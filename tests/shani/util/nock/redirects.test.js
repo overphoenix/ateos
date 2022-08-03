@@ -8,7 +8,7 @@ describe("shani", "util", "nock", "redirects", () => {
                 client: { request }
             }
         }
-    } = adone;
+    } = ateos;
 
     beforeEach(() => {
         nock.cleanAll();

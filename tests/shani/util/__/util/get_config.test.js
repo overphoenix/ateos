@@ -4,7 +4,7 @@ describe("shani", "util", "__", "util", "getConfig", () => {
             getConfig,
             defaultConfig
         } }
-    } = adone.shani.util;
+    } = ateos.shani.util;
 
     describe(".getConfig", () => {
         it("gets copy of default config", () => {

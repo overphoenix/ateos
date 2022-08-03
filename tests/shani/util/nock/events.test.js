@@ -5,7 +5,7 @@ describe("shani", "util", "nock", "events", () => {
         },
         std: { http },
         noop
-    } = adone;
+    } = ateos;
 
     beforeEach(() => {
         nock.cleanAll();

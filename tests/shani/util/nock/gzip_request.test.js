@@ -10,7 +10,7 @@ describe("shani", "util", "nock", "gzip request", () => {
         std: {
             http
         }
-    } = adone;
+    } = ateos;
 
     beforeEach(() => {
         nock.cleanAll();

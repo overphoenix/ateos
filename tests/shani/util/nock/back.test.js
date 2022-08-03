@@ -6,11 +6,11 @@ describe("shani", "util", "nock", "back", () => {
         std: {
             http
         }
-    } = adone;
+    } = ateos;
 
     const nockBack = nock.back;
 
-    const fixtures = new adone.fs.Directory(__dirname, "fixtures");
+    const fixtures = new ateos.fs.Directory(__dirname, "fixtures");
 
     nock.enableNetConnect();
 

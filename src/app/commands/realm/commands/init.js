@@ -1,10 +1,10 @@
 const {
-  app: { Subsystem, mainCommand },
+  app: { Subsystem, CliMainCommand },
   is
 } = ateos;
 
 export default class extends Subsystem {
-  @mainCommand()
+  @CliMainCommand()
   async main(args, opts) {
     let rootRealm = null;
     try {

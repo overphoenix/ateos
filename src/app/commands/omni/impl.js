@@ -1,137 +1,137 @@
 const {
-    app: { Subsystem, subsystem, command },
-    is,
-    cli,
-    pretty,
-    omnitron,
-    std
+  app: { Subsystem, AppSubsystem, CliCommand },
+  is,
+  cli,
+  pretty,
+  omnitron,
+  std
 } = ateos;
 
 const { STATUSES } = omnitron;
 
 // const subsystemPath = (name) => std.path.resolve(__dirname, "subsystems", name);
 
-@subsystem({
-    commandsGroups: [
-        {
-            name: "common",
-            description: "Common commands"
-        },
-        {
-            name: "inspect",
-            description: "Information, inspection and metrics"
-        },
-        {
-            name: "services",
-            description: "Services management"
-        },
-        {
-            name: "subsystems",
-            description: "Subsystems management"
-        },
-        {
-            name: "config",
-            description: "Configuration"
-        }
-    ],
-    // subsystems: [
-    //     {
-    //         name: "startup",
-    //         group: "common",
-    //         description: "Omnitron startup stuff",
-    //         subsystem: subsystemPath("startup")
-    //     },
-    //     {
-    //         name: "config",
-    //         group: "config",
-    //         description: "Generic omnitron configuration",
-    //         subsystem: subsystemPath("config")
-    //     },
-    //     {
-    //         name: ["net", "network"],
-    //         group: "config",
-    //         description: "Networks management",
-    //         subsystem: subsystemPath("network")
-    //     },
-    //     {
-    //         name: "host",
-    //         group: "config",
-    //         description: "Hosts management",
-    //         subsystem: subsystemPath("host")
-    //     }
-    // ]
+@AppSubsystem({
+  commandsGroups: [
+    {
+      name: "common",
+      description: "Common commands"
+    },
+    {
+      name: "inspect",
+      description: "Information, inspection and metrics"
+    },
+    {
+      name: "services",
+      description: "Services management"
+    },
+    {
+      name: "subsystems",
+      description: "Subsystems management"
+    },
+    {
+      name: "config",
+      description: "Configuration"
+    }
+  ],
+  // subsystems: [
+  //     {
+  //         name: "startup",
+  //         group: "common",
+  //         description: "Omnitron startup stuff",
+  //         subsystem: subsystemPath("startup")
+  //     },
+  //     {
+  //         name: "config",
+  //         group: "config",
+  //         description: "Generic omnitron configuration",
+  //         subsystem: subsystemPath("config")
+  //     },
+  //     {
+  //         name: ["net", "network"],
+  //         group: "config",
+  //         description: "Networks management",
+  //         subsystem: subsystemPath("network")
+  //     },
+  //     {
+  //         name: "host",
+  //         group: "config",
+  //         description: "Hosts management",
+  //         subsystem: subsystemPath("host")
+  //     }
+  // ]
 })
-export default () => class OmniCommand extends Subsystem {
-    @command({
-        name: "up",
-        group: "common",
-        help: "Start omni-application"
+  export default () => class OmniCommand extends Subsystem {
+    @CliCommand({
+      name: "up",
+      group: "common",
+      help: "Start omni-application"
     })
     async upCommand() {
-        // try {
-        //     kit.createProgress("starting up omnitron");
-        //     const pid = await omnitron.dispatcher.startOmnitron();
-        //     if (is.number(pid)) {
-        //         kit.updateProgress({
-        //             message: `done (pid: ${pid})`,
-        //             status: true
-        //         });
-        //     } else {
-        //         kit.updateProgress({
-        //             message: `already running (pid: ${pid.pid})`,
-        //             status: "info"
-        //         });
-        //     }
-        //     return 0;
-        // } catch (err) {
-        //     kit.updateProgress({
-        //         message: err.message,
-        //         status: false
-        //     });
-        //     return 1;
-        // }
+      // try {
+      //     kit.createProgress("starting up omnitron");
+      //     const pid = await omnitron.dispatcher.startOmnitron();
+      //     if (is.number(pid)) {
+      //         kit.updateProgress({
+      //             message: `done (pid: ${pid})`,
+      //             status: true
+      //         });
+      //     } else {
+      //         kit.updateProgress({
+      //             message: `already running (pid: ${pid.pid})`,
+      //             status: "info"
+      //         });
+      //     }
+      //     return 0;
+      // } catch (err) {
+      //     kit.updateProgress({
+      //         message: err.message,
+      //         status: false
+      //     });
+      //     return 1;
+      // }
     }
 
-    @command({
-        name: "down",
-        group: "common",
-        help: "Shutdown omni-application"
+    @CliCommand({
+      name: "down",
+      group: "common",
+      help: "Shutdown omni-application"
     })
     async downCommand() {
-        // try {
-        //     kit.createProgress("shutting down omnitron");
-        //     const result = await omnitron.dispatcher.stopOmnitron();
-        //     switch (result) {
-        //         case 0:
-        //             kit.updateProgress({
-        //                 message: "failed",
-        //                 status: false
-        //             });
-        //             break;
-        //         case 1:
-        //             kit.updateProgress({
-        //                 message: "done",
-        //                 status: true
-        //             });
-        //             break;
-        //         case 2:
-        //             kit.updateProgress({
-        //                 message: "omnitron is not started",
-        //                 status: "info"
-        //             });
-        //             break;
-        //     }
-        //     return 0;
-        // } catch (err) {
-        //     kit.updateProgress({
-        //         message: err.message,
-        //         status: false
-        //     });
-        //     return 1;
-        // }
+      // try {
+      //     kit.createProgress("shutting down omnitron");
+      //     const result = await omnitron.dispatcher.stopOmnitron();
+      //     switch (result) {
+      //         case 0:
+      //             kit.updateProgress({
+      //                 message: "failed",
+      //                 status: false
+      //             });
+      //             break;
+      //         case 1:
+      //             kit.updateProgress({
+      //                 message: "done",
+      //                 status: true
+      //             });
+      //             break;
+      //         case 2:
+      //             kit.updateProgress({
+      //                 message: "omnitron is not started",
+      //                 status: "info"
+      //             });
+      //             break;
+      //     }
+      //     return 0;
+      // } catch (err) {
+      //     kit.updateProgress({
+      //         message: err.message,
+      //         status: false
+      //     });
+      //     return 1;
+      // }
     }
 
-    // @command({
+    // @CliCommand({
     //     name: "gc",
     //     group: "common",
     //     help: "Force garbage collector"
@@ -155,7 +155,7 @@ export default () => class OmniCommand extends Subsystem {
     //     }
     // }
 
-    // @command({
+    // @CliCommand({
     //     name: "info",
     //     group: "inspect",
     //     help: "The omnitron's information",
@@ -190,7 +190,7 @@ export default () => class OmniCommand extends Subsystem {
     //     }
     // }
 
-    // @command({
+    // @CliCommand({
     //     name: "report",
     //     group: "inspect",
     //     help: "Report omnitron process statistics"
@@ -216,7 +216,7 @@ export default () => class OmniCommand extends Subsystem {
     //     }
     // }
 
-    // @command({
+    // @CliCommand({
     //     name: "enable",
     //     group: "services",
     //     help: "Enable service",
@@ -248,7 +248,7 @@ export default () => class OmniCommand extends Subsystem {
     //     }
     // }
 
-    // @command({
+    // @CliCommand({
     //     name: "disable",
     //     group: "services",
     //     help: "Disable service",
@@ -280,7 +280,7 @@ export default () => class OmniCommand extends Subsystem {
     //     }
     // }
 
-    // @command({
+    // @CliCommand({
     //     name: "start",
     //     group: "services",
     //     help: "Start service",
@@ -312,7 +312,7 @@ export default () => class OmniCommand extends Subsystem {
     //     }
     // }
 
-    // @command({
+    // @CliCommand({
     //     name: "stop",
     //     group: "services",
     //     help: "Stop service",
@@ -344,7 +344,7 @@ export default () => class OmniCommand extends Subsystem {
     //     }
     // }
 
-    // @command({
+    // @CliCommand({
     //     name: "restart",
     //     group: "services",
     //     help: "Restart service",
@@ -377,7 +377,7 @@ export default () => class OmniCommand extends Subsystem {
     //     }
     // }
 
-    // @command({
+    // @CliCommand({
     //     name: "configure",
     //     group: "services",
     //     help: "Configure service",
@@ -430,7 +430,7 @@ export default () => class OmniCommand extends Subsystem {
     //     }
     // }
 
-    // @command({
+    // @CliCommand({
     //     name: "services",
     //     group: "inspect",
     //     help: "Show services",
@@ -518,7 +518,7 @@ export default () => class OmniCommand extends Subsystem {
     //     }
     // }
 
-    // // @command({
+    // // @CliCommand({
     // //     name: "peers",
     // //     group: "inspect",
     // //     help: "Show connected peers"
@@ -577,7 +577,7 @@ export default () => class OmniCommand extends Subsystem {
     // //     }
     // // }
 
-    // @command({
+    // @CliCommand({
     //     name: "contexts",
     //     group: "inspect",
     //     help: "Show attached contexts"
@@ -621,7 +621,7 @@ export default () => class OmniCommand extends Subsystem {
     //     }
     // }
 
-    // @command({
+    // @CliCommand({
     //     name: "subsystems",
     //     group: "inspect",
     //     help: "Show omnitron subsystems"
@@ -673,7 +673,7 @@ export default () => class OmniCommand extends Subsystem {
     //     }
     // }
 
-    // @command({
+    // @CliCommand({
     //     name: "load",
     //     group: "subsystems",
     //     help: "Load subsystem",
@@ -737,7 +737,7 @@ export default () => class OmniCommand extends Subsystem {
     //     }
     // }
 
-    // @command({
+    // @CliCommand({
     //     name: "unload",
     //     group: "subsystems",
     //     help: "Unload subsystem",
@@ -768,4 +768,4 @@ export default () => class OmniCommand extends Subsystem {
     //         return 1;
     //     }
     // }
-};
+  };

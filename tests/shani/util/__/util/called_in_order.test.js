@@ -2,7 +2,7 @@ describe("shani", "util", "__", "util", "calledInOrder", () => {
     const {
         __: { util: { calledInOrder } },
         stub: sstub
-    } = adone.shani.util;
+    } = ateos.shani.util;
 
     const testObject1 = { someFunction() {} };
     const testObject2 = { otherFunction() {} };

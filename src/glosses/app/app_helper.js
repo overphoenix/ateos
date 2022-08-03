@@ -50,7 +50,7 @@ const INTERNAL = Symbol.for("ateos.app.Application#internal");
 const UNNAMED = Symbol();
 const EMPTY_VALUE = Symbol();
 const COMMAND = Symbol();
-const MAIN_COMMAND = Symbol.for("ateos.app.CliApplication#mainCommand");
+const MAIN_COMMAND = Symbol.for("ateos.app.Application#CliMainCommand");
 
 const escape = (x) => x.replace(/%/g, "%%");
 

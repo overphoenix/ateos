@@ -8,7 +8,7 @@ describe("shani", "util", "nock", "url encoding", () => {
                 client: { request }
             }
         }
-    } = adone;
+    } = ateos;
 
     beforeEach(() => {
         nock.cleanAll();

@@ -2,6 +2,7 @@
  * eslint-disable ateos/no-typeof
  */
 const {
+  is,
   assertion: { getFunctionName }
 } = ateos;
 

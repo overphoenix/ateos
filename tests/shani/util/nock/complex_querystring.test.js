@@ -8,7 +8,7 @@ describe("shani", "util", "nock", "complex querystring", () => {
                 client: { request }
             }
         }
-    } = adone;
+    } = ateos;
 
     beforeEach(() => {
         nock.cleanAll();

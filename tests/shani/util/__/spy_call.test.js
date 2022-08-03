@@ -1,5 +1,5 @@
 describe("shani", "util", "__", "SpyCall", () => {
-    const { __: { SpyCall }, spy: sspy, stub: sstub } = adone.shani.util;
+    const { __: { SpyCall }, spy: sspy, stub: sstub } = ateos.shani.util;
 
     const spyCallSetUp = function () {
         this.thisValue = {};

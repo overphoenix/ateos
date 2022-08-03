@@ -11,8 +11,8 @@ const {
 } = ateos;
 
 const {
-    subsystem,
-    mainCommand
+    AppSubsystem,
+    CliMainCommand
 } = app;
 
 const log = ({ stdout, stderr, inspect, ...options } = {}) => {
@@ -47,7 +47,7 @@ const log = ({ stdout, stderr, inspect, ...options } = {}) => {
 
 const command = (name) => path.join(__dirname, "commands", name);
 
-@subsystem({
+@AppSubsystem({
     commandsGroups: [
         {
             "name": "common",
@@ -102,10 +102,10 @@ const command = (name) => path.join(__dirname, "commands", name);
             subsystem: command("rollup")
         },
         {
-            name: ["shell", "sh"],
+            name: ["shani"],
             group: "common",
-            description: "Portable shell",
-            subsystem: command("shell")
+            description: "Test runner",
+            subsystem: command("shani")
         },
         // {
         //     name: ["system", "sys"],
@@ -128,7 +128,7 @@ export default class ATEOSApp extends app.Application {
         this.log = log;
     }
 
-    @mainCommand({
+    @CliMainCommand({
         blindMode: true,
         arguments: [
             {

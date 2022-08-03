@@ -1,5 +1,5 @@
 describe("shani", "util", "__", "util", "walk", () => {
-    const { __: { util: { walk } }, spy: createSpy } = adone.shani.util;
+    const { __: { util: { walk } }, spy: createSpy } = ateos.shani.util;
 
     it("should call iterator with value, key, and obj, with context as the receiver", () => {
         const target = Object.create(null);

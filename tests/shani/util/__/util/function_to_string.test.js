@@ -2,7 +2,7 @@ describe("shani", "util", "__", "util", "functionToString", () => {
     const {
         spy: createSpy,
         __: { util: { functionToString } }
-    } = adone.shani.util;
+    } = ateos.shani.util;
 
     it("returns function's displayName property", () => {
         const fn = function () {};

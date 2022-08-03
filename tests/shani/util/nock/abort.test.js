@@ -4,7 +4,7 @@ describe("shani", "util", "nock", "abort", () => {
             util: { nock }
         },
         std: { http }
-    } = adone;
+    } = ateos;
 
     const assertEvents = (cb) => {
         let gotAbort = false;

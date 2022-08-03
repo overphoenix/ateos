@@ -3,7 +3,7 @@ describe("shani", "util", "match", () => {
         is,
         error,
         shani: { util: { match } }
-    } = adone;
+    } = ateos;
 
     const propertyMatcherTests = (matcher, additionalTests) => () => {
         it("returns matcher", () => {

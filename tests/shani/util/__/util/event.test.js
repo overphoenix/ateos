@@ -6,7 +6,7 @@ describe("shani", "util", "__", "util", "EventTarget", () => {
             }
         },
         spy: sspy
-    } = adone.shani.util;
+    } = ateos.shani.util;
 
     beforeEach(function () {
         this.target = Object.assign({}, sevent.EventTarget);

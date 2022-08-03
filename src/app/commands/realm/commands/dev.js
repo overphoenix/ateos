@@ -1,11 +1,11 @@
 const {
-    app: { Subsystem, mainCommand },
+    app: { Subsystem, CliMainCommand },
     cli
 } = ateos;
 
 
 export default class extends Subsystem {
-    @mainCommand({
+    @CliMainCommand({
         arguments: [
             {
                 name: "path",

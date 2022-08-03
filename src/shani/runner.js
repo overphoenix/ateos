@@ -1,25 +1,22 @@
-require(process.argv[2]); // the main process passes adone's absolute path
+require(process.argv[2]); // the main process passes ateos's absolute path
 
-adone.sourcemap.support.install();
-
-// temp hack
-adone.shani = require("./shani");
+ateos.sourcemap.support.install();
 
 const {
   Engine,
   consoleReporter,
   simpleReporter,
   minimalReporter
-} = adone.shani;
+} = ateos.shani;
 
 const {
   is,
   path,
   noop,
   util: { arrify }
-} = adone;
+} = ateos;
 
-adone.app.run({
+ateos.app.run({
   async run() {
     this._uncaughtException = (err) => {
       // console.log("Uncaught exception", err.stack);
@@ -27,11 +24,12 @@ adone.app.run({
     this._unhandledRejection = (err) => {
       // console.log("Unhandled rejection", err.stack);
     };
-    this.__rejectionHandled = adone.noop;
+    this.__rejectionHandled = ateos.noop;
     const p = new Promise((resolve) => {
       process.once("message", resolve);
     });
     process.send("ready");
+    
     const {
       useConfig,
       configPath,
@@ -43,8 +41,8 @@ adone.app.run({
     } = await p;
 
     let config = {};
-    if (useConfig && await adone.fs.exists(configPath)) {
-      config = adone.require(configPath);
+    if (useConfig && await ateos.fs.pathExists(configPath)) {
+      config = ateos.require(configPath);
       if (config.default) {
         config = config.default;
       }
@@ -146,34 +144,34 @@ adone.app.run({
       })
       .on("reporterError", (err) => {
         console.error("Reporter failed");
-        console.error(adone.pretty.error(err));
+        console.error(ateos.pretty.error(err));
         process.exit(1);
       });
 
     await new Promise((resolve) => emitter.once("done", resolve));
     if (printCoverStats) {
-      if (adone.js.coverage.hasStats()) {
+      if (ateos.js.coverage.hasStats()) {
         const filter = is.string(printCoverStats) && printCoverStats;
-        adone.js.coverage.printTable(filter && new RegExp(filter));
+        ateos.js.coverage.printTable(filter && new RegExp(filter));
       } else {
         console.info("[coverage] no data can be shown");
       }
     }
     if (startCoverServer) {
-      if (adone.js.coverage.hasStats()) {
+      if (ateos.js.coverage.hasStats()) {
         const port = startCoverServer;
         console.info(`start http server with coverage stats at 127.0.0.1:${port}`);
-        await adone.js.coverage.startHTTPServer(port);
+        await ateos.js.coverage.startHTTPServer(port);
         return;
       } else if (!printCoverStats) {
         console.info("[coverage] no data can be shown");
       }
     }
 
-    const children = await adone.process.getChildPids(process.pid);
+    const children = await ateos.process.getChildPids(process.pid);
 
     await Promise.all(children.map(async ({ PID }) => {
-      await adone.process.kill(PID, { force: true, tree: false }).catch(noop);
+      await ateos.process.kill(PID, { force: true, tree: false }).catch(noop);
     }));
 
     if (failed) {

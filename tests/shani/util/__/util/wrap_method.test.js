@@ -1,6 +1,6 @@
 describe("shani", "util", "__", "util", "wrapMethod", () => {
-    const { error } = adone;
-    const { __: { util: { wrapMethod } }, spy: createSpy, stub: createStub } = adone.shani.util;
+    const { error } = ateos;
+    const { __: { util: { wrapMethod } }, spy: createSpy, stub: createStub } = ateos.shani.util;
 
     beforeEach(function () {
         this.method = function () { };

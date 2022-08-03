@@ -1,5 +1,5 @@
 describe("shani", "util", "__", "util", "timesInWords", () => {
-    const { timesInWords } = adone.shani.util.__.util;
+    const { timesInWords } = ateos.shani.util.__.util;
 
     it("should return \"once\" for input of 1", () => {
         const result = timesInWords(1);

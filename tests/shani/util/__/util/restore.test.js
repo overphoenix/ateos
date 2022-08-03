@@ -2,7 +2,7 @@ describe("shani", "util", "__", "util", "restore", () => {
     const {
         __: { util: { restore } },
         stub: createStub
-    } = adone.shani.util;
+    } = ateos.shani.util;
 
     it("restores all methods of supplied object", () => {
         const methodA = function () {};

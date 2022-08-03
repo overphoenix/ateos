@@ -12,7 +12,6 @@ const ateos: {
   getPath: (n: string, ...args: Array<string>) => string
   HOME: string
   std: {
-
   }
 } = Object.create({
   __app__: null, // root application instance
@@ -66,7 +65,7 @@ common.lazify({
   HOME: () => process.env.ATEOS_HOME,
   LOGO: () => ateos.fs.readFileSync(ateos.getPath("share", "media", "ateos.txt"), { encoding: "utf8" }),
 
-  getPath: () => (p: string, ...args: Array<string>) => ateos.path.join((p && p.startsWith("/")) ? p : ateos.path.join(ateos.HOME, p), ...args),
+  getPath: () => (p: string, ...args: string[]) => ateos.path.join((p && p.startsWith("/")) ? p : ateos.path.join(ateos.HOME, p), ...args),
 
   assert: () => ateos.assertion.assert,
 
@@ -96,7 +95,6 @@ common.lazify({
     path: "path",
     perfHooks: "perf_hooks",
     process: "process",
-    punycode: "punycode",
     querystring: "querystring",
     readline: "readline",
     repl: "repl",
@@ -140,7 +138,6 @@ common.lazify({
   globals: "./glosses/globals",
   http: "./glosses/http",
   inspect: "./glosses/inspect",
-  ipfs: "./glosses/ipfs",
   is: "./glosses/is",
   js: "./glosses/js",
   lockfile: "./glosses/lockfile",
@@ -160,11 +157,11 @@ common.lazify({
   process: "./glosses/process",
   promise: "./glosses/promise",
   punycode: () => ateos.asNamespace(require("punycode/")),
-  puppeteer: () => ateos.asNamespace(require("puppeteer-core")),
   realm: "./glosses/realm",
   regex: "./glosses/regex",
   rollup: "./glosses/rollup",
   semver: "semver",
+  shani: "./shani",
   shell: "./glosses/shell",
   sourcemap: "./glosses/sourcemap",
   stream: "./glosses/streams",
@@ -203,7 +200,7 @@ common.lazify({
 
 common.setLazifyErrorHandler((err: any) => {
   //eslint-disable-next-line
-    if (ateos.__app__ !== null) {
+  if (ateos.__app__ !== null) {
     ateos.__app__.fireException(err);
     return;
   }

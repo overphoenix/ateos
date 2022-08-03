@@ -1,5 +1,5 @@
 export default async (ctx) => {
-    await adone.promise.delay(100);
+    await ateos.promise.delay(100);
 
     ctx.before(function () {});
 

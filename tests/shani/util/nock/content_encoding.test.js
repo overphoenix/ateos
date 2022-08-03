@@ -7,7 +7,7 @@ describe("shani", "util", "nock", "content encoding", () => {
             util: { nock }
         },
         std: { http }
-    } = adone;
+    } = ateos;
 
     beforeEach(() => {
         nock.cleanAll();

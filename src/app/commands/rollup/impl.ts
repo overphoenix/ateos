@@ -1,6 +1,6 @@
 const {
-    app,
-    rollup
+  app,
+  rollup
 } = ateos;
 
 // rollup version __VERSION__
@@ -83,59 +83,59 @@ const {
 
 
 class RollupCommand extends app.Subsystem {
-    @app.mainCommand({
-        arguments: [
-            {
-                name: "entry",
-                type: String,
-                nargs: "+",
-                required: false,
-                description: "Entry file"
-            }
-        ],
-        options: [
-            {
-                name: ["--version", "-V"],
-                description: "Show rollup version"
-            },
-            {
-                name: ["--config", "-c"],
-                type: String,
-                default: "rollup.config.js",
-                description: "Use this config file"
-            },
-            {
-                name: ["--input", "-i"],
-                type: String,
-                description: "Input (alternative to <entry>)"
-            },
-            {
-                name: "--environment",
-                type: String,
-                description: "Settings passed to config file",
-                holder: "VALUES"
-            }
-        ]
-    })
-    main(args, opts) {
-        const options = opts.getAll();
-        if (options.version) {
-            console.log(`v${rollup.VERSION}`);
-            return 0;
-        }
-        ateos.sourcemap.support.install();
-
-        let input;
-        if (args.has("entry")) {
-            input = args.get("entry");
-        } else if (options.input) {
-            input = options.input;
-        }
-        rollup.run({
-            input,
-            ...ateos.util.omit(options, ["version", "input"])
-        });
+  @app.CliMainCommand({
+    arguments: [
+      {
+        name: "entry",
+        type: String,
+        nargs: "+",
+        required: false,
+        description: "Entry file"
+      }
+    ],
+    options: [
+      {
+        name: ["--version", "-V"],
+        description: "Show rollup version"
+      },
+      {
+        name: ["--config", "-c"],
+        type: String,
+        default: "rollup.config.js",
+        description: "Use this config file"
+      },
+      {
+        name: ["--input", "-i"],
+        type: String,
+        description: "Input (alternative to <entry>)"
+      },
+      {
+        name: "--environment",
+        type: String,
+        description: "Settings passed to config file",
+        holder: "VALUES"
+      }
+    ]
+  })
+  main(args, opts) {
+    const options = opts.getAll();
+    if (options.version) {
+      console.log(`v${rollup.VERSION}`);
+      return 0;
     }
+    ateos.sourcemap.support.install();
+
+    let input;
+    if (args.has("entry")) {
+      input = args.get("entry");
+    } else if (options.input) {
+      input = options.input;
+    }
+    rollup.run({
+      input,
+      ...ateos.util.omit(options, ["version", "input"])
+    });
+  }
 };
 
 export default () => RollupCommand;

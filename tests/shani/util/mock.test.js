@@ -1,12 +1,12 @@
 describe("shani", "util", "mock", () => {
-    const { is, error } = adone;
+    const { is, error } = ateos;
     const {
         mock,
         expectation,
         match,
         stub,
         spy
-    } = adone.shani.util;
+    } = ateos.shani.util;
 
     it("creates anonymous mock functions", () => {
         const expectation = mock();

@@ -8,7 +8,7 @@ describe("shani", "util", "nock", "dynamic mock", () => {
                 client: { request }
             }
         }
-    } = adone;
+    } = ateos;
 
     beforeEach(() => {
         nock.cleanAll();

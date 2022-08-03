@@ -7,9 +7,9 @@ describe("shani", "util", "diff", () => {
                 }
             }
         }
-    } = adone;
+    } = ateos;
 
-    const noColor = (s) => adone.text.stripAnsi(s);
+    const noColor = (s) => ateos.text.stripAnsi(s);
     const getDiffNoColor = (...args) => noColor(getDiff(...args));
     const join = (arr) => arr.join("\n");
 

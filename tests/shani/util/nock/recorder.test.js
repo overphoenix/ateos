@@ -12,13 +12,13 @@ describe("shani", "util", "nock", "recorder", () => {
         },
         compressor: { gz },
         std: { http }
-    } = adone;
+    } = ateos;
 
     const request = createHttpClient({
         rejectUnauthorized: false
     });
 
-    const fixtures = new adone.fs.Directory(__dirname, "fixtures");
+    const fixtures = new ateos.fs.Directory(__dirname, "fixtures");
     const httpsOpts = {
         secure: {
             key: fixtures.getFile("key", "private.key").contentsSync(),
@@ -550,7 +550,7 @@ describe("shani", "util", "nock", "recorder", () => {
         nock.recorder.rec({
             dont_print: true,
             output_objects: false,
-            logging: adone.noop
+            logging: ateos.noop
         });
 
         const serv = await createHttpServer()

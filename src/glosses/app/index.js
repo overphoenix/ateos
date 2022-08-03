@@ -41,8 +41,10 @@ const SubsystemDecorator = (sysInfo = {}) => (target) => {
   }
 };
 
-export const subsystem = SubsystemDecorator;
-export const mainCommand = (info = {}) => (target, key, descriptor) => {
+// Decorators
+ 
+export const AppSubsystem = SubsystemDecorator;
+export const CliMainCommand = (info = {}) => (target, key, descriptor) => {
   let sysMeta = getSubsystemMeta(target.constructor);
   info.handler = descriptor.value;
   if (is.undefined(sysMeta)) {
@@ -62,7 +64,7 @@ export const mainCommand = (info = {}) => (target, key, descriptor) => {
     }
   }
 };
-export const command = (commandInfo = {}) => (target, key, descriptor) => {
+export const CliCommand = (commandInfo = {}) => (target, key, descriptor) => {
   let sysMeta = getSubsystemMeta(target.constructor);
   commandInfo.handler = descriptor.value;
   if (is.undefined(sysMeta)) {

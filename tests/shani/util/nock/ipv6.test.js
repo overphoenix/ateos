@@ -4,7 +4,7 @@ describe("shani", "util", "nock", "ipv6", () => {
             util: { nock }
         },
         std: { http }
-    } = adone;
+    } = ateos;
 
     beforeEach(() => {
         nock.cleanAll();

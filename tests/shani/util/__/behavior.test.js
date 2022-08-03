@@ -1,5 +1,5 @@
 describe("shani", "util", "__", "behavior", () => {
-    const { stub: createStub, __: { behavior } } = adone.shani.util;
+    const { stub: createStub, __: { behavior } } = ateos.shani.util;
 
     it("adds and uses a custom behavior", () => {
         behavior.addBehavior(createStub, "returnsNum", (fake, n) => {

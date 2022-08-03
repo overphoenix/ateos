@@ -1,6 +1,6 @@
 describe("shani", "util", "assert", () => {
-    const { error } = adone;
-    const suitil = adone.shani.util;
+    const { error } = ateos;
+    const suitil = ateos.shani.util;
     const { __: { color } } = suitil;
     const { stub: sstub } = suitil;
     const { spy: sspy } = suitil;

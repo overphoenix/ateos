@@ -1,5 +1,5 @@
 describe("shani", "util", "__", "collection", () => {
-    const { __: { Collection }, spy: sspy, stub: sstub } = adone.shani.util;
+    const { __: { Collection }, spy: sspy, stub: sstub } = ateos.shani.util;
 
     it("creates fake collection", () => {
         const collection = new Collection();

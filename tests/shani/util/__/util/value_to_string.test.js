@@ -1,5 +1,5 @@
 describe("shani", "util", "__", "util", "valueToString", () => {
-    const { valueToString } = adone.shani.util.__.util;
+    const { valueToString } = ateos.shani.util.__.util;
 
     it("returns string representation of an object", () => {
         const obj = {};

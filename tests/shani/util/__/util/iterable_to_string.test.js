@@ -1,5 +1,5 @@
 describe("shani", "util", "__", "util", "iterableToString", () => {
-    const { iterableToString } = adone.shani.util.__.util;
+    const { iterableToString } = ateos.shani.util.__.util;
 
     it("returns an String representation of Array objects", () => {
         const arr = [1, "one", true, undefined, null];

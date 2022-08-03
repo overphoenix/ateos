@@ -8,7 +8,7 @@ describe("shani", "util", "nock", "net connect", () => {
                 client: { request }
             }
         }
-    } = adone;
+    } = ateos;
 
     beforeEach(() => {
         nock.cleanAll();

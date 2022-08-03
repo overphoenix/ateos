@@ -9,7 +9,7 @@ describe("shani", "util", "nock", "http allowUnmocked", () => {
                 server: { Server }
             }
         }
-    } = adone;
+    } = ateos;
 
     beforeEach(() => {
         nock.cleanAll();
@@ -24,7 +24,7 @@ describe("shani", "util", "nock", "http allowUnmocked", () => {
 
     nock.enableNetConnect();
 
-    const fixtures = new adone.fs.Directory(__dirname, "fixtures");
+    const fixtures = new ateos.fs.Directory(__dirname, "fixtures");
     const privateKey = fixtures.getFile("key", "private.key");
     const certificate = fixtures.getFile("key", "certificate.crt");
 

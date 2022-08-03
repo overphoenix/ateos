@@ -1,6 +1,6 @@
 describe("shani", "util", "issues", () => {
-    const { is } = adone;
-    const { sandbox, stub, spy, match, assert: sassert } = adone.shani.util;
+    const { is } = ateos;
+    const { sandbox, stub, spy, match, assert: sassert } = ateos.shani.util;
 
     beforeEach(function () {
         this.sandbox = sandbox.create();

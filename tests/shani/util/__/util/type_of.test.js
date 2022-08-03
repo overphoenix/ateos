@@ -1,5 +1,5 @@
 describe("shani", "util", "__", "util", "typeOf", () => {
-    const { typeOf } = adone.shani.util.__.util;
+    const { typeOf } = ateos.shani.util.__.util;
 
     it("returns boolean", () => {
         assert.equal(typeOf(false), "boolean");

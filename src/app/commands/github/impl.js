@@ -3,7 +3,7 @@ const {
     fs,
     app: {
         Subsystem,
-        subsystem,
+        AppSubsystem,
         command
     },
     nodejs,
@@ -22,7 +22,7 @@ const {
 // const IGNORE_FILES = ["LICENSE", "CHANGELOG.md", "README.md"];
 const subCommand = (...args) => ateos.path.join(__dirname, "commands", ...args);
 
-@subsystem({
+@AppSubsystem({
     subsystems: [
         {
             name: "repo",

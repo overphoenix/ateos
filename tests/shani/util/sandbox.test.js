@@ -7,7 +7,7 @@ describe("shani", "util", "sandbox", () => {
         __: {
             Collection
         }
-    } = adone.shani.util;
+    } = ateos.shani.util;
 
     it("inherits collection", () => {
         assert(sandbox() instanceof Collection);

@@ -1,5 +1,5 @@
 describe("shani", "util", "stub", () => {
-    const { is, error } = adone;
+    const { is, error } = ateos;
     const {
         stub: createStub,
         spy: createSpy,
@@ -9,7 +9,7 @@ describe("shani", "util", "stub", () => {
                 getPropertyDescriptor
             }
         }
-    } = adone.shani.util;
+    } = ateos.shani.util;
     const { createStubInstance } = createStub;
 
     it("is spy", () => {

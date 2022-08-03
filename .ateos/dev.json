@@ -100,6 +100,46 @@
         }
       }
     },
+    "ahani": {
+      "description": "Shani - test runner",
+      "units": {
+        "jssrc": {
+          "description": "JavaScript codebase",
+          "src": "src/shani/**/*.js",
+          "dst": "lib/shani",
+          "task": "transpile"
+        },
+        "tssrc": {
+          "description": "TypeScript codebase",
+          "src": [
+            "src/shani/**/*.ts",
+            "!src/shani/**/*.d.ts"
+          ],
+          "dst": "lib/shani",
+          "task": "tsc",
+          "compilerOptions": {
+            "allowSyntheticDefaultImports": true,
+            "noEmitOnError": true,
+            "noUnusedLocals": true,
+            "noUnusedParameters": true,
+            "strictPropertyInitialization": false,
+            "strictFunctionTypes": false,
+            "strict": true
+          }
+        },
+        "assets": {
+          "description": "Assets",
+          "task": "copy",
+          "src": [
+            "src/shani/**/*",
+            "!src/shani/**/*.js",
+            "!src/shani/**/*.ts",
+            "!src/shani/**/*.d.ts"
+          ],
+          "dst": "lib/shani"
+        }
+      }
+    },
     "native": {
       "description": "Everything to build Node.js addons",
       "src": "src/native/**/*",

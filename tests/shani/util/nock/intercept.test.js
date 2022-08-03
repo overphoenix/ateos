@@ -16,13 +16,13 @@ describe("shani", "util", "nock", "intercept", () => {
         shani: {
             util: { nock }
         }
-    } = adone;
+    } = ateos;
 
     const request = createHttpClient({
         rejectUnauthorized: false
     });
 
-    const fixtures = new adone.fs.Directory(__dirname, "fixtures");
+    const fixtures = new ateos.fs.Directory(__dirname, "fixtures");
     const httpsOpts = {
         secure: {
             key: fixtures.getFile("key", "private.key").contentsSync(),
@@ -45,7 +45,7 @@ describe("shani", "util", "nock", "intercept", () => {
 
     nock.enableNetConnect();
 
-    class Dest extends adone.event.Emitter {
+    class Dest extends ateos.event.Emitter {
         constructor() {
             super();
             this.buffer = Buffer.allocUnsafe(0);

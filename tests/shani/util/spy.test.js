@@ -1,5 +1,5 @@
 describe("shani", "util", "spy", () => {
-    const { spy: createSpy, match } = adone.shani.util;
+    const { spy: createSpy, match } = ateos.shani.util;
 
     const spyCalledTests = (method) => () => {
         beforeEach(function () {

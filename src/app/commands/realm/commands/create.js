@@ -1,5 +1,5 @@
 const {
-  app: { Subsystem, mainCommand },
+  app: { Subsystem, CliMainCommand },
   cli,
   fs,
   process: { command },
@@ -26,7 +26,7 @@ const getGitEmail = async () => {
 };
 
 export default class extends Subsystem {
-  @mainCommand({
+  @CliMainCommand({
     arguments: [
       {
         name: "name",

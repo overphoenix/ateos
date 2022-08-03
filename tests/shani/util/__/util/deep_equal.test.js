@@ -3,7 +3,7 @@ describe("shani", "util", "__", "util", "deepEqual", () => {
         __: { util: { deepEqual } },
         match,
         spy: createSpy
-    } = adone.shani.util;
+    } = ateos.shani.util;
 
     it("passes null", () => {
         assert(deepEqual(null, null));

@@ -8,7 +8,7 @@ describe("shani", "util", "nock", "body match", () => {
                 client: { request }
             }
         }
-    } = adone;
+    } = ateos;
 
     beforeEach(() => {
         nock.cleanAll();

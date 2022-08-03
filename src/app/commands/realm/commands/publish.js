@@ -1,5 +1,5 @@
 const {
-  app: { Subsystem, mainCommand },
+  app: { Subsystem, CliMainCommand },
   is
 } = ateos;
 export default class extends Subsystem {
@@ -7,7 +7,7 @@ export default class extends Subsystem {
     this.log = this.root.log;
   }
 
-  @mainCommand({
+  @CliMainCommand({
     options: [
       {
         name: "--auth",

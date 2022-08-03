@@ -8,7 +8,7 @@ describe("shani", "util", "nock", "basic auth", () => {
                 client: { request }
             }
         }
-    } = adone;
+    } = ateos;
 
     beforeEach(() => {
         nock.cleanAll();
