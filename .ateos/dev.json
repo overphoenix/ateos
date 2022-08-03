@@ -1,0 +1,109 @@
+{
+  "tasks": {
+    "fork": {
+      "tags": ["src", "info", "share"]
+    }
+  },
+  "defaultTask": "copy",
+  "nonWatchableTasks": [
+    "cmake"
+  ],
+  "units": {
+    "tasks": {
+      "description": "Realm tasks",
+      "units": {
+        "src": {
+          "description": "Codebase",
+          "src": "src/tasks/**/*.js",
+          "dst": "lib/tasks",
+          "task": "transpile"
+        },
+        "assets": {
+          "description": "Assets",
+          "src": [
+            "src/tasks/**/*",
+            "!src/tasks/**/*.js"
+          ],
+          "dst": "lib/tasks"
+        }
+      }
+    },
+    "app": {
+      "description": "ATEOS CLI application",
+      "units": {
+        "bin": {
+          "description": "Executable",
+          "src": "src/app/ateos.js",
+          "dst": "bin",
+          "task": "transpile"
+        },
+        "lib": {
+          "description": "Codebase",
+          "src": "src/app/**/*.js",
+          "dst": "lib/app",
+          "task": "transpile"
+        },
+        "assets": {
+          "description": "Assets",
+          "task": "copy",
+          "src": [
+            "src/app/**/*",
+            "!src/app/**/*.js"
+          ],
+          "dst": "lib/app"
+        }
+      }
+    },
+    "common": {
+      "description": "Common codebase",
+      "src": "src/*.ts",
+      "dst": "lib",
+      "task": "tsc"
+    },
+    "glosses": {
+      "description": "Glosses",
+      "units": {
+        "jssrc": {
+          "description": "JavaScript codebase",
+          "src": "src/glosses/**/*.js",
+          "dst": "lib/glosses",
+          "task": "transpile"
+        },
+        "tssrc": {
+          "description": "TypeScript codebase",
+          "src": [
+            "src/glosses/**/*.ts",
+            "!src/glosses/**/*.d.ts"
+          ],
+          "dst": "lib/glosses",
+          "task": "tsc",
+          "compilerOptions": {
+            "allowSyntheticDefaultImports": true,
+            "noEmitOnError": true,
+            "noUnusedLocals": true,
+            "noUnusedParameters": true,
+            "strictPropertyInitialization": false,
+            "strictFunctionTypes": false,
+            "strict": true
+          }
+        },
+        "assets": {
+          "description": "Assets",
+          "task": "copy",
+          "src": [
+            "src/glosses/**/*",
+            "!src/glosses/**/*.js",
+            "!src/glosses/**/*.ts",
+            "!src/glosses/**/*.d.ts"
+          ],
+          "dst": "lib/glosses"
+        }
+      }
+    },
+    "native": {
+      "description": "Everything to build Node.js addons",
+      "src": "src/native/**/*",
+      "dst": "lib/native"
+    }
+  }
+}

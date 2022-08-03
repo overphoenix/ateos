@@ -1,0 +1,63 @@
+{
+    "artifacts": {
+        "share": [
+            "share"
+        ],
+        "src": [
+            "src"
+        ],
+        "release": [
+            "bin",
+            "lib",
+            "package.json"
+        ],
+        "node_modules": [
+            "node_modules"
+        ],
+        "src.app": [
+            "src/app"
+        ],
+        "src.commands": [
+            "src/commands"
+        ],
+        "src.common": [
+            "src/glosses",
+            "src/index.ts",
+            "src/common.ts"
+        ],
+        "src.tasks": [
+            "src/tasks"
+        ],
+        "src.native": [
+            "src/native"
+        ],
+        "configs": [
+            "etc",
+            ".eslintignore",
+            ".eslintrc.js",
+            ".gitattributes",
+            ".gitignore",
+            "jsconfig.json"
+        ],
+        "info": [
+            "LICENSE",
+            "README.md"
+        ],
+        "tests": [
+            "tests",
+            "shanifile.js"
+        ]
+    },
+    "tasks": {
+        "basePath": [
+            "lib/tasks",
+            "src/tasks"
+        ],
+        "loadPolicy": "ignore",
+        "default": false,
+        "domains": {
+            "public": "public",
+            "private": "private"
+        }
+    }
+}

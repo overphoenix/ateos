@@ -161,6 +161,7 @@
     "is-reference": "^3.0.0",
     "iso-random-stream": "^2.0.0",
     "isomorphic-git": "^1.10.1",
+    "isomorphic-ws": "^5.0.0",
     "it-length-prefixed": "^5.0.3",
     "it-pipe": "^1.1.0",
     "it-pushable": "^1.4.0",
@@ -267,7 +268,7 @@
     "uri-js": "^4.4.1",
     "urijs": "^1.19.7",
     "uuid": "^8.3.2",
-    "ws": "^8.2.3",
+    "ws": "^8.8.1",
     "xtend": "^4.0.2",
     "yootils": "^0.3.1"
   }
