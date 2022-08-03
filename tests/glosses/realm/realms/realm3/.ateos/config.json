@@ -1,0 +1,21 @@
+{
+    "tasks": {
+        "basePath": "lib/tasks",
+        "tags": {
+            "pub": "common",
+            "dev": "dev"
+        }
+    },
+    "scheme": {
+        "tasks": {
+            "task": "transpile",
+            "src": "src/tasks/**/*",
+            "dst": "lib/tasks"
+        },
+        "app": {
+            "task": "transpile",
+            "src": "src/app/**/*",
+            "dst": "bin"
+        }
+    }
+}

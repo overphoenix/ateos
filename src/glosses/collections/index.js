@@ -1,0 +1,21 @@
+ateos.lazify({
+  TimeMap: "./time_map",
+  DefaultMap: "./default_map",
+  FastLRU: "./fast_lru",
+  LRU: "./lru",
+  LinkedList: "./linked_list",
+  BinarySearchTree: "./binary_search_tree",
+  AVLTree: "./avl_tree",
+  RedBlackTree: "./rb_tree",
+  Stack: "./stack",
+  BufferList: "./buffer_list",
+  ArraySet: "./array_set",
+  Queue: "./queue",
+  AsyncQueue: "./async_queue",
+  PriorityQueue: "./priority_queue",
+  MapCache: "./map_cache",
+  NSCache: "./ns_cache",
+  RefcountedCache: "./refcounted_cache",
+  Heap: "./heap",
+  HashSet: "./hash_set"
+}, ateos.asNamespace(exports), require);

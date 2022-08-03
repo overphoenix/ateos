@@ -1,0 +1,8 @@
+{
+    "tasks": {
+        "basePath": "lib",
+        "tags": {
+            "pub": "tasks"
+        }
+    }
+}

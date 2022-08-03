@@ -1,0 +1,14 @@
+export default {
+    units: {
+        tasks: {
+            task: "transpile",
+            src: "src/tasks/**/*",
+            dst: "lib/tasks"
+        },
+        app: {
+            task: "transpile",
+            src: "src/app/**/*",
+            dst: "bin"
+        }
+    }
+};

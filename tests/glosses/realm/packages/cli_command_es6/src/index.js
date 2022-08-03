@@ -1,0 +1,11 @@
+export default class TestCommand extends ateos.app.Subsystem {
+    async configure() {
+        await ateos.runtime.netron.getInterface("cli").defineCommand(this, {
+            handler: this.testCommand            
+        });
+    }
+
+    testCommand() {
+        console.log("well done");
+    }
+}

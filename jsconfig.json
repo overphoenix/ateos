@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "experimentalDecorators": true
+  },
+  "exclude": [
+    "/node_modules",
+    "/lib"
+  ],
+  "include": [
+    ".ateos/**/*.js",
+    "src/**/*.js",
+    "src/**/*.ts",
+    "tests/**/*.ts",
+    "tests/**/*.js"
+  ]
+}
