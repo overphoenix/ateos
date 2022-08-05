@@ -61,8 +61,8 @@ const readConfig = (ts, fileExists, readFile, options) => {
   }
   // Override default configuration options `ts-node` requires.
   config.compilerOptions = {
-    ...config.compilerOptions,
-    ...TS_COMPILER_OPTIONS
+    ...TS_COMPILER_OPTIONS,
+    ...config.compilerOptions
   };
   config = ts.parseJsonConfigFileContent(config, ts.sys, basePath, undefined, configFileName);
 

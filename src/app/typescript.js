@@ -62,7 +62,7 @@ const readConfig = (cwd, ts, fileExists, readFile, options) => {
     config.include = [];
   }
   // Override default configuration options `ts-node` requires.
-  config.compilerOptions = Object.assign({}, config.compilerOptions, TS_COMPILER_OPTIONS);
+  config.compilerOptions = Object.assign({}, TS_COMPILER_OPTIONS, config.compilerOptions);
   config = ts.parseJsonConfigFileContent(config, ts.sys, basePath, undefined, configFileName);
 
   // Delete options that *should not* be passed through.

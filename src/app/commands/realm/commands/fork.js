@@ -14,7 +14,7 @@ export default class extends Subsystem {
       {
         name: ["--path", "-P"],
         type: String,
-        default: ateos.path.join(ateos.system.env.home(), ".node_modules"),
+        default: ateos.path.join(ateos.env.home(), ".node_modules"),
         help: "Destination path"
       },
       {

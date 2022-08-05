@@ -275,8 +275,8 @@ const resolve = function (x, options) {
     const locations = [undefined];
     if (opts.searchGlobal) {
       locations.push(
-        path.join(ateos.system.env.home(), ".node_modules"),
-        path.join(ateos.system.env.home(), ".node_libraries"),
+        path.join(ateos.env.home(), ".node_modules"),
+        path.join(ateos.env.home(), ".node_libraries"),
         path.join(path.dirname(process.execPath), "..", "lib", "node")
       );
     }

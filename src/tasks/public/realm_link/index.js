@@ -39,7 +39,7 @@ export default class extends ateos.realm.BaseTask {
             prefixPath = stdout;
         } catch (err) {
             prefixPath = (is.windows)
-                ? ateos.path.join(ateos.system.env.home(), "AppData", "Roaming", "npm")
+                ? ateos.path.join(ateos.env.home(), "AppData", "Roaming", "npm")
                 : "/usr/local/bin";
             ateos.error(err);
         }
@@ -93,7 +93,7 @@ export default class extends ateos.realm.BaseTask {
 
         if (!noLib && is.string(packageConf.main)) {
             const realmPath = realm.getPath();
-            const linkPath = ateos.path.join(ateos.system.env.home(), ".node_libraries", libName ? libName : packageConf.name)
+            const linkPath = ateos.path.join(ateos.env.home(), ".node_libraries", libName ? libName : packageConf.name)
             await fs.mkdirp(ateos.path.dirname(linkPath)); // sure dir exists
             if (!(await fs.pathExists(linkPath))) {
                 await fs.symlink(realmPath, linkPath, "junction");

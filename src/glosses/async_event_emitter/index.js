@@ -6,7 +6,7 @@ const {
 const ONCE_MAPPING = Symbol.for("asyncEmitter:onceMapping");
 const MANAGER = Symbol();
 
-export default class AsyncEmitter extends ateos.EventEmitter {
+export default class AsyncEventEmitter extends ateos.EventEmitter {
   constructor(concurrency = null) {
     super();
     if (concurrency >= 1) {

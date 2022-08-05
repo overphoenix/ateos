@@ -1,12 +1,11 @@
 const {
   is,
-  error,
-  event: { AsyncEmitter }
+  error
 } = ateos;
 
 const __ = ateos.getPrivate(ateos.netron);
 
-export default class AbstractPeer extends AsyncEmitter {
+export default class AbstractPeer extends ateos.AsyncEventEmitter {
   #interfaces = new Map();
 
   constructor({ netron } = {}) {

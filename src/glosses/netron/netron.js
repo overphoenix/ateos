@@ -8,7 +8,7 @@ const {
 
 const __ = ateos.getPrivate(ateos.netron);
 
-export default class Netron extends ateos.event.AsyncEmitter {
+export default class Netron extends ateos.AsyncEventEmitter {
   constructor({
     taskManager = new ateos.task.TaskManager(),
     responseTimeout = 60000 * 3,

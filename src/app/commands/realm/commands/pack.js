@@ -20,7 +20,7 @@ export default class extends Subsystem {
       {
         name: ["--path", "-P"],
         type: String,
-        default: ateos.system.env.tmpdir(),
+        default: ateos.env.tmpdir(),
         help: "Destination path"
       },
       {

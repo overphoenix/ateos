@@ -695,7 +695,7 @@ ateos.lazify({
   smartBuffer: () => (obj) => obj instanceof ateos.buffer.SmartBuffer,
   long: () => (obj) => obj instanceof ateos.math.Long,
   emitter: () => (obj) => obj instanceof ateos.EventEmitter,
-  asyncEmitter: () => (obj) => obj instanceof ateos.event.AsyncEmitter,
+  asyncEmitter: () => (obj) => obj instanceof ateos.event.AsyncEventEmitter,
   coreStream: () => (obj) => obj instanceof ateos.stream.core.Stream,
   configuration: () => (obj) => obj instanceof ateos.configuration.BaseConfig,
   datetime: () => (obj) => obj instanceof ateos.datetime.Datetime,

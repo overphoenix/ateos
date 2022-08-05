@@ -24,7 +24,7 @@ const getOptionValue = (arg, meta, predicate, def) => predicate(arg)
  * 
  * To implement more advanced manager you should inherit this class.
  */
-export default class TaskManager extends ateos.event.AsyncEmitter {
+export default class TaskManager extends ateos.AsyncEventEmitter {
   static DEFAULT_LOAD_POLICY = "throw";
 
   #tasks = new Map();

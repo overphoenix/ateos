@@ -1,19 +1,21 @@
 // Be here until it appears in the official implementation
-require("reflect-metadata");
+import "reflect-metadata";
 
-const common = require("./common");
+import * as common from "./common";
 
-const ateos: {
-  __app__: any
-  assertion: any
-  asNamespace: (obf: any) => any
-  fs: any
-  path: any,
-  getPath: (n: string, ...args: Array<string>) => string
-  HOME: string
-  std: {
-  }
-} = Object.create({
+export interface Ateos {
+  __app__: any;
+  assertion: any;
+  asNamespace: (obf: any) => any;
+  fs: any;
+  path: any;
+  getPath: (n: string, ...args: string[]) => string;
+  HOME: string;
+  std: {};
+  [key: string]: unknown;
+}
+
+const ateos: Ateos = Object.create({
   __app__: null, // root application instance
   common: common.asNamespace(common),
   // expose some useful commons
@@ -210,9 +212,5 @@ common.setLazifyErrorHandler((err: any) => {
 // Set environment variables
 process.env.ATEOS_HOME = ateos.path.join(__dirname, "..");
 
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
 exports.ateos = ateos;
 exports.default = ateos;
