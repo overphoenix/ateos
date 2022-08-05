@@ -235,7 +235,7 @@ export default ({ globals: globals_ } = {}) => class InspectionCommand extends S
         if ((showValue || options.asObject) && parts.length === 0) {
           const tmp = stringToPath(namespace);
           parts = [tmp.pop()];
-          namespace = tmp.join(".");
+          namespace = tmp.length > 0 ? tmp.join(".") : "global";
         }
 
         if (namespace === "global") {

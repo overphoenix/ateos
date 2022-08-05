@@ -9,24 +9,6 @@
     "cmake"
   ],
   "units": {
-    "tasks": {
-      "units": {
-        "src": {
-          "description": "Reslm tasks codebase",
-          "src": "src/tasks/**/*.js",
-          "dst": "lib/tasks",
-          "task": "transpile"
-        },
-        "assets": {
-          "description": "Realm tasks assets",
-          "src": [
-            "src/tasks/**/*",
-            "!src/tasks/**/*.js"
-          ],
-          "dst": "lib/tasks"
-        }
-      }
-    },
     "app": {
       "units": {
         "bin": {

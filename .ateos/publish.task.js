@@ -3,7 +3,7 @@ const {
 } = ateos;
 
 export default {
-  tags: ["release", "info", "share"],
+  tags: ["release", "tasks", "info", "share"],
   targets: {
     gitea: {
       url: "https://gitea.recalibrated.systems",

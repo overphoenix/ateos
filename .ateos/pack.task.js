@@ -1,5 +1,5 @@
 export default {
-  tags: ["release", "info", "share"],
+  tags: ["release", "tasks", "info", "share"],
   filter: [
     "!bin/**/*.map",
     "!lib/**/*.map",

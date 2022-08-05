@@ -70,6 +70,19 @@ common.lazify({
   getPath: () => (p: string, ...args: string[]) => ateos.path.join((p && p.startsWith("/")) ? p : ateos.path.join(ateos.HOME, p), ...args),
 
   assert: () => ateos.assertion.assert,
+
+  // Predicates
+  isLinux: () => process.platform === "linux",
+  isDarwin: () => process.platform === "darwin",
+  isFreebsd: () => process.platform === "freebsd",
+  isOpenbsd: () => process.platform === "openbsd",
+  isWindows: () => common.isWindows,
+  isArray: () => common.isArray,
+  isFunction: () => common.isFunction,
+  isString: () => common.isString,
+  isNumber: () => common.isNumber,
+  isBuffer: () => common.isBuffer,
+  isPlainObject: () => common.isPlainObject
 }, ateos, require);
 
 // Namespaces
