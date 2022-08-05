@@ -13,12 +13,18 @@ module.exports = {
   parserOptions: {
     sourceType: "module",
     allowImportExportEverywhere: true,
-    requireConfigFile: false
+    requireConfigFile: true,
+    ecmaVersion: 2021,
+    ecmaFeatures: {
+      modules: true,
+      decorators: true,
+      legacyDecorators: true
+    }
   },
   rules: {
     "babel/generator-star-spacing": 0,
-    "babel/new-cap": 1,
     "object-shorthand": "error",
+    "babel/new-cap": 1,
     // "no-await-in-loop": "error",
     "arrow-parens": "error",
     "comma-dangle": 1,
