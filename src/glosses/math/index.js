@@ -9,7 +9,7 @@ ateos.lazify({
   Long: "./long",
   simd: "./simd",
   matrix: "./matrix"
-}, ateos.asNamespace(exports), require);
+}, exports, require);
 
 export const random = (min = 0, max = 0xFFFFFFFF) => {
   min >>>= 0;

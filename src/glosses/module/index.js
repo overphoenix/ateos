@@ -6,7 +6,7 @@ ateos.lazify({
   requireAddon: "./require_addon",
   resolve: "./resolve",
   transform: "./transforms"
-}, ateos.asNamespace(exports), require);
+}, exports, require);
 
 const {
   js: { babel: { createConfigItem } }

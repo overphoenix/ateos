@@ -3,8 +3,7 @@ const {
   path: aPath,
   std,
   util,
-  noop,
-  event
+  noop
 } = ateos;
 
 // fsevents
@@ -625,7 +624,7 @@ export default (fs) => {
   const normalizePath = is.windows ? util.normalizePath : ateos.identity;
   const unnormalizePath = is.windows ? (x) => x.replace(/\//g, "\\") : ateos.identity;
 
-  class Watcher extends event.Emitter {
+  class Watcher extends ateos.EventEmitter {
     constructor({
       persistent = true,
       ignoreInitial = false,

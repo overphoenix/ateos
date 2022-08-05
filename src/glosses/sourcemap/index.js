@@ -8,4 +8,4 @@ ateos.lazify({
   codec: "sourcemap-codec",
   convert: "convert-source-map",
   support: "source-map-support"
-}, ateos.asNamespace(exports), require);
+}, exports, require);

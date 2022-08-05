@@ -1,6 +1,5 @@
 const {
   is,
-  event,
   notifier: { __ },
   lazify,
   std: { path }
@@ -13,7 +12,7 @@ const lazy = lazify({
 const timeoutMessage = "the toast has timed out";
 const successMessage = "user clicked on the toast";
 
-export default class WindowsToaster extends event.Emitter {
+export default class WindowsToaster extends ateos.EventEmitter {
   constructor(options = {}) {
     super();
     this.options = ateos.util.clone(options);

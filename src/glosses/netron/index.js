@@ -131,5 +131,5 @@ ateos.lazify({
   AbstractNetCore: "./abstract_net_core",
   // IPCNetCore: "./ipc_net_core",
   P2PNetCore: "./p2p_net_core"
-}, ateos.asNamespace(exports), require);
+}, exports, require);
 

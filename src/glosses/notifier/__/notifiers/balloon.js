@@ -24,7 +24,6 @@
 const {
   is,
   error,
-  event,
   lazify,
   std: { path, os },
   notifier: { __ }
@@ -92,7 +91,7 @@ const doNotification = async (options, notifierOptions) => {
 
 let hasGrowl = false;
 
-export default class WindowsBalloon extends event.Emitter {
+export default class WindowsBalloon extends ateos.EventEmitter {
   constructor(options = {}) {
     super();
     this.options = ateos.util.clone(options);

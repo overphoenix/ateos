@@ -216,7 +216,7 @@ const errorMessageNotFound = "Couldn't connect to growl (might be used as a fall
 
 let hasGrowl = void 0;
 
-export default class Growl extends event.Emitter {
+export default class Growl extends ateos.EventEmitter {
   constructor(options = {}) {
     super();
     options = ateos.util.clone(options);

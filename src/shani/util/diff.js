@@ -43,7 +43,7 @@ const getTokenType = (match) => {
   return token.type;
 };
 
-class Differ extends ateos.event.Emitter {
+class Differ extends ateos.EventEmitter {
   diff(actual, expected, key) {
     if (actual === expected) {
       this.emit("element", "old", actual, key);

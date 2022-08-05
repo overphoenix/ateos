@@ -860,7 +860,7 @@ class ExternalRunner {
 
   start() {
     this.send("start");
-    const emitter = new ateos.event.Emitter();
+    const emitter = new ateos.EventEmitter();
 
     this.proc.on("message", ({ event, args }) => {
       emitter.emit(event, ...args);
@@ -1059,7 +1059,7 @@ export class Engine {
     };
 
     const start = () => {
-      const emitter = new ateos.event.Emitter();
+      const emitter = new ateos.EventEmitter();
       let stopped = false;
 
       emitter.stop = () => {
@@ -1466,7 +1466,7 @@ export class Engine {
   }
 
   start() {
-    const emitter = new ateos.event.Emitter();
+    const emitter = new ateos.EventEmitter();
 
     let executing = null;
     let stopped = false;

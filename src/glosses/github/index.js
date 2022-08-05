@@ -11,6 +11,6 @@ ateos.lazify({
   Markdown: "./markdown",
   Project: "./project",
   GitHubReleaseManager: "./release_manager"
-}, ateos.asNamespace(exports), require);
+}, exports, require);
 
 export const apiBase = "https://api.github.com";

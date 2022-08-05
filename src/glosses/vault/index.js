@@ -10,7 +10,7 @@
 ateos.lazify({
   Vault: "./vault",
   Valuable: "./valuable"
-}, ateos.asNamespace(exports), require);
+}, exports, require);
 
 const __ = ateos.lazifyp({
   SlicedValuable: "./sliced_valuable"

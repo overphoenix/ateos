@@ -2,8 +2,6 @@ const {
   is
 } = ateos;
 
-ateos.asNamespace(exports);
-
 class RetryOperation {
   constructor(timeouts, options) {
     // Compatibility for the old (timeouts, retryForever) signature

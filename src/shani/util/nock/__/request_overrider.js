@@ -182,7 +182,7 @@ export default function requestOverrider(req, options, interceptors, remove, cb)
       if (interceptor && req instanceof ClientRequest) {
         if (interceptor.options.allowUnmocked) {
           const newReq = new ClientRequest(options, cb);
-          ateos.event.Emitter.propagateEvents(newReq, req, [
+          ateos.EventEmitter.propagateEvents(newReq, req, [
             "abort",
             "connect",
             "continue",

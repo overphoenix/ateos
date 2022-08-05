@@ -1,6 +1,4 @@
-import { lazify, isString, asNamespace } from "../../common";
-
-asNamespace(exports);
+import { lazify, isString } from "../../common";
 
 export const exceptionIdMap = {};
 export const stdIdMap = {};

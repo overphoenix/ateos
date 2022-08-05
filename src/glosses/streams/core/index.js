@@ -2,7 +2,6 @@ const {
     noop,
     is,
     error,
-    event,
     std,
     collection
 } = ateos;
@@ -65,7 +64,7 @@ const STASHES = Symbol("stashes");
 /**
  * Represents a chain of transform streams
  */
-export class Stream extends event.Emitter {
+export class Stream extends ateos.EventEmitter {
     constructor(source, options) {
         super();
         this._chain = [this._createFirstStream(options)];

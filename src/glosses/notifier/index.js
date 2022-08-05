@@ -33,7 +33,7 @@ const notifier = lazify({
     }
   },
   instance: () => new notifier.Notification({ withFallback: true })
-}, ateos.asNamespace(exports), require);
+}, exports, require);
 
 export const notify = (...args) => notifier.instance.notify(...args);
 

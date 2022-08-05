@@ -1,1 +1,1 @@
-const pino = module.exports = ateos.asNamespace(require("pino"));
+const pino = module.exports = require("pino");

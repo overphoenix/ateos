@@ -1,4 +1,4 @@
-module.exports = ateos.asNamespace(require("globals"));
+module.exports = require("globals");
 
 // ATEOS specific
 module.exports.node.ateos = false;

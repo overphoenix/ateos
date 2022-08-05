@@ -24,7 +24,7 @@ ateos.lazify({
   SeriesFlowTask: "./series_flow_task",
   TryFlowTask: "./try_flow_task",
   WaterfallFlowTask: "./waterfall_flow_task"
-}, ateos.asNamespace(exports), require);
+}, exports, require);
 
 ateos.lazifyp({
   MANAGER_SYMBOL: () => Symbol(),

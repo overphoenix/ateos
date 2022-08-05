@@ -5,12 +5,11 @@ const {
   is,
   error,
   compressor,
-  event,
   text,
   data
 } = ateos;
 
-class Request extends event.Emitter {
+class Request extends ateos.EventEmitter {
   constructor(server) {
     super();
     this.server = server;

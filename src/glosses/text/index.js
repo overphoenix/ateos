@@ -291,4 +291,4 @@ ateos.lazify({
   sprintf: "./sprintf",
   MagicString: "magic-string",
   width: "./width"
-}, ateos.asNamespace(exports), require);
+}, exports, require);

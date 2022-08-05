@@ -9,7 +9,7 @@ const jsmemcmp = (buf1, _pos1, buf2, _pos2, num) => {
   return true;
 };
 
-export default class StreamSearch extends ateos.event.Emitter {
+export default class StreamSearch extends ateos.EventEmitter {
   constructor(_needle) {
     super();
 

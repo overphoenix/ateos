@@ -1,7 +1,7 @@
 export default (fs) => {
   const {
     error: { errno, CopyException },
-    event: { Emitter },
+    EventEmitter,
     is,
     glob,
     path
@@ -10,8 +10,8 @@ export default (fs) => {
   const { junk, createReadStream, createWriteStream, stat, lstat, readlink, readdir, symlink, mkdirp, remove, utimes } = fs;
 
   const emitterMixin = (obj) => {
-    for (const k of Object.getOwnPropertyNames(Emitter.prototype)) {
-      obj[k] = Emitter.prototype[k];
+    for (const k of Object.getOwnPropertyNames(EventEmitter.prototype)) {
+      obj[k] = EventEmitter.prototype[k];
     }
 
     Object.defineProperty(obj, "_events", {

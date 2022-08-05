@@ -23,4 +23,4 @@ ateos.lazify({
   convertChangesToDMP: ["./convert/dmp", "convertChangesToDMP"],
   convertChangesToXML: ["./convert/xml", "convertChangesToXML"],
   canonicalize: ["./diff/json", "canonicalize"]
-}, ateos.asNamespace(exports), require);
+}, exports, require);

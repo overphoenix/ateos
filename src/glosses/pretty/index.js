@@ -7,4 +7,4 @@ ateos.lazify({
   ms: "./ms",
   time: "./time",
   timeZone: "./time_zone"
-}, ateos.asNamespace(exports), require);
+}, exports, require);

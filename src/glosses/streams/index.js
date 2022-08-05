@@ -29,4 +29,4 @@ ateos.lazify({
   DelayedStream: "./delayed_stream",
   merge: "./merge",
   MultiStream: "./multi_stream"
-}, ateos.asNamespace(exports), require);
+}, exports, require);

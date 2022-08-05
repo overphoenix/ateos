@@ -9,7 +9,7 @@ const customBaseFs = (ct === "object")
 
 const base = customBaseFs || require("./base").default;
 
-const efs = ateos.asNamespace(improve(base));
+const efs = improve(base);
 efs.base = base;
 efs.improveFs = improve;
 

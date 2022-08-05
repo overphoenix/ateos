@@ -25,4 +25,4 @@ const realm = ateos.lazify({
   MountPoint: "./mount_point",
   code: "./code",
   rootRealm: () => new realm.RealmManager({ cwd: ateos.HOME })
-}, ateos.asNamespace(exports), require);
+}, exports, require);

@@ -68,11 +68,12 @@ common.lazify({
   getPath: () => (p: string, ...args: string[]) => ateos.path.join((p && p.startsWith("/")) ? p : ateos.path.join(ateos.HOME, p), ...args),
 
   assert: () => ateos.assertion.assert,
+}, ateos, require);
 
-  // Namespaces
-
-  // NodeJS
-  std: () => ateos.asNamespace(common.lazify({
+// Namespaces
+common.lazify({
+  // NodeJS modules
+  std: () => common.lazify({
     assert: "assert",
     asyncHooks: "async_hooks",
     buffer: "buffer",
@@ -109,12 +110,13 @@ common.lazify({
     vm: "vm",
     workerThreads: "worker_threads",
     zlib: "zlib"
-  }, null, require, { asNamespace: true })),
+  }, null, require, { asNamespace: true }),
 
   // glosses
   app: "./glosses/app",
   archive: "./glosses/archives",
   assertion: "./glosses/assertion",
+  AsyncEventEmitter: "./glosses/async_event_emitter",
   buffer: "./glosses/buffer",
   cli: "./glosses/cli",
   collection: "./glosses/collections",
@@ -126,11 +128,10 @@ common.lazify({
   datastore: "./glosses/datastores",
   datetime: "./glosses/datetime",
   diff: "./glosses/diff",
+  env: "./glosses/env",
   error: "./glosses/errors",
-  event: "./glosses/events",
   fast: "./glosses/fast",
   fs: "./glosses/fs",
-  fsm: "./glosses/fsm",
   git: "isomorphic-git",
   gitea: "./glosses/gitea",
   github: "./glosses/github",
@@ -152,11 +153,9 @@ common.lazify({
   notifier: "./glosses/notifier",
   omnitron: "./glosses/omnitron",
   p2p: "./glosses/p2p",
-  path: "./glosses/path",
   pretty: "./glosses/pretty",
   process: "./glosses/process",
   promise: "./glosses/promise",
-  punycode: () => ateos.asNamespace(require("punycode/")),
   realm: "./glosses/realm",
   regex: "./glosses/regex",
   rollup: "./glosses/rollup",
@@ -170,13 +169,22 @@ common.lazify({
   templating: "./glosses/templating",
   text: "./glosses/text",
   typeOf: "./glosses/typeof",
-  typescript: "./glosses/typescript",
-  uri: "./glosses/uri",
   util: "./glosses/utils",
   validation: "./glosses/validation",
   vault: "./glosses/vault",
-  web: "./glosses/web"
-}, ateos);
+  web: "./glosses/web",
+
+  // lazify third-party libraries
+  async: "async",
+  EventEmitter: "eventemitter3",
+  lodash: "lodash",
+  tslib: "tslib",
+  typescript: "typescript",
+  path: "upath",
+  punycode: "punycode/",
+  uri: "urijs",
+  systeminformation: "systeminformation"
+}, ateos, require, { asNamespace: true });
 
 // mappings
 common.lazify({
@@ -189,14 +197,6 @@ common.lazify({
 common.lazify({
   constants: "constants"
 }, ateos.std);
-
-// lazify third-party libraries
-common.lazify({
-  async: () => ateos.asNamespace(require("async")),
-  lodash: () => ateos.asNamespace(require("lodash"))
-}, ateos, require, {
-  asNamespace: true
-});
 
 common.setLazifyErrorHandler((err: any) => {
   //eslint-disable-next-line

@@ -4,8 +4,6 @@ const {
 } = ateos;
 const { os } = std;
 
-ateos.asNamespace(exports);
-
 export const user = () => {
   let result = is.windows ? `${process.env.USERDOMAIN}\\${process.env.USERNAME}` : process.env.USER;
   if (is.undefined(result)) {

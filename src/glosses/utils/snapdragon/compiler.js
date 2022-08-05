@@ -1,7 +1,6 @@
 const {
   is,
-  util: { Snapdragon },
-  event
+  util: { Snapdragon }
 } = ateos;
 
 const __ = ateos.getPrivate(Snapdragon);
@@ -24,7 +23,7 @@ const wrap = (type, fn) => function plugin(...args) {
 export default class Compiler {
   constructor(options, state) {
     this.options = { source: "string", ...options };
-    this.emitter = new event.Emitter();
+    this.emitter = new ateos.EventEmitter();
     this.on = this.emitter.on.bind(this.emitter);
     this.isCompiler = true;
     this.state = state || {};

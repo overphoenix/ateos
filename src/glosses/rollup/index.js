@@ -2,7 +2,7 @@ const {
   lazify
 } = ateos;
 
-exports = module.exports = ateos.asNamespace(require("rollup"));
+exports = module.exports = require("rollup");
 
 lazify({
   pluginutils: "@rollup/pluginutils",

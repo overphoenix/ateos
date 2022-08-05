@@ -86,7 +86,7 @@ ateos.lazify({
   mockInstance: "./mock_instance",
   splitArgs: "./split_args",
   withIs: "./with_is"
-}, ateos.asNamespace(exports), require);
+}, exports, require);
 
 const irregularPlurals = {
   addendum: "addenda",

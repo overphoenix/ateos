@@ -4,4 +4,4 @@ ateos.lazify({
   portNumbers: ["./get_port", "portNumbers"],
   ip: "./ip",
   ssh: "./ssh"
-}, ateos.asNamespace(exports), require);
+}, exports, require);

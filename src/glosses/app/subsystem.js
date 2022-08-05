@@ -1,7 +1,6 @@
 const {
   is,
   fs,
-  std,
   error,
   app: {
     getSubsystemMeta,
@@ -49,7 +48,7 @@ const SUBSYSTEM_FSM_SCHEME = {
 };
 
 
-export default class Subsystem extends ateos.fsm.StateMachine {
+export default class Subsystem extends ateos.app.StateMachine {
   #root;
 
   #parent;

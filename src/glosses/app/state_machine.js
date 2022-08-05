@@ -1,7 +1,6 @@
 const {
   is,
   error,
-  event: { AsyncEmitter },
   text: { toCamelCase },
   util
 } = ateos;
@@ -14,7 +13,7 @@ const createCallbackName = (str) => {
   return prefix + toCamelCase(`on_${str}`);
 };
 
-export class StateMachine extends AsyncEmitter {
+export default class StateMachine extends ateos.AsyncEventEmitter {
   #state = null;
 
   #failState;

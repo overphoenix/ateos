@@ -3,7 +3,7 @@ const lazy = ateos.lazify({
   BaseConfig: "./base",
   GenericConfig: "./generic",
   NpmConfig: "./npm"
-}, ateos.asNamespace(exports), require);
+}, exports, require);
 
 export const load = async (path, options) => {
   const config = new lazy.GenericConfig(options);

@@ -18,4 +18,4 @@ ateos.lazify({
   RefcountedCache: "./refcounted_cache",
   Heap: "./heap",
   HashSet: "./hash_set"
-}, ateos.asNamespace(exports), require);
+}, exports, require);

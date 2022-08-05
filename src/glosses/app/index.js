@@ -3,11 +3,12 @@ const {
 } = ateos;
 
 ateos.lazify({
+  StateMachine: "./state_machine",
   Subsystem: "./subsystem",
   Application: "./application",
   AppHelper: "./app_helper",
   run: "./run"
-}, ateos.asNamespace(exports), require);
+}, exports, require);
 
 export const STATE = {
   INITIAL: "initial",

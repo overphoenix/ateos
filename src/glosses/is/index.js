@@ -15,8 +15,6 @@ const callbackNames = ["callback", "callback_", "cb", "cb_", "done", "next"];
 
 const platform = process.platform;
 
-ateos.asNamespace(exports);
-
 // Checks whether `field` is a field owned by `object`.
 export const propertyOwned = (obj, field) => hasOwnProperty.call(obj, field);
 
@@ -696,7 +694,7 @@ ateos.lazify({
   application: () => (obj) => obj instanceof ateos.app.Application,
   smartBuffer: () => (obj) => obj instanceof ateos.buffer.SmartBuffer,
   long: () => (obj) => obj instanceof ateos.math.Long,
-  emitter: () => (obj) => obj instanceof ateos.event.Emitter,
+  emitter: () => (obj) => obj instanceof ateos.EventEmitter,
   asyncEmitter: () => (obj) => obj instanceof ateos.event.AsyncEmitter,
   coreStream: () => (obj) => obj instanceof ateos.stream.core.Stream,
   configuration: () => (obj) => obj instanceof ateos.configuration.BaseConfig,

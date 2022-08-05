@@ -3,8 +3,6 @@ const {
   util
 } = ateos;
 
-ateos.asNamespace(exports);
-
 /**
  * @typedef Deferred
  * @property {Function} resolve

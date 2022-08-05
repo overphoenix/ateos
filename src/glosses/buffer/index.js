@@ -5,5 +5,5 @@ ateos.lazify({
       : require("./buffer").Buffer;
   },
   SmartBuffer: "./smart_buffer"
-}, ateos.asNamespace(exports), require);
+}, exports, require);
 

@@ -9,6 +9,6 @@ ateos.lazify({
   walk: "babylon-walk",
   highlight: "@babel/highlight",
   recast: "recast"
-}, ateos.asNamespace(exports), require);
+}, exports, require);
 
 export const AsyncFunction = Object.getPrototypeOf(async () => { }).constructor;

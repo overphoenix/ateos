@@ -4,8 +4,7 @@ const {
   fs,
   crypto: { crc: { crc32 } },
   compressor: { deflate },
-  std: { stream: { Transform, PassThrough } },
-  event
+  std: { stream: { Transform, PassThrough } }
 } = ateos;
 
 const writeToOutputStream = (self, buffer) => {
@@ -611,7 +610,7 @@ const encodeCp437 = function (string) {
 
 const eocdrSignatureBuffer = Buffer.from([0x50, 0x4b, 0x05, 0x06]);
 
-export class ZipFile extends event.Emitter {
+export class ZipFile extends ateos.EventEmitter {
   constructor() {
     super();
     this.outputStream = new PassThrough();

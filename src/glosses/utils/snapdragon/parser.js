@@ -1,6 +1,5 @@
 const {
   is,
-  event,
   util: {
     Snapdragon
   }
@@ -35,7 +34,7 @@ const wrap = (type, fn) => function plugin(...args) {
  * @param {string} `input`
  * @param {object} `options`
  */
-export default class Parser extends event.Emitter {
+export default class Parser extends ateos.EventEmitter {
   constructor(options) {
     super();
     this.options = { source: "string", ...options };

@@ -56,7 +56,7 @@ lazify({
   crc: "./crc",
   murmurHash3: "./murmur_hash3",
   sha3: "./sha3"
-}, ateos.asNamespace(exports), require);
+}, exports, require);
 
 
 export const md = {

@@ -6,7 +6,6 @@ import PooledResource from "./pooled_resource";
 
 const {
   is,
-  event,
   noop
 } = ateos;
 
@@ -25,7 +24,7 @@ const FACTORY_DESTROY_ERROR = "factoryDestroyError";
 const reflector = (promise) => promise.then(noop, noop);
 
 
-export default class Pool extends event.Emitter {
+export default class Pool extends ateos.EventEmitter {
   /**
      * Generate an Object pool with a specified `factory` and `config`.
      *

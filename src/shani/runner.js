@@ -28,7 +28,7 @@ ateos.app.run({
     const p = new Promise((resolve) => {
       process.once("message", resolve);
     });
-    process.send("ready");
+    process.send("+");
     
     const {
       useConfig,

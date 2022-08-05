@@ -18,7 +18,7 @@ const __ = ateos.lazify({
   list: "./list",
   kill: "./kill",
   onExit: "./on_exit"
-}, ateos.asNamespace(exports), require);
+}, exports, require);
 
 export const spawnAsync = function (command, args, options) {
   const cp = __.spawn(command, args, options);

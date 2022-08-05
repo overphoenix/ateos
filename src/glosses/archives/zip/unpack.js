@@ -3,7 +3,6 @@ const {
   error,
   fs,
   compressor: { deflate },
-  event,
   stream
 } = ateos;
 
@@ -306,7 +305,7 @@ export const validateFileName = (fileName) => {
   return null;
 };
 
-class ZipFile extends event.Emitter {
+class ZipFile extends ateos.EventEmitter {
   constructor(
     reader,
     centralDirectoryOffset,

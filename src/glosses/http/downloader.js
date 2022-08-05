@@ -11,7 +11,7 @@ const {
 /**
  * Download helper
  */
-export default class Downlader extends ateos.event.Emitter {
+export default class Downlader extends ateos.EventEmitter {
   constructor({
     url,
     dest

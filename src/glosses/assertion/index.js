@@ -6,7 +6,7 @@ const assertion = lazify({
   util: "./__/utils",
   extension: "./extensions",
   getFunctionName: "./get_func_name"
-}, ateos.asNamespace(exports), require);
+}, exports, require);
 
 const __ = lazify({
   assertion: "./__/assertion",

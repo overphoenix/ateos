@@ -13,7 +13,7 @@ const fast = lazify({
   LocalMapStream: ["./local_map_stream", "FastLocalMapStream"],
   map: ["./local_map_stream", "map"],
   watchMap: ["./local_map_stream", "watchMap"]
-}, asNamespace(exports), require);
+}, exports, require);
 
 ateos.lazifyp({
   Concat: "./__/concat",

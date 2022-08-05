@@ -12,7 +12,7 @@ ateos.lazify({
   NodejsCompiler: "./compiler",
   cmake: "./cmake",
   FsCache: "./fs_cache"
-}, ateos.asNamespace(exports), require);
+}, exports, require);
 
 
 if (is.windows) {

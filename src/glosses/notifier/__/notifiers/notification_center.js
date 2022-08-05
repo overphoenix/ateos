@@ -1,6 +1,5 @@
 const {
   is,
-  event,
   lazify,
   notifier: { __ },
   std: { path }
@@ -16,7 +15,7 @@ const lazy = lazify({
 
 let activeId;
 
-export default class NotificationCenter extends event.Emitter {
+export default class NotificationCenter extends ateos.EventEmitter {
   constructor(options = {}) {
     super();
     this.options = ateos.util.clone(options);

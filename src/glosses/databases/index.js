@@ -4,4 +4,4 @@ ateos.lazify({
   orm: "typeorm",
   postgresql: "pg",
   sqlite3: "sqlite3"
-}, ateos.asNamespace(exports), require);
+}, exports, require);

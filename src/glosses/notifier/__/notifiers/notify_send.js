@@ -4,7 +4,6 @@ let hasNotifier = void 0;
 const {
   is,
   error,
-  event,
   notifier: { __ },
   std: { os }
 } = ateos;
@@ -29,7 +28,7 @@ const doNotification = (options) => {
 };
 
 
-export default class NotifySend extends event.Emitter {
+export default class NotifySend extends ateos.EventEmitter {
   constructor(options) {
     super();
     this.options = ateos.util.clone(options);

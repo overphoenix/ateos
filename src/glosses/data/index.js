@@ -12,4 +12,4 @@ ateos.lazify({
   varintSigned: "./varint_signed",
   protobuf: "protons",
   utf8: "./utf8"
-}, ateos.asNamespace(exports), require);
+}, exports, require);

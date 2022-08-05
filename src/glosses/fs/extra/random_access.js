@@ -6,7 +6,6 @@ const {
     }
   },
   error,
-  event,
   stream
 } = ateos;
 
@@ -33,7 +32,7 @@ export default (fs) => {
     }
   }
     
-  class AbstractRandomAccessReader extends event.Emitter {
+  class AbstractRandomAccessReader extends ateos.EventEmitter {
     constructor() {
       super();
       this.refCount = 0;

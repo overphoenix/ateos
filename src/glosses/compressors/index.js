@@ -5,4 +5,4 @@ ateos.lazify({
   lzma: "./lzma",
   xz: "./xz",
   snappy: "snappy"
-}, ateos.asNamespace(exports), require);
+}, exports, require);

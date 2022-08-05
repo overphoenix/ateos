@@ -1,6 +1,5 @@
 const {
   is,
-  event,
   util,
   fs,
   std,
@@ -12,7 +11,7 @@ const {
 /**
  * Represents a log file rotator.
  */
-export default class LogRotator extends event.Emitter {
+export default class LogRotator extends ateos.EventEmitter {
   /**
      * @param {string | number} target filepath
      * @param {number} checkInterval rotator reads file's stats with this delay

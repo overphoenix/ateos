@@ -1,7 +1,7 @@
 const {
   assertion,
   error,
-  fsm: { StateMachine },
+  app: { StateMachine },
   promise
 } = ateos;
 
