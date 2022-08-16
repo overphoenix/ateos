@@ -39,7 +39,7 @@ const main = {
   checkboxOff: "☐",
   checkboxCircleOn: "ⓧ",
   checkboxCircleOff: "Ⓘ",
-  questionMarkPrefix: (is.linux ? "?" : "?⃝"),
+  questionMarkPrefix: (ateos.isLinux ? "?" : "?⃝"),
   oneHalf: "½",
   oneThird: "⅓",
   oneQuarter: "¼",
@@ -120,10 +120,10 @@ const windows = {
   sevenEighths: "7/8"
 };
 
-export const symbol = is.windows ? windows : main;
+export const symbol = ateos.isWindows ? windows : main;
 
 export const approx = (str) => {
-  if (!ateos.is.windows) {
+  if (!ateos.ateos.isWindows) {
     return str;
   }
 

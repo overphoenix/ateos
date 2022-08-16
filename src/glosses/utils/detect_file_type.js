@@ -20,7 +20,7 @@ const readUInt64LE = (buf, offset = 0) => {
 };
 
 const detectFileType = (input) => {
-  if (!(input instanceof Uint8Array || is.buffer(input))) {
+  if (!(input instanceof Uint8Array || ateos.isBuffer(input))) {
     throw new TypeError(`Expected the \`input\` argument to be of type \`Uint8Array\` or \`Buffer\`, got \`${typeof input}\``);
   }
 

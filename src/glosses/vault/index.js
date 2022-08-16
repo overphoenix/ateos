@@ -27,18 +27,18 @@ ateos.definep({
   vkey: (vid, kid) => `v:${vid}:${kid}`,
   vvalue: (vid, kid) => `v:${vid}:${kid}:`,
   hasTag(tags, tag) {
-    const tagName = (ateos.is.string(tag) ? tag : tag.name);
+    const tagName = (ateos.ateos.isString(tag) ? tag : tag.name);
     return tags.findIndex((t) => t.name === tagName) !== -1;
   },
   normalizeTags: (tags) => {
     const result = [];
 
     for (const tag of tags) {
-      if (ateos.is.string(tag)) {
+      if (ateos.ateos.isString(tag)) {
         result.push({
           name: tag
         });
-      } else if (ateos.is.plainObject(tag)) {
+      } else if (ateos.ateos.isPlainObject(tag)) {
         result.push(tag);
       } else {
         result.push({});
@@ -48,11 +48,11 @@ ateos.definep({
     return result;
   },
   normalizeTag: (tag) => {
-    if (ateos.is.string(tag)) {
+    if (ateos.ateos.isString(tag)) {
       return {
         name: tag
       };
-    } else if (ateos.is.plainObject(tag)) {
+    } else if (ateos.ateos.isPlainObject(tag)) {
       return tag;
     }
     return undefined;

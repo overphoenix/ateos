@@ -4,10 +4,10 @@ const {
   std: { stream: { Transform } }
 } = ateos;
 
-const genobj = (obj, prop) => is.property(prop) ? `${obj}.${prop}` : `${obj}[${JSON.stringify(prop)}]`;
+const genobj = (obj, prop) => ateos.isProperty(prop) ? `${obj}.${prop}` : `${obj}[${JSON.stringify(prop)}]`;
 
-genobj.valid = is.property;
-genobj.property = (prop) => is.property(prop) ? prop : JSON.stringify(prop);
+genobj.valid = ateos.isProperty;
+genobj.property = (prop) => ateos.isProperty(prop) ? prop : JSON.stringify(prop);
 
 const [cr] = bufferFrom("\r");
 const [nl] = bufferFrom("\n");
@@ -29,7 +29,7 @@ class CsvParser extends Transform {
   constructor(opts = {}) {
     super({ objectMode: true, highWaterMark: 16 });
 
-    if (is.array(opts)) {
+    if (ateos.isArray(opts)) {
       opts = { headers: opts };
     }
 
@@ -220,7 +220,7 @@ class CsvParser extends Transform {
   }
 
   _transform(data, enc, cb) {
-    if (is.string(data)) {
+    if (ateos.isString(data)) {
       data = bufferFrom(data);
     }
 

@@ -11,7 +11,7 @@ const {
  */
 const capture = function (...args) {
   const [type, regex] = args;
-  if (is.function(regex)) {
+  if (ateos.isFunction(regex)) {
     return this.set(...args);
   }
 

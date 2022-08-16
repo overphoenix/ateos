@@ -4,7 +4,7 @@ export default function () {
   const defaultMode = 0o777 & (~process.umask());
 
   const normalize = (mode) => {
-    if (is.nil(mode)) {
+    if (ateos.isNil(mode)) {
       return mode;
     }
     let called = false;
@@ -15,7 +15,7 @@ export default function () {
     };
 
     for (const key of ["read", "write", "execute"]) {
-      if (is.boolean(mode[key])) {
+      if (ateos.isBoolean(mode[key])) {
         newMode.owner[key] = mode[key];
         newMode.group[key] = mode[key];
         newMode.others[key] = mode[key];
@@ -28,7 +28,7 @@ export default function () {
 
   const assign = (a, b) => {
     for (const key of util.keys(b)) {
-      if (is.object(b[key])) {
+      if (ateos.isObject(b[key])) {
         assign(a[key], b[key]);
       } else if (key in a) {
         a[key] = b[key];
@@ -37,14 +37,14 @@ export default function () {
   };
 
   return function chmod(mode, dirMode) {
-    if (!is.nil(mode) && !is.number(mode) && !is.object(mode)) {
+    if (!ateos.isNil(mode) && !ateos.isNumber(mode) && !ateos.isObject(mode)) {
       throw new error.InvalidArgumentException("Expected mode to be null/undefined/number/Object");
     }
 
     if (dirMode === true) {
       dirMode = mode;
     }
-    if (!is.nil(dirMode) && !is.number(dirMode) && !is.object(dirMode)) {
+    if (!ateos.isNil(dirMode) && !ateos.isNumber(dirMode) && !ateos.isObject(dirMode)) {
       throw new TypeError("Expected dirMode to be null/undefined/true/number/Object");
     }
 
@@ -57,7 +57,7 @@ export default function () {
         [curMode, ncurMode] = [dirMode, nDirMode];
       }
 
-      if (is.nil(curMode)) {
+      if (ateos.isNil(curMode)) {
         this.push(file);
         return;
       }
@@ -65,7 +65,7 @@ export default function () {
       file.stat = file.stat || {};
       file.stat.mode = file.stat.mode || defaultMode;
 
-      if (is.object(curMode)) {
+      if (ateos.isObject(curMode)) {
         const statMode = new fs.Mode(file.stat);
         assign(statMode, ncurMode);
         file.stat.mode = statMode.stat.mode;

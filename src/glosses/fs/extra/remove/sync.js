@@ -10,7 +10,7 @@ export default (fs) => {
     assert(options);
     fs.readdirSync(p).forEach((f) => rimrafSync(path.join(p, f), options));
     
-    if (is.windows) {
+    if (ateos.isWindows) {
       // We only end up here once we got ENOTEMPTY at least once, and
       // at this point, we are guaranteed to have removed all the kids.
       // So, we know that it won't be ENOENT or ENOTDIR or anything else.
@@ -110,7 +110,7 @@ export default (fs) => {
       }
     
       // Windows can EPERM on stat.  Life is suffering.
-      if (er.code === "EPERM" && is.windows) {
+      if (er.code === "EPERM" && ateos.isWindows) {
         fixWinEPERMSync(p, options, er);
       }
     }
@@ -126,7 +126,7 @@ export default (fs) => {
       if (er.code === "ENOENT") {
         return;
       } else if (er.code === "EPERM") {
-        return is.windows ? fixWinEPERMSync(p, options, er) : rmdirSync(p, options, er);
+        return ateos.isWindows ? fixWinEPERMSync(p, options, er) : rmdirSync(p, options, er);
       } else if (er.code !== "EISDIR") {
         throw er;
       }

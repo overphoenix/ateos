@@ -59,7 +59,7 @@ const convertTimezone = (tz) => {
 };
 
 export const escapeId = (val, forbidQualified) => {
-  if (is.array(val)) {
+  if (ateos.isArray(val)) {
     if (val.length === 0) {
       return "";
     }
@@ -138,7 +138,7 @@ const arrayToList = (array, timeZone) => {
   for (let i = 0; i < array.length; i++) {
     const value = array[i];
 
-    if (is.array(value)) {
+    if (ateos.isArray(value)) {
       sql += `${i === 0 ? "" : ", "}(${arrayToList(value, timeZone)})`;
     } else {
       // eslint-disable-next-line no-use-before-define
@@ -159,7 +159,7 @@ const objectToValues = (object, timeZone) => {
   for (let i = 0; i < entries.length; ++i) {
     const [key, value] = entries[i];
 
-    if (is.function(value)) {
+    if (ateos.isFunction(value)) {
       continue;
     }
     // eslint-disable-next-line no-use-before-define
@@ -170,7 +170,7 @@ const objectToValues = (object, timeZone) => {
 };
 
 export const escape = (value, stringifyObjects, timeZone) => {
-  if (is.nil(value)) {
+  if (ateos.isNil(value)) {
     return "NULL";
   }
 
@@ -182,11 +182,11 @@ export const escape = (value, stringifyObjects, timeZone) => {
       return String(value);
     }
     case "object": {
-      if (is.date(value)) {
+      if (ateos.isDate(value)) {
         return dateToString(value, timeZone || "local");
-      } else if (is.array(value)) {
+      } else if (ateos.isArray(value)) {
         return arrayToList(value, timeZone);
-      } else if (is.buffer(value)) {
+      } else if (ateos.isBuffer(value)) {
         return bufferToString(value);
       } else if (stringifyObjects) {
         return escapeString(value.toString());
@@ -201,7 +201,7 @@ export const escape = (value, stringifyObjects, timeZone) => {
 };
 
 export const format = (sql, values, stringifyObjects, timeZone) => {
-  if (is.nil(values)) {
+  if (ateos.isNil(values)) {
     return sql;
   }
 

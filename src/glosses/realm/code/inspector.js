@@ -32,7 +32,7 @@ export default class Inspector {
     if (!this.namespaces.has(namespace)) {
       throw new ateos.error.UnknownException(`Unknown namespace: '${namespace}'`);
     }
-    if (is.plainObject(names)) {
+    if (ateos.isPlainObject(names)) {
       names.namespace = namespace;
       names.objectName = objectName;
     }

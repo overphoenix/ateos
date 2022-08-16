@@ -84,7 +84,7 @@ describe("headers", () => {
 
     it("should remove content-type if data is empty", (done) => {
         nock("http://example.org")
-            .matchHeader("Content-Type", (x) => is.undefined(x))
+            .matchHeader("Content-Type", (x) => ateos.isUndefined(x))
             .post("/foo")
             .reply(200, () => {
                 done();

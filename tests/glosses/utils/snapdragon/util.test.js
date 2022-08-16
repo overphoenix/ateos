@@ -9,7 +9,7 @@ const { Parser, Compiler, util } = ateos.getPrivate(Snapdragon);
  */
 
 const isNode = (node) => {
-    return is.object(node) && node.isNode === true;
+    return ateos.isObject(node) && node.isNode === true;
 };
 
 const decorate = (node) => {
@@ -297,7 +297,7 @@ describe("util", "Snapdragon", "util", () => {
         it("should visit a node with the given function", () => {
             let type = null;
             util.visit(ast, (node) => {
-                if (is.null(type)) {
+                if (ateos.isNull(type)) {
                     type = node.type;
                 }
             });
@@ -321,7 +321,7 @@ describe("util", "Snapdragon", "util", () => {
         it('should map "visit" over node.nodes', () => {
             let type = null;
             util.mapVisit(ast, (node) => {
-                if (is.null(type) && node.parent && node.parent.type === "root") {
+                if (ateos.isNull(type) && node.parent && node.parent.type === "root") {
                     type = node.type;
                 }
             });
@@ -1301,7 +1301,7 @@ describe("util", "Snapdragon", "util", () => {
             const node = new Node({ type: "brace" });
             util.addType(state, node);
             assert(state.inside);
-            assert(is.array(state.inside.brace));
+            assert(ateos.isArray(state.inside.brace));
         });
 
         it("should add the node to the state.inside type array", () => {

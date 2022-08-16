@@ -111,7 +111,7 @@ export const cbc = function (options) {
 cbc.prototype.start = function (options) {
   // Note: legacy support for using IV residue (has security flaws)
   // if IV is null, reuse block from previous processing
-  if (is.null(options.iv)) {
+  if (ateos.isNull(options.iv)) {
     // must have a previous block
     if (!this._prev) {
       throw new Error("Invalid IV parameter.");
@@ -967,7 +967,7 @@ gcm.prototype.generateSubHashTable = function (mid, bits) {
  */
 
 function transformIV(iv) {
-  if (is.string(iv)) {
+  if (ateos.isString(iv)) {
     // convert iv string into byte buffer
     iv = crypto.util.createBuffer(iv);
   }

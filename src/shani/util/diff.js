@@ -59,7 +59,7 @@ class Differ extends ateos.EventEmitter {
     }
 
     const handleArray = (actual, expected) => {
-      const diff = ateos.diff.arrays(actual, expected, {
+      const diff = ateos.diff.diffArrays(actual, expected, {
         comparator: (a, b) => ateos.is.deepEqual(a, b)
       }).reduce((res, curr) => {
         const action = curr.removed
@@ -187,7 +187,7 @@ class Differ extends ateos.EventEmitter {
         break;
       }
       case "Object": {
-        // if (ateos.is.plainObject(actual) && ateos.is.plainObject(expected)) {
+        // if (ateos.ateos.isPlainObject(actual) && ateos.ateos.isPlainObject(expected)) {
         this.emit("enter", "object", key);
         const actualKeys = Object.keys(actual);
         const expectedKeys = Object.keys(expected);
@@ -243,7 +243,7 @@ export const getDiff = (actual, expected) => {
       case "regex": {
         let src;
         let flags;
-        if (is.regexp(obj)) {
+        if (ateos.isRegexp(obj)) {
           src = obj.source;
           flags = obj.flags;
         } else {
@@ -302,7 +302,7 @@ export const getDiff = (actual, expected) => {
   };
 
   const formatObjectKey = (key) => {
-    if (!ateos.is.identifier(key)) {
+    if (!ateos.isIdentifier(key)) {
       return `${colorizer("[", "square.bracket")}${stringify(key)}${colorizer("]", "square.bracket")}`;
     }
     return colorizer(key, "object.key");
@@ -388,7 +388,7 @@ export const getDiff = (actual, expected) => {
         return result;
       }
       case "Object": {
-        if (ateos.is.plainObject(obj)) {
+        if (ateos.ateos.isPlainObject(obj)) {
           return handlePlainObject(obj);
         }
         if (obj.inspect) {
@@ -487,9 +487,9 @@ export const getDiff = (actual, expected) => {
           colorizer("[", "square.bracket")
         }${
           colorizer(
-            is.generatorFunction(obj)
+            ateos.isGeneratorFunction(obj)
               ? "GeneratorFunction" // TODO: async genrators
-              : is.asyncFunction(obj)
+              : ateos.isAsyncFunction(obj)
                 ? "AsyncFunction"
                 : "Function",
             "class.name"
@@ -662,7 +662,7 @@ export const getDiff = (actual, expected) => {
       i = i.slice(2); // correctly indent the marker, keep the value on its place
     }
 
-    if (ateos.is.string(val)) {
+    if (ateos.ateos.isString(val)) {
       result += `${i}${marker}${k}${mask ? stringify(applyMask(val, type, mask)) : colorizer(stringify(val), "string")}`;
     } else if (!stack.empty && stack.top.type === "arrayBuffer") {
       const byte = `0x${val.toString(16).padStart(2, "0").toUpperCase()}`;

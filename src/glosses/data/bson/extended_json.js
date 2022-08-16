@@ -38,7 +38,7 @@ const keysToCodecs = {
 };
 
 function deserializeValue(self, key, value, options) {
-  if (is.number(value)) {
+  if (ateos.isNumber(value)) {
     if (options.relaxed) {
       return value;
     }
@@ -59,7 +59,7 @@ function deserializeValue(self, key, value, options) {
   }
 
   // from here on out we're looking for bson types, so bail if its not an object
-  if (is.nil(value) || typeof value !== "object") {
+  if (ateos.isNil(value) || typeof value !== "object") {
     return value; 
   }
 
@@ -68,7 +68,7 @@ function deserializeValue(self, key, value, options) {
     return null; 
   }
 
-  const keys = Object.keys(value).filter((k) => k.startsWith("$") && !is.nil(value[k]));
+  const keys = Object.keys(value).filter((k) => k.startsWith("$") && !ateos.isNil(value[k]));
   for (let i = 0; i < keys.length; i++) {
     const c = keysToCodecs[keys[i]];
     if (c) {
@@ -76,21 +76,21 @@ function deserializeValue(self, key, value, options) {
     }
   }
 
-  if (!is.nil(value.$date)) {
+  if (!ateos.isNil(value.$date)) {
     const d = value.$date;
     const date = new Date();
 
-    if (is.string(d)) {
+    if (ateos.isString(d)) {
       date.setTime(Date.parse(d)); 
-    } else if (is.long(d)) {
+    } else if (ateos.isLong(d)) {
       date.setTime(d.toNumber()); 
-    } else if (is.number(d) && options.relaxed) {
+    } else if (ateos.isNumber(d) && options.relaxed) {
       date.setTime(d); 
     }
     return date;
   }
 
-  if (!is.nil(value.$code)) {
+  if (!ateos.isNil(value.$code)) {
     const copy = Object.assign({}, value);
     if (value.$scope) {
       copy.$scope = deserializeValue(self, null, value.$scope);
@@ -99,7 +99,7 @@ function deserializeValue(self, key, value, options) {
     return Code.fromExtendedJSON(value);
   }
 
-  if (!is.nil(value.$ref) || !is.nil(value.$dbPointer)) {
+  if (!ateos.isNil(value.$ref) || !ateos.isNil(value.$dbPointer)) {
     const v = value.$ref ? value : value.$dbPointer;
 
     // we run into this in a "degenerate EJSON" case (with $id and $ref order flipped)
@@ -149,10 +149,10 @@ function parse(text, options) {
   options = Object.assign({}, { relaxed: true }, options);
 
   // relaxed implies not strict
-  if (is.boolean(options.relaxed)) {
+  if (ateos.isBoolean(options.relaxed)) {
     options.strict = !options.relaxed; 
   }
-  if (is.boolean(options.strict)) {
+  if (ateos.isBoolean(options.strict)) {
     options.relaxed = !options.strict; 
   }
 
@@ -194,18 +194,18 @@ const BSON_INT64_MIN = -0x8000000000000000;
  * console.log(EJSON.stringify(doc));
  */
 function stringify(value, replacer, space, options) {
-  if (!is.nil(space) && typeof space === "object") {
+  if (!ateos.isNil(space) && typeof space === "object") {
     options = space;
     space = 0;
   }
-  if (!is.nil(replacer) && typeof replacer === "object" && !is.array(replacer)) {
+  if (!ateos.isNil(replacer) && typeof replacer === "object" && !ateos.isArray(replacer)) {
     options = replacer;
     replacer = null;
     space = 0;
   }
   options = Object.assign({}, { relaxed: true }, options);
 
-  const doc = is.array(value)
+  const doc = ateos.isArray(value)
     ? serializeArray(value, options)
     : serializeDocument(value, options);
 
@@ -249,11 +249,11 @@ function getISOString(date) {
 }
 
 function serializeValue(value, options) {
-  if (is.array(value)) {
+  if (ateos.isArray(value)) {
     return serializeArray(value, options); 
   }
 
-  if (is.undefined(value)) {
+  if (ateos.isUndefined(value)) {
     return null; 
   }
 
@@ -267,7 +267,7 @@ function serializeValue(value, options) {
       : { $date: { $numberLong: value.getTime().toString() } };
   }
 
-  if (is.number(value) && !options.relaxed) {
+  if (ateos.isNumber(value) && !options.relaxed) {
     // it's an integer
     if (Math.floor(value) === value) {
       const int32Range = value >= BSON_INT32_MIN && value <= BSON_INT32_MAX;
@@ -286,7 +286,7 @@ function serializeValue(value, options) {
 
   if (value instanceof RegExp) {
     let flags = value.flags;
-    if (is.undefined(flags)) {
+    if (ateos.isUndefined(flags)) {
       flags = value.toString().match(/[gimuy]*$/)[0];
     }
 
@@ -294,7 +294,7 @@ function serializeValue(value, options) {
     return rx.toExtendedJSON();
   }
 
-  if (!is.nil(value) && typeof value === "object") {
+  if (!ateos.isNil(value) && typeof value === "object") {
     return serializeDocument(value, options); 
   }
   return value;
@@ -310,9 +310,9 @@ const BSON_TYPE_MAPPINGS = {
   Long: (o) =>
     Long.fromBits(
       // underscore variants for 1.x backwards compatibility
-      !is.nil(o.low) ? o.low : o.low_,
-      !is.nil(o.low) ? o.high : o.high_,
-      !is.nil(o.low) ? o.unsigned : o.unsigned_
+      !ateos.isNil(o.low) ? o.low : o.low_,
+      !ateos.isNil(o.low) ? o.high : o.high_,
+      !ateos.isNil(o.low) ? o.unsigned : o.unsigned_
     ),
   MaxKey: () => new MaxKey(),
   MinKey: () => new MinKey(),
@@ -324,22 +324,22 @@ const BSON_TYPE_MAPPINGS = {
 };
 
 function serializeDocument(doc, options) {
-  if (is.nil(doc) || typeof doc !== "object") {
+  if (ateos.isNil(doc) || typeof doc !== "object") {
     throw new Error("not an object instance"); 
   }
 
   const bsontype = doc._bsontype;
-  if (is.undefined(bsontype)) {
+  if (ateos.isUndefined(bsontype)) {
     // It's a regular object. Recursively serialize its property values.
     const _doc = {};
     for (const name in doc) {
       _doc[name] = serializeValue(doc[name], options);
     }
     return _doc;
-  } else if (is.string(bsontype)) {
+  } else if (ateos.isString(bsontype)) {
     // the "document" is really just a BSON type object
     let _doc = doc;
-    if (!is.function(_doc.toExtendedJSON)) {
+    if (!ateos.isFunction(_doc.toExtendedJSON)) {
       // There's no EJSON serialization function on the object. It's probably an
       // object created by a previous version of this library (or another library)
       // that's duck-typing objects to look like they were generated by this library).

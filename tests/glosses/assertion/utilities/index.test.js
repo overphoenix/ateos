@@ -203,7 +203,7 @@ describe("assertion", "utilities", () => {
                         utils.flag(this, "mySpecificFlag", "value1");
                         utils.flag(this, "ultraSpecificFlag", "value2");
 
-                        if (is.string(this._obj)) {
+                        if (ateos.isString(this._obj)) {
                             this.assert(this._obj === "four", "expected #{this} to be 'four'", "expected #{this} to not be 'four'", "four");
                         } else {
                             _super.call(this);
@@ -308,7 +308,7 @@ describe("assertion", "utilities", () => {
             } catch (err) {
                 // not all browsers support err.stack
                 // Phantom does not include function names for getter exec
-                if (!is.undefined(err.stack) && !is.undefined(Error.captureStackTrace)) {
+                if (!ateos.isUndefined(err.stack) && !ateos.isUndefined(Error.captureStackTrace)) {
                     expect(err.stack).to.include("index.test.js");
                     expect(err.stack).to.not.include("overwriteMethod");
                 }
@@ -322,7 +322,7 @@ describe("assertion", "utilities", () => {
             } catch (err) {
                 // not all browsers support err.stack
                 // Phantom does not include function names for getter exec
-                if (!is.undefined(err.stack) && !is.undefined(Error.captureStackTrace)) {
+                if (!ateos.isUndefined(err.stack) && !ateos.isUndefined(Error.captureStackTrace)) {
                     expect(err.stack).to.include("index.test.js");
                     expect(err.stack).to.not.include("overwriteMethod");
                 }
@@ -505,7 +505,7 @@ describe("assertion", "utilities", () => {
 
                 _chai.Assertion.overwriteProperty("four", (_super) => {
                     return function () {
-                        if (is.string(this._obj)) {
+                        if (ateos.isString(this._obj)) {
                             this.assert(this._obj === "four", "expected #{this} to be 'four'", "expected #{this} to not be 'four'", "four");
                         } else {
                             _super.call(this);
@@ -560,7 +560,7 @@ describe("assertion", "utilities", () => {
             } catch (err) {
                 // not all browsers support err.stack
                 // Phantom does not include function names for getter exec
-                if (!is.undefined(err.stack) && !is.undefined(Error.captureStackTrace)) {
+                if (!ateos.isUndefined(err.stack) && !ateos.isUndefined(Error.captureStackTrace)) {
                     expect(err.stack).to.include("index.test.js");
                     expect(err.stack).to.not.include("overwriteProperty");
                 }
@@ -574,7 +574,7 @@ describe("assertion", "utilities", () => {
             } catch (err) {
                 // not all browsers support err.stack
                 // Phantom does not include function names for getter exec
-                if (!is.undefined(err.stack) && !is.undefined(Error.captureStackTrace)) {
+                if (!ateos.isUndefined(err.stack) && !ateos.isUndefined(Error.captureStackTrace)) {
                     expect(err.stack).to.include("index.test.js");
                     expect(err.stack).to.not.include("overwriteProperty");
                 }
@@ -751,7 +751,7 @@ describe("assertion", "utilities", () => {
     });
 
     it("inspect Symbol", () => {
-        if (!is.function(Symbol)) {
+        if (!ateos.isFunction(Symbol)) {
             return;
         }
 
@@ -774,7 +774,7 @@ describe("assertion", "utilities", () => {
 
             // Checks if engine supports common TypedArrays
             if ((!isNode && "Int8Array" in window) ||
-                isNode && !is.undefined(typeof "Int8Array")) {
+                isNode && !ateos.isUndefined(typeof "Int8Array")) {
                 // Typed array inspections should work as array inspections do
                 expect(_.inspect(new Int8Array(arr))).to.equal(exp);
                 expect(_.inspect(new Uint8Array(arr))).to.equal(exp);
@@ -787,12 +787,12 @@ describe("assertion", "utilities", () => {
 
             // These ones may not be available alongside the others above
             if ((!isNode && "Uint8ClampedArray" in window) ||
-                isNode && !is.undefined(typeof "Uint8ClampedArray")) {
+                isNode && !ateos.isUndefined(typeof "Uint8ClampedArray")) {
                 expect(_.inspect(new Uint8ClampedArray(arr))).to.equal(exp);
             }
 
             if ((!isNode && "Float64Array" in window) ||
-                isNode && !is.undefined(typeof "Float64Array")) {
+                isNode && !ateos.isUndefined(typeof "Float64Array")) {
                 expect(_.inspect(new Float64Array(arr))).to.equal(exp);
             }
         });
@@ -827,7 +827,7 @@ describe("assertion", "utilities", () => {
             }
 
             if ((!isNode && "Int8Array" in window) ||
-                isNode && !is.undefined(typeof "Int8Array")) {
+                isNode && !ateos.isUndefined(typeof "Int8Array")) {
                 expect(_.inspect(new Int8Array(arr))).to.equal(exp);
             }
         });
@@ -1043,7 +1043,7 @@ describe("assertion", "utilities", () => {
             // Ensure that foo returns an Assertion (not a function)
             expect(expect("x").x()).to.be.an.instanceOf(assertionConstructor);
 
-            if (is.function(Object.setPrototypeOf)) {
+            if (ateos.isFunction(Object.setPrototypeOf)) {
                 expect(expect("x").x).to.be.an.instanceOf(assertionConstructor);
             }
         });
@@ -1084,7 +1084,7 @@ describe("assertion", "utilities", () => {
             expect(cbi({ cat: [["dog", 1]] }, { cat: [["dog", 2]] })).to.equal(-1);
             expect(cbi({ cat: [["dog", 2]] }, { cat: [["dog", 1]] })).to.equal(1);
 
-            if (is.function(Symbol)) {
+            if (ateos.isFunction(Symbol)) {
                 // "Symbol(c" is less than "Symbol(d"
                 expect(cbi(Symbol("cat"), Symbol("dog"))).to.equal(-1);
                 expect(cbi(Symbol("dog"), Symbol("cat"))).to.equal(1);
@@ -1111,7 +1111,7 @@ describe("assertion", "utilities", () => {
         });
 
         it("returns enumerable symbols only", () => {
-            if (!is.function(Symbol)) {
+            if (!ateos.isFunction(Symbol)) {
                 return;
             }
 
@@ -1162,7 +1162,7 @@ describe("assertion", "utilities", () => {
         });
 
         it("returns enumerable property names and symbols", () => {
-            if (!is.function(Symbol)) {
+            if (!ateos.isFunction(Symbol)) {
                 return;
             }
 
@@ -1192,7 +1192,7 @@ describe("assertion", "utilities", () => {
     });
 
     describe("proxified object", () => {
-        if (is.undefined(Proxy) || is.undefined(Reflect)) {
+        if (ateos.isUndefined(Proxy) || ateos.isUndefined(Reflect)) {
             return;
         }
 
@@ -1327,7 +1327,7 @@ describe("assertion", "utilities", () => {
             assertion.config.useProxy = origUseProxy;
         });
 
-        if (!is.undefined(Proxy) && !is.undefined(Reflect)) {
+        if (!ateos.isUndefined(Proxy) && !ateos.isUndefined(Reflect)) {
             it("returns true if Proxy and Reflect are defined, and useProxy is true", () => {
                 expect(isProxyEnabled()).to.be.true;
             });
@@ -1424,8 +1424,8 @@ describe("assertion", "utilities", () => {
             assert(checkError.getConstructorName(Error) === "Error");
             assert(checkError.getConstructorName(TypeError) === "TypeError");
 
-            assert(is.null(checkError.getConstructorName(null)));
-            assert(is.undefined(checkError.getConstructorName(undefined)));
+            assert(ateos.isNull(checkError.getConstructorName(null)));
+            assert(ateos.isUndefined(checkError.getConstructorName(undefined)));
 
             // Asserting that `getName` behaves correctly
             function /*one*/correctName/*two*/() { // eslint-disable-line no-inline-comments, spaced-comment
@@ -1495,7 +1495,7 @@ describe("assertion", "utilities", () => {
                 assert(pathval.hasProperty(false, "bar") === false);
                 assert(pathval.hasProperty(true, "toString") === true);
 
-                if (is.function(Symbol)) {
+                if (ateos.isFunction(Symbol)) {
                     assert(pathval.hasProperty(Symbol(), 1) === false);
                     assert(pathval.hasProperty(Symbol.iterator, "valueOf") === true);
                 }
@@ -1543,7 +1543,7 @@ describe("assertion", "utilities", () => {
             it("should handle non-existent property", () => {
                 const info = gpi(obj, "dimensions.size");
                 assert(info.parent === obj.dimensions);
-                assert(is.undefined(info.value));
+                assert(ateos.isUndefined(info.value));
                 assert(info.name === "size");
                 assert(info.exists === false);
             });
@@ -1567,7 +1567,7 @@ describe("assertion", "utilities", () => {
             it("should handle out of bounds array index", () => {
                 const info = gpi(obj, "dimensions.lengths[3]");
                 assert(info.parent === obj.dimensions.lengths);
-                assert(is.undefined(info.value));
+                assert(ateos.isUndefined(info.value));
                 assert(info.name === 3);
                 assert(info.exists === false);
             });
@@ -1575,7 +1575,7 @@ describe("assertion", "utilities", () => {
             it("should handle out of bounds dimensional array index", () => {
                 const info = gpi(obj, "dimensions.lengths[2][5]");
                 assert(info.parent === obj.dimensions.lengths[2]);
-                assert(is.undefined(info.value));
+                assert(ateos.isUndefined(info.value));
                 assert(info.name === 5);
                 assert(info.exists === false);
             });
@@ -1615,8 +1615,8 @@ describe("assertion", "utilities", () => {
 
             it("handles undefined objects and properties", () => {
                 const object = {};
-                assert(is.null(pathval.getPathValue(undefined, "this.should.work")));
-                assert(is.null(pathval.getPathValue(object, "this.should.work")));
+                assert(ateos.isNull(pathval.getPathValue(undefined, "this.should.work")));
+                assert(ateos.isNull(pathval.getPathValue(object, "this.should.work")));
                 assert(pathval.getPathValue("word", "length") === 4);
             });
         });
@@ -1664,7 +1664,7 @@ describe("assertion", "utilities", () => {
                 pathval.setPathValue(obj, "hello[2]", 3);
 
                 assert(obj.hello[0] === 1);
-                assert(is.undefined(obj.hello[1]));
+                assert(ateos.isUndefined(obj.hello[1]));
                 assert(obj.hello[2] === 3);
             });
 
@@ -1730,33 +1730,33 @@ describe("assertion", "utilities", () => {
         });
 
         it("should return `null` when passed a String as argument", () => {
-            assert(is.null(getName("")));
+            assert(ateos.isNull(getName("")));
         });
 
         it("should return `null` when passed a Number as argument", () => {
-            assert(is.null(getName(1)));
+            assert(ateos.isNull(getName(1)));
         });
 
         it("should return `null` when passed a Boolean as argument", () => {
-            assert(is.null(getName(true)));
+            assert(ateos.isNull(getName(true)));
         });
 
         it("should return `null` when passed `null` as argument", () => {
-            assert(is.null(getName(null)));
+            assert(ateos.isNull(getName(null)));
         });
 
         it("should return `null` when passed `undefined` as argument", () => {
-            assert(is.null(getName(undefined)));
+            assert(ateos.isNull(getName(undefined)));
         });
 
         it("should return `null` when passed a Symbol as argument", () => {
-            if (!is.undefined(Symbol)) {
-                assert(is.null(getName(Symbol())));
+            if (!ateos.isUndefined(Symbol)) {
+                assert(ateos.isNull(getName(Symbol())));
             }
         });
 
         it("should return `null` when passed an Object as argument", () => {
-            assert(is.null(getName({})));
+            assert(ateos.isNull(getName({})));
         });
     });
 });

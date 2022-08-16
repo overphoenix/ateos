@@ -216,13 +216,13 @@ export default function requestOverrider(req, options, interceptors, remove, cb)
 
     interceptor.scope.emit("request", req, interceptor);
 
-    if (!is.undefined(interceptor.errorMessage)) {
+    if (!ateos.isUndefined(interceptor.errorMessage)) {
       interceptor.interceptionCounter++;
       remove(interceptor);
       interceptor.discard();
 
       let error;
-      if (is.object(interceptor.errorMessage)) {
+      if (ateos.isObject(interceptor.errorMessage)) {
         error = interceptor.errorMessage;
       } else {
         error = new Error(interceptor.errorMessage);
@@ -251,10 +251,10 @@ export default function requestOverrider(req, options, interceptors, remove, cb)
       //  if we have `responseBuffers` instead)
 
       if (responseBody) {
-        if (is.array(responseBody) &&
+        if (ateos.isArray(responseBody) &&
                     responseBody.length >= 2 &&
                     responseBody.length <= 3 &&
-                    is.number(responseBody[0])) {
+                    ateos.isNumber(responseBody[0])) {
           response.statusCode = Number(responseBody[0]);
           if (!response.headers) {
             response.headers = {};
@@ -274,7 +274,7 @@ export default function requestOverrider(req, options, interceptors, remove, cb)
           responseBody = new __.DelayedBody(interceptor.getTotalDelay(), responseBody);
         }
 
-        if (is.stream(responseBody)) {
+        if (ateos.isStream(responseBody)) {
           responseBody.pause();
           responseBody.on("data", (d) => {
             response.push(d);
@@ -285,8 +285,8 @@ export default function requestOverrider(req, options, interceptors, remove, cb)
           responseBody.on("error", (err) => {
             response.emit("error", err);
           });
-        } else if (responseBody && !is.buffer(responseBody)) {
-          if (is.string(responseBody)) {
+        } else if (responseBody && !ateos.isBuffer(responseBody)) {
+          if (ateos.isString(responseBody)) {
             responseBody = Buffer.from(responseBody);
           } else {
             responseBody = JSON.stringify(responseBody);
@@ -320,7 +320,7 @@ export default function requestOverrider(req, options, interceptors, remove, cb)
       Object.keys(response.headers).forEach((key) => {
         const value = response.headers[key];
 
-        if (is.function(value)) {
+        if (ateos.isFunction(value)) {
           response.headers[key] = evaluatedHeaders[key] = value(req, response, responseBody);
         }
       });
@@ -328,7 +328,7 @@ export default function requestOverrider(req, options, interceptors, remove, cb)
       for (let rawHeaderIndex = 0; rawHeaderIndex < response.rawHeaders.length; rawHeaderIndex += 2) {
         const key = response.rawHeaders[rawHeaderIndex];
         const value = response.rawHeaders[rawHeaderIndex + 1];
-        if (is.function(value)) {
+        if (ateos.isFunction(value)) {
           response.rawHeaders[rawHeaderIndex + 1] = evaluatedHeaders[key.toLowerCase()];
         }
       }
@@ -349,7 +349,7 @@ export default function requestOverrider(req, options, interceptors, remove, cb)
           }
 
 
-          if (is.function(cb)) {
+          if (ateos.isFunction(cb)) {
             cb(response);
           }
 
@@ -359,11 +359,11 @@ export default function requestOverrider(req, options, interceptors, remove, cb)
             req.emit("response", response);
           }
 
-          if (is.stream(responseBody)) {
+          if (ateos.isStream(responseBody)) {
             responseBody.resume();
           } else {
             responseBuffers = responseBuffers || [];
-            if (!is.undefined(responseBody)) {
+            if (!ateos.isUndefined(responseBody)) {
               responseBuffers.push(responseBody);
             }
 
@@ -390,7 +390,7 @@ export default function requestOverrider(req, options, interceptors, remove, cb)
       });
     };
 
-    if (is.function(interceptor.body)) {
+    if (ateos.isFunction(interceptor.body)) {
       if (requestBody && _util.isJSONContent(options.headers)) {
         if (requestBody && _util.contentEncoding(options.headers, "gzip")) {
           requestBody = String(gz.decompressSync(Buffer.from(requestBody, "hex")), "hex");
@@ -414,7 +414,7 @@ export default function requestOverrider(req, options, interceptors, remove, cb)
       //  of response buffers which should be mocked one by one.
       //  (otherwise decompressions after the first one fails as unzip expects to receive
       //  buffer by buffer and not one single merged buffer)
-      if (_util.isContentEncoded(response.headers) && !is.stream(interceptor.body)) {
+      if (_util.isContentEncoded(response.headers) && !ateos.isStream(interceptor.body)) {
 
         if (interceptor.delayInMs) {
           emitError(new Error("Response delay is currently not supported with content-encoded responses."));
@@ -422,7 +422,7 @@ export default function requestOverrider(req, options, interceptors, remove, cb)
         }
 
         let buffers = interceptor.body;
-        if (!is.array(buffers)) {
+        if (!ateos.isArray(buffers)) {
           buffers = [buffers];
         }
 
@@ -436,7 +436,7 @@ export default function requestOverrider(req, options, interceptors, remove, cb)
 
         //  If the request was binary then we assume that the response will be binary as well.
         //  In that case we send the response as a Buffer object as that's what the client will expect.
-        if (isBinaryRequestBodyBuffer && is.string(responseBody)) {
+        if (isBinaryRequestBodyBuffer && ateos.isString(responseBody)) {
           //  Try to create the buffer from the interceptor's body response as hex.
           try {
             responseBody = Buffer.from(responseBody, "hex");
@@ -459,12 +459,12 @@ export default function requestOverrider(req, options, interceptors, remove, cb)
   req.write = function (buffer, encoding, callback) {
     if (!aborted) {
       if (buffer) {
-        if (!is.buffer(buffer)) {
+        if (!ateos.isBuffer(buffer)) {
           buffer = Buffer.from(buffer, encoding);
         }
         requestBodyBuffers.push(buffer);
       }
-      if (is.function(callback)) {
+      if (ateos.isFunction(callback)) {
         callback();
       }
     } else {
@@ -481,7 +481,7 @@ export default function requestOverrider(req, options, interceptors, remove, cb)
   req.end = function (buffer, encoding, callback) {
     if (!aborted && !ended) {
       req.write(buffer, encoding, () => {
-        if (is.function(callback)) {
+        if (ateos.isFunction(callback)) {
           callback();
         }
         end(cb);

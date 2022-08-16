@@ -22,9 +22,9 @@ const util = {};
   // use native nextTick (unless we're in webpack)
   // webpack (or better node-libs-browser polyfill) sets process.browser.
   // this way we can detect webpack properly
-  if (!is.undefined(process) && process.nextTick && !process.browser) {
+  if (!ateos.isUndefined(process) && process.nextTick && !process.browser) {
     util.nextTick = process.nextTick;
-    if (is.function(setImmediate)) {
+    if (ateos.isFunction(setImmediate)) {
       util.setImmediate = setImmediate;
     } else {
       // polyfill setImmediate with nextTick, older versions of node
@@ -35,7 +35,7 @@ const util = {};
   }
 
   // polyfill nextTick with native setImmediate
-  if (is.function(setImmediate)) {
+  if (ateos.isFunction(setImmediate)) {
     util.setImmediate = function () {
       return setImmediate.apply(undefined, arguments); 
     };
@@ -57,8 +57,8 @@ const util = {};
   };
 
   // upgrade polyfill to use postMessage
-  if (!is.undefined(window) &&
-    is.function(window.postMessage)) {
+  if (!ateos.isUndefined(window) &&
+    ateos.isFunction(window.postMessage)) {
     const msg = "forge.setImmediate";
     var callbacks = [];
     util.setImmediate = function (callback) {
@@ -83,7 +83,7 @@ const util = {};
   }
 
   // upgrade polyfill to use MutationObserver
-  if (!is.undefined(MutationObserver)) {
+  if (!ateos.isUndefined(MutationObserver)) {
     // polyfill with MutationObserver
     let now = Date.now();
     let attr = true;
@@ -120,26 +120,26 @@ const util = {};
 // To remain compatible with older browsers, we fall back to 'window' if 'self'
 // is not available.
 util.globalScope = (function () {
-  if (is.nodejs) {
+  if (ateos.isNodejs) {
     return global;
   }
 
-  return is.undefined(self) ? window : self;
+  return ateos.isUndefined(self) ? window : self;
 })();
 
 // define isArray
-util.isArray = is.array || function (x) {
+util.isArray = ateos.isArray || function (x) {
   return Object.prototype.toString.call(x) === "[object Array]";
 };
 
 // define isArrayBuffer
 util.isArrayBuffer = function (x) {
-  return !is.undefined(ArrayBuffer) && x instanceof ArrayBuffer;
+  return !ateos.isUndefined(ArrayBuffer) && x instanceof ArrayBuffer;
 };
 
 // define isArrayBufferView
 util.isArrayBufferView = function (x) {
-  return x && util.isArrayBuffer(x.buffer) && !is.undefined(x.byteLength);
+  return x && util.isArrayBuffer(x.buffer) && !ateos.isUndefined(x.byteLength);
 };
 
 /**
@@ -178,10 +178,10 @@ function ByteStringBuffer(b) {
   // the pointer for reading from this buffer
   this.read = 0;
 
-  if (is.string(b)) {
+  if (ateos.isString(b)) {
     this.data = b;
   } else if (util.isArrayBuffer(b) || util.isArrayBufferView(b)) {
-    if (!is.undefined(Buffer) && b instanceof Buffer) {
+    if (!ateos.isUndefined(Buffer) && b instanceof Buffer) {
       this.data = b.toString("binary");
     } else {
       // convert native buffer to forge buffer
@@ -196,8 +196,8 @@ function ByteStringBuffer(b) {
       }
     }
   } else if (b instanceof ByteStringBuffer ||
-    (typeof b === "object" && is.string(b.data) &&
-    is.number(b.read))) {
+    (typeof b === "object" && ateos.isString(b.data) &&
+    ateos.isNumber(b.read))) {
     // copy existing buffer
     this.data = b.data;
     this.read = b.read;
@@ -606,7 +606,7 @@ util.ByteStringBuffer.prototype.getBytes = function (count) {
  * @return a string full of UTF-8 encoded characters.
  */
 util.ByteStringBuffer.prototype.bytes = function (count) {
-  return (is.undefined(count) ?
+  return (ateos.isUndefined(count) ?
     this.data.slice(this.read) :
     this.data.slice(this.read, this.read + count));
 };
@@ -786,7 +786,7 @@ function DataBuffer(b, options) {
   this.data = new DataView(new ArrayBuffer(0));
   this.write = 0;
 
-  if (!is.nil(b)) {
+  if (!ateos.isNil(b)) {
     this.putBytes(b);
   }
 
@@ -903,7 +903,7 @@ util.DataBuffer.prototype.putBytes = function (bytes, encoding) {
   // bytes is a util.DataBuffer or equivalent
   if (bytes instanceof util.DataBuffer ||
     (typeof bytes === "object" &&
-    is.number(bytes.read) && is.number(bytes.write) &&
+    ateos.isNumber(bytes.read) && ateos.isNumber(bytes.write) &&
     util.isArrayBufferView(bytes.data))) {
     var src = new Uint8Array(bytes.data.byteLength, bytes.read, bytes.length());
     this.accommodate(src.byteLength);
@@ -921,7 +921,7 @@ util.DataBuffer.prototype.putBytes = function (bytes, encoding) {
 
   // string conversion
   encoding = encoding || "binary";
-  if (is.string(bytes)) {
+  if (ateos.isString(bytes)) {
     let view;
 
     // decode from string
@@ -1275,7 +1275,7 @@ util.DataBuffer.prototype.getBytes = function (count) {
  */
 util.DataBuffer.prototype.bytes = function (count) {
   // TODO: deprecate this method, it is poorly named, add "getString()"
-  return (is.undefined(count) ?
+  return (ateos.isUndefined(count) ?
     this.data.slice(this.read) :
     this.data.slice(this.read, this.read + count));
 };
@@ -1431,7 +1431,7 @@ util.DataBuffer.prototype.toString = function (encoding) {
 util.createBuffer = function (input, encoding) {
   // TODO: deprecate, use new ByteBuffer() instead
   encoding = encoding || "raw";
-  if (!is.undefined(input) && encoding === "utf8") {
+  if (!ateos.isUndefined(input) && encoding === "utf8") {
     input = util.encodeUtf8(input);
   }
   return new util.ByteBuffer(input);
@@ -1977,7 +1977,7 @@ util.deflate = function (api, bytes, raw) {
 util.inflate = function (api, bytes, raw) {
   // TODO: add zlib header and trailer if necessary/possible
   const rval = api.inflate(util.encode64(bytes)).rval;
-  return (is.null(rval)) ? null : util.decode64(rval);
+  return (ateos.isNull(rval)) ? null : util.decode64(rval);
 };
 
 /**
@@ -1993,7 +1993,7 @@ const _setStorageObject = function (api, id, obj) {
   }
 
   let rval;
-  if (is.null(obj)) {
+  if (ateos.isNull(obj)) {
     rval = api.removeItem(id);
   } else {
     // json-encode and base64-encode object
@@ -2002,7 +2002,7 @@ const _setStorageObject = function (api, id, obj) {
   }
 
   // handle potential flash error
-  if (!is.undefined(rval) && rval.rval !== true) {
+  if (!ateos.isUndefined(rval) && rval.rval !== true) {
     const error = new Error(rval.error.message);
     error.id = rval.error.id;
     error.name = rval.error.name;
@@ -2033,7 +2033,7 @@ const _getStorageObject = function (api, id) {
 
   // flash returns item wrapped in an object, handle special case
   if (api.init) {
-    if (is.null(rval.rval)) {
+    if (ateos.isNull(rval.rval)) {
       if (rval.error) {
         const error = new Error(rval.error.message);
         error.id = rval.error.id;
@@ -2048,7 +2048,7 @@ const _getStorageObject = function (api, id) {
   }
 
   // handle decoding
-  if (!is.null(rval)) {
+  if (!ateos.isNull(rval)) {
     // base64-decode and json-decode data
     rval = JSON.parse(util.decode64(rval));
   }
@@ -2067,7 +2067,7 @@ const _getStorageObject = function (api, id) {
 const _setItem = function (api, id, key, data) {
   // get storage object
   let obj = _getStorageObject(api, id);
-  if (is.null(obj)) {
+  if (ateos.isNull(obj)) {
     // create a new storage object
     obj = {};
   }
@@ -2090,7 +2090,7 @@ const _setItem = function (api, id, key, data) {
 const _getItem = function (api, id, key) {
   // get storage object
   let rval = _getStorageObject(api, id);
-  if (!is.null(rval)) {
+  if (!ateos.isNull(rval)) {
     // return data at key
     rval = (key in rval) ? rval[key] : null;
   }
@@ -2108,7 +2108,7 @@ const _getItem = function (api, id, key) {
 const _removeItem = function (api, id, key) {
   // get storage object
   let obj = _getStorageObject(api, id);
-  if (!is.null(obj) && key in obj) {
+  if (!ateos.isNull(obj) && key in obj) {
     // remove key
     delete obj[key];
 
@@ -2151,7 +2151,7 @@ const _callStorageFunction = function (func, args, location) {
   let rval = null;
 
   // default storage types
-  if (is.undefined(location)) {
+  if (ateos.isUndefined(location)) {
     location = ["web", "flash"];
   }
 
@@ -2163,7 +2163,7 @@ const _callStorageFunction = function (func, args, location) {
     type = location[idx];
     try {
       if (type === "flash" || type === "both") {
-        if (is.null(args[0])) {
+        if (ateos.isNull(args[0])) {
           throw new Error("Flash local storage not available.");
         }
         rval = func.apply(this, args);
@@ -2276,7 +2276,7 @@ util.parseUrl = function (str) {
   const regex = /^(https?):\/\/([^:&^\/]*):?(\d*)(.*)$/g;
   regex.lastIndex = 0;
   const m = regex.exec(str);
-  const url = (is.null(m)) ? null : {
+  const url = (ateos.isNull(m)) ? null : {
     full: str,
     scheme: m[1],
     host: m[2],
@@ -2364,7 +2364,7 @@ util.getQueryVariables = function (query) {
         rval[key] = [];
       }
       // disallow overriding object prototype keys
-      if (!(key in Object.prototype) && !is.null(val)) {
+      if (!(key in Object.prototype) && !ateos.isNull(val)) {
         rval[key].push(unescape(val));
       }
     }
@@ -2372,10 +2372,10 @@ util.getQueryVariables = function (query) {
   };
 
   let rval;
-  if (is.undefined(query)) {
+  if (ateos.isUndefined(query)) {
     // set cached variables if needed
-    if (is.null(_queryVariables)) {
-      if (!is.undefined(window) && window.location && window.location.search) {
+    if (ateos.isNull(_queryVariables)) {
+      if (!ateos.isUndefined(window) && window.location && window.location.search) {
         // parse window search query
         _queryVariables = parse(window.location.search.substring(1));
       } else {
@@ -2463,7 +2463,7 @@ util.makeRequest = function (reqString) {
      * @return path or part of path if i provided.
      */
     getPath(i) {
-      return (is.undefined(i)) ? frag.path : frag.path[i];
+      return (ateos.isUndefined(i)) ? frag.path : frag.path[i];
     },
     /**
      * Get query, values for a key, or value for a key index.
@@ -2475,11 +2475,11 @@ util.makeRequest = function (reqString) {
      */
     getQuery(k, i) {
       let rval;
-      if (is.undefined(k)) {
+      if (ateos.isUndefined(k)) {
         rval = frag.query;
       } else {
         rval = frag.query[k];
-        if (rval && !is.undefined(i)) {
+        if (rval && !ateos.isUndefined(i)) {
           rval = rval[i];
         }
       }
@@ -2534,7 +2534,7 @@ util.makeLink = function (path, query, fragment) {
  */
 util.setPath = function (object, keys, value) {
   // need to start at an object
-  if (typeof(object) === "object" && !is.null(object)) {
+  if (typeof(object) === "object" && !ateos.isNull(object)) {
     let i = 0;
     const len = keys.length;
     while (i < len) {
@@ -2547,7 +2547,7 @@ util.setPath = function (object, keys, value) {
         const hasNext = (next in object);
         if (!hasNext ||
           (hasNext && typeof(object[next]) !== "object") ||
-          (hasNext && is.null(object[next]))) {
+          (hasNext && ateos.isNull(object[next]))) {
           object[next] = {};
         }
         object = object[next];
@@ -2573,7 +2573,7 @@ util.getPath = function (object, keys, _default) {
   const len = keys.length;
   let hasNext = true;
   while (hasNext && i < len &&
-    typeof(object) === "object" && !is.null(object)) {
+    typeof(object) === "object" && !ateos.isNull(object)) {
     const next = keys[i++];
     hasNext = next in object;
     if (hasNext) {
@@ -2593,7 +2593,7 @@ util.getPath = function (object, keys, _default) {
  */
 util.deletePath = function (object, keys) {
   // need to start at an object
-  if (typeof(object) === "object" && !is.null(object)) {
+  if (typeof(object) === "object" && !ateos.isNull(object)) {
     let i = 0;
     const len = keys.length;
     while (i < len) {
@@ -2605,7 +2605,7 @@ util.deletePath = function (object, keys) {
         // more
         if (!(next in object) ||
           (typeof(object[next]) !== "object") ||
-          (is.null(object[next]))) {
+          (ateos.isNull(object[next]))) {
           break;
         }
         object = object[next];
@@ -2704,8 +2704,8 @@ util.formatNumber = function (number, decimals, dec_point, thousands_sep) {
   // *     returns 1: 1234.57
 
   let n = number; const c = isNaN(decimals = Math.abs(decimals)) ? 2 : decimals;
-  const d = is.undefined(dec_point) ? "," : dec_point;
-  const t = is.undefined(thousands_sep) ?
+  const d = ateos.isUndefined(dec_point) ? "," : dec_point;
+  const t = ateos.isUndefined(thousands_sep) ?
     "." : thousands_sep; const s = n < 0 ? "-" : "";
   const i = `${parseInt((n = Math.abs(Number(n) || 0).toFixed(c)), 10)}`;
   const j = (i.length > 3) ? i.length % 3 : 0;
@@ -2905,7 +2905,7 @@ util.bytesToIPv6 = function (bytes) {
  * @param callback(err, max) called once the operation completes.
  */
 util.estimateCores = function (options, callback) {
-  if (is.function(options)) {
+  if (ateos.isFunction(options)) {
     callback = options;
     options = {};
   }
@@ -2913,18 +2913,18 @@ util.estimateCores = function (options, callback) {
   if ("cores" in util && !options.update) {
     return callback(null, util.cores);
   }
-  if (!is.undefined(navigator) &&
+  if (!ateos.isUndefined(navigator) &&
     "hardwareConcurrency" in navigator &&
     navigator.hardwareConcurrency > 0) {
     util.cores = navigator.hardwareConcurrency;
     return callback(null, util.cores);
   }
-  if (is.undefined(Worker)) {
+  if (ateos.isUndefined(Worker)) {
     // workers not available
     util.cores = 1;
     return callback(null, util.cores);
   }
-  if (is.undefined(Blob)) {
+  if (ateos.isUndefined(Blob)) {
     // can't estimate, default to 2
     util.cores = 2;
     return callback(null, util.cores);

@@ -16,7 +16,7 @@ describe.todo("glob", () => {
 
     const root = std.path.resolve("/");
 
-    const normalizePath = !is.windows ? ateos.identity : (x) => {
+    const normalizePath = !ateos.isWindows ? ateos.identity : (x) => {
         x = x.replace(/\//g, "\\");
         if (x[0] === "\\") {
             x = `${root}${x.slice(1)}`;
@@ -24,7 +24,7 @@ describe.todo("glob", () => {
         return x;
     };
 
-    const normalizePaths = is.windows
+    const normalizePaths = ateos.isWindows
         ? (x) => x.map(normalizePath)
         : ateos.identity;
 
@@ -359,7 +359,7 @@ describe.todo("glob", () => {
             ]));
         });
 
-        it("should follow symlinks when follow = true", { skip: is.windows }, async () => {
+        it("should follow symlinks when follow = true", { skip: ateos.isWindows }, async () => {
             virtual.add((ctx) => ({
                 a: {
                     a0: ctx.file("hello")
@@ -2016,7 +2016,7 @@ describe.todo("glob", () => {
             await a.addFile("c", "d", "c", "b");
             await a.addFile("cb", "e", "f");
             const c = await a.addDirectory("symlink", "a", "b");
-            if (!is.windows) {
+            if (!ateos.isWindows) {
                 await fs.symlink("../..", c.getDirectory("c").path());
             }
             await a.addFile("x", ".y", "b");
@@ -2032,7 +2032,7 @@ describe.todo("glob", () => {
         for (const [pattern, expected] of Object.entries(cases)) {
             it(pattern, async function () { // eslint-disable-line
                 if (
-                    is.windows
+                    ateos.isWindows
                     && (
                         pattern.includes("symlink") // depends on the symlink behaviour
                         || pattern === "**/abcdef/g/../**"
@@ -2043,7 +2043,7 @@ describe.todo("glob", () => {
                     return;
                 }
                 for (const e of expected) {
-                    if (is.windows && e.includes("symlink")) {
+                    if (ateos.isWindows && e.includes("symlink")) {
                         this.skip();
                         return;
                     }

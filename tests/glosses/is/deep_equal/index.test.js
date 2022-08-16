@@ -449,7 +449,7 @@ describe("is", "deepEqual", () => {
 
     describe("Node Specific", () => {
 
-        describeIf(is.function(Buffer))("buffers", () => {
+        describeIf(ateos.isFunction(Buffer))("buffers", () => {
 
             it("returns true for same buffers", () => {
                 assert(deepEqual(Buffer.from([1]), Buffer.from([1])) === true,
@@ -543,7 +543,7 @@ describe("is", "deepEqual", () => {
         it("returns true if Comparator says so even on primitives", () => {
             const valueA = {
                 a: new Matcher(((value) => {
-                    return is.number(value);
+                    return ateos.isNumber(value);
                 }))
             };
             const valueB = { a: 1 };
@@ -555,7 +555,7 @@ describe("is", "deepEqual", () => {
             const valueA = { a: 1 };
             const valueB = {
                 a: new Matcher(((value) => {
-                    return is.number(value);
+                    return ateos.isNumber(value);
                 }))
             };
             assert(deepEqual(valueA, valueB, { comparator: matcherComparator }) === true,

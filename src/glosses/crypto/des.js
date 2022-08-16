@@ -60,7 +60,7 @@ export const startEncrypting = function (key, iv, output, mode) {
     key,
     output,
     decrypt: false,
-    mode: mode || (is.null(iv) ? "ECB" : "CBC")
+    mode: mode || (ateos.isNull(iv) ? "ECB" : "CBC")
   });
   cipher.start(iv);
   return cipher;
@@ -114,7 +114,7 @@ export const startDecrypting = function (key, iv, output, mode) {
     key,
     output,
     decrypt: true,
-    mode: mode || (is.null(iv) ? "ECB" : "CBC")
+    mode: mode || (ateos.isNull(iv) ? "ECB" : "CBC")
   });
   cipher.start(iv);
   return cipher;

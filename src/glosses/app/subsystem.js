@@ -62,13 +62,13 @@ export default class Subsystem extends ateos.app.StateMachine {
   constructor({ name, transitions, allowedStates } = {}) {
     const scheme = util.clone(SUBSYSTEM_FSM_SCHEME);
 
-    if (is.array(transitions)) {
+    if (ateos.isArray(transitions)) {
       scheme.transitions.push(...transitions);
     }
 
-    if (is.object(allowedStates)) {
+    if (ateos.isObject(allowedStates)) {
       for (const transition of scheme.transitions) {
-        if (is.propertyDefined(allowedStates, transition.name)) {
+        if (ateos.isPropertyDefined(allowedStates, transition.name)) {
           transition.from = [...util.arrify(transition.from), ...util.arrify(allowedStates[transition.name])];
         }
       }
@@ -105,7 +105,7 @@ export default class Subsystem extends ateos.app.StateMachine {
      * Return true if this subsystem is root.
      */
   get isRoot() {
-    return is.undefined(this.#root);
+    return ateos.isUndefined(this.#root);
   }
 
   /**
@@ -129,7 +129,7 @@ export default class Subsystem extends ateos.app.StateMachine {
 
   async configure(...args) {
     let result;
-    if (is.function(this.onConfigure)) {
+    if (ateos.isFunction(this.onConfigure)) {
       result = await this.onConfigure(...args);
     }
     await this.configureSubsystems();
@@ -138,7 +138,7 @@ export default class Subsystem extends ateos.app.StateMachine {
 
   async initialize(...args) {
     let result;
-    if (is.function(this.onInitialize)) {
+    if (ateos.isFunction(this.onInitialize)) {
       result = await this.onInitialize(...args);
     }
     await this.initializeSubsystems();
@@ -147,7 +147,7 @@ export default class Subsystem extends ateos.app.StateMachine {
 
   async uninitialize(...args) {
     let result;
-    if (is.function(this.onUninitialize)) {
+    if (ateos.isFunction(this.onUninitialize)) {
       result = await this.onUninitialize(...args);
     }
     await this.uninitializeSubsystems();
@@ -201,7 +201,7 @@ export default class Subsystem extends ateos.app.StateMachine {
                     await this.#uninitializeSubsystem(sysInfo); // eslint-disable-line
         } catch (err) {
           if (ignoreErrors) {
-            is.function(errorLogger) && errorLogger(err);
+            ateos.isFunction(errorLogger) && errorLogger(err);
           }
           throw err;
         }
@@ -270,7 +270,7 @@ export default class Subsystem extends ateos.app.StateMachine {
     }
 
     await this.deleteSubsystem(name);
-    if (is.string(path)) {
+    if (ateos.isString(path)) {
       ateos.require.uncache(path);
     }
   }
@@ -328,7 +328,7 @@ export default class Subsystem extends ateos.app.StateMachine {
      */
   hasSubsystems(group) {
     let subsystems = this.#subsystems;
-    if (is.string(group)) {
+    if (ateos.isString(group)) {
       subsystems = subsystems.filter((ss) => ss.group === group);
     }
     return subsystems.length > 0;
@@ -341,7 +341,7 @@ export default class Subsystem extends ateos.app.StateMachine {
      */
   getSubsystemInfo(name) {
     const sysInfo = this.#subsystems.find((s) => s.name === name);
-    if (is.undefined(sysInfo)) {
+    if (ateos.isUndefined(sysInfo)) {
       throw new error.UnknownException(`Unknown subsystem: ${name}`);
     }
     return sysInfo;
@@ -352,7 +352,7 @@ export default class Subsystem extends ateos.app.StateMachine {
      */
   getSubsystems(group) {
     const subsystems = this.#subsystems;
-    if (is.string(group)) {
+    if (ateos.isString(group)) {
       return subsystems.filter((ss) => ss.group === group);
     }
 
@@ -378,8 +378,8 @@ export default class Subsystem extends ateos.app.StateMachine {
       throw new error.NotAllowedException("Subsystem already owned by other subsystem");
     }
 
-    if (is.string(subsystem) && useFilename) {
-      if (is.string(_basePath)) {
+    if (ateos.isString(subsystem) && useFilename) {
+      if (ateos.isString(_basePath)) {
         const relPath = aPath.normalize(aPath.relative(_basePath, subsystem));
         const dirName = aPath.dirname(relPath);
         name = dirName !== "."
@@ -390,7 +390,7 @@ export default class Subsystem extends ateos.app.StateMachine {
       }
     }
 
-    if (!is.string(name)) {
+    if (!ateos.isString(name)) {
       name = instance.constructor.name;
     }
 
@@ -404,7 +404,7 @@ export default class Subsystem extends ateos.app.StateMachine {
       group,
       configureArgs,
       instance,
-      path: is.string(subsystem) ? subsystem : null
+      path: ateos.isString(subsystem) ? subsystem : null
     };
 
     instance.#name = name;
@@ -416,7 +416,7 @@ export default class Subsystem extends ateos.app.StateMachine {
       bind = name;
     }
 
-    if (is.string(bind)) {
+    if (ateos.isString(bind)) {
       if (this[bind]) {
         throw new error.NotAllowedException(`Property with name '${bind}' is already exist`);
       }
@@ -443,10 +443,10 @@ export default class Subsystem extends ateos.app.StateMachine {
 
     const files = await fs.readdir(path);
 
-    if (is.array(filter)) {
+    if (ateos.isArray(filter)) {
       const targetNames = filter;
       filter = (name) => targetNames.includes(name);
-    } else if (!is.function(filter)) {
+    } else if (!ateos.isFunction(filter)) {
       filter = ateos.truly;
     }
 
@@ -489,7 +489,7 @@ export default class Subsystem extends ateos.app.StateMachine {
   instantiateSubsystem(subsystem, { transpile = false } = {}) {
     let instance;
 
-    if (is.string(subsystem)) {
+    if (ateos.isString(subsystem)) {
       if (!aPath.isAbsolute(subsystem)) {
         throw new error.NotValidException("Path must be absolute");
       }
@@ -526,7 +526,7 @@ export default class Subsystem extends ateos.app.StateMachine {
       throw new error.NotAllowedException(`The subsystem is used (state: ${state}) and can not be deleted`);
     }
 
-    if (is.string(sysInfo.property) && is.subsystem(this[sysInfo.property])) {
+    if (ateos.isString(sysInfo.property) && is.subsystem(this[sysInfo.property])) {
       delete this[sysInfo.property];
     }
 

@@ -261,7 +261,7 @@ export default class Pool extends ateos.EventEmitter {
      */
   _dispatchPooledResourceToNextWaitingClient(pooledResource) {
     const clientResourceRequest = this._waitingClientsQueue.pop();
-    if (is.undefined(clientResourceRequest)) {
+    if (ateos.isUndefined(clientResourceRequest)) {
       // While we were away either all the waiting clients timed out
       // or were somehow fulfilled. put our pooledResource back.
       this._addPooledResourceToAvailableObjects(pooledResource);
@@ -439,7 +439,7 @@ export default class Pool extends ateos.EventEmitter {
 
     // TODO: should we defer this check till after this event loop incase "the situation" changes in the meantime
     if (
-      !is.undefined(this._config.maxWaitingClients) &&
+      !ateos.isUndefined(this._config.maxWaitingClients) &&
             this._waitingClientsQueue.length >= this._config.maxWaitingClients
     ) {
       return this._Promise.reject(
@@ -487,7 +487,7 @@ export default class Pool extends ateos.EventEmitter {
      *  True if resource belongs to this pool and false otherwise
      */
   isBorrowedResource(resource) {
-    return !is.undefined(this._resourceLoans.get(resource));
+    return !ateos.isUndefined(this._resourceLoans.get(resource));
   }
 
   /**
@@ -500,7 +500,7 @@ export default class Pool extends ateos.EventEmitter {
     // check for an outstanding loan
     const loan = this._resourceLoans.get(resource);
 
-    if (is.undefined(loan)) {
+    if (ateos.isUndefined(loan)) {
       return this._Promise.reject(
         new Error("Resource not currently part of this pool")
       );
@@ -530,7 +530,7 @@ export default class Pool extends ateos.EventEmitter {
     // check for an outstanding loan
     const loan = this._resourceLoans.get(resource);
 
-    if (is.undefined(loan)) {
+    if (ateos.isUndefined(loan)) {
       return this._Promise.reject(
         new Error("Resource not currently part of this pool")
       );

@@ -212,7 +212,7 @@ BitSet.prototype = {
 
     scale(this, ndx);
 
-    if (is.undefined(value) || value) {
+    if (ateos.isUndefined(value) || value) {
       this.data[ndx >>> WORD_LOG] |= (1 << ndx);
     } else {
       this.data[ndx >>> WORD_LOG] &= ~(1 << ndx);
@@ -426,7 +426,7 @@ BitSet.prototype = {
      */
   flip(from, to) {
 
-    if (is.undefined(from)) {
+    if (ateos.isUndefined(from)) {
 
       const d = this.data;
       for (let i = 0; i < d.length; i++) {
@@ -435,7 +435,7 @@ BitSet.prototype = {
 
       this._ = ~this._;
 
-    } else if (is.undefined(to)) {
+    } else if (ateos.isUndefined(to)) {
 
       scale(this, from);
 
@@ -468,14 +468,14 @@ BitSet.prototype = {
 
     const data = this.data;
 
-    if (is.undefined(from)) {
+    if (ateos.isUndefined(from)) {
 
       for (let i = data.length - 1; i >= 0; i--) {
         data[i] = 0;
       }
       this._ = 0;
 
-    } else if (is.undefined(to)) {
+    } else if (ateos.isUndefined(to)) {
 
       from |= 0;
 
@@ -506,9 +506,9 @@ BitSet.prototype = {
      */
   slice(from, to) {
 
-    if (is.undefined(from)) {
+    if (ateos.isUndefined(from)) {
       return this.clone();
-    } else if (is.undefined(to)) {
+    } else if (ateos.isUndefined(to)) {
 
       to = this.data.length * WORD_LENGTH;
 
@@ -927,7 +927,7 @@ BitSet.fromHexString = function (str) {
 
 BitSet.Random = function (n) {
 
-  if (is.undefined(n) || n < 0) {
+  if (ateos.isUndefined(n) || n < 0) {
     n = WORD_LENGTH;
   }
 

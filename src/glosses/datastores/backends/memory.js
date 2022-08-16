@@ -23,7 +23,7 @@ class MemoryDatastore {
   }
 
   async has(key) { // eslint-disable-line require-await
-    return !is.undefined(this.data[key.toString()]);
+    return !ateos.isUndefined(this.data[key.toString()]);
   }
 
   async delete(key) { // eslint-disable-line require-await
@@ -60,24 +60,24 @@ class MemoryDatastore {
 
     it = map(it, (entry) => ({ key: new Key(entry[0]), value: entry[1] }));
 
-    if (!is.nil(q.prefix)) {
+    if (!ateos.isNil(q.prefix)) {
       it = filter(it, (e) => e.key.toString().startsWith(q.prefix));
     }
 
-    if (is.array(q.filters)) {
+    if (ateos.isArray(q.filters)) {
       it = q.filters.reduce((it, f) => filter(it, f), it);
     }
 
-    if (is.array(q.orders)) {
+    if (ateos.isArray(q.orders)) {
       it = q.orders.reduce((it, f) => sortAll(it, f), it);
     }
 
-    if (!is.nil(q.offset)) {
+    if (!ateos.isNil(q.offset)) {
       let i = 0;
       it = filter(it, () => i++ >= q.offset);
     }
 
-    if (!is.nil(q.limit)) {
+    if (!ateos.isNil(q.limit)) {
       it = take(it, q.limit);
     }
 

@@ -88,7 +88,7 @@ const get = (self, key, doUse) => {
 const trim = (self) => {
   if (priv(self, "length") > priv(self, "maxSize")) {
     for (let walker = priv(self, "lruList").tail;
-      priv(self, "length") > priv(self, "maxSize") && !is.null(walker);) {
+      priv(self, "length") > priv(self, "maxSize") && !ateos.isNull(walker);) {
       // We know that we're about to delete this one, and also
       // what the next least recently used key will be, so just
       // go ahead and set it now.
@@ -153,12 +153,12 @@ export default class LRU {
   constructor({ maxSize, length, dispose, stale = false, maxAge = 0 } = {}) {
     const max = priv(this, "maxSize", maxSize);
     // Kind of weird to have a default max of Infinity, but oh well.
-    if (!max || !(is.number(max)) || max <= 0) {
+    if (!max || !(ateos.isNumber(max)) || max <= 0) {
       priv(this, "maxSize", Infinity);
     }
 
     let lc = length || naiveLength;
-    if (!is.function(lc)) {
+    if (!ateos.isFunction(lc)) {
       lc = naiveLength;
     }
     priv(this, "lengthCalculator", lc);
@@ -175,7 +175,7 @@ export default class LRU {
      * @param {number} mL
      */
   set maxSize(mL) {
-    if (!mL || !(is.number(mL)) || mL <= 0) {
+    if (!mL || !(ateos.isNumber(mL)) || mL <= 0) {
       mL = Infinity;
     }
     priv(this, "maxSize", mL);
@@ -215,7 +215,7 @@ export default class LRU {
      * @param {number} mA
      */
   set maxAge(mA) {
-    if (!mA || !(is.number(mA)) || mA < 0) {
+    if (!mA || !(ateos.isNumber(mA)) || mA < 0) {
       mA = 0;
     }
     priv(this, "maxAge", mA);
@@ -237,7 +237,7 @@ export default class LRU {
      * @param {LengthCalculator} lC
      */
   set lengthCalculator(lC) {
-    if (!is.function(lC)) {
+    if (!ateos.isFunction(lC)) {
       lC = naiveLength;
     }
     if (lC !== priv(this, "lengthCalculator")) {

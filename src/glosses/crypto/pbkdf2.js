@@ -9,12 +9,11 @@
  */
 
 const {
-  is,
   crypto
 } = ateos;
 
 let stdCrypto;
-if (is.nodejs && !crypto.options.usePureJavaScript) {
+if (ateos.isNodejs && !crypto.options.usePureJavaScript) {
   stdCrypto = require("crypto");
 }
 
@@ -36,17 +35,17 @@ if (is.nodejs && !crypto.options.usePureJavaScript) {
  */
 export default function (
   p, s, c, dkLen, md, callback) {
-  if (is.function(md)) {
+  if (ateos.isFunction(md)) {
     callback = md;
     md = null;
   }
 
   // use native implementation if possible and not disabled, note that
   // some node versions only support SHA-1, others allow digest to be changed
-  if (is.nodejs && !crypto.options.usePureJavaScript &&
-        stdCrypto.pbkdf2 && (is.null(md) || typeof md !== "object") &&
+  if (ateos.isNodejs && !crypto.options.usePureJavaScript &&
+        stdCrypto.pbkdf2 && (ateos.isNull(md) || typeof md !== "object") &&
         (stdCrypto.pbkdf2Sync.length > 4 || (!md || md === "sha1"))) {
-    if (!is.string(md)) {
+    if (!ateos.isString(md)) {
       // default prf to SHA-1
       md = "sha1";
     }
@@ -74,11 +73,11 @@ export default function (
     });
   }
 
-  if (is.nil(md)) {
+  if (ateos.isNil(md)) {
     // default prf to SHA-1
     md = "sha1";
   }
-  if (is.string(md)) {
+  if (ateos.isString(md)) {
     if (!(md in crypto.md.algorithms)) {
       throw new Error(`Unknown hash algorithm: ${md}`);
     }

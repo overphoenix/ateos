@@ -25,7 +25,7 @@ const findSgrCloseParameter = (sgrParameter) => {
   } else {
     closeSgrParameter = esc.codes.get(Number(sgrCode)).toString();
   }
-  if (!is.string(closeSgrParameter)) {
+  if (!ateos.isString(closeSgrParameter)) {
     throw new Error("Can not find SGR code to close");
   }
   return closeSgrParameter;
@@ -67,7 +67,7 @@ const appendAnsiOutput = (output, ansi) => {
  */
 export default (str, begin, end, { term = false } = {}) => {
   const characters = Array.from(str.normalize());
-  const actualEnd = is.nil(end) ? characters.length : end;
+  const actualEnd = ateos.isNil(end) ? characters.length : end;
 
   let insideAnsi = false; // Is the `character` inside of ANSI escape code?
   let effectingSgrParameters = [];

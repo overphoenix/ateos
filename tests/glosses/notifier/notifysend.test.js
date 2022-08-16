@@ -47,7 +47,7 @@ describe("notifier", "notify-send", () => {
     });
 
     it("should escape message input", async () => {
-        const excapedNewline = is.windows ? "\\r\\n" : "\\n";
+        const excapedNewline = ateos.isWindows ? "\\r\\n" : "\\n";
         const expected = [
             '"Node Notification"',
             `"some${excapedNewline} \\"me'ss\\\`age\\\`\\""`

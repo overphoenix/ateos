@@ -43,15 +43,15 @@ export default (ctx) => {
         for (const name of Object.keys(actualFields)) {
             const aField = actualFields[name];
             const tField = testFields[name];
-            if (is.array(aField)) { // this is a file
+            if (ateos.isArray(aField)) { // this is a file
                 expect(aField).to.have.length(1);
                 expect(aField[0].type).to.be.equal(tField.type);
             } else { // value
                 let eValue = tField.eValue;
-                if (is.function(eValue)) {
+                if (ateos.isFunction(eValue)) {
                     eValue = eValue();
                 }
-                if (is.buffer(eValue)) {
+                if (ateos.isBuffer(eValue)) {
                     eValue = eValue.toString("binary");
                 }
                 expect(aField.value).to.be.equal(eValue);
@@ -62,7 +62,7 @@ export default (ctx) => {
     ctx.runtime.populateFields = (form, fields) => {
         for (const [name, field] of Object.entries(fields)) {
             let { value } = field;
-            if (is.function(value)) {
+            if (ateos.isFunction(value)) {
                 value = value();
             }
             form.append(name, value);

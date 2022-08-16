@@ -1,5 +1,4 @@
 const {
-  is,
   module: { resolve },
   std: { module: NodeModule, path }
 } = ateos;
@@ -11,7 +10,7 @@ export default class Module extends NodeModule {
   }
 
   addTransform(fn) {
-    if (!is.function(fn)) {
+    if (!ateos.isFunction(fn)) {
       throw new ateos.error.InvalidArgumentException("Transform must be a function");
     }
     this.transforms.push(fn);
@@ -37,7 +36,7 @@ export default class Module extends NodeModule {
       return cachedModule.exports;
     }
 
-    if (is.boolean(resolve.core[filename])) {
+    if (ateos.isBoolean(resolve.core[filename])) {
       return require(filename);
     }
 
@@ -65,7 +64,7 @@ export default class Module extends NodeModule {
     const visited = {};
 
     const mod = NodeModule._cache[filename];
-    if (filename && (!is.undefined(mod))) {
+    if (filename && (!ateos.isUndefined(mod))) {
       const run = (current) => {
         visited[current.id] = true;
         current.children.forEach((child) => {

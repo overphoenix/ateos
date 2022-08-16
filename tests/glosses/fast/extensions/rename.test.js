@@ -169,7 +169,7 @@ describe("fast", "transform", "rename", () => {
         const err = ateos.error.InvalidArgumentException;
 
         for (const obj of [undefined, null, "", true, 1]) {
-            it(`with ${is.null(obj) ? "null" : typeof obj}`, async () => {
+            it(`with ${ateos.isNull(obj) ? "null" : typeof obj}`, async () => {
                 await fromdir.addFile("test.js");
                 const e = await fast.src(srcPath).rename(obj).dest(todir.path()).then(() => null, (e) => e);
                 expect(e).to.be.instanceOf(err);

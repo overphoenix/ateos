@@ -40,7 +40,7 @@ export default class Sandbox {
 
     this.cwd = cwd;
     const entries = util.arrify(input);
-    if (entries.length === 0 || entries.filter((file) => is.string(file) && file.length).length === 0) {
+    if (entries.length === 0 || entries.filter((file) => ateos.isString(file) && file.length).length === 0) {
       throw new error.NotValidException("Invalid input");
     }
 
@@ -74,7 +74,7 @@ export default class Sandbox {
   async loadAndCacheModule(modPath) {
     const realPath = ateos.module.resolve(modPath);
     let mod = this.#modulesCache.get(realPath);
-    if (is.undefined(mod)) {
+    if (ateos.isUndefined(mod)) {
       mod = new Module({
         sandbox: this,
         file: realPath

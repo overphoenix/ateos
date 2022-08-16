@@ -12,13 +12,13 @@ class _AVLTree extends collection.BinarySearchTree {
       return;
     }
 
-    if (this.left && is.undefined(this.left.height)) {
+    if (this.left && ateos.isUndefined(this.left.height)) {
       throw new error.IllegalStateException(`Undefined height for node ${this.left.key}`);
     }
-    if (this.right && is.undefined(this.right.height)) {
+    if (this.right && ateos.isUndefined(this.right.height)) {
       throw new error.IllegalStateException(`Undefined height for node ${this.right.key}`);
     }
-    if (is.undefined(this.height)) {
+    if (ateos.isUndefined(this.height)) {
       throw new error.IllegalStateException(`Undefined height for node ${this.key}`);
     }
 
@@ -266,7 +266,7 @@ class _AVLTree extends collection.BinarySearchTree {
     }
     const newData = [];
     // Delete only a value (no tree modification)
-    if (currentNode.data.length > 1 && !is.undefined(value)) {
+    if (currentNode.data.length > 1 && !ateos.isUndefined(value)) {
       currentNode.data.forEach((d) => {
         if (!currentNode._checkValueEquality(d, value)) {
           newData.push(d);

@@ -8,11 +8,11 @@ const {
 } = ateos;
 
 let isStackSupported = false;
-if (!is.undefined(Error.captureStackTrace)) {
+if (!ateos.isUndefined(Error.captureStackTrace)) {
     try {
         throw Error();
     } catch (err) {
-        if (!is.undefined(err.stack)) {
+        if (!ateos.isUndefined(err.stack)) {
             isStackSupported = true;
         }
     }

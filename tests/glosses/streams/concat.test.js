@@ -22,7 +22,7 @@ describe("stream", "concat", () => {
             buffers.write(Buffer.from("stringy cat"));
             buffers.end();
             const out = await buffers;
-            assert(is.buffer(out));
+            assert(ateos.isBuffer(out));
             assert.equal(out.toString("utf8"), "pizza Array is not a stringy cat");
         });
 
@@ -37,7 +37,7 @@ describe("stream", "concat", () => {
             buffers.write(555);
             buffers.end();
             const out = await buffers;
-            assert(is.buffer(out));
+            assert(ateos.isBuffer(out));
             assert.equal(out.toString("utf8"), "pizza Array is not a stringy cat555");
         });
     });

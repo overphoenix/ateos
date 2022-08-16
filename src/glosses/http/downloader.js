@@ -19,7 +19,7 @@ export default class Downlader extends ateos.EventEmitter {
     super();
 
     this.url = url;
-    if (!is.string(dest) && !is.writableStream(dest)) {
+    if (!ateos.isString(dest) && !ateos.isWritableStream(dest)) {
       throw new error.InvalidArgumentException("dest must be a string or writable stream");
     }
     this.dest = dest;
@@ -31,7 +31,7 @@ export default class Downlader extends ateos.EventEmitter {
   async _createDestStream() {
     let { dest } = this;
 
-    if (is.writableStream(dest)) {
+    if (ateos.isWritableStream(dest)) {
       return dest;
     }
 

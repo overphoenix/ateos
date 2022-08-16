@@ -108,22 +108,22 @@ export default function stub(object, property, ...args) {
   }
   __.throwOnFalsyObject(object, property);
 
-  if (object && !is.undefined(property) && !(property in object)) {
+  if (object && !ateos.isUndefined(property) && !(property in object)) {
     throw new TypeError(`Cannot stub non-existent own property ${__.util.valueToString(property)}`);
   }
 
 
   const actualDescriptor = __.util.getPropertyDescriptor(object, property);
-  const isStubbingEntireObject = is.undefined(property) && is.object(object) && !is.function(object);
-  const isCreatingNewStub = !object && is.undefined(property);
+  const isStubbingEntireObject = ateos.isUndefined(property) && ateos.isObject(object) && !ateos.isFunction(object);
+  const isCreatingNewStub = !object && ateos.isUndefined(property);
 
-  const isStubbingNonFuncProperty = is.object(object)
-        && !is.undefined(property)
-        && (is.undefined(actualDescriptor) || !is.function(actualDescriptor.value));
+  const isStubbingNonFuncProperty = ateos.isObject(object)
+        && !ateos.isUndefined(property)
+        && (ateos.isUndefined(actualDescriptor) || !ateos.isFunction(actualDescriptor.value));
 
-  const isStubbingExistingMethod = is.object(object) &&
-        !is.undefined(actualDescriptor) &&
-        is.function(actualDescriptor.value);
+  const isStubbingExistingMethod = ateos.isObject(object) &&
+        !ateos.isUndefined(actualDescriptor) &&
+        ateos.isFunction(actualDescriptor.value);
 
   const arity = isStubbingExistingMethod ? object[property].length : 0;
 
@@ -139,7 +139,7 @@ export default function stub(object, property, ...args) {
   s.rootObj = object;
   s.propName = property;
   s.restore = function restore() {
-    if (!is.undefined(actualDescriptor)) {
+    if (!ateos.isUndefined(actualDescriptor)) {
       Object.defineProperty(object, property, actualDescriptor);
       return;
     }
@@ -151,7 +151,7 @@ export default function stub(object, property, ...args) {
 }
 
 stub.createStubInstance = function (constructor) {
-  if (!is.function(constructor)) {
+  if (!ateos.isFunction(constructor)) {
     throw new error.InvalidArgumentException("The constructor should be a function.");
   }
   return stub(Object.create(constructor.prototype));

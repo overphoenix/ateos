@@ -38,7 +38,7 @@ for (const t of TYPES) {
     enter(astNode, astProcessor, ancestors) {
       const name = `enter${t}`;
       const method = astProcessor[name];
-      if (is.function(method)) {
+      if (ateos.isFunction(method)) {
         const node = astProcessor.createNode(t, astNode);
         method.call(astProcessor, node, ancestors);
         astProcessor.nodes.push(node);
@@ -49,7 +49,7 @@ for (const t of TYPES) {
     exit(astNode, astProcessor, ancestors) {
       const name = `exit${t}`;
       const method = astProcessor[name];
-      if (is.function(method)) {
+      if (ateos.isFunction(method)) {
         method.call(astProcessor, astNode, ancestors);
       }
       astProcessor.nodes.pop();
@@ -105,13 +105,13 @@ export default class AstProcessor {
 
   createNode(type, astNode) {
     const NodeClass = code[type];
-    if (is.undefined(NodeClass)) {
+    if (ateos.isUndefined(NodeClass)) {
       throw new error.UnknownException(`Unknown type of node: ${type}`);
     }
 
     const node = new NodeClass(astNode, this.nodes.top, this.scopes.top);
 
-    if (is.null(this.nodes.top)) {
+    if (ateos.isNull(this.nodes.top)) {
       this.body.push(node);
     }
 

@@ -882,14 +882,14 @@ tls.parseHelloMessage = function (c, record, length) {
         // FIXME: should be checking configured acceptable suites
         // cipher suites take up 2 bytes
         c.session.cipherSuite = tls.getCipherSuite(tmp.getBytes(2));
-        if (!is.null(c.session.cipherSuite)) {
+        if (!ateos.isNull(c.session.cipherSuite)) {
           break;
         }
       }
     }
 
     // cipher suite not supported
-    if (is.null(c.session.cipherSuite)) {
+    if (ateos.isNull(c.session.cipherSuite)) {
       return c.error(c, {
         message: "No cipher suites in common.",
         send: true,
@@ -1059,7 +1059,7 @@ tls.handleClientHello = function (c, record, length) {
   let session = null;
   if (c.sessionCache) {
     session = c.sessionCache.getSession(sessionId);
-    if (is.null(session)) {
+    if (ateos.isNull(session)) {
       // session ID not found
       sessionId = "";
     } else if (session.version.major !== msg.version.major ||
@@ -1097,7 +1097,7 @@ tls.handleClientHello = function (c, record, length) {
   }
 
   // if a session is set, resume it
-  if (!is.null(session)) {
+  if (!ateos.isNull(session)) {
     // resuming session, expect a ChangeCipherSpec next
     c.expect = CCC;
     c.session.resuming = true;
@@ -1404,7 +1404,7 @@ tls.handleClientKeyExchange = function (c, record, length) {
     }
   }
 
-  if (is.null(privateKey)) {
+  if (ateos.isNull(privateKey)) {
     return c.error(c, {
       message: "No private key set.",
       send: true,
@@ -1440,7 +1440,7 @@ tls.handleClientKeyExchange = function (c, record, length) {
   // does not have fixed Diffie-Hellman params, otherwise expect
   // ChangeCipherSpec
   c.expect = CCC;
-  if (!is.null(c.session.clientCertificate)) {
+  if (!ateos.isNull(c.session.clientCertificate)) {
     // only RSA support, so expect CertificateVerify
     // TODO: support Diffie-Hellman
     c.expect = CCV;
@@ -1613,7 +1613,7 @@ tls.handleServerHelloDone = function (c, record, length) {
     });
   }
 
-  if (is.null(c.serverCertificate)) {
+  if (ateos.isNull(c.serverCertificate)) {
     // no server certificate was provided
     const error = {
       message: "No server certificate provided. Not enough security.",
@@ -1638,7 +1638,7 @@ tls.handleServerHelloDone = function (c, record, length) {
           if (ret.alert) {
             error.alert.description = ret.alert;
           }
-        } else if (is.number(ret)) {
+        } else if (ateos.isNumber(ret)) {
           // set custom alert description
           error.alert.description = ret;
         }
@@ -1650,7 +1650,7 @@ tls.handleServerHelloDone = function (c, record, length) {
   }
 
   // create client certificate message if requested
-  if (!is.null(c.session.certificateRequest)) {
+  if (!ateos.isNull(c.session.certificateRequest)) {
     record = tls.createRecord(c, {
       type: tls.ContentType.handshake,
       data: tls.createCertificate(c)
@@ -1670,8 +1670,8 @@ tls.handleServerHelloDone = function (c, record, length) {
 
   // create callback to handle client signature (for client-certs)
   const callback = function (c, signature) {
-    if (!is.null(c.session.certificateRequest) &&
-      !is.null(c.session.clientCertificate)) {
+    if (!ateos.isNull(c.session.certificateRequest) &&
+      !ateos.isNull(c.session.clientCertificate)) {
       // create certificate verify message
       tls.queue(c, tls.createRecord(c, {
         type: tls.ContentType.handshake,
@@ -1709,8 +1709,8 @@ tls.handleServerHelloDone = function (c, record, length) {
 
   // if there is no certificate request or no client certificate, do
   // callback immediately
-  if (is.null(c.session.certificateRequest) ||
-    is.null(c.session.clientCertificate)) {
+  if (ateos.isNull(c.session.certificateRequest) ||
+    ateos.isNull(c.session.clientCertificate)) {
     return callback(c, null);
   }
 
@@ -2886,7 +2886,7 @@ tls.createCertificate = function (c) {
 
   // buffer to hold certificate list
   const certList = crypto.util.createBuffer();
-  if (!is.null(cert)) {
+  if (!ateos.isNull(cert)) {
     try {
       // normalize cert to a chain of certificates
       if (!crypto.util.isArray(cert)) {
@@ -2909,7 +2909,7 @@ tls.createCertificate = function (c) {
         }
 
         const der = crypto.util.createBuffer(msg.body);
-        if (is.null(asn1)) {
+        if (ateos.isNull(asn1)) {
           asn1 = crypto.asn1.fromDer(der.bytes(), false);
         }
 
@@ -3097,7 +3097,7 @@ tls.getClientSignature = function (c, callback) {
         });
       }
     }
-    if (is.null(privateKey)) {
+    if (ateos.isNull(privateKey)) {
       c.error(c, {
         message: "No private key set.",
         send: true,
@@ -3366,7 +3366,7 @@ tls.createFinished = function (c) {
  * @return the HeartbeatRequest byte buffer.
  */
 tls.createHeartbeat = function (type, payload, payloadLength) {
-  if (is.undefined(payloadLength)) {
+  if (ateos.isUndefined(payloadLength)) {
     payloadLength = payload.length;
   }
   // build record fragment
@@ -3651,7 +3651,7 @@ tls.createSessionCache = function (cache, capacity) {
         key = rval.order[0];
       }
 
-      if (!is.null(key) && key in rval.cache) {
+      if (!ateos.isNull(key) && key in rval.cache) {
         // get cached session and remove from cache
         session = rval.cache[key];
         delete rval.cache[key];
@@ -3708,7 +3708,7 @@ tls.createConnection = function (options) {
 
   // setup default cipher suites
   let cipherSuites = options.cipherSuites || null;
-  if (is.null(cipherSuites)) {
+  if (ateos.isNull(cipherSuites)) {
     cipherSuites = [];
     for (const key in tls.CipherSuites) {
       cipherSuites.push(tls.CipherSuites[key]);
@@ -3799,7 +3799,7 @@ tls.createConnection = function (options) {
     c.handshakes = 0;
     c.handshaking = false;
     c.isConnected = false;
-    c.fail = !(clearFail || is.undefined(clearFail));
+    c.fail = !(clearFail || ateos.isUndefined(clearFail));
     c.input.clear();
     c.tlsData.clear();
     c.data.clear();
@@ -3910,7 +3910,7 @@ tls.createConnection = function (options) {
       if (s.update(c, c.record)) {
         // see if there is a previously fragmented message that the
         // new record's message fragment should be appended to
-        if (!is.null(c.fragmented)) {
+        if (!ateos.isNull(c.fragmented)) {
           // if the record type matches a previously fragmented
           // record, append the record fragment to it
           if (c.fragmented.type === c.record.type) {
@@ -3980,7 +3980,7 @@ tls.createConnection = function (options) {
         }
 
         // matching session not found in cache, clear session ID
-        if (is.null(session)) {
+        if (ateos.isNull(session)) {
           sessionId = "";
         }
       }
@@ -3988,7 +3988,7 @@ tls.createConnection = function (options) {
       // no session given, grab a session from the cache, if available
       if (sessionId.length === 0 && c.sessionCache) {
         session = c.sessionCache.getSession();
-        if (!is.null(session)) {
+        if (!ateos.isNull(session)) {
           sessionId = session.id;
         }
       }
@@ -4050,23 +4050,23 @@ tls.createConnection = function (options) {
     // each record is handled (since handling can be asynchronous)
     if (!c.fail) {
       // reset record if ready and now empty
-      if (!is.null(c.record) &&
+      if (!ateos.isNull(c.record) &&
         c.record.ready && c.record.fragment.isEmpty()) {
         c.record = null;
       }
 
       // if there is no pending record, try to read record header
-      if (is.null(c.record)) {
+      if (ateos.isNull(c.record)) {
         rval = _readRecordHeader(c);
       }
 
       // read the next record (if record not yet ready)
-      if (!c.fail && !is.null(c.record) && !c.record.ready) {
+      if (!c.fail && !ateos.isNull(c.record) && !c.record.ready) {
         rval = _readRecord(c);
       }
 
       // record ready to be handled, update engine state
-      if (!c.fail && !is.null(c.record) && c.record.ready) {
+      if (!c.fail && !ateos.isNull(c.record) && c.record.ready) {
         _update(c, c.record);
       }
     }
@@ -4112,7 +4112,7 @@ tls.createConnection = function (options) {
     if (payload instanceof crypto.util.ByteBuffer) {
       payload = payload.bytes();
     }
-    if (is.undefined(payloadLength)) {
+    if (ateos.isUndefined(payloadLength)) {
       payloadLength = payload.length;
     }
     c.expectedHeartbeatPayload = payload;
@@ -4455,7 +4455,7 @@ function compareMacs(key, mac1, mac2) {
 
 // expose non-functions
 for (const key in tls) {
-  if (!is.function(tls[key])) {
+  if (!ateos.isFunction(tls[key])) {
     exports[key] = tls[key];
   }
 }

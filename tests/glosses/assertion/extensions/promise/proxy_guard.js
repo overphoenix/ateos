@@ -17,7 +17,7 @@ describe("Proxy guard", () => {
     const promise = Promise.resolve(42);
 
     before(function () {
-        if (is.undefined(Proxy) || is.undefined(Reflect) || is.undefined(assertion.util.proxify)) {
+        if (ateos.isUndefined(Proxy) || ateos.isUndefined(Reflect) || ateos.isUndefined(assertion.util.proxify)) {
             /**
              * eslint-disable no-invalid-this
              */

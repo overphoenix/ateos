@@ -2,10 +2,10 @@ const { is } = ateos;
 const __ = ateos.getPrivate(ateos.datetime);
 
 export const isValid = (m) => {
-  if (is.nil(m._isValid)) {
+  if (ateos.isNil(m._isValid)) {
     const flags = __.create.getParsingFlags(m);
     const parsedParts = Array.prototype.some.call(flags.parsedDateParts, (i) => {
-      return is.exist(i);
+      return ateos.isExist(i);
     });
     let isNowValid = !isNaN(m._d.getTime())
             && flags.overflow < 0
@@ -22,10 +22,10 @@ export const isValid = (m) => {
       isNowValid = isNowValid
                 && flags.charsLeftOver === 0
                 && flags.unusedTokens.length === 0
-                && is.undefined(flags.bigHour);
+                && ateos.isUndefined(flags.bigHour);
     }
 
-    if (is.nil(Object.isFrozen) || !Object.isFrozen(m)) {
+    if (ateos.isNil(Object.isFrozen) || !Object.isFrozen(m)) {
       m._isValid = isNowValid;
     } else {
       return isNowValid;
@@ -38,7 +38,7 @@ export const createInvalid = (flags) => {
   const { getParsingFlags, createUTC } = __.create;
 
   const m = createUTC(NaN);
-  if (is.exist(flags)) {
+  if (ateos.isExist(flags)) {
     Object.assign(getParsingFlags(m), flags);
   } else {
     getParsingFlags(m).userInvalidated = true;

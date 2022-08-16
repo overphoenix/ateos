@@ -34,7 +34,7 @@ Object.defineProperties(environment, {
   },
   isNinjaAvailable: {
     get() {
-      if (is.null(this._isNinjaAvailable)) {
+      if (ateos.isNull(this._isNinjaAvailable)) {
         this._isNinjaAvailable = false;
         try {
           if (fs.whichSync("ninja")) {
@@ -53,7 +53,7 @@ Object.defineProperties(environment, {
   },
   isMakeAvailable: {
     get() {
-      if (is.null(this._isMakeAvailable)) {
+      if (ateos.isNull(this._isMakeAvailable)) {
         this._isMakeAvailable = false;
         try {
           if (fs.whichSync("make")) {
@@ -72,7 +72,7 @@ Object.defineProperties(environment, {
   },
   isGPPAvailable: {
     get() {
-      if (is.null(this._isGPPAvailable)) {
+      if (ateos.isNull(this._isGPPAvailable)) {
         this._isGPPAvailable = false;
         try {
           if (fs.whichSync("g++")) {
@@ -91,7 +91,7 @@ Object.defineProperties(environment, {
   },
   isClangAvailable: {
     get() {
-      if (is.null(this._isClangAvailable)) {
+      if (ateos.isNull(this._isClangAvailable)) {
         this._isClangAvailable = false;
         try {
           if (fs.whichSync("clang++")) {
@@ -211,7 +211,7 @@ export default class BuildSystem {
     this.buildDir = path.join(this.workDir, this.config);
     this._isAvailable = null;
     this.cMakeOptions = this.options.cMakeOptions || {};
-    this.options.silent = is.boolean(this.options.silent) ? this.options.silent : true;
+    this.options.silent = ateos.isBoolean(this.options.silent) ? this.options.silent : true;
     this.silent = Boolean(options.silent);
 
     // from toolset
@@ -247,7 +247,7 @@ export default class BuildSystem {
 
     // Build configuration:
     D.push({ CMAKE_BUILD_TYPE: this.config });
-    if (is.windows) {
+    if (ateos.isWindows) {
       D.push({ CMAKE_RUNTIME_OUTPUT_DIRECTORY: this.workDir });
     } else {
       D.push({ CMAKE_LIBRARY_OUTPUT_DIRECTORY: this.buildDir });
@@ -267,7 +267,7 @@ export default class BuildSystem {
 
     // Sources:
     const srcPaths = [];
-    if (is.windows) {
+    if (ateos.isWindows) {
       const delayHook = path.normalize(path.join(__dirname, "addon", "win_delay_load_hook.cc"));
       srcPaths.push(delayHook.replace(/\\/gm, "/"));
     }
@@ -279,7 +279,7 @@ export default class BuildSystem {
     D.push({ NODE_RUNTIMEVERSION: this.options.version });
     D.push({ NODE_ARCH: this.options.arch });
 
-    if (is.windows) {
+    if (ateos.isWindows) {
       const libs = [
         path.join(this.options.nodePath, (this.options.arch || ateos.std.os.arch()) === "x64" ? "win-x64" : "win-x86", "node.lib")
       ];
@@ -473,7 +473,7 @@ export default class BuildSystem {
   // toolset
   async initialize(install) {
     if (!this._initialized) {
-      if (is.windows) {
+      if (ateos.isWindows) {
         await this.initializeWin(install);
       } else {
         this.initializePosix(install);
@@ -557,7 +557,7 @@ export default class BuildSystem {
   }
 
   async _getTopSupportedVisualStudioGenerator() {
-    assert(is.windows);
+    assert(ateos.isWindows);
     const vswhereVersion = await this._getVersionFromVSWhere();
     const list = await BuildSystem.getGenerators(this.options);
     let maxVer = 0;
@@ -620,7 +620,7 @@ Object.defineProperties(BuildSystem.prototype, {
   },
   isAvailable: {
     get() {
-      if (is.null(this._isAvailable)) {
+      if (ateos.isNull(this._isAvailable)) {
         this._isAvailable = BuildSystem.isAvailable(this.options);
       }
       return this._isAvailable;

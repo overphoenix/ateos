@@ -8,16 +8,16 @@ export default class GetContextDefsTask extends ateos.task.Task {
     const allowedContexts = null;
 
     // const gateName = peer.options.gateName;
-    // if (is.string(gateName)) {
+    // if (ateos.isString(gateName)) {
     //     const gate = this.gates.get(gateName);
-    //     if (is.array(gate.contexts) && gate.contexts.length > 0) {
+    //     if (ateos.isArray(gate.contexts) && gate.contexts.length > 0) {
     //         allowedContexts = gate.contexts;
     //     }
     // }
 
     const defs = {};
     for (const [name, stub] of netron.contexts.entries()) {
-      if (is.null(allowedContexts) || allowedContexts.includes(name)) {
+      if (ateos.isNull(allowedContexts) || allowedContexts.includes(name)) {
         defs[name] = stub.definition;
       }
     }

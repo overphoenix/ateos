@@ -9,13 +9,13 @@ const MAX_INT = 9007199254740992;
 const MAX_INT_ARR = smallToArray(MAX_INT);
 const DEFAULT_ALPHABET = "0123456789abcdefghijklmnopqrstuvwxyz";
 
-const supportsNativeBigInt = is.function(BigInt);
+const supportsNativeBigInt = ateos.isFunction(BigInt);
 
 function Integer(v, radix, alphabet, caseSensitive) {
-  if (is.undefined(v)) {
+  if (ateos.isUndefined(v)) {
     return Integer[0];
   }
-  if (!is.undefined(radix)) {
+  if (!ateos.isUndefined(radix)) {
     return Number(radix) === 10 && !alphabet ? parseValue(v) : parseBase(v, radix, alphabet, caseSensitive);
   }
   return parseValue(v);
@@ -218,7 +218,7 @@ function subtractAny(a, b, sign) {
     sign = !sign;
   }
   value = arrayToSmall(value);
-  if (is.number(value)) {
+  if (ateos.isNumber(value)) {
     if (sign) {
       value = -value;
     }
@@ -240,7 +240,7 @@ function subtractSmall(a, b, sign) { // assumes a is array, b is number with 0 <
     r[i] = difference < 0 ? difference + base : difference;
   }
   r = arrayToSmall(r);
-  if (is.number(r)) {
+  if (ateos.isNumber(r)) {
     if (sign) {
       r = -r;
     }
@@ -622,7 +622,7 @@ function divModAny(self, v) {
       if (self.sign) {
         remainder = -remainder;
       }
-      if (is.number(quotient)) {
+      if (ateos.isNumber(quotient)) {
         if (self.sign !== n.sign) {
           quotient = -quotient;
         }
@@ -651,7 +651,7 @@ function divModAny(self, v) {
   const qSign = self.sign !== n.sign;
   let mod = value[1];
   const mSign = self.sign;
-  if (is.number(quotient)) {
+  if (ateos.isNumber(quotient)) {
     if (qSign) {
       quotient = -quotient;
     }
@@ -659,7 +659,7 @@ function divModAny(self, v) {
   } else {
     quotient = new BigInteger(quotient, qSign);
   }
-  if (is.number(mod)) {
+  if (ateos.isNumber(mod)) {
     if (mSign) {
       mod = -mod;
     }
@@ -1045,7 +1045,7 @@ function millerRabinTest(n, a) {
 // Set "strict" to true to force GRH-supported lower bound of 2*log(N)^2
 BigInteger.prototype.isPrime = function (strict) {
   const isPrime = isBasicPrime(this);
-  if (!is.undefined(isPrime)) {
+  if (!ateos.isUndefined(isPrime)) {
     return isPrime;
   }
   const n = this.abs();
@@ -1064,11 +1064,11 @@ NativeBigInt.prototype.isPrime = SmallInteger.prototype.isPrime = BigInteger.pro
 
 BigInteger.prototype.isProbablePrime = function (iterations) {
   const isPrime = isBasicPrime(this);
-  if (!is.undefined(isPrime)) {
+  if (!ateos.isUndefined(isPrime)) {
     return isPrime;
   }
   const n = this.abs();
-  const t = is.undefined(iterations) ? 5 : iterations;
+  const t = ateos.isUndefined(iterations) ? 5 : iterations;
   for (var a = [], i = 0; i < t; i++) {
     a.push(Integer.randBetween(2, n.minus(2)));
   }
@@ -1253,7 +1253,7 @@ function roughLOB(n) { // get lowestOneBit (rough)
   // SmallInteger: return Min(lowestOneBit(n), 1 << 30)
   // BigInteger: return Min(lowestOneBit(n), 1 << 14) [BASE=1e7]
   const v = n.value;
-  const x = is.number(v) ? v | LOBMASK_I :
+  const x = ateos.isNumber(v) ? v | LOBMASK_I :
     typeof v === "bigint" ? v | BigInt(LOBMASK_I) :
       v[0] + v[1] * BASE | LOBMASK_BI;
   return x & -x;
@@ -1498,7 +1498,7 @@ NativeBigInt.prototype.toArray = function (radix) {
 };
 
 BigInteger.prototype.toString = function (radix, alphabet) {
-  if (is.undefined(radix)) {
+  if (ateos.isUndefined(radix)) {
     radix = 10;
   }
   if (radix !== 10) {
@@ -1514,7 +1514,7 @@ BigInteger.prototype.toString = function (radix, alphabet) {
 };
 
 SmallInteger.prototype.toString = function (radix, alphabet) {
-  if (is.undefined(radix)) {
+  if (ateos.isUndefined(radix)) {
     radix = 10;
   }
   if (radix != 10) {
@@ -1613,10 +1613,10 @@ function parseNumberValue(v) {
 }
 
 function parseValue(v) {
-  if (is.number(v)) {
+  if (ateos.isNumber(v)) {
     return parseNumberValue(v);
   }
-  if (is.string(v)) {
+  if (ateos.isString(v)) {
     return parseStringValue(v);
   }
   if (typeof v === "bigint") {

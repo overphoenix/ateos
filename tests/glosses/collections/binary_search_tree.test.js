@@ -898,13 +898,13 @@ describe("collection", "BinarySearchTree", () => {
 
     it("Can use undefined as key and value", () => {
         const compareKeys = (a, b) => {
-            if (is.undefined(a) && is.undefined(b)) {
+            if (ateos.isUndefined(a) && ateos.isUndefined(b)) {
                 return 0;
             }
-            if (is.undefined(a)) {
+            if (ateos.isUndefined(a)) {
                 return -1;
             }
-            if (is.undefined(b)) {
+            if (ateos.isUndefined(b)) {
                 return 1;
             }
 
@@ -985,13 +985,13 @@ describe("collection", "BinarySearchTree", () => {
 
     it("Can use null as key and value", () => {
         const compareKeys = (a, b) => {
-            if (is.null(a) && is.null(b)) {
+            if (ateos.isNull(a) && ateos.isNull(b)) {
                 return 0;
             }
-            if (is.null(a)) {
+            if (ateos.isNull(a)) {
                 return -1;
             }
-            if (is.null(b)) {
+            if (ateos.isNull(b)) {
                 return 1;
             }
 

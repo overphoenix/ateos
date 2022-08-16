@@ -5,7 +5,7 @@ const {
 class RetryOperation {
   constructor(timeouts, options) {
     // Compatibility for the old (timeouts, retryForever) signature
-    if (is.boolean(options)) {
+    if (ateos.isBoolean(options)) {
       options = { forever: options };
     }
 
@@ -42,7 +42,7 @@ class RetryOperation {
     }
 
     let timeout = this._timeouts.shift();
-    if (is.undefined(timeout)) {
+    if (ateos.isUndefined(timeout)) {
       if (this._cachedTimeouts) {
         // retry forever, only keep last error
         this._errors.splice(this._errors.length - 1, this._errors.length);
@@ -197,7 +197,7 @@ export const timeouts = (options) => {
 //     if (!methods) {
 //         methods = [];
 //         for (const key in obj) {
-//             if (is.function(obj[key])) {
+//             if (ateos.isFunction(obj[key])) {
 //                 methods.push(key);
 //             }
 //         }

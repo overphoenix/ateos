@@ -533,7 +533,7 @@ const applyRules = (str, rules, skip, override) => {
 
       for (; i < j; i++) {
         if (str.match(rules[i][0])) {
-          if (!is.undefined(rules[i][1])) {
+          if (!ateos.isUndefined(rules[i][1])) {
             str = str.replace(rules[i][0], rules[i][1]);
           }
           break;

@@ -218,7 +218,7 @@ function lock(file, options, callback) {
   };
 
   options.retries = options.retries || 0;
-  options.retries = is.number(options.retries) ? { retries: options.retries } : options.retries;
+  options.retries = ateos.isNumber(options.retries) ? { retries: options.retries } : options.retries;
   options.stale = Math.max(options.stale || 0, 2000);
   options.update = options.update == null ? options.stale / 2 : options.update || 0;
   options.update = Math.max(Math.min(options.update, options.stale / 2), 1000);

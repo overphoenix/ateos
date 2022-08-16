@@ -22,24 +22,24 @@ const keepQuotes = (ch, opts) => {
 };
 
 const keepEscaping = (opts, str, idx) => {
-  if (is.function(opts.keepEscaping)) {
+  if (ateos.isFunction(opts.keepEscaping)) {
     return opts.keepEscaping(str, idx);
   }
   return opts.keepEscaping === true || str[idx + 1] === "\\";
 };
 
 export default function splitString(str, options, fn) {
-  if (!is.string(str)) {
+  if (!ateos.isString(str)) {
     throw new error.InvalidArgumentException("Expected a string");
   }
 
-  if (is.function(options)) {
+  if (ateos.isFunction(options)) {
     fn = options;
     options = null;
   }
 
   // allow separator to be defined as a string
-  if (is.string(options)) {
+  if (ateos.isString(options)) {
     options = { sep: options };
   }
 
@@ -50,7 +50,7 @@ export default function splitString(str, options, fn) {
     "`": "`",
     "“": "”"
   };
-  if (is.array(quotes)) {
+  if (ateos.isArray(quotes)) {
     quotes = quotes.reduce((acc, ele) => {
       acc[ele] = ele;
       return acc;
@@ -93,7 +93,7 @@ export default function splitString(str, options, fn) {
     if (ch === "\\") {
       tok.val = keepEscaping(opts, str, idx) === true ? (ch + next) : next;
       tok.escaped = true;
-      if (is.function(fn)) {
+      if (ateos.isFunction(fn)) {
         fn(tok);
       }
       arr[arr.length - 1] += tok.val;
@@ -163,7 +163,7 @@ export default function splitString(str, options, fn) {
       tok.idx = idx = closeIdx;
     }
 
-    if (is.function(fn)) {
+    if (ateos.isFunction(fn)) {
       fn(tok, tokens);
       ch = tok.val;
       idx = tok.idx;

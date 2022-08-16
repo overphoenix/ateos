@@ -52,7 +52,7 @@ export const create = function (algorithm) {
     _init();
   }
 
-  if (is.undefined(algorithm)) {
+  if (ateos.isUndefined(algorithm)) {
     algorithm = "SHA-512";
   }
 

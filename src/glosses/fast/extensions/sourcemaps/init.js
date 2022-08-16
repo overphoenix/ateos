@@ -68,7 +68,7 @@ export default function plugin({ __ }) {
           sources: [util.normalizePath(file.relative)],
           sourcesContent: [fileContent]
         };
-      } else if (!is.nil(preExistingComment)) {
+      } else if (!ateos.isNil(preExistingComment)) {
         sourceMap.preExistingComment = preExistingComment;
       }
 

@@ -9,28 +9,28 @@ class Cloner {
     nonPlainObjects = false,
     enumOnly = true
   } = {}) {
-    if (!is.object(obj)) {
+    if (!ateos.isObject(obj)) {
       return obj;
     }
-    if (is.array(obj)) {
+    if (ateos.isArray(obj)) {
       if (deep) {
         return obj.map((x) => this.clone(x, { deep, nonPlainObjects, enumOnly }));
       }
       return obj.slice(0);
     }
-    if (is.function(obj)) {
+    if (ateos.isFunction(obj)) {
       return obj;
     }
-    if (is.regexp(obj)) {
+    if (ateos.isRegexp(obj)) {
       return new RegExp(obj.source, obj.flags);
     }
-    if (is.buffer(obj)) {
+    if (ateos.isBuffer(obj)) {
       return Buffer.from(obj);
     }
-    if (is.date(obj)) {
+    if (ateos.isDate(obj)) {
       return new Date(obj.getTime());
     }
-    if (!nonPlainObjects && !is.plainObject(obj)) {
+    if (!nonPlainObjects && !ateos.isPlainObject(obj)) {
       return obj;
     }
     const res = {};

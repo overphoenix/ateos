@@ -5,12 +5,12 @@ export default (fs) => {
   } = ateos;
     
   return (file, options, callback) => {
-    if (is.nil(callback)) {
+    if (ateos.isNil(callback)) {
       callback = options;
       options = {};
     }
     
-    if (is.string(options)) {
+    if (ateos.isString(options)) {
       options = { encoding: options };
     }
     

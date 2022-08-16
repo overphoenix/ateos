@@ -22,13 +22,13 @@ export class FastLocalMapStream extends ateos.fast.LocalStream {
       const sourcePath = file.history[0];
       for (let i = 0; i < this._matchers.length; ++i) {
         if (this._matchers[i](sourcePath)) {
-          if (!is.null(match)) {
+          if (!ateos.isNull(match)) {
             throw new ateos.error.Exception(`Ambiguity. This file "${sourcePath}" has more than one possible source: "${this._mappings[match].from}" or "${this._mappings[i].from}"`);
           }
           match = i;
         }
       }
-      if (is.null(match)) {
+      if (ateos.isNull(match)) {
         throw new ateos.error.Exception(`Invalid file: "${sourcePath}". There is no matching source`);
       }
 

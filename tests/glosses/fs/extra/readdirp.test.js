@@ -110,7 +110,7 @@ describe("fs", "readdirp", () => {
     });
 
     it("reading root with symlinks using lstat", async function () {
-        if (ateos.is.windows) {
+        if (ateos.ateos.isWindows) {
             this.skip();
             return;
         }

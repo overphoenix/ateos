@@ -54,7 +54,7 @@ const detectEncoding = (buf, defaultEncoding = "utf-16le") => {
 
 class Utf16Encoder {
   constructor(options = {}) {
-    if (is.undefined(options.addBOM)) {
+    if (ateos.isUndefined(options.addBOM)) {
       options.addBOM = true;
     }
     this.encoder = getEncoder("utf-16le", options);

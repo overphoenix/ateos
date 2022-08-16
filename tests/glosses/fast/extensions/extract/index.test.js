@@ -57,7 +57,7 @@ describe("fast", "extension", "extract", () => {
             });
 
             it("should set proper file mode", {
-                skip: is.windows
+                skip: ateos.isWindows
             }, async () => {
                 const input = await tmpdir.addDirectory("input");
                 await input.addFile("a", { contents: "abc", mode: 0o444 });
@@ -136,7 +136,7 @@ describe("fast", "extension", "extract", () => {
             });
 
             it("should set proper directory mode", {
-                skip: is.windows
+                skip: ateos.isWindows
             }, async () => {
                 const input = await tmpdir.addDirectory("input");
                 await input.addDirectory("a", { mode: 0o700 });
@@ -176,7 +176,7 @@ describe("fast", "extension", "extract", () => {
             });
 
             it("should handle symlinks", {
-                skip: is.windows
+                skip: ateos.isWindows
             }, async () => {
                 const input = await tmpdir.addDirectory("input");
                 await input.addFile("hello", { contents: "world" });
@@ -239,7 +239,7 @@ describe("fast", "extension", "extract", () => {
             });
 
             it("should set proper file mode", {
-                skip: is.windows
+                skip: ateos.isWindows
             }, async () => {
                 const input = await tmpdir.addDirectory("input");
                 await input.addFile("a", { contents: "abc", mode: 0o444 });
@@ -318,7 +318,7 @@ describe("fast", "extension", "extract", () => {
             });
 
             it("should set proper directory mode", {
-                skip: is.windows
+                skip: ateos.isWindows
             }, async () => {
                 const input = await tmpdir.addDirectory("input");
                 await input.addDirectory("a", { mode: 0o700 });

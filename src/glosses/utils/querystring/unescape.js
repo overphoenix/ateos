@@ -81,7 +81,7 @@ const customDecodeURIComponent = (input) => {
 };
 
 export default function unescape(encodedURI) {
-  if (!is.string(encodedURI)) {
+  if (!ateos.isString(encodedURI)) {
     throw new TypeError(`Expected \`encodedURI\` to be of type \`string\`, got \`${typeof encodedURI}\``);
   }
 

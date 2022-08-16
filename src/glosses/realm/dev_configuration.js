@@ -30,7 +30,7 @@ export default class DevConfiguration extends ateos.configuration.GenericConfig 
     if (options.ext === ".json" && !options.space) {
       options.space = "    ";
     }
-    return super.save(is.string(cwd) ? path.join(cwd, DevConfiguration.configName) : DevConfiguration.configName, options);
+    return super.save(ateos.isString(cwd) ? path.join(cwd, DevConfiguration.configName) : DevConfiguration.configName, options);
   }
 
   /**
@@ -43,14 +43,14 @@ export default class DevConfiguration extends ateos.configuration.GenericConfig 
   getUnits(path) {
     const units = [];
 
-    if (is.plainObject(this.raw.units)) {
+    if (ateos.isPlainObject(this.raw.units)) {
       this._walkUnits("", this.raw.units, units);
     }
 
     let validator;
-    if (is.regexp(path)) {
+    if (ateos.isRegexp(path)) {
       validator = (unit) => path.test(unit.id);
-    } else if (is.string(path)) {
+    } else if (ateos.isString(path)) {
       if (path.endsWith(".")) {
         path = path.slice(0, -1);
         validator = (unit) => unit.id.startsWith(path);
@@ -68,7 +68,7 @@ export default class DevConfiguration extends ateos.configuration.GenericConfig 
     // TODO: need more accurate validation of 'src', 'dst' fields.
     const srcs = [];
     for (const [key, val] of Object.entries(tree)) {
-      if (is.plainObject(val)) {
+      if (ateos.isPlainObject(val)) {
         const fullKey = prefix.length > 0
           ? `${prefix}.${key}`
           : key;
@@ -94,7 +94,7 @@ export default class DevConfiguration extends ateos.configuration.GenericConfig 
           addIfNotIncluded(srcs, unit.src, (i) => !i.startsWith("!"));
         }
 
-        if (is.plainObject(val.units)) {
+        if (ateos.isPlainObject(val.units)) {
           const childSrcs = this._walkUnits(fullKey, val.units, units);
           if (childSrcs.length > 0) {
             addIfNotIncluded(srcs, childSrcs);

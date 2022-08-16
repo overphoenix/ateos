@@ -58,12 +58,12 @@ export default class FormData extends CombinedStream {
     options = options || {};
 
     // allow filename as single option
-    if (is.string(options)) {
+    if (ateos.isString(options)) {
       options = { filename: options };
     }
 
     // all that streamy business can't handle numbers
-    if (is.number(value)) {
+    if (ateos.isNumber(value)) {
       value = String(value);
     }
 
@@ -94,11 +94,11 @@ export default class FormData extends CombinedStream {
     // e.g. for streaming directly from a remote server,
     // w/ a known file a size, and not wanting to wait for
     // incoming file to finish to get its size.
-    if (!is.nil(options.knownLength)) {
+    if (!ateos.isNil(options.knownLength)) {
       valueLength += Number(options.knownLength);
-    } else if (is.buffer(value)) {
+    } else if (ateos.isBuffer(value)) {
       valueLength = value.length;
-    } else if (is.string(value)) {
+    } else if (ateos.isString(value)) {
       valueLength = Buffer.byteLength(value);
     }
 
@@ -129,7 +129,7 @@ export default class FormData extends CombinedStream {
       // it doesn't respect `end` options without `start` options
       // Fix it when node fixes it.
       // https://github.com/joyent/node/issues/7819
-      if (!is.nil(value.end) && value.end !== Infinity && !is.nil(value.start)) {
+      if (!ateos.isNil(value.end) && value.end !== Infinity && !ateos.isNil(value.start)) {
 
         // when end specified
         // no need to calculate range
@@ -174,7 +174,7 @@ export default class FormData extends CombinedStream {
     // custom header specified (as string)?
     // it becomes responsible for boundary
     // (e.g. to handle extra CRLFs on .NET servers)
-    if (is.string(options.header)) {
+    if (ateos.isString(options.header)) {
       return options.header;
     }
 
@@ -190,7 +190,7 @@ export default class FormData extends CombinedStream {
     };
 
     // allow custom headers.
-    if (is.object(options.header)) {
+    if (ateos.isObject(options.header)) {
       populate(headers, options.header);
     }
 
@@ -202,12 +202,12 @@ export default class FormData extends CombinedStream {
       header = headers[prop];
 
       // skip nullish headers.
-      if (is.nil(header)) {
+      if (ateos.isNil(header)) {
         continue;
       }
 
       // convert all headers to arrays.
-      if (!is.array(header)) {
+      if (!ateos.isArray(header)) {
         header = [header];
       }
 
@@ -223,7 +223,7 @@ export default class FormData extends CombinedStream {
   _getContentDisposition(value, options) {
     let filename;
     let contentDisposition;
-    if (is.string(options.filepath)) {
+    if (ateos.isString(options.filepath)) {
       // custom filepath for relative paths
       filename = path.normalize(options.filepath).replace(/\\/g, "/");
     } else if (options.filename || value.name || value.path) {
@@ -269,7 +269,7 @@ export default class FormData extends CombinedStream {
     }
 
     // fallback to the default content type if `value` is not simple value
-    if (!contentType && is.object(value) && !is.array(value) && !is.function(value)) {
+    if (!contentType && ateos.isObject(value) && !ateos.isArray(value) && !ateos.isFunction(value)) {
       contentType = FormData.DEFAULT_CONTENT_TYPE;
     }
 
@@ -399,7 +399,7 @@ export default class FormData extends CombinedStream {
 
     // parse provided url if it's string
     // or treat it as options object
-    if (is.string(params)) {
+    if (ateos.isString(params)) {
       params = parseUrl({ url: params });
       options = populate({
         port: params.port,

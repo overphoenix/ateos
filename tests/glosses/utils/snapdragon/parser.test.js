@@ -51,7 +51,7 @@ describe("util", "Snapdragon", "parser", () => {
                     });
                 });
 
-                assert(is.function(parser.parsers.all));
+                assert(ateos.isFunction(parser.parsers.all));
             });
 
             it("should expose named parsers to middleware:", () => {

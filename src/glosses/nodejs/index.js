@@ -15,7 +15,7 @@ ateos.lazify({
 }, exports, require);
 
 
-if (is.windows) {
+if (ateos.isWindows) {
   ateos.lazify({
     findVS2017: "./find_vs2017"
   }, exports, require);
@@ -45,7 +45,7 @@ export const getCurrentArch = () => {
   }
 };
 
-export const DEFAULT_EXT = is.windows
+export const DEFAULT_EXT = ateos.isWindows
   ? ".zip"
   : ".tar.gz";
 
@@ -53,7 +53,7 @@ const UNIX_EXTS = ["", ".tar.gz", ".tar.xz"];
 const WIN_EXTS = ["", ".7z", ".zip"];
 
 const validateVersion = (version) => {
-  if (is.string(version)) {
+  if (ateos.isString(version)) {
     if (versionRegex().test(version)) {
       return version;
     } else if (nonStrictVersionRegex().test(version)) {
@@ -66,10 +66,10 @@ const validateVersion = (version) => {
 export const getArchiveName = async ({ version, platform = getCurrentPlatform(), arch = getCurrentArch(), type = "release", omitSuffix = false, ext } = {}) => {
   version = validateVersion(version);
 
-  if (is.undefined(ext)) {
+  if (ateos.isUndefined(ext)) {
     ext = (type === "sources" || type === "headers")
       ? ".tar.gz"
-      : is.windows
+      : ateos.isWindows
         ? ".zip"
         : ".tar.gz";
   }
@@ -119,18 +119,18 @@ export const getExePath = () => fs.which("node");
 export const getPrefixPath = async ({ global = false } = {}) => {
   try {
     if (global) {
-      return is.windows
+      return ateos.isWindows
         ? ""
-        : is.linux
+        : ateos.isLinux
           ? "/usr"
           : "/usr/local";
     }
     const exePath = await getExePath();
     return aPath.dirname(aPath.dirname(exePath));
   } catch (err) {
-    return is.windows
+    return ateos.isWindows
       ? ""
-      : is.linux
+      : ateos.isLinux
         ? "/usr"
         : "/usr/local";
   }
@@ -139,7 +139,7 @@ export const getPrefixPath = async ({ global = false } = {}) => {
 export const getCurrentVersion = async ({ prefixPath } = {}) => {
   try {
     let exePath;
-    if (is.string(prefixPath)) {
+    if (ateos.isString(prefixPath)) {
       exePath = ateos.path.join(prefixPath, "bin", "node");
     } else {
       exePath = await getExePath();
@@ -158,7 +158,7 @@ export const checkVersion = async (ver) => {
   let version = ver;
   if (!["latest", "lts"].includes(version)) {
     version = semver.valid(version);
-    if (is.null(version)) {
+    if (ateos.isNull(version)) {
       throw new error.NotValidException(`Invalid version: ${ver}`);
     }
   }

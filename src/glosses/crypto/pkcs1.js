@@ -74,7 +74,7 @@ export const encode_rsa_oaep = function (key, message, options) {
   let md;
   let mgf1Md;
   // legacy args (label, seed, md)
-  if (is.string(options)) {
+  if (ateos.isString(options)) {
     label = options;
     seed = arguments[3] || undefined;
     md = arguments[4] || undefined;
@@ -166,7 +166,7 @@ export const decode_rsa_oaep = function (key, em, options) {
   let md;
   let mgf1Md;
   // legacy args
-  if (is.string(options)) {
+  if (ateos.isString(options)) {
     label = options;
     md = arguments[3] || undefined;
   } else if (options) {
@@ -188,7 +188,7 @@ export const decode_rsa_oaep = function (key, em, options) {
   }
 
   // default OAEP to SHA-1 message digest
-  if (is.undefined(md)) {
+  if (ateos.isUndefined(md)) {
     md = crypto.md.sha1.create();
   } else {
     md.start();

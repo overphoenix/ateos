@@ -33,7 +33,7 @@ export default class RemotePeer extends AbstractPeer {
     this._packetUid = new FastUid();
     this._responseHandlers = new TimeMap(this.netron.options.responseTimeout, (id) => {
       const handler = this._deleteHandler(id);
-      !is.undefined(handler.error) && handler.error(new error.NetronTimeout(`Response timeout ${this.netron.options.responseTimeout}ms exceeded`));
+      !ateos.isUndefined(handler.error) && handler.error(new error.NetronTimeout(`Response timeout ${this.netron.options.responseTimeout}ms exceeded`));
     });
 
     this._remoteEvents = new Map();
@@ -53,12 +53,12 @@ export default class RemotePeer extends AbstractPeer {
   }
 
   get connected() {
-    return !is.null(this._writer);
+    return !ateos.isNull(this._writer);
   }
 
   get(defId, name, defaultData) {
     const ctxDef = this._defs.get(defId);
-    if (is.undefined(ctxDef)) {
+    if (ateos.isUndefined(ctxDef)) {
       throw new error.NotExistsException(`Context with definition id '${defId}' not exists`);
     }
 
@@ -77,7 +77,7 @@ export default class RemotePeer extends AbstractPeer {
 
   set(defId, name, data) {
     const ctxDef = this._defs.get(defId);
-    if (is.undefined(ctxDef)) {
+    if (ateos.isUndefined(ctxDef)) {
       throw new error.NotExistsException(`Context with definition id '${defId}' not exists`);
     }
 
@@ -99,7 +99,7 @@ export default class RemotePeer extends AbstractPeer {
 
   async subscribe(eventName, handler) {
     const handlers = this._remoteEvents.get(eventName);
-    if (is.undefined(handlers)) {
+    if (ateos.isUndefined(handlers)) {
       this._remoteEvents.set(eventName, [handler]);
       await this.runTask({
         task: "netronSubscribe",
@@ -112,7 +112,7 @@ export default class RemotePeer extends AbstractPeer {
 
   async unsubscribe(eventName, handler) {
     const handlers = this._remoteEvents.get(eventName);
-    if (!is.undefined(handlers)) {
+    if (!ateos.isUndefined(handlers)) {
       const index = handlers.indexOf(handler);
       if (index >= 0) {
         handlers.splice(index, 1);
@@ -134,7 +134,7 @@ export default class RemotePeer extends AbstractPeer {
     }
 
     const stub = this.netron.stubManager.createStub(instance);
-    if (is.null(ctxId)) {
+    if (ateos.isNull(ctxId)) {
       ctxId = stub.reflection.getName();
     }
 
@@ -159,7 +159,7 @@ export default class RemotePeer extends AbstractPeer {
       throw new error.NotSupportedException(`Context proxification feature is not enabled on remote netron (peer id: '${this.id}')`);
     }
     const defId = this._proxifiedContexts.get(ctxId);
-    if (is.undefined(defId)) {
+    if (ateos.isUndefined(defId)) {
       throw new error.NotExistsException(`Context '${ctxId}' not proxified on the peer '${this.id}' code`);
     }
     this.netron.stubManager.deleteStub(defId);
@@ -190,8 +190,8 @@ export default class RemotePeer extends AbstractPeer {
 
   _write(pkt) {
     return new Promise((resolve, reject) => {
-      // if (!is.null(this.connection)) {
-      if (!is.null(this._writer)) {
+      // if (!ateos.isNull(this.connection)) {
+      if (!ateos.isNull(this._writer)) {
         const rawPkt = packet.encode(pkt).toBuffer();
         HEADER_BUFFER.writeUInt32BE(rawPkt.length, 0);
         this._writer.push(Buffer.concat([HEADER_BUFFER, rawPkt]));
@@ -205,7 +205,7 @@ export default class RemotePeer extends AbstractPeer {
 
   _sendRequest(action, data, result, error) {
     const id = this._packetUid.create();
-    if (is.function(result) || is.function(error)) {
+    if (ateos.isFunction(result) || ateos.isFunction(error)) {
       this._responseHandlers.set(id, {
         result,
         error
@@ -233,8 +233,8 @@ export default class RemotePeer extends AbstractPeer {
     const isError = packet.getError();
     const data = packet.data;
     switch (isError) {
-      case 0: return !is.undefined(handler.result) && handler.result(data);
-      case 1: return !is.undefined(handler.error) && handler.error(data);
+      case 0: return !ateos.isUndefined(handler.result) && handler.result(data);
+      case 1: return !ateos.isUndefined(handler.error) && handler.error(data);
     }
   }
 
@@ -247,7 +247,7 @@ export default class RemotePeer extends AbstractPeer {
   _runTask(task) {
     return new Promise((resolve, reject) => {
       this._sendRequest(ACTION.TASK, task, (result) => {
-        if (!is.plainObject(result)) {
+        if (!ateos.isPlainObject(result)) {
           return reject(new ateos.error.NotValidException(`Not valid result: ${ateos.typeOf(result)}`));
         }
         resolve(result);
@@ -257,7 +257,7 @@ export default class RemotePeer extends AbstractPeer {
 
   _queryInterfaceByDefinition(defId) {
     const def = this._defs.get(defId);
-    if (is.undefined(def)) {
+    if (ateos.isUndefined(def)) {
       throw new error.UnknownException(`Unknown definition '${defId}'`);
     }
     return this.netron.interfaceFactory.create(def, this);
@@ -265,7 +265,7 @@ export default class RemotePeer extends AbstractPeer {
 
   _getContextDefinition(ctxId) {
     const def = this._ctxidDefs.get(ctxId);
-    if (is.undefined(def)) {
+    if (ateos.isUndefined(def)) {
       throw new error.NotExistsException(`Context '${ctxId}' not exists`);
     }
     return def;
@@ -373,7 +373,7 @@ export default class RemotePeer extends AbstractPeer {
 
     // greet remote...
     await this.runTask(ON_CONNECT_TASKS);
-    if (is.object(this.task.netronGetContextDefs.result)) {
+    if (ateos.isObject(this.task.netronGetContextDefs.result)) {
       this._updateStrongDefinitions(this.task.netronGetContextDefs.result);
     }
 
@@ -407,7 +407,7 @@ export default class RemotePeer extends AbstractPeer {
           try {
             const stub = this.netron.stubManager.getStub(defId);
 
-            if (is.undefined(stub)) {
+            if (ateos.isUndefined(stub)) {
               return this._sendErrorResponse(packet, new error.NotExistsException(`Context with definition id '${defId}' not exists`));
             }
             await this._sendResponse(packet, await stub.set(name, data[2], this));
@@ -435,7 +435,7 @@ export default class RemotePeer extends AbstractPeer {
           try {
             const stub = this.netron.stubManager.getStub(defId);
 
-            if (is.undefined(stub)) {
+            if (ateos.isUndefined(stub)) {
               return this._sendErrorResponse(packet, new error.NotExistsException(`Context with definition id '${defId}' not exists`));
             }
             await this._sendResponse(packet, await stub.get(name, data[2], this));
@@ -508,7 +508,7 @@ export default class RemotePeer extends AbstractPeer {
   }
 
   _processArgsRemote(args, isMethod, ctxDef) {
-    if (isMethod && is.array(args)) {
+    if (isMethod && ateos.isArray(args)) {
       for (let i = 0; i < args.length; ++i) {
         args[i] = this._processObjectRemote(args[i], ctxDef);
       }

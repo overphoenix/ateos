@@ -16,7 +16,7 @@ const {
 } = ateos;
 
 let _crypto = null;
-if (is.nodejs && !crypto.options.usePureJavaScript &&
+if (ateos.isNodejs && !crypto.options.usePureJavaScript &&
   !process.versions["node-webkit"]) {
   _crypto = require("crypto");
 }
@@ -111,7 +111,7 @@ export const create = function (plugin) {
         ctx.key = null;
       }
 
-      if (is.null(ctx.key)) {
+      if (ateos.isNull(ctx.key)) {
         // prevent stack overflow
         return crypto.util.nextTick(() => {
           _reseed(generate);
@@ -159,7 +159,7 @@ export const create = function (plugin) {
         ctx.key = null;
       }
 
-      if (is.null(ctx.key)) {
+      if (ateos.isNull(ctx.key)) {
         _reseedSync();
       }
 
@@ -289,7 +289,7 @@ export const create = function (plugin) {
           }
         } catch (e) {
           /* only ignore QuotaExceededError */
-          if (!(!is.undefined(QuotaExceededError) &&
+          if (!(!ateos.isUndefined(QuotaExceededError) &&
             e instanceof QuotaExceededError)) {
             throw e;
           }

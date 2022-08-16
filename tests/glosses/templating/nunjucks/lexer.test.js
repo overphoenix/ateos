@@ -12,7 +12,7 @@ describe("templating", "nunjucks", "lexer", () => {
                 }
             }
 
-            if (is.array(type)) {
+            if (ateos.isArray(type)) {
                 expect(tok.type).to.be.equal(type[0]);
                 expect(tok.value).to.be.equal(type[1]);
             } else {

@@ -11,7 +11,7 @@ const {
  * The task is to collect all usages of ateos from a file
  *
  * The strategy for bindings is to rename all of them and encapsulate into the name which ateos object each of them represents
- * For direct ateos usages (ateos.is.number(1)) we can just take member expressions
+ * For direct ateos usages (ateos.ateos.isNumber(1)) we can just take member expressions
  */
 class AteosDependencyCollector {
   constructor(dependencies = new Map()) {
@@ -84,7 +84,7 @@ class AteosDependencyCollector {
 
     const nested = this.compactMemberExpression(node.object);
 
-    if (is.null(nested)) {
+    if (ateos.isNull(nested)) {
       return null;
     }
 
@@ -122,7 +122,7 @@ class AteosDependencyCollector {
         // handle mapped ateos identifier
         const v = this.decodeAteosPath(name);
 
-        if (is.null(v)) {
+        if (ateos.isNull(v)) {
           return null;
         }
 
@@ -133,7 +133,7 @@ class AteosDependencyCollector {
       }
       case "MemberExpression": {
         const v = this.compactMemberExpression(node);
-        if (is.null(v)) {
+        if (ateos.isNull(v)) {
           return null;
         }
         if (v.value.startsWith("ateos")) {
@@ -208,13 +208,13 @@ class AteosDependencyCollector {
       VariableDeclarator: (path) => {
         const { node } = path;
 
-        if (is.null(node.init)) {
+        if (ateos.isNull(node.init)) {
           return;
         }
 
         const p = this.nodeToAteosPath(node.init);
 
-        if (is.null(p)) {
+        if (ateos.isNull(p)) {
           return;
         }
 
@@ -256,7 +256,7 @@ class AteosDependencyCollector {
       VariableDeclarator: (path) => {
         const { node } = path;
 
-        if (is.null(node.init)) {
+        if (ateos.isNull(node.init)) {
           return;
         }
 
@@ -265,13 +265,13 @@ class AteosDependencyCollector {
           return;
         }
         const p = this.nodeToAteosPath(node.init.callee);
-        if (is.null(p)) {
+        if (ateos.isNull(p)) {
           return;
         }
         switch (p.value) {
           case "ateos.getPrivate": {
             const target = this.nodeToAteosPath(node.init.arguments[0]);
-            if (is.null(target)) {
+            if (ateos.isNull(target)) {
               return; // wtf?
             }
             path.scope.rename(node.id.name, this.ateosPathToId(target.value, path.scope, true));
@@ -287,7 +287,7 @@ class AteosDependencyCollector {
       const { node } = path;
       const p = this.nodeToAteosPath(node);
       path.skip();
-      if (is.null(p)) {
+      if (ateos.isNull(p)) {
         return;
       }
 
@@ -502,11 +502,11 @@ export default class XModule extends realm.code.Base {
           if (["ExportDefaultDeclaration", "ExportNamedDeclaration"].includes(node.type)) {
             isDefault = (node.type === "ExportDefaultDeclaration");
 
-            if (is.array(node.specifiers) && node.specifiers.length > 0) {
+            if (ateos.isArray(node.specifiers) && node.specifiers.length > 0) {
               shouldSkip = true;
               for (const specifier of node.specifiers) {
                 xObj = this.lookupInGlobalScope(specifier.local.name);
-                if (is.null(xObj)) {
+                if (ateos.isNull(xObj)) {
                   throw new ateos.error.NotFoundException(`Variable '${specifier.local.name}' not found in global scope`);
                 }
                 if (specifier.local.name !== specifier.exported.name) {
@@ -542,7 +542,7 @@ export default class XModule extends realm.code.Base {
               throw new SyntaxError("Detected unsupported declaration of multiple variables.");
             }
             const declrNode = node.declarations[0];
-            if (!is.null(declrNode.init) && declrNode.init.type === "CallExpression" && declrNode.init.callee.type === "MemberExpression") {
+            if (!ateos.isNull(declrNode.init) && declrNode.init.type === "CallExpression" && declrNode.init.callee.type === "MemberExpression") {
               const exprName = this._getMemberExpressionName(declrNode.init.callee);
               if (exprName === "ateos.requireAddon") {
                 shouldSkip = true;
@@ -563,7 +563,7 @@ export default class XModule extends realm.code.Base {
 
             this._traverseVariableDeclarator(declrNode, node.kind);
 
-            if (!is.null(declrNode.init) && declrNode.init.type === "Identifier") {
+            if (!ateos.isNull(declrNode.init) && declrNode.init.type === "Identifier") {
               shouldSkip = true;
             } else {
               realPath.traverse({
@@ -583,7 +583,7 @@ export default class XModule extends realm.code.Base {
         if (!shouldSkip) {
           const node = realPath.node;
 
-          if (is.null(xObj)) {
+          if (ateos.isNull(xObj)) {
             const xObjData = {
               ast: node,
               path: realPath,
@@ -601,7 +601,7 @@ export default class XModule extends realm.code.Base {
               this.addToScope(xObj);
             }
           }
-          if (!is.undefined(isDefault)) {
+          if (!ateos.isUndefined(isDefault)) {
             // export default ateos.asNamespace(identifier);
             // TODO
             this._addExport(xObj, isDefault, node);
@@ -609,7 +609,7 @@ export default class XModule extends realm.code.Base {
         } else if (nodeType === "ExportNamedDeclaration") {
           const node = realPath.node;
 
-          if (is.null(xObj)) {
+          if (ateos.isNull(xObj)) {
             const xObjData = {
               ast: node,
               path: realPath,
@@ -627,7 +627,7 @@ export default class XModule extends realm.code.Base {
               this.addToScope(xObj);
             }
           }
-          if (!is.undefined(isDefault)) {
+          if (!ateos.isUndefined(isDefault)) {
             // export default ateos.asNamespace(identifier);
             // TODO
             this._addExport(xObj, isDefault, node);
@@ -660,7 +660,7 @@ export default class XModule extends realm.code.Base {
     }
     for (const [name, lazy] of this.lazies.entries()) {
       if (realm.code.isModule(lazy)) {
-        if (is.undefined(lazy.exports().default)) { // special case
+        if (ateos.isUndefined(lazy.exports().default)) { // special case
           result[name] = lazy;
         } else {
           const modExports = XModule.lazyExports(lazy);
@@ -743,7 +743,7 @@ export default class XModule extends realm.code.Base {
     switch (expr.callee.type) {
       case "Identifier": {
         const g = this.getGlobal(expr.callee.name);
-        return !is.undefined(g) && g.full === "ateos.lazify";
+        return !ateos.isUndefined(g) && g.full === "ateos.lazify";
       }
       case "MemberExpression": {
         return this._getMemberExpressionName(expr.callee) === "ateos.lazify";
@@ -754,7 +754,7 @@ export default class XModule extends realm.code.Base {
 
   _traverseVariableDeclarator(node, kind) {
     let prefix = "";
-    if (is.null(node.init)) {
+    if (ateos.isNull(node.init)) {
       return this._addGlobal(node.id.name, null, kind, false);
     }
     const initType = node.init.type;
@@ -828,7 +828,7 @@ export default class XModule extends realm.code.Base {
 
   _addGlobal(name, prefix, kind, isNamespace) {
     if (name.length > 0 && !this.globals.map((x) => x.name).includes(name)) {
-      const full = is.null(prefix) ? name : `${prefix}.${name}`;
+      const full = ateos.isNull(prefix) ? name : `${prefix}.${name}`;
       this.globals.push({
         name,
         full,
@@ -844,7 +844,7 @@ export default class XModule extends realm.code.Base {
     if (!isDefault) {
       switch (node.type) {
         case "ClassDeclaration": {
-          if (is.null(node.id)) {
+          if (ateos.isNull(node.id)) {
             throw new ateos.error.NotValidException("Anonymous class");
           }
           name = node.id.name;
@@ -885,7 +885,7 @@ export default class XModule extends realm.code.Base {
     } else if (realm.code.isFunctionLike(rawExports.default)) {
       // console.log(rawExports.default.name);
       result[rawExports.default.name] = rawExports.default;
-    } else if (is.undefined(rawExports.default)) {
+    } else if (ateos.isUndefined(rawExports.default)) {
       return rawExports;
     } else {
       throw new ateos.error.NotSupportedException(`Unsupported type '${rawExports.default.ast.type}' of exports: ${xModule.filePath}`);

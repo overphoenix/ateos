@@ -8,7 +8,7 @@ const {
 
 const _braces = (pattern, options) => {
   let arr = [];
-  if (is.array(pattern)) {
+  if (ateos.isArray(pattern)) {
     for (let i = 0; i < pattern.length; i++) {
       arr.push.apply(arr, braces.create(pattern[i], options));
     }
@@ -84,7 +84,7 @@ braces.optimize = function (pattern, options) {
  * @return {string[]} Returns an array of expanded values.
  */
 braces.create = function (pattern, options) {
-  if (!is.string(pattern)) {
+  if (!ateos.isString(pattern)) {
     throw new error.InvalidArgumentException("expected a string");
   }
 
@@ -143,7 +143,7 @@ braces.create = function (pattern, options) {
  * @return {RegExp}
  */
 braces.makeRe = function (pattern, options) {
-  if (!is.string(pattern)) {
+  if (!ateos.isString(pattern)) {
     throw new error.InvalidArgumentException("expected a string");
   }
 

@@ -49,7 +49,7 @@ Cancel.prototype[Symbol.for("ateos:request:cancel")] = true;
  */
 export class CancelToken {
   constructor(executor) {
-    if (!is.function(executor)) {
+    if (!ateos.isFunction(executor)) {
       throw new ateos.error.InvalidArgumentException("executor must be a function.");
     }
     let resolvePromise;
@@ -96,7 +96,7 @@ export const isCancel = (value) => Boolean(value && value[Symbol.for("ateos:requ
  * @returns {*} The resulting transformed data
  */
 export const transformData = (data, headers, config, fns) => {
-  if (is.nil(fns)) {
+  if (ateos.isNil(fns)) {
     return data;
   }
   fns = util.arrify(fns);
@@ -108,9 +108,9 @@ export const transformData = (data, headers, config, fns) => {
 
 
 export const defaults = {
-  adapter: (!is.undefined(process) && Object.prototype.toString.call(process) === "[object process]")
+  adapter: (!ateos.isUndefined(process) && Object.prototype.toString.call(process) === "[object process]")
     ? __.httpAdapter
-    : (!is.undefined(XMLHttpRequest))
+    : (!ateos.isUndefined(XMLHttpRequest))
       ? __.xhrAdapter
       : undefined,
   transformRequest: [(data, headers = {}) => {
@@ -119,21 +119,21 @@ export const defaults = {
 
     if (/*isFormData(data) ||*/
       is.arrayBuffer(data) ||
-            is.buffer(data) ||
-            is.stream(data)) {
-      if (is.undefined(headers["Content-Type"])) {
+            ateos.isBuffer(data) ||
+            ateos.isStream(data)) {
+      if (ateos.isUndefined(headers["Content-Type"])) {
         headers["Content-Type"] = "application/x-www-form-urlencoded";
       }
       return data;
     }
     if (is.arrayBufferView(data)) {
-      if (is.undefined(headers["Content-Type"])) {
+      if (ateos.isUndefined(headers["Content-Type"])) {
         headers["Content-Type"] = "application/x-www-form-urlencoded";
       }
       return data.buffer;
     }
-    if (is.object(data)) {
-      if (is.undefined(headers["Content-Type"])) {
+    if (ateos.isObject(data)) {
+      if (ateos.isUndefined(headers["Content-Type"])) {
         headers["Content-Type"] = "application/json;charset=utf-8";
       } else if (headers["Content-Type"].startsWith("application/x-www-form-urlencoded")) {
         return util.querystring.stringify(data);
@@ -142,7 +142,7 @@ export const defaults = {
     }
 
     // TODO: must it preserve content-type if there is no data?
-    if (is.undefined(headers["Content-Type"])) {
+    if (ateos.isUndefined(headers["Content-Type"])) {
       headers["Content-Type"] = "application/x-www-form-urlencoded";
     }
     return data;
@@ -211,19 +211,19 @@ const mergeConfig = (config1, config2) => {
   const config = {};
 
   forEach(["url", "method", "params", "data"], (prop) => {
-    if (!is.undefined(config2[prop])) {
+    if (!ateos.isUndefined(config2[prop])) {
       config[prop] = config2[prop];
     }
   });
 
   forEach(["headers", "auth", "proxy"], (prop) => {
-    if (is.object(config2[prop])) {
+    if (ateos.isObject(config2[prop])) {
       config[prop] = deepMerge(config1[prop], config2[prop]);
-    } else if (!is.undefined(config2[prop])) {
+    } else if (!ateos.isUndefined(config2[prop])) {
       config[prop] = config2[prop];
-    } else if (is.object(config1[prop])) {
+    } else if (ateos.isObject(config1[prop])) {
       config[prop] = deepMerge(config1[prop]);
-    } else if (!is.undefined(config1[prop])) {
+    } else if (!ateos.isUndefined(config1[prop])) {
       config[prop] = config1[prop];
     }
   });
@@ -235,9 +235,9 @@ const mergeConfig = (config1, config2) => {
     "validateStatus", "maxRedirects", "httpAgent", "httpsAgent", "cancelToken",
     "socketPath"
   ], (prop) => {
-    if (!is.undefined(config2[prop])) {
+    if (!ateos.isUndefined(config2[prop])) {
       config[prop] = config2[prop];
-    } else if (!is.undefined(config1[prop])) {
+    } else if (!ateos.isUndefined(config1[prop])) {
       config[prop] = config1[prop];
     }
   });
@@ -261,7 +261,7 @@ export class Client {
 
   request(...args) {
     let config;
-    if (is.string(args[0])) {
+    if (ateos.isString(args[0])) {
       config = args[1] || {};
       config.url = args[0];
     } else {

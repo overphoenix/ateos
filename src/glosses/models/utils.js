@@ -5,7 +5,7 @@ const {
 
 // Clone object or array
 export const clone = function (obj, seen) {
-  if (typeof obj !== "object" || is.null(obj)) {
+  if (typeof obj !== "object" || ateos.isNull(obj)) {
 
     return obj;
   }
@@ -20,8 +20,8 @@ export const clone = function (obj, seen) {
   let newObj;
   let cloneDeep = false;
 
-  if (!is.array(obj)) {
-    if (is.buffer(obj)) {
+  if (!ateos.isArray(obj)) {
+    if (ateos.isBuffer(obj)) {
       newObj = Buffer.from(obj);
     } else if (obj instanceof Date) {
       newObj = new Date(obj.getTime());
@@ -68,14 +68,14 @@ export const clone = function (obj, seen) {
 // Merge all the properties of source into target, source wins in conflict, and by default null and undefined from source are applied
 export const merge = function (target, source, isNullOverride /* = true */, isMergeArrays /* = true */) {
   assert(target && typeof target === "object", "Invalid target value: must be an object");
-  assert(is.nil(source) || typeof source === "object", "Invalid source value: must be null, undefined, or an object");
+  assert(ateos.isNil(source) || typeof source === "object", "Invalid source value: must be null, undefined, or an object");
 
   if (!source) {
     return target;
   }
 
-  if (is.array(source)) {
-    exports.assert(is.array(target), "Cannot merge array onto an object");
+  if (ateos.isArray(source)) {
+    exports.assert(ateos.isArray(target), "Cannot merge array onto an object");
     if (isMergeArrays === false) { // isMergeArrays defaults to true
       target.length = 0; // Must not change target assignment
     }
@@ -100,9 +100,9 @@ export const merge = function (target, source, isNullOverride /* = true */, isMe
 
       if (!target[key] ||
                 typeof target[key] !== "object" ||
-                (is.array(target[key]) !== is.array(value)) ||
+                (ateos.isArray(target[key]) !== ateos.isArray(value)) ||
                 value instanceof Date ||
-                is.buffer(value) ||
+                ateos.isBuffer(value) ||
                 value instanceof RegExp) {
 
         target[key] = exports.clone(value);
@@ -110,7 +110,7 @@ export const merge = function (target, source, isNullOverride /* = true */, isMe
         exports.merge(target[key], value, isNullOverride, isMergeArrays);
       }
     } else {
-      if (!is.nil(value)) { // Explicit to preserve empty strings
+      if (!ateos.isNil(value)) { // Explicit to preserve empty strings
 
         target[key] = value;
       } else if (isNullOverride !== false) { // Defaults to true
@@ -154,8 +154,8 @@ export const deepEqual = function (obj, ref, options, seen) {
   }
 
   if (type !== "object" ||
-        is.null(obj) ||
-        is.null(ref)) {
+        ateos.isNull(obj) ||
+        ateos.isNull(ref)) {
 
     if (obj === ref) { // Copied from Deep-eql, copyright(c) 2013 Jake Luer, jake@alogicalparadox.com, MIT Licensed, https://github.com/chaijs/deep-eql
       return obj !== 0 || 1 / obj === 1 / ref; // -0 / +0
@@ -171,8 +171,8 @@ export const deepEqual = function (obj, ref, options, seen) {
 
   seen.push(obj);
 
-  if (is.array(obj)) {
-    if (!is.array(ref)) {
+  if (ateos.isArray(obj)) {
+    if (!ateos.isArray(ref)) {
       return false;
     }
 
@@ -201,8 +201,8 @@ export const deepEqual = function (obj, ref, options, seen) {
     return true;
   }
 
-  if (is.buffer(obj)) {
-    if (!is.buffer(ref)) {
+  if (ateos.isBuffer(obj)) {
+    if (!ateos.isBuffer(ref)) {
       return false;
     }
 
@@ -314,8 +314,8 @@ export const contain = function (ref, values, options) {
   let valuePairs = null;
   if (typeof ref === "object" &&
         typeof values === "object" &&
-        !is.array(ref) &&
-        !is.array(values)) {
+        !ateos.isArray(ref) &&
+        !ateos.isArray(values)) {
 
     valuePairs = values;
     values = Object.keys(values);
@@ -325,7 +325,7 @@ export const contain = function (ref, values, options) {
 
   options = options || {}; // deep, once, only, part
 
-  assert(is.string(ref) || typeof ref === "object", "Reference must be string or an object");
+  assert(ateos.isString(ref) || typeof ref === "object", "Reference must be string or an object");
   assert(values.length, "Values array cannot be empty");
 
   let compare;
@@ -350,11 +350,11 @@ export const contain = function (ref, values, options) {
     matches[i] = 0;
   }
 
-  if (is.string(ref)) {
+  if (ateos.isString(ref)) {
     let pattern = "(";
     for (let i = 0; i < values.length; ++i) {
       const value = values[i];
-      assert(is.string(value), "Cannot compare string reference to non-string value");
+      assert(ateos.isString(value), "Cannot compare string reference to non-string value");
       pattern += (i ? "|" : "") + escapeRegex(value);
     }
 
@@ -367,7 +367,7 @@ export const contain = function (ref, values, options) {
     });
 
     misses = Boolean(leftovers);
-  } else if (is.array(ref)) {
+  } else if (ateos.isArray(ref)) {
     for (let i = 0; i < ref.length; ++i) {
       let matched = false;
       for (let j = 0; j < values.length && matched === false; ++j) {
@@ -424,7 +424,7 @@ export const flatten = function (array, target) {
   const result = target || [];
 
   for (let i = 0; i < array.length; ++i) {
-    if (is.array(array[i])) {
+    if (ateos.isArray(array[i])) {
       exports.flatten(array[i], result);
     } else {
       result.push(array[i]);
@@ -439,14 +439,14 @@ export const flatten = function (array, target) {
 export const reach = function (obj, chain, options) {
 
   if (chain === false ||
-        is.null(chain) ||
-        is.undefined(chain)) {
+        ateos.isNull(chain) ||
+        ateos.isUndefined(chain)) {
 
     return obj;
   }
 
   options = options || {};
-  if (is.string(options)) {
+  if (ateos.isString(options)) {
     options = { separator: options };
   }
 
@@ -454,17 +454,17 @@ export const reach = function (obj, chain, options) {
   let ref = obj;
   for (let i = 0; i < path.length; ++i) {
     let key = path[i];
-    if (key[0] === "-" && is.array(ref)) {
+    if (key[0] === "-" && ateos.isArray(ref)) {
       key = key.slice(1, key.length);
       key = ref.length - key;
     }
 
     if (!ref ||
-            !((typeof ref === "object" || is.function(ref)) && key in ref) ||
+            !((typeof ref === "object" || ateos.isFunction(ref)) && key in ref) ||
             (typeof ref !== "object" && options.functions === false)) { // Only object and function can have properties
 
       assert(!options.strict || i + 1 === path.length, "Missing segment", key, "in reach path ", chain);
-      assert(typeof ref === "object" || options.functions === true || !is.function(ref), "Invalid segment", key, "in reach path ", chain);
+      assert(typeof ref === "object" || options.functions === true || !ateos.isFunction(ref), "Invalid segment", key, "in reach path ", chain);
       ref = options.default;
       break;
     }
@@ -510,7 +510,7 @@ const namedHtml = {
   174: "&reg;"
 };
 
-const isSafe = (charCode) => (!is.undefined(safeCharCodes[charCode]));
+const isSafe = (charCode) => (!ateos.isUndefined(safeCharCodes[charCode]));
 
 const padLeft = function (str, len) {
   while (str.length < len) {
@@ -522,7 +522,7 @@ const padLeft = function (str, len) {
 
 const escapeHtmlChar = function (charCode) {
   const namedEscape = namedHtml[charCode];
-  if (!is.undefined(namedEscape)) {
+  if (!ateos.isUndefined(namedEscape)) {
     return namedEscape;
   }
 
@@ -737,7 +737,7 @@ export class Topo {
         }
       }
 
-      if (!is.null(next)) {
+      if (!ateos.isNull(next)) {
         visited[next] = true;
         sorted.push(next);
       }

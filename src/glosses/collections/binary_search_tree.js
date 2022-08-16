@@ -34,7 +34,7 @@ const defaultCheckValueEquality = (a, b) => a === b;
 export default class BinarySearchTree {
   constructor(options = {}) {
     this.left = this.right = null;
-    this.parent = !is.undefined(options.parent) ? options.parent : null;
+    this.parent = !ateos.isUndefined(options.parent) ? options.parent : null;
     if (options.hasOwnProperty("key")) {
       this.key = options.key;
     }
@@ -449,7 +449,7 @@ export default class BinarySearchTree {
     const newData = [];
 
     // Delete only a value
-    if (this.data.length > 1 && !is.undefined(value)) {
+    if (this.data.length > 1 && !ateos.isUndefined(value)) {
       for (const i of this.data) {
         if (!this._checkValueEquality(i, value)) {
           newData.push(i);

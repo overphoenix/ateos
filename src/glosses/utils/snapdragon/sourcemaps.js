@@ -91,7 +91,7 @@ mixin.emit = function (str, node) {
  * @param {object} `pos`
  */
 mixin.addFile = function (file, position) {
-  if (!is.string(position.content)) {
+  if (!ateos.isString(position.content)) {
     return;
   }
   if (Object.prototype.hasOwnProperty.call(this.files, file)) {
@@ -107,7 +107,7 @@ mixin.addFile = function (file, position) {
  * @param {object} `position`
  */
 mixin.addContent = function (source, position) {
-  if (!is.string(position.content)) {
+  if (!ateos.isString(position.content)) {
     return;
   }
   if (Object.prototype.hasOwnProperty.call(this.content, source)) {

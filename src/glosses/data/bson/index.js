@@ -59,13 +59,13 @@ function setInternalBufferSize(size) {
 function serialize(object, options) {
   options = options || {};
   // Unpack the options
-  const checkKeys = is.boolean(options.checkKeys) ? options.checkKeys : false;
+  const checkKeys = ateos.isBoolean(options.checkKeys) ? options.checkKeys : false;
   const serializeFunctions =
-    is.boolean(options.serializeFunctions) ? options.serializeFunctions : false;
+    ateos.isBoolean(options.serializeFunctions) ? options.serializeFunctions : false;
   const ignoreUndefined =
-    is.boolean(options.ignoreUndefined) ? options.ignoreUndefined : true;
+    ateos.isBoolean(options.ignoreUndefined) ? options.ignoreUndefined : true;
   const minInternalBufferSize =
-    is.number(options.minInternalBufferSize) ? options.minInternalBufferSize : MAXSIZE;
+    ateos.isNumber(options.minInternalBufferSize) ? options.minInternalBufferSize : MAXSIZE;
 
   // Resize the internal serialization buffer if needed
   if (buffer.length < minInternalBufferSize) {
@@ -108,12 +108,12 @@ function serialize(object, options) {
 function serializeWithBufferAndIndex(object, finalBuffer, options) {
   options = options || {};
   // Unpack the options
-  const checkKeys = is.boolean(options.checkKeys) ? options.checkKeys : false;
+  const checkKeys = ateos.isBoolean(options.checkKeys) ? options.checkKeys : false;
   const serializeFunctions =
-    is.boolean(options.serializeFunctions) ? options.serializeFunctions : false;
+    ateos.isBoolean(options.serializeFunctions) ? options.serializeFunctions : false;
   const ignoreUndefined =
-    is.boolean(options.ignoreUndefined) ? options.ignoreUndefined : true;
-  const startIndex = is.number(options.index) ? options.index : 0;
+    ateos.isBoolean(options.ignoreUndefined) ? options.ignoreUndefined : true;
+  const startIndex = ateos.isNumber(options.index) ? options.index : 0;
 
   // Attempt to serialize
   const serializationIndex = internalSerialize(
@@ -163,9 +163,9 @@ function calculateObjectSize(object, options) {
   options = options || {};
 
   const serializeFunctions =
-    is.boolean(options.serializeFunctions) ? options.serializeFunctions : false;
+    ateos.isBoolean(options.serializeFunctions) ? options.serializeFunctions : false;
   const ignoreUndefined =
-    is.boolean(options.ignoreUndefined) ? options.ignoreUndefined : true;
+    ateos.isBoolean(options.ignoreUndefined) ? options.ignoreUndefined : true;
 
   return internalCalculateObjectSize(object, serializeFunctions, ignoreUndefined);
 }

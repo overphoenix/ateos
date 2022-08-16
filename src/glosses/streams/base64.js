@@ -30,7 +30,7 @@ const wrap = (str, lineLength, delimiter) => {
 };
 
 const encode = (buffer) => {
-  if (is.string(buffer)) {
+  if (ateos.isString(buffer)) {
     buffer = Buffer.from(buffer, "utf-8");
   }
 

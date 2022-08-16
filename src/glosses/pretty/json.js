@@ -18,7 +18,7 @@ const getMaxIndexLength = function (input) {
 
   Object.getOwnPropertyNames(input).forEach((key) => {
     // Skip undefined values.
-    if (is.undefined(input[key])) {
+    if (ateos.isUndefined(input[key])) {
       return;
     }
 
@@ -31,20 +31,20 @@ const getMaxIndexLength = function (input) {
 // Helper function to detect if an object can be directly serializable
 const isSerializable = function (input, onlyPrimitives, options) {
   if (
-    is.boolean(input) ||
-        is.number(input) ||
-        is.function(input) ||
-        is.null(input) ||
+    ateos.isBoolean(input) ||
+        ateos.isNumber(input) ||
+        ateos.isFunction(input) ||
+        ateos.isNull(input) ||
         input instanceof Date
   ) {
     return true;
   }
-  if (is.string(input) && !input.includes("\n")) {
+  if (ateos.isString(input) && !input.includes("\n")) {
     return true;
   }
 
   if (options.inlineArrays && !onlyPrimitives) {
-    if (is.array(input) && isSerializable(input[0], true, options)) {
+    if (ateos.isArray(input) && isSerializable(input[0], true, options)) {
       return true;
     }
   }
@@ -57,7 +57,7 @@ const addColorToData = function (input, options) {
     return input;
   }
 
-  if (is.string(input)) {
+  if (ateos.isString(input)) {
     // Print strings in regular term color
     return options.stringColor ? chalk[options.stringColor](input) : input;
   }
@@ -70,17 +70,17 @@ const addColorToData = function (input, options) {
   if (input === false) {
     return chalk.red(sInput);
   }
-  if (is.null(input)) {
+  if (ateos.isNull(input)) {
     return chalk.grey(sInput);
   }
-  if (is.number(input)) {
+  if (ateos.isNumber(input)) {
     return chalk[options.numberColor](sInput);
   }
-  if (is.function(input)) {
+  if (ateos.isFunction(input)) {
     return "function() {}";
   }
 
-  if (is.array(input)) {
+  if (ateos.isArray(input)) {
     return input.join(", ");
   }
 
@@ -101,7 +101,7 @@ const renderToArray = function (data, options, indentation) {
   }
 
   // Unserializable string means it's multiline
-  if (is.string(data)) {
+  if (ateos.isString(data)) {
     return [
       `${indent(indentation)}"""`,
       indentLines(data, indentation + options.defaultIndentation),
@@ -110,7 +110,7 @@ const renderToArray = function (data, options, indentation) {
   }
 
 
-  if (is.array(data)) {
+  if (ateos.isArray(data)) {
     // If the array is empty, render the `emptyArrayMsg`
     if (data.length === 0) {
       return [indent(indentation) + options.emptyArrayMsg];
@@ -173,7 +173,7 @@ const renderToArray = function (data, options, indentation) {
     key = indent(indentation) + key;
 
     // Skip `undefined`, it's not a valid JSON value.
-    if (is.undefined(data[i])) {
+    if (ateos.isUndefined(data[i])) {
       return;
     }
 

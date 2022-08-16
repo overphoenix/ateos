@@ -45,21 +45,21 @@ export default class CodeLayout {
 
   getNamespaceInfo(nsName) {
     const namespace = this.namespaces.find((ns) => ns.name === nsName);
-    if (is.undefined(namespace)) {
+    if (ateos.isUndefined(namespace)) {
       throw new error.UnknownException(`Unknown namespace: ${nsName}`);
     }
     return namespace;
   }
 
   #init() {
-    if (!is.nil(this.#layout)) {
+    if (!ateos.isNil(this.#layout)) {
       const scanLayout = (layout, prefix) => {
-        if (is.nil(layout)) {
+        if (ateos.isNil(layout)) {
           return;
         }
         for (const [name, val] of Object.entries(layout)) {
           if (val.namespace) {
-            const nsName = is.null(prefix) ? name : `${prefix}.${name}`;
+            const nsName = ateos.isNull(prefix) ? name : `${prefix}.${name}`;
             this.nsNames.push(nsName);
             this.namespaces.push({
               name: nsName,

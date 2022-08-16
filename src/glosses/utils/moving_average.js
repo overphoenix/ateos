@@ -5,7 +5,7 @@ const {
 const { exp } = Math;
 
 export default function (timespan) {
-  if (!is.number(timespan)) {
+  if (!ateos.isNumber(timespan)) {
     throw new Error("must provide a timespan to the moving average constructor");
   }
 

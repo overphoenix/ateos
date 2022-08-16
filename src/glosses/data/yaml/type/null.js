@@ -1,7 +1,7 @@
 const { data: { yaml }, is } = ateos;
 
 const resolveYamlNull = (data) => {
-  if (is.null(data)) {
+  if (ateos.isNull(data)) {
     return true;
   }
 
@@ -15,7 +15,7 @@ module.exports = new yaml.type.Type("tag:yaml.org,2002:null", {
   kind: "scalar",
   resolve: resolveYamlNull,
   construct: () => null,
-  predicate: is.null,
+  predicate: ateos.isNull,
   represent: {
     canonical: () => "~",
     lowercase: () => "null",

@@ -70,7 +70,7 @@ class ObjectId {
     }
 
     // The most common usecase (blank id, new objectId instance)
-    if (is.nil(id) || is.number(id)) {
+    if (ateos.isNil(id) || ateos.isNumber(id)) {
       // Generate a new id
       this.id = ObjectId.generate(id);
       // If we are caching the hex string
@@ -85,18 +85,18 @@ class ObjectId {
     const valid = ObjectId.isValid(id);
 
     // Throw an error if it's not a valid setup
-    if (!valid && !is.nil(id)) {
+    if (!valid && !ateos.isNil(id)) {
       throw new TypeError(
         "Argument passed in must be a single String of 12 bytes or a string of 24 hex characters"
       );
-    } else if (valid && is.string(id) && id.length === 24 && hasBufferType) {
+    } else if (valid && ateos.isString(id) && id.length === 24 && hasBufferType) {
       return new ObjectId(Buffer.from(id, "hex"));
-    } else if (valid && is.string(id) && id.length === 24) {
+    } else if (valid && ateos.isString(id) && id.length === 24) {
       return ObjectId.createFromHexString(id);
-    } else if (!is.nil(id) && id.length === 12) {
+    } else if (!ateos.isNil(id) && id.length === 12) {
       // assume 12 byte string
       this.id = id;
-    } else if (!is.nil(id) && id.toHexString) {
+    } else if (!ateos.isNil(id) && id.toHexString) {
       // Duck-typing to support ObjectId from different npm packages
       return ObjectId.createFromHexString(id.toHexString());
     } else {
@@ -140,7 +140,7 @@ class ObjectId {
 
     for (let i = 0; i < this.id.length; i++) {
       const hexChar = hexTable[this.id.charCodeAt(i)];
-      if (!is.string(hexChar)) {
+      if (!ateos.isString(hexChar)) {
         throw makeObjectIdError(this.id, i);
       }
       hexString += hexChar;
@@ -171,7 +171,7 @@ class ObjectId {
      * @return {Buffer} return the 12 byte id buffer string.
      */
   static generate(time) {
-    if (!is.number(time)) {
+    if (!ateos.isNumber(time)) {
       time = ~~(Date.now() / 1000);
     }
 
@@ -209,7 +209,7 @@ class ObjectId {
   toString(format) {
     // Is the id a buffer then use the buffer toString method to return the format
     if (this.id && this.id.copy) {
-      return this.id.toString(is.string(format) ? format : "hex");
+      return this.id.toString(ateos.isString(format) ? format : "hex");
     }
 
     return this.toHexString();
@@ -238,7 +238,7 @@ class ObjectId {
     }
 
     if (
-      is.string(otherId) &&
+      ateos.isString(otherId) &&
             ObjectId.isValid(otherId) &&
             otherId.length === 12 &&
             this.id instanceof _Buffer
@@ -246,15 +246,15 @@ class ObjectId {
       return otherId === this.id.toString("binary");
     }
 
-    if (is.string(otherId) && ObjectId.isValid(otherId) && otherId.length === 24) {
+    if (ateos.isString(otherId) && ObjectId.isValid(otherId) && otherId.length === 24) {
       return otherId.toLowerCase() === this.toHexString();
     }
 
-    if (is.string(otherId) && ObjectId.isValid(otherId) && otherId.length === 12) {
+    if (ateos.isString(otherId) && ObjectId.isValid(otherId) && otherId.length === 12) {
       return otherId === this.id;
     }
 
-    if (!is.nil(otherId) && (otherId instanceof ObjectId || otherId.toHexString)) {
+    if (!ateos.isNil(otherId) && (otherId instanceof ObjectId || otherId.toHexString)) {
       return otherId.toHexString() === this.toHexString();
     }
 
@@ -308,7 +308,7 @@ class ObjectId {
      */
   static createFromHexString(string) {
     // Throw an error if it's not a valid setup
-    if (is.undefined(string) || (!is.nil(string) && string.length !== 24)) {
+    if (ateos.isUndefined(string) || (!ateos.isNil(string) && string.length !== 24)) {
       throw new TypeError(
         "Argument passed in must be a single String of 12 bytes or a string of 24 hex characters"
       );
@@ -339,15 +339,15 @@ class ObjectId {
      * @return {boolean} return true if the value is a valid bson ObjectId, return false otherwise.
      */
   static isValid(id) {
-    if (is.nil(id)) {
+    if (ateos.isNil(id)) {
       return false;
     }
 
-    if (is.number(id)) {
+    if (ateos.isNumber(id)) {
       return true;
     }
 
-    if (is.string(id)) {
+    if (ateos.isString(id)) {
       return id.length === 12 || (id.length === 24 && checkForHexRegExp.test(id));
     }
 

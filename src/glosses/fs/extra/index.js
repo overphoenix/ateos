@@ -46,7 +46,7 @@ export const improve = (fs) => {
     "unlink",
     "utimes",
     "writeFile"
-  ].filter((key) => is.function(fs[key]));
+  ].filter((key) => ateos.isFunction(fs[key]));
 
   // Universalify async methods:
   for (const method of api) {
@@ -56,7 +56,7 @@ export const improve = (fs) => {
   // We differ from mz/fs in that we still ship the old, broken, fs.exists()
   // since we are a drop-in replacement for the native module
   improvedFs.exists = ateos.std.util.deprecate((filename, callback) => {
-    return (is.function(callback))
+    return (ateos.isFunction(callback))
       ? fs.exists(filename, callback)
       : new Promise((resolve) => {
         return fs.exists(filename, resolve);
@@ -64,7 +64,7 @@ export const improve = (fs) => {
   }, "fs.exists() is deprecated", "ADEP00001");
 
   improvedFs.read = (fd, buffer, offset, length, position, callback) => {
-    return (is.function(callback))
+    return (ateos.isFunction(callback))
       ? fs.read(fd, buffer, offset, length, position, callback)
       : new Promise((resolve, reject) => {
         fs.read(fd, buffer, offset, length, position, (err, bytesRead, buffer) => {
@@ -82,7 +82,7 @@ export const improve = (fs) => {
   // fs.write(fd, string[, position[, encoding]], callback)
   // We need to handle both cases, so we use ...args
   improvedFs.write = function (fd, buffer, ...args) {
-    return (is.function(args[args.length - 1]))
+    return (ateos.isFunction(args[args.length - 1]))
       ? fs.write(fd, buffer, ...args)
       : new Promise((resolve, reject) => {
         fs.write(fd, buffer, ...args, (err, bytesWritten, buffer) => {

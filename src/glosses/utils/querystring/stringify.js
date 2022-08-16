@@ -43,11 +43,11 @@ const _stringify = ( // eslint-disable-line func-name-matching
   encodeValuesOnly
 ) => {
   let obj = object;
-  if (is.function(filter)) {
+  if (ateos.isFunction(filter)) {
     obj = filter(prefix, obj);
   } else if (obj instanceof Date) {
     obj = serializeDate(obj);
-  } else if (is.null(obj)) {
+  } else if (ateos.isNull(obj)) {
     if (strictNullHandling) {
       return encoder && !encodeValuesOnly ? encoder(prefix, defaults.encoder) : prefix;
     }
@@ -55,7 +55,7 @@ const _stringify = ( // eslint-disable-line func-name-matching
     obj = "";
   }
 
-  if (is.string(obj) || is.number(obj) || is.boolean(obj) || is.buffer(obj)) {
+  if (ateos.isString(obj) || ateos.isNumber(obj) || ateos.isBoolean(obj) || ateos.isBuffer(obj)) {
     if (encoder) {
       const keyValue = encodeValuesOnly ? prefix : encoder(prefix, defaults.encoder);
       return [`${formatter(keyValue)}=${formatter(encoder(obj, defaults.encoder))}`];
@@ -65,12 +65,12 @@ const _stringify = ( // eslint-disable-line func-name-matching
 
   let values = [];
 
-  if (is.undefined(obj)) {
+  if (ateos.isUndefined(obj)) {
     return values;
   }
 
   let objKeys;
-  if (is.array(filter)) {
+  if (ateos.isArray(filter)) {
     objKeys = filter;
   } else {
     const keys = Object.keys(obj);
@@ -80,11 +80,11 @@ const _stringify = ( // eslint-disable-line func-name-matching
   for (let i = 0; i < objKeys.length; ++i) {
     const key = objKeys[i];
 
-    if (skipNulls && is.null(obj[key])) {
+    if (skipNulls && ateos.isNull(obj[key])) {
       continue;
     }
 
-    if (is.array(obj)) {
+    if (ateos.isArray(obj)) {
       values = values.concat(_stringify(
         obj[key],
         generateArrayPrefix(prefix, key),
@@ -124,20 +124,20 @@ export default function stringify(object, opts) {
   let obj = object;
   const options = opts ? { ...opts } : {};
 
-  if (!is.null(options.encoder) && !is.undefined(options.encoder) && !is.function(options.encoder)) {
+  if (!ateos.isNull(options.encoder) && !ateos.isUndefined(options.encoder) && !ateos.isFunction(options.encoder)) {
     throw new TypeError("Encoder has to be a function.");
   }
 
-  const delimiter = is.undefined(options.delimiter) ? defaults.delimiter : options.delimiter;
-  const strictNullHandling = is.boolean(options.strictNullHandling) ? options.strictNullHandling : defaults.strictNullHandling;
-  const skipNulls = is.boolean(options.skipNulls) ? options.skipNulls : defaults.skipNulls;
-  const encode = is.boolean(options.encode) ? options.encode : defaults.encode;
-  const encoder = is.function(options.encoder) ? options.encoder : defaults.encoder;
-  const sort = is.function(options.sort) ? options.sort : null;
-  const allowDots = is.undefined(options.allowDots) ? false : options.allowDots;
-  const serializeDate = is.function(options.serializeDate) ? options.serializeDate : defaults.serializeDate;
-  const encodeValuesOnly = is.boolean(options.encodeValuesOnly) ? options.encodeValuesOnly : defaults.encodeValuesOnly;
-  if (is.undefined(options.format)) {
+  const delimiter = ateos.isUndefined(options.delimiter) ? defaults.delimiter : options.delimiter;
+  const strictNullHandling = ateos.isBoolean(options.strictNullHandling) ? options.strictNullHandling : defaults.strictNullHandling;
+  const skipNulls = ateos.isBoolean(options.skipNulls) ? options.skipNulls : defaults.skipNulls;
+  const encode = ateos.isBoolean(options.encode) ? options.encode : defaults.encode;
+  const encoder = ateos.isFunction(options.encoder) ? options.encoder : defaults.encoder;
+  const sort = ateos.isFunction(options.sort) ? options.sort : null;
+  const allowDots = ateos.isUndefined(options.allowDots) ? false : options.allowDots;
+  const serializeDate = ateos.isFunction(options.serializeDate) ? options.serializeDate : defaults.serializeDate;
+  const encodeValuesOnly = ateos.isBoolean(options.encodeValuesOnly) ? options.encodeValuesOnly : defaults.encodeValuesOnly;
+  if (ateos.isUndefined(options.format)) {
     options.format = formats.default;
   } else if (!Object.prototype.hasOwnProperty.call(formats.formatters, options.format)) {
     throw new TypeError("Unknown format option provided.");
@@ -146,17 +146,17 @@ export default function stringify(object, opts) {
   let objKeys;
   let filter;
 
-  if (is.function(options.filter)) {
+  if (ateos.isFunction(options.filter)) {
     filter = options.filter;
     obj = filter("", obj);
-  } else if (is.array(options.filter)) {
+  } else if (ateos.isArray(options.filter)) {
     filter = options.filter;
     objKeys = filter;
   }
 
   let keys = [];
 
-  if (!is.object(obj)) {
+  if (!ateos.isObject(obj)) {
     return "";
   }
 
@@ -182,7 +182,7 @@ export default function stringify(object, opts) {
   for (let i = 0; i < objKeys.length; ++i) {
     const key = objKeys[i];
 
-    if (skipNulls && is.null(obj[key])) {
+    if (skipNulls && ateos.isNull(obj[key])) {
       continue;
     }
 

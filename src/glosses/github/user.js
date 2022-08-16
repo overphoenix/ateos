@@ -53,7 +53,7 @@ export default class User extends Requestable {
      * @return {Promise} - the promise for the http request
      */
   listRepos(options, cb) {
-    if (is.function(options)) {
+    if (ateos.isFunction(options)) {
       cb = options;
       options = {};
     }
@@ -112,7 +112,7 @@ export default class User extends Requestable {
      */
   listNotifications(options, cb) {
     options = options || {};
-    if (is.function(options)) {
+    if (ateos.isFunction(options)) {
       cb = options;
       options = {};
     }
@@ -153,7 +153,7 @@ export default class User extends Requestable {
      */
   listStarredGists(options, cb) {
     options = options || {};
-    if (is.function(options)) {
+    if (ateos.isFunction(options)) {
       cb = options;
       options = {};
     }

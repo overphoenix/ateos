@@ -10,7 +10,7 @@ export default class Concat {
     this.columnOffset = 0;
     this.sourceMapping = generateSourceMap;
     this.contentParts = [];
-    if (!is.buffer(separator)) {
+    if (!ateos.isBuffer(separator)) {
       separator = Buffer.from(separator);
     }
     this.separator = separator;
@@ -31,7 +31,7 @@ export default class Concat {
 
   async add(filePath, content, sourceMap) {
     filePath = filePath && util.normalizePath(filePath);
-    if (!is.buffer(content)) {
+    if (!ateos.isBuffer(content)) {
       content = Buffer.from(content);
     }
     if (this.contentParts.length) {
@@ -43,7 +43,7 @@ export default class Concat {
       const contentString = content.toString();
       const lines = contentString.split("\n").length;
 
-      if (is.string(sourceMap)) {
+      if (ateos.isString(sourceMap)) {
         sourceMap = JSON.parse(sourceMap);
       }
 

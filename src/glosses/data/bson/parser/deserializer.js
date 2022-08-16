@@ -24,7 +24,7 @@ const JS_INT_MIN_LONG = Long.fromNumber(constants.JS_INT_MIN);
 const functionCache = {};
 
 function deserialize(buffer, options, isArray) {
-  options = is.nil(options) ? {} : options;
+  options = ateos.isNil(options) ? {} : options;
   const index = options && options.index ? options.index : 0;
   // Read the document size
   const size =
@@ -63,27 +63,27 @@ function deserialize(buffer, options, isArray) {
 }
 
 function deserializeObject(buffer, index, options, isArray) {
-  const evalFunctions = is.nil(options.evalFunctions) ? false : options.evalFunctions;
-  const cacheFunctions = is.nil(options.cacheFunctions) ? false : options.cacheFunctions;
+  const evalFunctions = ateos.isNil(options.evalFunctions) ? false : options.evalFunctions;
+  const cacheFunctions = ateos.isNil(options.cacheFunctions) ? false : options.cacheFunctions;
   const cacheFunctionsCrc32 =
-        is.nil(options.cacheFunctionsCrc32) ? false : options.cacheFunctionsCrc32;
+        ateos.isNil(options.cacheFunctionsCrc32) ? false : options.cacheFunctionsCrc32;
 
   if (!cacheFunctionsCrc32) {
     var crc32 = null;
   }
 
-  const fieldsAsRaw = is.nil(options.fieldsAsRaw) ? null : options.fieldsAsRaw;
+  const fieldsAsRaw = ateos.isNil(options.fieldsAsRaw) ? null : options.fieldsAsRaw;
 
   // Return raw bson buffer instead of parsing it
-  const raw = is.nil(options.raw) ? false : options.raw;
+  const raw = ateos.isNil(options.raw) ? false : options.raw;
 
   // Return BSONRegExp objects instead of native regular expressions
-  const bsonRegExp = is.boolean(options.bsonRegExp) ? options.bsonRegExp : false;
+  const bsonRegExp = ateos.isBoolean(options.bsonRegExp) ? options.bsonRegExp : false;
 
   // Controls the promotion of values vs wrapper classes
-  const promoteBuffers = is.nil(options.promoteBuffers) ? false : options.promoteBuffers;
-  const promoteLongs = is.nil(options.promoteLongs) ? true : options.promoteLongs;
-  const promoteValues = is.nil(options.promoteValues) ? true : options.promoteValues;
+  const promoteBuffers = ateos.isNil(options.promoteBuffers) ? false : options.promoteBuffers;
+  const promoteLongs = ateos.isNil(options.promoteLongs) ? true : options.promoteLongs;
+  const promoteValues = ateos.isNil(options.promoteValues) ? true : options.promoteValues;
 
   // Set the start index
   const startIndex = index;
@@ -299,7 +299,7 @@ function deserializeObject(buffer, index, options, isArray) {
       }
 
       // Decode as raw Buffer object if options specifies it
-      if (!is.nil(buffer.slice)) {
+      if (!ateos.isNil(buffer.slice)) {
         // If we have subtype 2 skip the 4 bytes for the size
         if (subType === Binary.SUBTYPE_BYTE_ARRAY) {
           binarySize =
@@ -325,7 +325,7 @@ function deserializeObject(buffer, index, options, isArray) {
         }
       } else {
         const _buffer =
-                    !is.undefined(Uint8Array)
+                    !ateos.isUndefined(Uint8Array)
                       ? new Uint8Array(new ArrayBuffer(binarySize))
                       : new Array(binarySize);
         // If we have subtype 2 skip the 4 bytes for the size
@@ -639,7 +639,7 @@ function deserializeObject(buffer, index, options, isArray) {
     return object;
   }
 
-  if (!is.nil(object.$id) && !is.nil(object.$ref)) {
+  if (!ateos.isNil(object.$id) && !ateos.isNil(object.$ref)) {
     const copy = Object.assign({}, object);
     delete copy.$ref;
     delete copy.$id;
@@ -661,7 +661,7 @@ function isolateEvalWithHash(functionCache, hash, functionString, object) {
   const value = null;
 
   // Check for cache hit, eval if missing and return cached function
-  if (is.nil(functionCache[hash])) {
+  if (ateos.isNil(functionCache[hash])) {
     eval(`value = ${functionString}`);
     functionCache[hash] = value;
   }

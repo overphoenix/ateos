@@ -125,15 +125,15 @@ class Argument {
 
   coerce(value) {
     const _coerce = (type, ...args) => {
-      if (is.class(type)) {
+      if (ateos.isClass(type)) {
         return new type(value, ...args);
       }
-      if (is.function(type)) {
+      if (ateos.isFunction(type)) {
         return type(value, ...args);
       }
-      if (is.regexp(type)) {
+      if (ateos.isRegexp(type)) {
         const match = value.match(type);
-        if (is.null(match)) {
+        if (ateos.isNull(match)) {
           const err = new error.Exception(`Incorrect value, must match ${type}`);
           err.fatal = true;
           throw err;
@@ -142,17 +142,17 @@ class Argument {
       }
     };
 
-    if (is.array(this.type)) {
+    if (ateos.isArray(this.type)) {
       return _coerce(this.type[this.value.length]);
     }
-    if (is.array(this.value)) {
+    if (ateos.isArray(this.value)) {
       return _coerce(this.type, this.value.length);
     }
     return _coerce(this.type);
   }
 
   hasVerifier() {
-    return !is.null(this._verify);
+    return !ateos.isNull(this._verify);
   }
 
   async verify(args, opts) { // rest ?
@@ -164,7 +164,7 @@ class Argument {
     }
     // each non-true value is recognized as an error
     if (res !== true) {
-      const message = is.string(res) ? res : `verification of ${this.names[0]} failed`;
+      const message = ateos.isString(res) ? res : `verification of ${this.names[0]} failed`;
       throw new error.InvalidArgumentException(message);
     }
   }
@@ -187,7 +187,7 @@ class Argument {
   }
 
   match(arg) {
-    if (is.string(arg)) {
+    if (ateos.isString(arg)) {
       return this.names.includes(arg);
     }
 
@@ -211,7 +211,7 @@ class Argument {
   }
 
   static normalize(options, cmd, arg) {
-    if (is.string(options)) {
+    if (ateos.isString(options)) {
       options = { name: options };
     } else {
       options = ateos.o(options);
@@ -282,7 +282,7 @@ class Argument {
               };
               break;
             default: {
-              if (!is.function(options.set)) {
+              if (!ateos.isFunction(options.set)) {
                 throw invalid("'set' must be a function or one of: defaultTrue, defaultFalse, defaultUndefined, trueOnEmpty, falseOnEmpty, undefinedOnEmpty");
               }
             }
@@ -293,7 +293,7 @@ class Argument {
         case "store":
         case "append":
           if ("nargs" in options) {
-            if (is.integer(options.nargs)) {
+            if (ateos.isInteger(options.nargs)) {
               if (options.nargs < 1) {
                 throw invalid(`nargs should be a positive integer for ${options.action}`);
               }
@@ -306,7 +306,7 @@ class Argument {
           break;
       }
     } else if (options.nargs) {
-      if ((is.integer(options.nargs) && options.nargs < 1) || (!is.integer(options.nargs) && !["+", "*", "?"].includes(options.nargs))) {
+      if ((ateos.isInteger(options.nargs) && options.nargs < 1) || (!ateos.isInteger(options.nargs) && !["+", "*", "?"].includes(options.nargs))) {
         throw invalid("nargs should be a positive integer or one of [+, *, ?]");
       }
       options.action = "store";
@@ -317,17 +317,17 @@ class Argument {
 
     if (!options.type) {
       options.type = String;
-    } else if (is.array(options.type)) {
+    } else if (ateos.isArray(options.type)) {
       if (options.nargs === "*" || options.nargs === "+") {
         throw invalid("using the variadic nargs with a list of types is ambiguous");
       }
-      if (is.integer(options.nargs) && options.nargs !== options.type.length) {
+      if (ateos.isInteger(options.nargs) && options.nargs !== options.type.length) {
         throw invalid("the number of types must be equal to the number of arguments");
       }
     }
 
     if (options.verify) {
-      if (!is.function(options.verify)) {
+      if (!ateos.isFunction(options.verify)) {
         throw invalid("verify must be a function");
       }
     } else {
@@ -339,8 +339,8 @@ class Argument {
       options.required = false;
     }
 
-    if (!is.string(options.description)) {
-      if (is.string(options.help)) {
+    if (!ateos.isString(options.description)) {
+      if (ateos.isString(options.help)) {
         options.description = options.help;
       } else {
         options.description = "";
@@ -354,18 +354,18 @@ class Argument {
     }
     if (options.holder) {
       const checkHolder = (holder, i) => {
-        const index = is.integer(i) ? `[${i}]` : "";
-        if (!is.string(holder)) {
+        const index = ateos.isInteger(i) ? `[${i}]` : "";
+        if (!ateos.isString(holder)) {
           throw invalid(`${index} holder must be a string`);
         }
         if (/\s/.test(holder)) {
           throw invalid(`${index} holder cannot have space characters: ${options.holder}`);
         }
       };
-      if (!is.integer(options.nargs) || options.nargs === 1) {
+      if (!ateos.isInteger(options.nargs) || options.nargs === 1) {
         checkHolder(options.holder);
       } else {
-        if (!is.array(options.holder)) {
+        if (!ateos.isArray(options.holder)) {
           throw invalid("you must specify a holder for each argument");
         }
         for (let i = 0; i < options.nargs; ++i) {
@@ -378,7 +378,7 @@ class Argument {
     }
 
     if (options.format) {
-      if (!is.function(options.format)) {
+      if (!ateos.isFunction(options.format)) {
         throw invalid("format must be a function");
       }
     } else {
@@ -405,7 +405,7 @@ class Argument {
     } else if (options.colors === "default") {
       options.colors = util.clone(DEFAULT_COLORS);
       options._frozenColors = true;
-    } else if (is.object(options.colors)) {
+    } else if (ateos.isObject(options.colors)) {
       if (options.colors.inherit === false) {
         options.colors = util.assignDeep({}, DEFAULT_COLORS, options.colors);
         delete options.colors.inherit;
@@ -498,7 +498,7 @@ class Argument {
 
 class PositionalArgument extends Argument {
   constructor(options = {}, command) {
-    if (is.string(options)) {
+    if (ateos.isString(options)) {
       options = { name: options };
     }
     if ("default" in options && !("nargs" in options)) {
@@ -554,7 +554,7 @@ class PositionalArgument extends Argument {
       msg = `${openBracket}${formatVar(usageVariables[0])} ${ellipsis}${closeBracket}`;
     } else if (this.nargs === "?") {
       msg = `${openBracket}${formatVar(usageVariables[0])}${closeBracket}`;
-    } else if (is.integer(this.nargs)) {
+    } else if (ateos.isInteger(this.nargs)) {
       msg = usageVariables.map(formatVar).join(" ");
     }
 
@@ -583,7 +583,7 @@ class PositionalArgument extends Argument {
 
 class OptionalArgument extends Argument {
   constructor(options = {}, command) {
-    if (is.string(options)) {
+    if (ateos.isString(options)) {
       options = { name: options };
     }
     super(ateos.o({
@@ -612,7 +612,7 @@ class OptionalArgument extends Argument {
     if (raw) {
       return super.match(name);
     }
-    if (is.null(this.mappedNames)) {
+    if (ateos.isNull(this.mappedNames)) {
       this.mappedNames = [
         ...this.names,
         ...this.names.map((x) => {
@@ -670,7 +670,7 @@ class OptionalArgument extends Argument {
       msg = `${msg} ${openBrace}${usageVariables[0]} ${ellipsis}${closeBrace}`;
     } else if (this.nargs === "?") {
       msg = `${msg} ${openBrace}${usageVariables[0]}${closeBrace}`;
-    } else if (is.integer(this.nargs) && this.nargs) {
+    } else if (ateos.isInteger(this.nargs) && this.nargs) {
       msg = `${msg} ${usageVariables.join(" ")}`;
     }
     if (required && !this.required) {
@@ -748,7 +748,7 @@ const commandsWrap = (cmds, maxLength, colors) => {
 
 class Group {
   constructor(params) {
-    if (!is.object(params)) {
+    if (!ateos.isObject(params)) {
       params = String(params);
       this.name = params;
       this.description = text.capitalize(params);
@@ -850,11 +850,11 @@ class ArgumentsMap {
     if (arg.type === Number) {
       return 0;
     }
-    if (is.class(arg.type)) {
+    if (ateos.isClass(arg.type)) {
       // eslint-disable-next-line
             return new arg.type(null);
     }
-    if (is.function(arg.type)) {
+    if (ateos.isFunction(arg.type)) {
       return arg.type(null);
     }
     // array type?
@@ -1086,7 +1086,7 @@ class Command {
   }
 
   match(arg) {
-    if (is.string(arg)) {
+    if (ateos.isString(arg)) {
       if (this._match) {
         return this._match(arg) || false;
       }
@@ -1152,12 +1152,12 @@ class Command {
         };
         options.handler[INTERNAL] = true;
       }
-    } else if (!is.function(options.handler)) {
+    } else if (!ateos.isFunction(options.handler)) {
       throw new error.IllegalStateException(`${name}: A command handler must be a function`);
     }
 
-    if (!is.string(options.description)) {
-      if (is.string(options.help)) {
+    if (!ateos.isString(options.description)) {
+      if (ateos.isString(options.help)) {
         options.description = options.help;
       } else {
         options.description = postInit ? ateos.null : "";
@@ -1172,14 +1172,14 @@ class Command {
     } else if (options.name.length > 1) {
       throw new error.IllegalStateException(`${name}: When match is set only one name is possible`);
     } else {
-      if (is.regexp(options.match)) {
+      if (ateos.isRegexp(options.match)) {
         const re = options.match;
         options.match = (x) => x.match(re);
       }
     }
     if (!hasColorsSupport) {
       options.colors = false;
-    } else if (is.object(options.colors)) {
+    } else if (ateos.isObject(options.colors)) {
       if (!options.colors.inherit) {
         options.colors = util.assignDeep({}, DEFAULT_COLORS, options.colors);
         delete options.colors.inherit;
@@ -1214,7 +1214,7 @@ class Command {
     }
     options.name = util.arrify(options.name);
     for (const name of options.name) {
-      if (!is.string(name) || !name) {
+      if (!ateos.isString(name) || !name) {
         throw new error.IllegalStateException("A command name must be a non-empty string");
       }
     }
@@ -1295,7 +1295,7 @@ class Command {
 
     const totalWidth = process.stdout.columns;
 
-    if (is.string(this.description) && this.description) {
+    if (ateos.isString(this.description) && this.description) {
       helpMessage.push("", text.wrapAnsi(this.description, totalWidth));
     }
 
@@ -1483,7 +1483,7 @@ export default class AppHelper {
   }
 
   async getVersion() {
-    return is.string(this.#version)
+    return ateos.isString(this.#version)
       ? this.#version
       : (this.#version = "unknown");
   }
@@ -1600,7 +1600,7 @@ export default class AppHelper {
           break;
         }
       }
-      if (is.undefined(subcmd)) {
+      if (ateos.isUndefined(subcmd)) {
         if (create) {
           subcmd = this._createCommand({ name }, cmd);
         } else {
@@ -1641,7 +1641,7 @@ export default class AppHelper {
       subsystem = null;
     }
 
-    if (!is.object(cmdParams)) {
+    if (!ateos.isObject(cmdParams)) {
       throw new error.InvalidArgumentException("The options must be an object");
     }
 
@@ -1704,7 +1704,7 @@ export default class AppHelper {
 
   _defineCommandFromSubsystem(subsystem, sysMeta, props) {
     const commands = util.arrify(sysMeta.commands);
-    if (is.array(sysMeta.subsystems)) {
+    if (ateos.isArray(sysMeta.subsystems)) {
       for (const ss of sysMeta.subsystems) {
         commands.push({
           ...util.pick(ss, ["name", "description", "group"]),
@@ -1712,7 +1712,7 @@ export default class AppHelper {
         });
       }
     }
-    const params = is.array(props) ? util.pick(sysMeta, props) : sysMeta;
+    const params = ateos.isArray(props) ? util.pick(sysMeta, props) : sysMeta;
     this.defineCommand(subsystem, {
       ...params,
       commands
@@ -1855,7 +1855,7 @@ export default class AppHelper {
               if (commandMatch !== false) {
                 match = commandMatch;
                 command = commands[j];
-                if (is.function(command.loader)) {
+                if (ateos.isFunction(command.loader)) {
                   // We have lazy loaded subsystem, try load it and reinit command
                                     const sysInfo = await command.loader.call(command.subsystem); // eslint-disable-line
                   sysInfo.instance[COMMAND] = command;
@@ -1944,7 +1944,7 @@ export default class AppHelper {
             }
             if (matches) {
               argument.present = true;
-              if ((is.integer(argument.nargs) && argument.nargs > 0) || argument.nargs === "*" || argument.nargs === "+" || argument.nargs === "?") {
+              if ((ateos.isInteger(argument.nargs) && argument.nargs > 0) || argument.nargs === "*" || argument.nargs === "+" || argument.nargs === "?") {
                 if (argument.nargs !== 0) {
                   argument.value = [];
                 }
@@ -2040,7 +2040,7 @@ export default class AppHelper {
                   continue;
                 }
                 const { nargs } = arg;
-                if (is.integer(nargs)) {
+                if (ateos.isInteger(nargs)) {
                   atLeast += nargs;
                 } else if (nargs === "+") {
                   ++atLeast;
@@ -2052,7 +2052,7 @@ export default class AppHelper {
             if (argument.required || argument.optional) { // optional was passed, have to calculate
               const { nargs } = argument;
               const hasValue = argument.hasValue();
-              if (is.integer(nargs)) {
+              if (ateos.isInteger(nargs)) {
                 if (hasValue) {
                   thisAtLeast += nargs - argument.value.length;
                 } else {
@@ -2094,7 +2094,7 @@ export default class AppHelper {
             if (
               argument.nargs === "?" || // it requires 1 value and it has got it
                             (atLeast >= possible && thisAtLeast === 0) ||
-                            (is.integer(argument.nargs) && argument.value.length === argument.nargs)
+                            (ateos.isInteger(argument.nargs) && argument.value.length === argument.nargs)
             ) {
               // it can be enough for this argument or we have only required elements left
               state.push("finish argument");
@@ -2104,7 +2104,7 @@ export default class AppHelper {
             break;
           }
           case "finish argument": {
-            if (is.integer(argument.nargs)) {
+            if (ateos.isInteger(argument.nargs)) {
               if (argument.nargs > 0 && !argument.hasValue()) {
                 errors.push(new error.IllegalStateException(`${argument.names[0]}: must have a value`));
               }
@@ -2145,7 +2145,7 @@ export default class AppHelper {
                 argument.value,
                 command
               );
-              if (is.integer(res)) {
+              if (ateos.isInteger(res)) {
                 return this.app.stop(res);
               }
             }
@@ -2169,7 +2169,7 @@ export default class AppHelper {
                   arg.value = arg.default;
                 } else if (arg.nargs === "+") {
                   errors.push(new error.IllegalStateException(`${arg.names[0]}: has not enough parameters, must have at least 1`));
-                } else if (is.integer(arg.nargs)) {
+                } else if (ateos.isInteger(arg.nargs)) {
                   errors.push(new error.IllegalStateException(`${arg.names[0]}: has not enough parameters, must have ${arg.nargs}`));
                 }
               }
@@ -2204,7 +2204,7 @@ export default class AppHelper {
           case "rest": {
             for (; ;) {
               nextPart();
-              if (is.undefined(part)) {
+              if (ateos.isUndefined(part)) {
                 break;
               }
               rest.push(part);

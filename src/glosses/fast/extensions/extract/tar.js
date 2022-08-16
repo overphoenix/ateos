@@ -27,7 +27,7 @@ export default () => ({
           case "file": {
             entryFile.stat.mode |= S_IFREG;
             entryStream.pipe(ateos.stream.concat.create()).then((data) => {
-              if (is.array(data)) {
+              if (ateos.isArray(data)) {
                 data = Buffer.from(data);
               }
               entryFile.contents = data;

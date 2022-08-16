@@ -12,7 +12,7 @@ const isByteLength = (str, max) => {
 };
 
 export default function isEmail(str, options) {
-  if (!is.string(str)) {
+  if (!ateos.isString(str)) {
     return false;
   }
   options = {

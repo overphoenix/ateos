@@ -1,4 +1,4 @@
-const { is, error } = ateos;
+const { error } = ateos;
 
 const empty = Symbol.for("linkedlist:empty");
 
@@ -57,7 +57,7 @@ class Iterator {
  */
 export default class LinkedList {
   constructor(maxLength) {
-    if (!maxLength || !is.finite(maxLength)) {
+    if (!maxLength || !ateos.isFinite(maxLength)) {
       maxLength = LinkedList.DEFAULT_LENGTH;
       this.autoresize = true;
     } else {

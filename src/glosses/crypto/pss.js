@@ -45,7 +45,7 @@ export const create = function (options) {
   const hLen = hash.digestLength;
 
   let salt_ = options.salt || null;
-  if (is.string(salt_)) {
+  if (ateos.isString(salt_)) {
     // assume binary-encoded string
     salt_ = crypto.util.createBuffer(salt_);
   }
@@ -53,13 +53,13 @@ export const create = function (options) {
   let sLen;
   if ("saltLength" in options) {
     sLen = options.saltLength;
-  } else if (!is.null(salt_)) {
+  } else if (!ateos.isNull(salt_)) {
     sLen = salt_.length();
   } else {
     throw new Error("Salt length not specified or specific salt not given.");
   }
 
-  if (!is.null(salt_) && salt_.length() !== sLen) {
+  if (!ateos.isNull(salt_) && salt_.length() !== sLen) {
     throw new Error("Given salt length does not match length of given salt.");
   }
 
@@ -97,7 +97,7 @@ export const create = function (options) {
          * 4. Generate a random octet string salt of length sLen; if sLen = 0,
          */
     let salt;
-    if (is.null(salt_)) {
+    if (ateos.isNull(salt_)) {
       salt = prng.getBytesSync(sLen);
     } else {
       salt = salt_.bytes();

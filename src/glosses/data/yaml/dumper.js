@@ -53,7 +53,7 @@ const DEPRECATED_BOOLEANS_SYNTAX = new Set([
 ]);
 
 const compileStyleMap = (schema, map) => {
-  if (is.null(map)) {
+  if (ateos.isNull(map)) {
     return {};
   }
 
@@ -66,7 +66,7 @@ const compileStyleMap = (schema, map) => {
     }
     const type = schema.compiledTypeMap.fallback[tag];
 
-    if (type && is.propertyOwned(type.styleAliases, style)) {
+    if (type && ateos.isPropertyOwned(type.styleAliases, style)) {
       style = type.styleAliases[style];
     }
 
@@ -102,7 +102,7 @@ class State {
     this.indent = Math.max(1, (options.indent || 2));
     this.noArrayIndent = options.noArrayIndent || false;
     this.skipInvalid = options.skipInvalid || false;
-    this.flowLevel = is.nil(options.flowLevel) ? -1 : options.flowLevel;
+    this.flowLevel = ateos.isNil(options.flowLevel) ? -1 : options.flowLevel;
     this.styleMap = compileStyleMap(this.schema, options.styles || null);
     this.sortKeys = options.sortKeys || false;
     this.lineWidth = options.lineWidth || 80;
@@ -561,7 +561,7 @@ const writeBlockMapping = (state, level, object, compact) => {
   if (state.sortKeys === true) {
     // Default sorting
     keys.sort();
-  } else if (is.function(state.sortKeys)) {
+  } else if (ateos.isFunction(state.sortKeys)) {
     // Custom sort function
     keys.sort(state.sortKeys);
   } else if (state.sortKeys) {
@@ -580,7 +580,7 @@ const writeBlockMapping = (state, level, object, compact) => {
       continue; // Skip this pair because of invalid key.
     }
 
-    const explicitPair = (!is.null(state.tag) && state.tag !== "?") ||
+    const explicitPair = (!ateos.isNull(state.tag) && state.tag !== "?") ||
             (state.dump && state.dump.length > 1024);
 
     if (explicitPair) {
@@ -623,7 +623,7 @@ const detectType = (state, object, explicit) => {
 
   for (const type of typeList) {
     if ((type.instanceOf || type.predicate) &&
-            (!type.instanceOf || (is.object(object) && (object instanceof type.instanceOf))) &&
+            (!type.instanceOf || (ateos.isObject(object) && (object instanceof type.instanceOf))) &&
             (!type.predicate || type.predicate(object))) {
 
       state.tag = explicit ? type.tag : "?";
@@ -633,9 +633,9 @@ const detectType = (state, object, explicit) => {
 
         let result;
 
-        if (is.function(type.represent)) {
+        if (ateos.isFunction(type.represent)) {
           result = type.represent(object, style);
-        } else if (is.propertyOwned(type.represent, style)) {
+        } else if (ateos.isPropertyOwned(type.represent, style)) {
           result = type.represent[style](object, style);
         } else {
           throw new error.IllegalStateException(`!<${type.tag}> tag resolver accepts not "${style}" style`);
@@ -677,7 +677,7 @@ const writeNode = (state, level, object, block, compact, iskey) => {
     duplicate = duplicateIndex !== -1;
   }
 
-  if ((!is.null(state.tag) && state.tag !== "?") || duplicate || (state.indent !== 2 && level > 0)) {
+  if ((!ateos.isNull(state.tag) && state.tag !== "?") || duplicate || (state.indent !== 2 && level > 0)) {
     compact = false;
   }
 
@@ -712,7 +712,7 @@ const writeNode = (state, level, object, block, compact, iskey) => {
           state.dump = `&ref_${duplicateIndex} ${state.dump}`;
         }
       }
-    } else if (is.string(state.dump)) {
+    } else if (ateos.isString(state.dump)) {
       if (state.tag !== "?") {
         writeScalar(state, state.dump, level, iskey);
       }
@@ -723,7 +723,7 @@ const writeNode = (state, level, object, block, compact, iskey) => {
       throw new error.IllegalStateException(`unacceptable kind of an object to dump ${type}`);
     }
 
-    if (!is.null(state.tag) && state.tag !== "?") {
+    if (!ateos.isNull(state.tag) && state.tag !== "?") {
       state.dump = `!<${state.tag}> ${state.dump}`;
     }
   }
@@ -732,7 +732,7 @@ const writeNode = (state, level, object, block, compact, iskey) => {
 };
 
 const inspectNode = (object, objects, duplicatesIndexes) => {
-  if (!is.null(object) && is.object(object)) {
+  if (!ateos.isNull(object) && ateos.isObject(object)) {
     const index = objects.indexOf(object);
     if (index !== -1) {
       if (!duplicatesIndexes.has(index)) {
@@ -741,7 +741,7 @@ const inspectNode = (object, objects, duplicatesIndexes) => {
     } else {
       objects.push(object);
 
-      if (is.array(object)) {
+      if (ateos.isArray(object)) {
         for (const value of object) {
           inspectNode(value, objects, duplicatesIndexes);
         }

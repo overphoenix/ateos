@@ -1,5 +1,4 @@
 /* eslint-disable func-style */
-import * as aPath from "../path";
 import clone from "./clone.js";
 const fs = require("fs");
 const polyfills = require("./polyfills.js");
@@ -82,7 +81,7 @@ if (!global[gracefulQueue]) {
 }
 
 const base = patch(clone(fs));
-base.path = aPath;
+base.path = ateos.path;
 base.cwd = process.cwd;
 
 export default base;

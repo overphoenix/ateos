@@ -136,7 +136,7 @@ describe("datetime", "format", () => {
     });
 
     it("toJSON", () => {
-        const supportsJson = !is.undefined(JSON) && JSON.stringify && JSON.stringify.call;
+        const supportsJson = !ateos.isUndefined(JSON) && JSON.stringify && JSON.stringify.call;
         const date = ateos.datetime("2012-10-09T21:30:40.678+0100");
 
         assert.equal(date.toJSON(), "2012-10-09T20:30:40.678Z", "should output ISO8601 on ateos.datetime.fn.toJSON");

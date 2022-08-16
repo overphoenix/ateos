@@ -104,9 +104,9 @@ const constructOptions = (options, object, templateOptions) => {
   let subtitle = "";
   let outputData = {};
 
-  if (is.function(options)) {
+  if (ateos.isFunction(options)) {
     message = options(object);
-    if (is.object(message)) {
+    if (ateos.isObject(message)) {
       options = message;
     }
     if (!message) {
@@ -114,32 +114,32 @@ const constructOptions = (options, object, templateOptions) => {
     }
   }
 
-  if (is.string(options)) {
+  if (ateos.isString(options)) {
     message = options;
   }
 
-  if (is.object(options)) {
+  if (ateos.isObject(options)) {
     outputData = { console: true, gui: true, ...options };
 
-    if (is.function(outputData.title)) {
+    if (ateos.isFunction(outputData.title)) {
       title = outputData.title(object);
     } else {
       title = outputData.title || title;
     }
 
-    if (is.function(outputData.subtitle)) {
+    if (ateos.isFunction(outputData.subtitle)) {
       subtitle = outputData.subtitle(object);
     } else {
       subtitle = outputData.subtitle || subtitle;
     }
 
-    if (is.function(outputData.open)) {
+    if (ateos.isFunction(outputData.open)) {
       open = outputData.open(object);
     } else {
       open = outputData.open || open;
     }
 
-    if (is.function(outputData.message)) {
+    if (ateos.isFunction(outputData.message)) {
       message = outputData.message(object);
       if (!message) {
         return false;

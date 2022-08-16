@@ -247,7 +247,7 @@ export const createSignedData = function () {
       let serialNumber = signer.serialNumber;
       if (signer.certificate) {
         let cert = signer.certificate;
-        if (is.string(cert)) {
+        if (ateos.isString(cert)) {
           cert = crypto.pki.certificateFromPem(cert);
         }
         issuer = cert.issuer.attributes;
@@ -258,7 +258,7 @@ export const createSignedData = function () {
         throw new Error(
           "Could not add PKCS#7 signer; no private key specified.");
       }
-      if (is.string(key)) {
+      if (ateos.isString(key)) {
         key = crypto.pki.privateKeyFromPem(key);
       }
 
@@ -330,7 +330,7 @@ export const createSignedData = function () {
     sign(options) {
       options = options || {};
       // auto-generate content info
-      if (typeof msg.content !== "object" || is.null(msg.contentInfo)) {
+      if (typeof msg.content !== "object" || ateos.isNull(msg.contentInfo)) {
         // use Data ContentInfo
         msg.contentInfo = asn1.create(
           asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
@@ -344,7 +344,7 @@ export const createSignedData = function () {
           let content;
           if (msg.content instanceof crypto.util.ByteBuffer) {
             content = msg.content.bytes();
-          } else if (is.string(msg.content)) {
+          } else if (ateos.isString(msg.content)) {
             content = crypto.util.encodeUtf8(msg.content);
           }
 
@@ -384,7 +384,7 @@ export const createSignedData = function () {
      */
     addCertificate(cert) {
       // convert from PEM
-      if (is.string(cert)) {
+      if (ateos.isString(cert)) {
         cert = crypto.pki.certificateFromPem(cert);
       }
       msg.certificates.push(cert);
@@ -565,7 +565,7 @@ export const createEncryptedData = function () {
      * @param key The (symmetric) key as a byte buffer
      */
     decrypt(key) {
-      if (!is.undefined(key)) {
+      if (!ateos.isUndefined(key)) {
         msg.encryptedContent.key = key;
       }
       _decryptContent(msg);
@@ -669,8 +669,8 @@ export const createEnvelopedData = function () {
      * @param privKey The (RSA) private key object
      */
     decrypt(recipient, privKey) {
-      if (is.undefined(msg.encryptedContent.key) && !is.undefined(recipient) &&
-                !is.undefined(privKey)) {
+      if (ateos.isUndefined(msg.encryptedContent.key) && !ateos.isUndefined(recipient) &&
+                !ateos.isUndefined(privKey)) {
         switch (recipient.encryptedContent.algorithm) {
           case crypto.pki.oids.rsaEncryption:
           case crypto.pki.oids.desCBC:
@@ -722,7 +722,7 @@ export const createEnvelopedData = function () {
      */
     encrypt(key, cipher) {
       // Part 1: Symmetric encryption
-      if (is.undefined(msg.encryptedContent.content)) {
+      if (ateos.isUndefined(msg.encryptedContent.content)) {
         cipher = cipher || msg.encryptedContent.algorithm;
         key = key || msg.encryptedContent.key;
 
@@ -756,7 +756,7 @@ export const createEnvelopedData = function () {
             throw new Error(`Unsupported symmetric cipher, OID ${cipher}`);
         }
 
-        if (is.undefined(key)) {
+        if (ateos.isUndefined(key)) {
           key = crypto.util.createBuffer(crypto.random.getBytes(keyLen));
         } else if (key.length() != keyLen) {
           throw new Error(`${"Symmetric key has wrong length; " +
@@ -788,7 +788,7 @@ export const createEnvelopedData = function () {
         const recipient = msg.recipients[i];
 
         // Nothing to do, encryption already done.
-        if (!is.undefined(recipient.encryptedContent.content)) {
+        if (!ateos.isUndefined(recipient.encryptedContent.content)) {
           continue;
         }
 
@@ -1063,7 +1063,7 @@ function _attributeToAsn1(attr) {
     const jan_1_1950 = new Date("1950-01-01T00:00:00Z");
     const jan_1_2050 = new Date("2050-01-01T00:00:00Z");
     let date = attr.value;
-    if (is.string(date)) {
+    if (ateos.isString(date)) {
       // try to parse date
       const timestamp = Date.parse(date);
       if (!isNaN(timestamp)) {
@@ -1219,11 +1219,11 @@ function _fromAsn1(msg, obj, validator) {
  * @param The PKCS#7 message object.
  */
 function _decryptContent(msg) {
-  if (is.undefined(msg.encryptedContent.key)) {
+  if (ateos.isUndefined(msg.encryptedContent.key)) {
     throw new Error("Symmetric key not available.");
   }
 
-  if (is.undefined(msg.content)) {
+  if (ateos.isUndefined(msg.content)) {
     let ciph;
 
     switch (msg.encryptedContent.algorithm) {

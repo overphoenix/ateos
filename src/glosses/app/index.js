@@ -35,7 +35,7 @@ export const getSubsystemMeta = (target) => Reflect.getMetadata(SUBSYSTEM_ANNOTA
 
 const SubsystemDecorator = (sysInfo = {}) => (target) => {
   const info = getSubsystemMeta(target);
-  if (is.undefined(info)) {
+  if (ateos.isUndefined(info)) {
     setSubsystemMeta(target, sysInfo);
   } else {
     Object.assign(info, sysInfo);
@@ -48,7 +48,7 @@ export const AppSubsystem = SubsystemDecorator;
 export const CliMainCommand = (info = {}) => (target, key, descriptor) => {
   let sysMeta = getSubsystemMeta(target.constructor);
   info.handler = descriptor.value;
-  if (is.undefined(sysMeta)) {
+  if (ateos.isUndefined(sysMeta)) {
     if (target instanceof ateos.app.Application) {
       sysMeta = {
         mainCommand: info
@@ -68,7 +68,7 @@ export const CliMainCommand = (info = {}) => (target, key, descriptor) => {
 export const CliCommand = (commandInfo = {}) => (target, key, descriptor) => {
   let sysMeta = getSubsystemMeta(target.constructor);
   commandInfo.handler = descriptor.value;
-  if (is.undefined(sysMeta)) {
+  if (ateos.isUndefined(sysMeta)) {
     sysMeta = {
       commands: [
         commandInfo
@@ -76,7 +76,7 @@ export const CliCommand = (commandInfo = {}) => (target, key, descriptor) => {
     };
     setSubsystemMeta(target.constructor, sysMeta);
   } else {
-    if (!is.array(sysMeta.commands)) {
+    if (!ateos.isArray(sysMeta.commands)) {
       sysMeta.commands = [
         commandInfo
       ];

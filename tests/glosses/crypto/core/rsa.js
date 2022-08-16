@@ -101,7 +101,7 @@ describe("rsa", () => {
 
     // generate pair in async mode
     const _genAsync = function (options, callback) {
-        if (!is.function(callback)) {
+        if (!ateos.isFunction(callback)) {
             callback = options;
             options = { samePrng: false };
         }
@@ -133,11 +133,11 @@ describe("rsa", () => {
             // Node versions >= 10.12.0 support native keyPair generation,
             // which is non-deterministic
             if (isAsync && !isPurejs &&
-                is.function(require("crypto").generateKeyPair)) {
+                ateos.isFunction(require("crypto").generateKeyPair)) {
                 return false;
             }
             if (!isAsync && !isPurejs &&
-                is.function(require("crypto").generateKeyPairSync)) {
+                ateos.isFunction(require("crypto").generateKeyPairSync)) {
                 return false;
             }
         } else {

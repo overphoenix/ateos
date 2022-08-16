@@ -4,11 +4,11 @@ const {
 } = ateos;
 
 export default (input, columns, { ellipsis = "…", position = "end", term = false } = {}) => {
-  if (!is.string(input)) {
+  if (!ateos.isString(input)) {
     throw new TypeError(`Expected \`input\` to be a string, got ${typeof input}`);
   }
 
-  if (!is.number(columns)) {
+  if (!ateos.isNumber(columns)) {
     throw new TypeError(`Expected \`columns\` to be a number, got ${typeof columns}`);
   }
 

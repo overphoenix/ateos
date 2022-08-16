@@ -388,21 +388,21 @@ export class Devil {
     @Public()
     possess(manName) {
         const iSoul = this.souls.get(manName);
-        if (!is.undefined(iSoul)) {
+        if (!ateos.isUndefined(iSoul)) {
             this.possessedSoul = iSoul;
         }
     }
 
     @Public()
     takeVitality(percentage) {
-        if (!is.undefined(this.possessedSoul)) {
+        if (!ateos.isUndefined(this.possessedSoul)) {
             return this.possessedSoul.eatVitality(percentage);
         }
     }
 
     @Public()
     doEvil(manName, percentage) {
-        if (!is.undefined(this.possessedSoul)) {
+        if (!ateos.isUndefined(this.possessedSoul)) {
             return this.possessedSoul.doEvil(this.souls.get(manName), percentage);
         }
     }

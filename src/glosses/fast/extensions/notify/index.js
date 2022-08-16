@@ -23,7 +23,7 @@ const notify = function (options = {}) {
   }
 
   let filter;
-  if (options.filter && is.function(options.filter)) {
+  if (options.filter && ateos.isFunction(options.filter)) {
     ({ filter } = options);
   } else {
     filter = ateos.truly;
@@ -33,7 +33,7 @@ const notify = function (options = {}) {
     let _report = report;
     if (options.debounce) {
       let opts = options.debounce;
-      if (is.number(opts)) {
+      if (ateos.isNumber(opts)) {
         opts = { timeout: opts };
       }
       _report = util.debounce(_report, opts.timeout, opts);

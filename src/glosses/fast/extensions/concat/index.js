@@ -9,7 +9,7 @@ export default function plugin() {
       throw new error.InvalidArgumentException("Missing file option");
     }
     // to preserve existing |undefined| behaviour and to introduce |newLine: ""| for binaries
-    if (!is.string(options.newLine)) {
+    if (!ateos.isString(options.newLine)) {
       options.newLine = "\n";
     }
 
@@ -19,9 +19,9 @@ export default function plugin() {
     let fileName;
     let data;
 
-    if (is.string(file)) {
+    if (ateos.isString(file)) {
       fileName = file;
-    } else if (is.string(file.path)) {
+    } else if (ateos.isString(file.path)) {
       fileName = path.basename(file.path);
     } else {
       throw new error.InvalidArgumentException("Missing path in file options");
@@ -62,7 +62,7 @@ export default function plugin() {
       let joinedFile;
       // if file options was a file path
       // clone everything from the latest file
-      if (is.string(file)) {
+      if (ateos.isString(file)) {
         joinedFile = latestFile.clone({ contents: false });
         joinedFile.path = path.join(latestFile.base, file);
       } else {

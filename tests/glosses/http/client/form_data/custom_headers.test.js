@@ -23,7 +23,7 @@ describe("custom headers object", function () {
         let expectedLength;
 
         const server = ateos.std.http.createServer((req, res) => {
-            assert.ok( !is.undefined(req.headers["content-length"]) );
+            assert.ok( !ateos.isUndefined(req.headers["content-length"]) );
             assert.equal(req.headers["content-length"], expectedLength);
 
             req.on("data", (data) => {
@@ -64,7 +64,7 @@ describe("custom headers object", function () {
         let expectedLength;
 
         const server = ateos.std.http.createServer((req, res) => {
-            assert.ok( !is.undefined(req.headers["content-length"]) );
+            assert.ok( !ateos.isUndefined(req.headers["content-length"]) );
             assert.equal(req.headers["content-length"], expectedLength);
 
             req.on("data", (data) => {

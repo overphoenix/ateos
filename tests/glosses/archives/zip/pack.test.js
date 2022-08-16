@@ -25,7 +25,7 @@ describe("archive", "zip", "pack", () => {
         const buffers = [];
         for (; ;) {
             const entry = await zipFile.readEntry();
-            if (ateos.is.null(entry)) {
+            if (ateos.ateos.isNull(entry)) {
                 break;
             }
             const readStream = await zipFile.openReadStream(entry);
@@ -91,7 +91,7 @@ describe("archive", "zip", "pack", () => {
         const actual = [];
         for (; ;) {
             const entry = await zipFile.readEntry();
-            if (ateos.is.null(entry)) {
+            if (ateos.ateos.isNull(entry)) {
                 break;
             }
             actual.push(entry.fileName);
@@ -111,7 +111,7 @@ describe("archive", "zip", "pack", () => {
         const actual = [];
         for (; ;) {
             const entry = await zipFile.readEntry();
-            if (ateos.is.null(entry)) {
+            if (ateos.ateos.isNull(entry)) {
                 break;
             }
             actual.push(entry.fileName);

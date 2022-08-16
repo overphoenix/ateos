@@ -7,8 +7,7 @@ ateos.lazify({
   parseExpression: ["@babel/parser", (mod) => mod.parseExpression],
   parseFunction: "./parse_function",
   walk: "babylon-walk",
-  highlight: "@babel/highlight",
-  recast: "recast"
+  highlight: "@babel/highlight"
 }, exports, require);
 
 export const AsyncFunction = Object.getPrototypeOf(async () => { }).constructor;

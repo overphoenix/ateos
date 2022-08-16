@@ -6,7 +6,7 @@ const {
 
 const hasOwn = Object.prototype.hasOwnProperty;
 
-const isFunction = (obj) => is.function(obj) || Boolean(obj && obj.constructor && obj.call && obj.apply);
+const isFunction = (obj) => ateos.isFunction(obj) || Boolean(obj && obj.constructor && obj.call && obj.apply);
 
 const mirrorProperties = (target, source) => {
   for (const prop in source) {
@@ -23,7 +23,7 @@ export default function wrapMethod(object, property, method) {
     throw new InvalidArgument("Should wrap property of object");
   }
 
-  if (!is.function(method) && !is.object(method)) {
+  if (!ateos.isFunction(method) && !ateos.isObject(method)) {
     throw new TypeError("Method wrapper should be a function or a property descriptor");
   }
 
@@ -59,7 +59,7 @@ export default function wrapMethod(object, property, method) {
   // Firefox has a problem when using hasOwn.call on objects from other frames.
   const owned = object.hasOwnProperty ? object.hasOwnProperty(property) : hasOwn.call(object, property);
 
-  const methodDesc = is.function(method) ? { value: method } : method;
+  const methodDesc = ateos.isFunction(method) ? { value: method } : method;
   const wrappedMethodDesc = __.util.getPropertyDescriptor(object, property);
 
   let error;
@@ -89,7 +89,7 @@ export default function wrapMethod(object, property, method) {
 
   // catch failing assignment
   // this is the converse of the check in `.restore` below
-  if (is.function(method) && object[property] !== method) {
+  if (ateos.isFunction(method) && object[property] !== method) {
     // correct any wrongdoings caused by the defineProperty call above,
     // such as adding new items (if object was a Storage object)
     delete object[property];

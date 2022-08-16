@@ -1,7 +1,7 @@
 const { is } = ateos;
 
 export const compare = (a, b) => {
-  if (is.buffer(a)) {
+  if (ateos.isBuffer(a)) {
     const l = Math.min(a.length, b.length);
     for (let i = 0; i < l; i++) {
       const cmp = a[i] - b[i];
@@ -14,8 +14,8 @@ export const compare = (a, b) => {
   return a < b ? -1 : a > b ? 1 : 0;
 };
 
-const isDef = (val) => !is.undefined(val) && val !== "";
-const hasKey = (range, name) => is.propertyOwned(range, name) && name;
+const isDef = (val) => !ateos.isUndefined(val) && val !== "";
+const hasKey = (range, name) => ateos.isPropertyOwned(range, name) && name;
 
 export const lowerBoundKey = (range) => {
   return (hasKey(range, "gt") || hasKey(range, "gte") || hasKey(range, "min") || (range.reverse ? hasKey(range, "end") : hasKey(range, "start")) || undefined);
@@ -26,10 +26,10 @@ export const lowerBound = (range, def) => {
   return k ? range[k] : def;
 };
 
-export const lowerBoundInclusive = (range) => (is.propertyOwned(range, "gt") ? false : true);
+export const lowerBoundInclusive = (range) => (ateos.isPropertyOwned(range, "gt") ? false : true);
 
 export const upperBoundInclusive = (range) => {
-  return (is.propertyOwned(range, "lt") /*&& !range.maxEx*/) ? false : true;
+  return (ateos.isPropertyOwned(range, "lt") /*&& !range.maxEx*/) ? false : true;
 };
 
 export const lowerBoundExclusive = (range) => !lowerBoundInclusive(range);
@@ -85,20 +85,20 @@ export const toLtgt = (range, _range, map, lower, upper) => {
     _range.lte = map(upper, true);
   }
 
-  if (!is.nil(range.reverse)) {
+  if (!ateos.isNil(range.reverse)) {
     _range.reverse = Boolean(range.reverse);
   }
 
-  if (is.propertyOwned(_range, "max")) {
+  if (ateos.isPropertyOwned(_range, "max")) {
     delete _range.max;
   }
-  if (is.propertyOwned(_range, "min")) {
+  if (ateos.isPropertyOwned(_range, "min")) {
     delete _range.min;
   }
-  if (is.propertyOwned(_range, "start")) {
+  if (ateos.isPropertyOwned(_range, "start")) {
     delete _range.start;
   }
-  if (is.propertyOwned(_range, "end")) {
+  if (ateos.isPropertyOwned(_range, "end")) {
     delete _range.end;
   }
 

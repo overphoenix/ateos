@@ -26,7 +26,7 @@ export default
 // })
 class OmniApplication extends app.Application {
   async configure(options) {
-    if (is.string(options.config)) {
+    if (ateos.isString(options.config)) {
       // Load app configuration from file.
       this.config = await configuration.load(options.config);
     } else {
@@ -35,7 +35,7 @@ class OmniApplication extends app.Application {
       this.config.set("app", {});
     }
 
-    if (!is.undefined(process.report)) {
+    if (!ateos.isUndefined(process.report)) {
       Object.assign(process.report, util.pick(this.config.app.report || {}, [
         "reportOnFatalError",
         "reportOnSignal",
@@ -54,10 +54,10 @@ class OmniApplication extends app.Application {
     //     group: CORE_GROUP
     // });
 
-    if (!is.windows) {
+    if (!ateos.isWindows) {
       this.exitOnSignal("SIGQUIT", "SIGTERM", "SIGINT");
       // process.on("SIGILL", () => {
-      //     if (is.function(global.gc)) {
+      //     if (ateos.isFunction(global.gc)) {
       //         global.gc();
       //         // logger.info("Forced garbage collector");
       //     }
@@ -74,7 +74,7 @@ class OmniApplication extends app.Application {
   }
 
   async main() {
-    // if (is.function(process.send)) {
+    // if (ateos.isFunction(process.send)) {
     //     process.send({
     //         pid: process.pid
     //     });
@@ -129,7 +129,7 @@ class OmniApplication extends app.Application {
   // // }
 
   // _signalExit(sigName) {
-  //     if (is.string(sigName)) {
+  //     if (ateos.isString(sigName)) {
   //         // logger.info(`Killed by signal '${sigName}'`);
   //     } else {
   //         // logger.info("Killed using api");
@@ -143,7 +143,7 @@ class OmniApplication extends app.Application {
   //     description: "Force garbage collector"
   // })
   // gc() {
-  //     if (is.function(global.gc)) {
+  //     if (ateos.isFunction(global.gc)) {
   //         global.gc();
   //         return "done";
   //     }
@@ -219,7 +219,7 @@ class OmniApplication extends app.Application {
   //     }
 
   //     if (netron) {
-  //         result.netron = ateos.util.omit(runtime.netron.options, (key, val) => is.function(val));
+  //         result.netron = ateos.util.omit(runtime.netron.options, (key, val) => ateos.isFunction(val));
   //     }
 
   //     return result;
@@ -243,7 +243,7 @@ class OmniApplication extends app.Application {
   //     }
 
   //     for (const key of Object.keys(process.env)) {
-  //         if (!is.propertyDefined(envs, key)) {
+  //         if (!ateos.isPropertyDefined(envs, key)) {
   //             delete process.env[key];
   //         }
   //     }

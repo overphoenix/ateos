@@ -5,7 +5,7 @@ const {
 
 
 const toStreams2 = (s, opts) => {
-  if (!s || is.function(s) || s._readableState) {
+  if (!s || ateos.isFunction(s) || s._readableState) {
     return s;
   }
 
@@ -31,12 +31,12 @@ export default class MultiStream extends Readable {
     this._current = null;
     this._toStreams2 = (options && options.objectMode) ? toStreams2Obj : toStreams2Buf;
 
-    if (is.function(streams)) {
+    if (ateos.isFunction(streams)) {
       this._queue = streams;
     } else {
       this._queue = streams.map(this._toStreams2);
       this._queue.forEach((stream) => {
-        if (!is.function(stream)) {
+        if (!ateos.isFunction(stream)) {
           this._attachErrorListener(stream);
         }
       });
@@ -57,7 +57,7 @@ export default class MultiStream extends Readable {
     this._forwarding = true;
 
     let chunk;
-    while (!is.null(chunk = this._current.read())) {
+    while (!ateos.isNull(chunk = this._current.read())) {
       this._drained = this.push(chunk);
     }
 
@@ -73,7 +73,7 @@ export default class MultiStream extends Readable {
     if (this._current && this._current.destroy) {
       this._current.destroy();
     }
-    if (!is.function(this._queue)) {
+    if (!ateos.isFunction(this._queue)) {
       this._queue.forEach((stream) => {
         if (stream.destroy) {
           stream.destroy();
@@ -90,7 +90,7 @@ export default class MultiStream extends Readable {
   _next() {
     this._current = null;
 
-    if (is.function(this._queue)) {
+    if (ateos.isFunction(this._queue)) {
       this._queue((err, stream) => {
         if (err) {
           return this.destroy(err);
@@ -101,7 +101,7 @@ export default class MultiStream extends Readable {
       });
     } else {
       let stream = this._queue.shift();
-      if (is.function(stream)) {
+      if (ateos.isFunction(stream)) {
         stream = this._toStreams2(stream());
         this._attachErrorListener(stream);
       }

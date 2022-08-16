@@ -12,7 +12,7 @@ export const getMemberExpressionName = (node) => {
     return `${node.object.name}.${node.property.name}`;
   }
 
-  return is.undefined(prefix)
+  return ateos.isUndefined(prefix)
     ? node.property.name
     : `${prefix}.${node.property.name}`;
 };

@@ -16,7 +16,7 @@ describe("util", "csv", () => {
     const fixture = (name) => path.join(__dirname, "data", name);
 
     const collect = (file, opts, cb) => {
-        if (is.function(opts)) {
+        if (ateos.isFunction(opts)) {
             return collect(file, null, opts);
         }
         const data = read(fixture(file));
@@ -258,9 +258,9 @@ describe("util", "csv", () => {
             const testLine = function (row) {
                 assert.strictEqual(Object.keys(row).length, 3, "Split into three columns");
                 assert.isTrue(/^2007-01-0\d$/.test(row.a), "First column is a date");
-                assert.isTrue(!is.undefined(row.b), "Empty column is in line");
+                assert.isTrue(!ateos.isUndefined(row.b), "Empty column is in line");
                 assert.strictEqual(row.b.length, 0, "Empty column is empty");
-                assert.isTrue(!is.undefined(row.c), "Empty column is in line");
+                assert.isTrue(!ateos.isUndefined(row.c), "Empty column is in line");
                 assert.strictEqual(row.c.length, 0, "Empty column is empty");
             };
             lines.forEach(testLine);

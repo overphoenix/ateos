@@ -12,7 +12,7 @@ const expected = [
 ];
 
 const testHandler = (actual) => {
-    assert(is.array(actual));
+    assert(ateos.isArray(actual));
     assert.strictEqual(actual.length, 7);
 
     assert.deepEqual(actual[0], expected[0]);

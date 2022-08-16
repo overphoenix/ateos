@@ -71,7 +71,7 @@ const { STATUSES } = omnitron;
       // try {
       //     kit.createProgress("starting up omnitron");
       //     const pid = await omnitron.dispatcher.startOmnitron();
-      //     if (is.number(pid)) {
+      //     if (ateos.isNumber(pid)) {
       //         kit.updateProgress({
       //             message: `done (pid: ${pid})`,
       //             status: true

@@ -1,6 +1,6 @@
 
 export const generateOptions = (options, defaults) => {
-  if (ateos.is.function(options)) {
+  if (ateos.ateos.isFunction(options)) {
     defaults.callback = options;
   } else if (options) {
     for (const name in options) {

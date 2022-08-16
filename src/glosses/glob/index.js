@@ -60,7 +60,7 @@ const normalize = (path) => path.replace(/\\/g, "/");
  */
 const removeTrailingSlashes = (path) => path.replace(/\/+$/, "");
 
-const isAbsolute = is.windows
+const isAbsolute = ateos.isWindows
   ? (path) => {
     const { length } = path;
     if (length === 0) {
@@ -518,7 +518,7 @@ class Pattern {
   async _readAndHandleChildren(dynamicPart) {
     const files = await this.readdir();
 
-    if (is.array(files)) {
+    if (ateos.isArray(files)) {
       if (!files.length) {
         return;
       }
@@ -647,7 +647,7 @@ class Pattern {
 
     const targetStat = await this.stat();
 
-    if (is.error(targetStat)) {
+    if (ateos.isError(targetStat)) {
       switch (targetStat.code) {
         case "ELOOP": // symlink loop
         case "ENOTDIR": // symlink refers to a directory that does not exist, but exists a file with the same name, dead link
@@ -683,7 +683,7 @@ class Pattern {
 
     const stat = await this.lstat();
 
-    if (is.error(stat)) {
+    if (ateos.isError(stat)) {
       switch (stat.code) {
         case "ENOTDIR": // we tried to stat a directory wich does not exist, the path has / at the end
         case "ELOOP": // too many links, symlink loop
@@ -739,7 +739,7 @@ class Pattern {
 
     const files = await this.readdir();
 
-    if (is.array(files)) {
+    if (ateos.isArray(files)) {
       if (!runtime.stat) {
         return this._handleDir(undefined, this.dynamicPart, files);
       }
@@ -808,7 +808,7 @@ const absoluteGetter = (entry) => entry.absolutePath;
 const relativeGetter = (entry) => entry.path;
 const normalizedAbsoluteGetter = (entry) => entry.normalizedAbsolute;
 const normalizedRelativeGetter = (entry) => entry.normalizedRelative;
-const defaultRoot = is.windows ? resolve("/").slice(0, -1) : resolve("/");
+const defaultRoot = ateos.isWindows ? resolve("/").slice(0, -1) : resolve("/");
 
 class Glob extends ateos.EventEmitter {
   constructor(patterns, {

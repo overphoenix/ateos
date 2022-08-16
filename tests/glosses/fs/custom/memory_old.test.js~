@@ -1933,7 +1933,7 @@ describe.todo("fs2", "custom", "MemoryFileSystem", () => {
                     });
                 });
 
-                describe("O_NOFOLLOW", { skip: is.windows }, () => {
+                describe("O_NOFOLLOW", { skip: ateos.isWindows }, () => {
                     it("should throw ELOOP if the pathname is a symlink", async () => {
                         engine.add((ctx) => ({
                             a: {
@@ -2293,7 +2293,7 @@ describe.todo("fs2", "custom", "MemoryFileSystem", () => {
                     });
                 });
 
-                describe("O_NOFOLLOW", { skip: is.windows }, () => {
+                describe("O_NOFOLLOW", { skip: ateos.isWindows }, () => {
                     it("should throw ELOOP if the pathname is a symlink", () => {
                         engine.add((ctx) => ({
                             a: {

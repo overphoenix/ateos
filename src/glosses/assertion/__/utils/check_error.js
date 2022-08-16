@@ -70,10 +70,10 @@ export const compatibleConstructor = (thrown, errorLike) => {
  * @api public
  */
 export const compatibleMessage = (thrown, errMatcher) => {
-  const comparisonString = is.string(thrown) ? thrown : thrown.message;
+  const comparisonString = ateos.isString(thrown) ? thrown : thrown.message;
   if (errMatcher instanceof RegExp) {
     return errMatcher.test(comparisonString);
-  } else if (is.string(errMatcher)) {
+  } else if (ateos.isString(errMatcher)) {
     return comparisonString.indexOf(errMatcher) !== -1; // eslint-disable-line no-magic-numbers
   }
 
@@ -94,7 +94,7 @@ export const getConstructorName = (errorLike) => {
   let constructorName = errorLike;
   if (errorLike instanceof Error) {
     constructorName = getFunctionName(errorLike.constructor);
-  } else if (is.function(errorLike)) {
+  } else if (ateos.isFunction(errorLike)) {
     // If `err` is not an instance of Error it is an error constructor itself or another function.
     // If we've got a common function we get its name, otherwise we may need to create a new instance
     // of the error just in case it's a poorly-constructed error. Please see chaijs/chai/issues/45 to know more.
@@ -125,7 +125,7 @@ export const getMessage = (errorLike) => {
   let msg = "";
   if (errorLike && errorLike.message) {
     msg = errorLike.message;
-  } else if (is.string(errorLike)) {
+  } else if (ateos.isString(errorLike)) {
     msg = errorLike;
   }
 

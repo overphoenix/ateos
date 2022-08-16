@@ -227,7 +227,7 @@ export const setLevel = function (logger, level) {
  * @param lock boolean lock value, default to true.
  */
 export const lock = function (logger, lock) {
-  if (is.undefined(lock) || lock) {
+  if (ateos.isUndefined(lock) || lock) {
     logger.flags |= LEVEL_LOCKED;
   } else {
     logger.flags &= ~LEVEL_LOCKED;
@@ -244,7 +244,7 @@ export const addLogger = function (logger) {
 };
 
 // setup the console logger if possible, else create fake console.log
-if (!is.undefined(console) && "log" in console) {
+if (!ateos.isUndefined(console) && "log" in console) {
   let logger;
   if (console.error && console.warn && console.info && console.debug) {
     // looks like Firebug-style logging is available
@@ -297,7 +297,7 @@ if (!is.undefined(console) && "log" in console) {
  * after console.level is processed.  Useful to force a level of verbosity
  * that could otherwise be limited by a user config.
  */
-if (!is.null(sConsoleLogger)) {
+if (!ateos.isNull(sConsoleLogger)) {
   const query = crypto.util.getQueryVariables();
   if ("console.level" in query) {
     // set with last value

@@ -57,7 +57,7 @@ export default class MountDatastore {
 
   put(key, value) {
     const match = this._lookup(key);
-    if (is.nil(match)) {
+    if (ateos.isNil(match)) {
       throw error.dbWriteFailedError(new Error("No datastore mounted for this key"));
     }
 
@@ -66,7 +66,7 @@ export default class MountDatastore {
 
   get(key) {
     const match = this._lookup(key);
-    if (is.nil(match)) {
+    if (ateos.isNil(match)) {
       throw error.notFoundError(new Error("No datastore mounted for this key"));
     }
     return match.datastore.get(match.rest);
@@ -74,7 +74,7 @@ export default class MountDatastore {
 
   has(key) {
     const match = this._lookup(key);
-    if (is.nil(match)) {
+    if (ateos.isNil(match)) {
       return false;
     }
     return match.datastore.has(match.rest);
@@ -82,7 +82,7 @@ export default class MountDatastore {
 
   delete(key) {
     const match = this._lookup(key);
-    if (is.nil(match)) {
+    if (ateos.isNil(match)) {
       throw error.dbDeleteFailedError(new Error("No datastore mounted for this key"));
     }
 
@@ -99,12 +99,12 @@ export default class MountDatastore {
     const batchMounts = {};
     const lookup = (key) => {
       const match = this._lookup(key);
-      if (is.nil(match)) {
+      if (ateos.isNil(match)) {
         throw new Error("No datastore mounted for this key");
       }
 
       const m = match.mountpoint.toString();
-      if (is.nil(batchMounts[m])) {
+      if (ateos.isNil(batchMounts[m])) {
         batchMounts[m] = match.datastore.batch();
       }
 
@@ -141,7 +141,7 @@ export default class MountDatastore {
       });
 
       let prefix;
-      if (!is.nil(q.prefix)) {
+      if (!ateos.isNil(q.prefix)) {
         prefix = replaceStartWith(q.prefix, m.prefix.toString());
       }
 
@@ -163,11 +163,11 @@ export default class MountDatastore {
         it = sortAll(it, o);
       });
     }
-    if (!is.nil(q.offset)) {
+    if (!ateos.isNil(q.offset)) {
       let i = 0;
       it = filter(it, () => i++ >= q.offset);
     }
-    if (!is.nil(q.limit)) {
+    if (!ateos.isNil(q.limit)) {
       it = take(it, q.limit);
     }
 

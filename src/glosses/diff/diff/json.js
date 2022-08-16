@@ -15,9 +15,9 @@ jsonDiff.useLongestToken = true;
 
 jsonDiff.tokenize = lineDiff.tokenize;
 jsonDiff.castInput = function (value) {
-  const { undefinedReplacement, stringifyReplacer = (k, v) => is.undefined(v) ? undefinedReplacement : v } = this.options;
+  const { undefinedReplacement, stringifyReplacer = (k, v) => ateos.isUndefined(v) ? undefinedReplacement : v } = this.options;
 
-  return is.string(value) ? value : JSON.stringify(canonicalize(value, null, null, stringifyReplacer), stringifyReplacer, "  ");
+  return ateos.isString(value) ? value : JSON.stringify(canonicalize(value, null, null, stringifyReplacer), stringifyReplacer, "  ");
 };
 jsonDiff.equals = function (left, right) {
   return Diff.prototype.equals.call(jsonDiff, left.replace(/,([\r\n])/g, "$1"), right.replace(/,([\r\n])/g, "$1"));
@@ -63,7 +63,7 @@ export function canonicalize(obj, stack, replacementStack, replacer, key) {
     obj = obj.toJSON();
   }
 
-  if (typeof obj === "object" && !is.null(obj)) {
+  if (typeof obj === "object" && !ateos.isNull(obj)) {
     stack.push(obj);
     canonicalizedObj = {};
     replacementStack.push(canonicalizedObj);

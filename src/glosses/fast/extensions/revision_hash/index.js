@@ -89,7 +89,7 @@ const relPath = (base, filePath) => {
 };
 
 export const manifest = function (pth, opts) {
-  if (is.string(pth)) {
+  if (ateos.isString(pth)) {
     pth = { path: pth };
   }
 

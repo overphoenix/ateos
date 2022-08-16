@@ -1,50 +1,49 @@
 const {
-    cli: { style },
-    is,
-    realm
+  cli: { style },
+  realm
 } = ateos;
 
 
-@ateos.task.task("registerCliCommand")
+@ateos.task.Task("registerCliCommand")
 export default class extends realm.BaseTask {
-    async main({ cmd } = {}) {
-        const rootRealm = this.manager;
-        const AppConfiguration = require(rootRealm.getPath("lib", "app", "configuration")).default; // hmm...
+  async main({ cmd } = {}) {
+    const rootRealm = this.manager;
+    const AppConfiguration = require(rootRealm.getPath("lib", "app", "configuration")).default; // hmm...
 
-        this.manager.notify(this, "progress", {
-            status: true,
-            message: `registering ${style.accent(cmd.name)} cli command`
-        });
+    this.manager.notify(this, "progress", {
+      status: true,
+      message: `registering ${style.accent(cmd.name)} cli command`
+    });
 
-        const group = is.object(cmd.group)
-            ? cmd.group
-            : is.string(cmd.group)
-                ? { name: cmd.group }
-                : { name: "subsystem", description: "Third party commands" };
+    const group = ateos.isObject(cmd.group)
+      ? cmd.group
+      : ateos.isString(cmd.group)
+        ? { name: cmd.group }
+        : { name: "subsystem", description: "Third party commands" };
 
-        cmd.group = group.name;
+    cmd.group = group.name;
 
-        const cliConfig = await AppConfiguration.load({
-            cwd: ateos.path.join(rootRealm.getPath("etc"))
-        });
+    const cliConfig = await AppConfiguration.load({
+      cwd: ateos.path.join(rootRealm.getPath("etc"))
+    });
 
-        if (cliConfig.hasCommand(cmd.name)) {
-            throw new ateos.error.ExistsException(`Command '${cmd.name}' already exists`);
-        }
-
-        cliConfig.setCommand(cmd);
-
-        if (!cliConfig.hasGroup(cmd.group.name)) {
-            cliConfig.addGroup(group);
-        }
-
-        await cliConfig.save();
-
-        this.manager.notify(this, "progress", {
-            status: true,
-            message: "cli command ${style.accent(cmd.name)} successfully registered"
-        });
+    if (cliConfig.hasCommand(cmd.name)) {
+      throw new ateos.error.ExistsException(`Command '${cmd.name}' already exists`);
     }
+
+    cliConfig.setCommand(cmd);
+
+    if (!cliConfig.hasGroup(cmd.group.name)) {
+      cliConfig.addGroup(group);
+    }
+
+    await cliConfig.save();
+
+    this.manager.notify(this, "progress", {
+      status: true,
+      message: "cli command ${style.accent(cmd.name)} successfully registered"
+    });
+  }
 }
 
 
@@ -57,9 +56,9 @@ export default class extends realm.BaseTask {
 
 // export default class extends realm.MountPoint {
 //     async register({ superRealm, subRealm, realmExport } = {}) {
-//         const group = is.object(realmExport.group)
+//         const group = ateos.isObject(realmExport.group)
 //             ? realmExport.group
-//             : is.string(realmExport.group)
+//             : ateos.isString(realmExport.group)
 //                 ? { name: realmExport.group }
 //                 : { name: "subsystem", description: "Third party commands" };
 
@@ -108,7 +107,7 @@ export default class extends realm.BaseTask {
 //     //     const cliConfig = await ateos.cli.Configuration.load({
 //     //         cwd: ateos.ETC_ATEOS_PATH
 //     //     });
-//     //     if (!is.array(cliConfig.raw.commands)) {
+//     //     if (!ateos.isArray(cliConfig.raw.commands)) {
 //     //         cliConfig.raw.commands = [];
 //     //     }
 //     //     const commands = cliConfig.raw.commands;
@@ -133,7 +132,7 @@ export default class extends realm.BaseTask {
 
 //     //     const StartupClass = modExports.default;
 
-//     //     if (!is.class(StartupClass)) {
+//     //     if (!ateos.isClass(StartupClass)) {
 //     //         throw new ateos.error.NotValidException("Startup script is not valid");
 //     //     }
 

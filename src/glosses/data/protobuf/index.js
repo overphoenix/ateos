@@ -28,7 +28,7 @@ export const create = function (proto, opts) {
     throw new Error("Pass in a .proto string or a protobuf-schema parsed object");
   }
 
-  const sch = (typeof proto === "object" && !is.buffer(proto)) ? proto : __.schema.parse(proto);
+  const sch = (typeof proto === "object" && !ateos.isBuffer(proto)) ? proto : __.schema.parse(proto);
 
   // to not make toString,toJSON enumarable we make a fire-and-forget prototype
   const Messages = function () {

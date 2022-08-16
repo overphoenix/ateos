@@ -35,7 +35,7 @@ class TestApp extends app.Application {
     }
 
     run() {
-        console.log(is.undefined(this.root));
+        console.log(ateos.isUndefined(this.root));
         return 0;
     }
 }

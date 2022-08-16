@@ -43,26 +43,26 @@ const readAndAssertNoEof = async (reader, buffer, offset, length, position) => {
 };
 
 export const fromRandomAccessReader = async (reader, totalSize, options) => {
-  if (is.nil(options)) {
+  if (ateos.isNil(options)) {
     options = {};
   }
-  if (is.nil(options.autoClose)) {
+  if (ateos.isNil(options.autoClose)) {
     options.autoClose = true;
   }
-  if (is.nil(options.lazyEntries)) {
+  if (ateos.isNil(options.lazyEntries)) {
     options.lazyEntries = false;
   }
-  if (is.nil(options.decodeStrings)) {
+  if (ateos.isNil(options.decodeStrings)) {
     options.decodeStrings = true;
   }
   const decodeStrings = Boolean(options.decodeStrings);
-  if (is.nil(options.validateEntrySizes)) {
+  if (ateos.isNil(options.validateEntrySizes)) {
     options.validateEntrySizes = true;
   }
-  if (is.nil(options.strictFileNames)) {
+  if (ateos.isNil(options.strictFileNames)) {
     options.strictFileNames = false;
   }
-  if (!is.number(totalSize)) {
+  if (!ateos.isNumber(totalSize)) {
     throw new error.InvalidArgumentException("expected totalSize parameter to be a number");
   }
   if (totalSize > Number.MAX_SAFE_INTEGER) {
@@ -190,22 +190,22 @@ export const fromRandomAccessReader = async (reader, totalSize, options) => {
 };
 
 export const fromFd = async (fd, options) => {
-  if (is.nil(options)) {
+  if (ateos.isNil(options)) {
     options = {};
   }
-  if (is.nil(options.autoClose)) {
+  if (ateos.isNil(options.autoClose)) {
     options.autoClose = false;
   }
-  if (is.nil(options.lazyEntries)) {
+  if (ateos.isNil(options.lazyEntries)) {
     options.lazyEntries = false;
   }
-  if (is.nil(options.decodeStrings)) {
+  if (ateos.isNil(options.decodeStrings)) {
     options.decodeStrings = true;
   }
-  if (is.nil(options.validateEntrySizes)) {
+  if (ateos.isNil(options.validateEntrySizes)) {
     options.validateEntrySizes = true;
   }
-  if (is.nil(options.strictFileNames)) {
+  if (ateos.isNil(options.strictFileNames)) {
     options.strictFileNames = false;
   }
   const stats = await fs.fstat(fd);
@@ -214,22 +214,22 @@ export const fromFd = async (fd, options) => {
 };
 
 export const open = async (path, options) => {
-  if (is.nil(options)) {
+  if (ateos.isNil(options)) {
     options = {};
   }
-  if (is.nil(options.autoClose)) {
+  if (ateos.isNil(options.autoClose)) {
     options.autoClose = true;
   }
-  if (is.nil(options.lazyEntries)) {
+  if (ateos.isNil(options.lazyEntries)) {
     options.lazyEntries = false;
   }
-  if (is.nil(options.decodeStrings)) {
+  if (ateos.isNil(options.decodeStrings)) {
     options.decodeStrings = true;
   }
-  if (is.nil(options.validateEntrySizes)) {
+  if (ateos.isNil(options.validateEntrySizes)) {
     options.validateEntrySizes = true;
   }
-  if (is.nil(options.strictFileNames)) {
+  if (ateos.isNil(options.strictFileNames)) {
     options.strictFileNames = false;
   }
   const fd = await fs.open(path, "r");
@@ -242,20 +242,20 @@ export const open = async (path, options) => {
 };
 
 export const fromBuffer = async (buffer, options) => {
-  if (is.nil(options)) {
+  if (ateos.isNil(options)) {
     options = {};
   }
   options.autoClose = false;
-  if (is.nil(options.lazyEntries)) {
+  if (ateos.isNil(options.lazyEntries)) {
     options.lazyEntries = false;
   }
-  if (is.nil(options.decodeStrings)) {
+  if (ateos.isNil(options.decodeStrings)) {
     options.decodeStrings = true;
   }
-  if (is.nil(options.validateEntrySizes)) {
+  if (ateos.isNil(options.validateEntrySizes)) {
     options.validateEntrySizes = true;
   }
-  if (is.nil(options.strictFileNames)) {
+  if (ateos.isNil(options.strictFileNames)) {
     options.strictFileNames = false;
   }
   const reader = new fs.RandomAccessBufferReader(buffer);
@@ -482,7 +482,7 @@ class ZipFile extends ateos.EventEmitter {
             break;
           }
         }
-        if (is.nil(zip64EiefBuffer)) {
+        if (ateos.isNil(zip64EiefBuffer)) {
           throw new error.IllegalStateException("expected zip64 extended information extra field");
         }
         let index = 0;
@@ -562,7 +562,7 @@ class ZipFile extends ateos.EventEmitter {
           entry.fileName = entry.fileName.replace(/\\/g, "/");
         }
         const errorMessage = validateFileName(entry.fileName, this.validateFileNameOptions);
-        if (!is.nil(errorMessage)) {
+        if (!ateos.isNil(errorMessage)) {
           throw new error.Exception(errorMessage);
         }
       }
@@ -583,11 +583,11 @@ class ZipFile extends ateos.EventEmitter {
     // parameter validation
     let relativeStart = 0;
     let relativeEnd = entry.compressedSize;
-    if (is.nil(options)) {
+    if (ateos.isNil(options)) {
       options = {};
     } else {
       // validate options that the caller has no excuse to get wrong
-      if (!is.nil(options.decrypt)) {
+      if (!ateos.isNil(options.decrypt)) {
         if (!entry.isEncrypted()) {
           throw new error.InvalidArgumentException("options.decrypt can only be specified for encrypted entries");
         }
@@ -600,7 +600,7 @@ class ZipFile extends ateos.EventEmitter {
           }
         }
       }
-      if (!is.nil(options.decompress)) {
+      if (!ateos.isNil(options.decompress)) {
         if (!entry.isCompressed()) {
           throw new error.InvalidArgumentException("options.decompress can only be specified for compressed entries");
         }
@@ -608,7 +608,7 @@ class ZipFile extends ateos.EventEmitter {
           throw new error.InvalidArgumentException(`invalid options.decompress value: ${options.decompress}`);
         }
       }
-      if (!is.nil(options.start) || !is.nil(options.end)) {
+      if (!ateos.isNil(options.start) || !ateos.isNil(options.end)) {
         if (entry.isCompressed() && options.decompress !== false) {
           throw new error.InvalidArgumentException("start/end range not allowed for compressed entry without options.decompress === false");
         }
@@ -616,7 +616,7 @@ class ZipFile extends ateos.EventEmitter {
           throw new error.InvalidArgumentException("start/end range not allowed for encrypted entry without options.decrypt === false");
         }
       }
-      if (!is.nil(options.start)) {
+      if (!ateos.isNil(options.start)) {
         relativeStart = options.start;
         if (relativeStart < 0) {
           throw new error.InvalidArgumentException("options.start < 0");
@@ -625,7 +625,7 @@ class ZipFile extends ateos.EventEmitter {
           throw new error.InvalidArgumentException("options.start > entry.compressedSize");
         }
       }
-      if (!is.nil(options.end)) {
+      if (!ateos.isNil(options.end)) {
         relativeEnd = options.end;
         if (relativeEnd < 0) {
           throw new error.InvalidArgumentException("options.end < 0");
@@ -684,7 +684,7 @@ class ZipFile extends ateos.EventEmitter {
         decompress = false;
       } else if (entry.compressionMethod === 8) {
         // 8 - The file is Deflated
-        decompress = !is.nil(options.decompress) ? options.decompress : true;
+        decompress = !ateos.isNil(options.decompress) ? options.decompress : true;
       } else {
         throw new error.NotSupportedException(`unsupported compression method: ${entry.compressionMethod}`);
       }

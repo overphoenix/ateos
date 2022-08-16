@@ -15,7 +15,7 @@ const fromArrayBuffer = (obj, byteOffset, length) => {
     throw new RangeError("'offset' is out of bounds");
   }
 
-  if (is.undefined(length)) {
+  if (ateos.isUndefined(length)) {
     length = maxLength;
   } else {
     length >>>= 0;
@@ -29,7 +29,7 @@ const fromArrayBuffer = (obj, byteOffset, length) => {
 };
 
 const fromString = (string, encoding) => {
-  if (!is.string(encoding) || encoding === "") {
+  if (!ateos.isString(encoding) || encoding === "") {
     encoding = "utf8";
   }
 
@@ -41,7 +41,7 @@ const fromString = (string, encoding) => {
 };
 
 export default (value, encodingOrOffset, length) => {
-  if (is.number(value)) {
+  if (ateos.isNumber(value)) {
     throw new TypeError('"value" argument must not be a number');
   }
 
@@ -49,7 +49,7 @@ export default (value, encodingOrOffset, length) => {
     return fromArrayBuffer(value, encodingOrOffset, length);
   }
 
-  if (is.string(value)) {
+  if (ateos.isString(value)) {
     return fromString(value, encodingOrOffset);
   }
 

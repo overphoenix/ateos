@@ -13,14 +13,14 @@ const {
 
 const PACK_CONFIG_FILE = "pack.task"
 
-@ateos.task.task("realmPack")
+@ateos.task.Task("realmPack")
 export default class extends BaseTask {
   async main({ realm, path, name, tags, filter, type = nodejs.DEFAULT_EXT } = {}) {
     this.manager.notify(this, "progress", {
       text: "[pack] checking"
     });
 
-    if (is.string(realm)) {
+    if (ateos.isString(realm)) {
       realm = new RealmManager({ cwd: realm });
     }
 
@@ -47,11 +47,11 @@ export default class extends BaseTask {
         : configOptions.filter
     }
 
-    if (!is.string(options.path) || options.path.length === 0) {
+    if (!ateos.isString(options.path) || options.path.length === 0) {
       throw new error.NotValidException(`Invalid destPath: ${ateos.inspect(options.path)}`);
     }
 
-    if (!is.string(options.name) || options.name.length === 0) {
+    if (!ateos.isString(options.name) || options.name.length === 0) {
       options.name = `${realm.name}-v${realm.package.version}-node-v${process.version.split(".")[0].slice(1)}.x-${nodejs.getCurrentPlatform()}-${nodejs.getCurrentArch()}`;
     }
 
@@ -72,9 +72,9 @@ export default class extends BaseTask {
     });
 
     const artifacts = new Set;
-    if (is.array(options.tags) && options.tags.length > 0) {
+    if (ateos.isArray(options.tags) && options.tags.length > 0) {
       options.tags = new Set(options.tags);
-    } else if (is.string(options.tags) && options.tags.length > 0) {
+    } else if (ateos.isString(options.tags) && options.tags.length > 0) {
       options.tags = new Set(options.tags.split(","));
     } else if (!options.tags || options.tags.length === 0) {
       options.tags = new Set();
@@ -99,7 +99,7 @@ export default class extends BaseTask {
         from.push(dir);
       }
     }
-    
+
     await fast.src([
       ...from,
       ...options.filter,

@@ -4,12 +4,12 @@ const __ = ateos.getPrivate(ateos.datetime);
 const mergeConfigs = (parentConfig, childConfig) => {
   const res = { ...parentConfig };
   for (const prop in childConfig) {
-    if (is.propertyOwned(childConfig, prop)) {
-      if (is.plainObject(parentConfig[prop]) && is.plainObject(childConfig[prop])) {
+    if (ateos.isPropertyOwned(childConfig, prop)) {
+      if (ateos.isPlainObject(parentConfig[prop]) && ateos.isPlainObject(childConfig[prop])) {
         res[prop] = {};
         Object.assign(res[prop], parentConfig[prop]);
         Object.assign(res[prop], childConfig[prop]);
-      } else if (is.exist(childConfig[prop])) {
+      } else if (ateos.isExist(childConfig[prop])) {
         res[prop] = childConfig[prop];
       } else {
         delete res[prop];
@@ -18,9 +18,9 @@ const mergeConfigs = (parentConfig, childConfig) => {
   }
   for (const prop in parentConfig) {
     if (
-      is.propertyOwned(parentConfig, prop)
-            && !is.propertyOwned(childConfig, prop)
-            && is.plainObject(parentConfig[prop])
+      ateos.isPropertyOwned(parentConfig, prop)
+            && !ateos.isPropertyOwned(childConfig, prop)
+            && ateos.isPlainObject(parentConfig[prop])
     ) {
       // make sure changes to properties don't modify parent config
       res[prop] = { ...res[prop] };
@@ -97,14 +97,14 @@ const baseConfig = ateos.lazify({
 
 export class Locale {
   constructor(config) {
-    if (is.exist(config)) {
+    if (ateos.isExist(config)) {
       this.set(config);
     }
   }
 
   calendar(key, mom, now) {
     const output = this._calendar[key] || this._calendar.sameElse;
-    return is.function(output) ? output.call(mom, now) : output;
+    return ateos.isFunction(output) ? output.call(mom, now) : output;
   }
 
   longDateFormat(key) {
@@ -136,14 +136,14 @@ export class Locale {
 
   relativeTime(number, withoutSuffix, string, isFuture) {
     const output = this._relativeTime[string];
-    return is.function(output)
+    return ateos.isFunction(output)
       ? output(number, withoutSuffix, string, isFuture)
       : output.replace(/%d/i, number);
   }
 
   pastFuture(diff, output) {
     const format = this._relativeTime[diff > 0 ? "future" : "past"];
-    return is.function(format)
+    return ateos.isFunction(format)
       ? format(output)
       : format.replace(/%s/i, output);
   }
@@ -151,7 +151,7 @@ export class Locale {
   set(config) {
     for (const i in config) {
       const prop = config[i];
-      if (is.function(prop)) {
+      if (ateos.isFunction(prop)) {
         Object.defineProperty(this, i, {
           value: prop,
           configurable: true
@@ -178,7 +178,7 @@ Locale.prototype.postformat = Locale.prototype.preparse;
 export const getSetGlobalLocale = (key, values) => {
   let data;
   if (key) {
-    if (is.undefined(values)) {
+    if (ateos.isUndefined(values)) {
       // eslint-disable-next-line no-use-before-define
       data = getLocale(key);
     } else {
@@ -196,11 +196,11 @@ export const getSetGlobalLocale = (key, values) => {
 };
 
 export const defineLocale = (name, config) => {
-  if (!is.null(config)) {
+  if (!ateos.isNull(config)) {
     let parentConfig = baseConfig;
     config.abbr = name;
-    if (is.exist(config.parentLocale)) {
-      if (is.exist(locales[config.parentLocale])) {
+    if (ateos.isExist(config.parentLocale)) {
+      if (ateos.isExist(locales[config.parentLocale])) {
         parentConfig = locales[config.parentLocale]._config;
       } else {
         if (!localeFamilies[config.parentLocale]) {
@@ -289,7 +289,7 @@ export const getLocale = (key) => {
     return globalLocale;
   }
 
-  if (!is.array(key)) {
+  if (!ateos.isArray(key)) {
     //short-circuit everything else
     locale = loadLocale(key);
     if (locale) {
@@ -303,11 +303,11 @@ export const getLocale = (key) => {
 
 
 export const updateLocale = (name, config) => {
-  if (is.exist(config)) {
+  if (ateos.isExist(config)) {
     let parentConfig = baseConfig;
     // MERGE
     const tmpLocale = loadLocale(name);
-    if (!is.nil(tmpLocale)) {
+    if (!ateos.isNil(tmpLocale)) {
       parentConfig = tmpLocale._config;
     }
     config = mergeConfigs(parentConfig, config);
@@ -319,10 +319,10 @@ export const updateLocale = (name, config) => {
     getSetGlobalLocale(name);
   } else {
     // pass null for config to unupdate, useful for tests
-    if (is.exist(locales[name])) {
-      if (is.exist(locales[name].parentLocale)) {
+    if (ateos.isExist(locales[name])) {
+      if (ateos.isExist(locales[name].parentLocale)) {
         locales[name] = locales[name].parentLocale;
-      } else if (is.exist(locales[name])) {
+      } else if (ateos.isExist(locales[name])) {
         delete locales[name];
       }
     }
@@ -339,14 +339,14 @@ const get = (format, index, field, setter) => {
 };
 
 const listMonthsImpl = (format, index, field) => {
-  if (is.number(format)) {
+  if (ateos.isNumber(format)) {
     index = format;
     format = undefined;
   }
 
   format = format || "";
 
-  if (is.exist(index)) {
+  if (ateos.isExist(index)) {
     return get(format, index, field, "month");
   }
 
@@ -367,8 +367,8 @@ const listMonthsImpl = (format, index, field) => {
 // (true, fmt, 5)
 // (true, fmt)
 const listWeekdaysImpl = (localeSorted, format, index, field) => {
-  if (is.boolean(localeSorted)) {
-    if (is.number(format)) {
+  if (ateos.isBoolean(localeSorted)) {
+    if (ateos.isNumber(format)) {
       index = format;
       format = undefined;
     }
@@ -377,7 +377,7 @@ const listWeekdaysImpl = (localeSorted, format, index, field) => {
     format = localeSorted;
     index = format;
     localeSorted = false;
-    if (is.number(format)) {
+    if (ateos.isNumber(format)) {
       index = format;
       format = undefined;
     }
@@ -387,7 +387,7 @@ const listWeekdaysImpl = (localeSorted, format, index, field) => {
   const locale = getLocale();
   const shift = localeSorted ? locale._week.dow : 0;
 
-  if (is.exist(index)) {
+  if (ateos.isExist(index)) {
     return get(format, (index + shift) % 7, field, "day");
   }
 

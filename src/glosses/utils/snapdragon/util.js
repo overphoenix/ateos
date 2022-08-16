@@ -6,7 +6,7 @@ const {
  * Shim to ensure the `.append` methods work with any version of snapdragon
  */
 const _append = (compiler, val, node) => {
-  if (!is.function(compiler.append)) {
+  if (!ateos.isFunction(compiler.append)) {
     return compiler.emit(val, node);
   }
   return compiler.append(val, node);
@@ -33,7 +33,7 @@ const expect = (node, name, Node) => {
  * @returns {boolean}
  */
 export const isNode = function (node) {
-  return is.object(node) && node.isNode === true;
+  return ateos.isObject(node) && node.isNode === true;
 };
 
 /**
@@ -61,7 +61,7 @@ export const noop = function (node) {
  */
 
 export const value = function (node) {
-  if (is.string(node.value)) {
+  if (ateos.isString(node.value)) {
     return node.value;
   }
   return node.val;
@@ -123,7 +123,7 @@ export const toNoop = function (node, nodes) {
  * @returns {object} returns the node after recursively visiting all child nodes.
  */
 export const visit = function (node, fn) {
-  assert(is.function(fn), "expected a visitor function");
+  assert(ateos.isFunction(fn), "expected a visitor function");
   expect(node, "node");
   fn(node);
   return node.nodes ? mapVisit(node, fn) : node; // eslint-disable-line no-use-before-define
@@ -140,9 +140,9 @@ export const visit = function (node, fn) {
  * @returns {object} returns the node
  */
 export const mapVisit = function (node, fn) {
-  assert(is.function(fn), "expected a visitor function");
+  assert(ateos.isFunction(fn), "expected a visitor function");
   expect(node, "node");
-  assert(is.array(node.nodes), "expected node.nodes to be an array");
+  assert(ateos.isArray(node.nodes), "expected node.nodes to be an array");
 
   for (let i = 0; i < node.nodes.length; i++) {
     visit(node.nodes[i], fn);
@@ -163,7 +163,7 @@ export const unshiftNode = function (parent, node) {
     return;
   }
 
-  if (is.function(parent.unshift)) {
+  if (ateos.isFunction(parent.unshift)) {
     return parent.unshift(node);
   }
 
@@ -185,7 +185,7 @@ export const pushNode = function (parent, node) {
     return;
   }
 
-  if (is.function(parent.push)) {
+  if (ateos.isFunction(parent.push)) {
     return parent.push(node);
   }
 
@@ -206,19 +206,19 @@ export const pushNode = function (parent, node) {
  */
 export const addOpen = function (node, Node, value, filter) {
   expect(node, "node");
-  assert(is.function(Node), "expected Node to be a constructor function");
+  assert(ateos.isFunction(Node), "expected Node to be a constructor function");
 
-  if (is.function(value)) {
+  if (ateos.isFunction(value)) {
     filter = value;
     value = "";
   }
 
-  if (is.function(filter) && !filter(node)) {
+  if (ateos.isFunction(filter) && !filter(node)) {
     return;
   }
   const open = new Node({ type: `${node.type}.open`, value });
   const unshift = node.unshift || node.unshiftNode;
-  if (is.function(unshift)) {
+  if (ateos.isFunction(unshift)) {
     unshift.call(node, open);
   } else {
     unshiftNode(node, open);
@@ -235,20 +235,20 @@ export const addOpen = function (node, Node, value, filter) {
  * @returns {object} Returns the created closing node.
  */
 export const addClose = function (node, Node, value, filter) {
-  assert(is.function(Node), "expected Node to be a constructor function");
+  assert(ateos.isFunction(Node), "expected Node to be a constructor function");
   expect(node, "node", Node);
 
-  if (is.function(value)) {
+  if (ateos.isFunction(value)) {
     filter = value;
     value = "";
   }
 
-  if (is.function(filter) && !filter(node)) {
+  if (ateos.isFunction(filter) && !filter(node)) {
     return;
   }
   const close = new Node({ type: `${node.type}.close`, value });
   const push = node.push || node.pushNode;
-  if (is.function(push)) {
+  if (ateos.isFunction(push)) {
     push.call(node, close);
   } else {
     pushNode(node, close);
@@ -266,7 +266,7 @@ export const addClose = function (node, Node, value, filter) {
  */
 export const wrapNodes = function (node, Node, filter) {
   assert(isNode(node), "expected node to be an instance of Node");
-  assert(is.function(Node), "expected Node to be a constructor function");
+  assert(ateos.isFunction(Node), "expected Node to be a constructor function");
 
   addOpen(node, Node, filter);
   addClose(node, Node, filter);
@@ -284,7 +284,7 @@ export const wrapNodes = function (node, Node, filter) {
  */
 export const popNode = function (node) {
   assert(isNode(node), "expected node to be an instance of Node");
-  if (is.function(node.pop)) {
+  if (ateos.isFunction(node.pop)) {
     return node.pop();
   }
   return node.nodes && node.nodes.pop();
@@ -301,7 +301,7 @@ export const popNode = function (node) {
  */
 export const shiftNode = function (node) {
   assert(isNode(node), "expected node to be an instance of Node");
-  if (is.function(node.shift)) {
+  if (ateos.isFunction(node.shift)) {
     return node.shift();
   }
   return node.nodes && node.nodes.shift();
@@ -323,7 +323,7 @@ export const removeNode = function (parent, node) {
     return;
   }
 
-  if (is.function(parent.remove)) {
+  if (ateos.isFunction(parent.remove)) {
     return parent.remove(node);
   }
 
@@ -376,7 +376,7 @@ export const hasType = function (node, type) {
   if (!isNode(node)) {
     return false;
   }
-  if (!is.array(node.nodes)) {
+  if (!ateos.isArray(node.nodes)) {
     return false;
   }
   for (const child of node.nodes) {
@@ -411,10 +411,10 @@ export const firstOfType = function (nodes, type) {
  * @returns {object} Returns a node or undefined.
  */
 export const findNode = function (nodes, type) {
-  if (!is.array(nodes)) {
+  if (!ateos.isArray(nodes)) {
     return null;
   }
-  if (is.number(type)) {
+  if (ateos.isNumber(type)) {
     return nodes[type];
   }
   return firstOfType(nodes, type);
@@ -430,10 +430,10 @@ export const isOpen = function (node) {
   if (!node) {
     return false;
   }
-  if (node.parent && is.function(node.parent.isOpen)) {
+  if (node.parent && ateos.isFunction(node.parent.isOpen)) {
     return node.parent.isOpen(node);
   }
-  if (node && is.function(node.isOpen)) {
+  if (node && ateos.isFunction(node.isOpen)) {
     return node.isOpen(node);
   }
   return node.type ? node.type.slice(-5) === ".open" : false;
@@ -449,10 +449,10 @@ export const isClose = function (node) {
   if (!node) {
     return false;
   }
-  if (node.parent && is.function(node.parent.isClose)) {
+  if (node.parent && ateos.isFunction(node.parent.isClose)) {
     return node.parent.isClose(node);
   }
-  if (node && is.function(node.isClose)) {
+  if (node && ateos.isFunction(node.isClose)) {
     return node.isClose(node);
   }
   return node.type ? node.type.slice(-6) === ".close" : false;
@@ -469,13 +469,13 @@ export const isBlock = function (node) {
   if (!node || !isNode(node)) {
     return false;
   }
-  if (!is.array(node.nodes)) {
+  if (!ateos.isArray(node.nodes)) {
     return false;
   }
-  if (node.parent && is.function(node.parent.isBlock)) {
+  if (node.parent && ateos.isFunction(node.parent.isBlock)) {
     return node.parent.isBlock(node);
   }
-  if (is.function(node.isBlock)) {
+  if (ateos.isFunction(node.isBlock)) {
     return node.isBlock(node);
   }
   return hasOpenAndClose(node);
@@ -493,7 +493,7 @@ export const hasOpen = function (node) {
   if (!isNode(first)) {
     return false;
   }
-  if (is.function(node.isOpen)) {
+  if (ateos.isFunction(node.isOpen)) {
     return node.isOpen(first);
   }
   return first.type === `${node.type}.open`;
@@ -511,7 +511,7 @@ export const hasClose = function (node) {
   if (!isNode(last)) {
     return false;
   }
-  if (is.function(node.isClose)) {
+  if (ateos.isFunction(node.isClose)) {
     return node.isClose(last);
   }
   return last.type === `${node.type}.close`;
@@ -538,7 +538,7 @@ export const hasOpenAndClose = function (node) {
  */
 export const addType = function (state, node) {
   assert(isNode(node), "expected node to be an instance of Node");
-  assert(is.object(state), "expected state to be an object");
+  assert(ateos.isObject(state), "expected state to be an object");
 
   const type = node.parent
     ? node.parent.type
@@ -567,7 +567,7 @@ export const addType = function (state, node) {
  */
 export const removeType = function (state, node) {
   assert(isNode(node), "expected node to be an instance of Node");
-  assert(is.object(state), "expected state to be an object");
+  assert(ateos.isObject(state), "expected state to be an object");
 
   const type = node.parent
     ? node.parent.type
@@ -589,8 +589,8 @@ export const removeType = function (state, node) {
 export const isEmpty = function (node, fn) {
   assert(isNode(node), "expected node to be an instance of Node");
 
-  if (!is.array(node.nodes)) {
-    if (is.function(fn)) {
+  if (!ateos.isArray(node.nodes)) {
+    if (ateos.isFunction(fn)) {
       return fn(node);
     }
     return !value(node);
@@ -618,8 +618,8 @@ export const isEmpty = function (node, fn) {
  * @returns {boolean}
  */
 export const isInsideType = function (state, type) {
-  assert(is.object(state), "expected state to be an object");
-  assert(is.string(type), "expected type to be a string");
+  assert(ateos.isObject(state), "expected state to be an object");
+  assert(ateos.isString(type), "expected type to be a string");
 
   if (!state.hasOwnProperty("inside")) {
     return false;
@@ -643,9 +643,9 @@ export const isInsideType = function (state, type) {
  */
 export const isInside = function (state, node, type) {
   assert(isNode(node), "expected node to be an instance of Node");
-  assert(is.object(state), "expected state to be an object");
+  assert(ateos.isObject(state), "expected state to be an object");
 
-  if (is.array(type)) {
+  if (ateos.isArray(type)) {
     for (let i = 0; i < type.length; i++) {
       if (isInside(state, node, type[i])) {
         return true;
@@ -655,7 +655,7 @@ export const isInside = function (state, node, type) {
   }
 
   const parent = node.parent;
-  if (is.string(type)) {
+  if (ateos.isString(type)) {
     return (parent && parent.type === type) || isInsideType(state, type);
   }
 
@@ -671,7 +671,7 @@ export const isInside = function (state, node, type) {
       const key = keys[idx];
       const value = state.inside[key];
 
-      if (is.array(value) && value.length !== 0 && type.test(key)) {
+      if (ateos.isArray(value) && value.length !== 0 && type.test(key)) {
         return true;
       }
     }
@@ -688,11 +688,11 @@ export const isInside = function (state, node, type) {
  * @return {undefined}
  */
 export const last = function (arr, n) {
-  return is.array(arr) ? arr[arr.length - (n || 1)] : null;
+  return ateos.isArray(arr) ? arr[arr.length - (n || 1)] : null;
 };
 
 export const lastNode = function (node) {
-  return is.array(node.nodes) ? last(node.nodes) : null;
+  return ateos.isArray(node.nodes) ? last(node.nodes) : null;
 };
 
 /**
@@ -702,10 +702,10 @@ export const lastNode = function (node) {
  * @return {Array}
  */
 export const arrayify = function (value) {
-  if (is.string(value) && value !== "") {
+  if (ateos.isString(value) && value !== "") {
     return [value];
   }
-  if (!is.array(value)) {
+  if (!ateos.isArray(value)) {
     return [];
   }
   return value;

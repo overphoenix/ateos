@@ -21,7 +21,7 @@ const callGc = typeof gc === "undefined" ? ateos.noop : gc; // eslint-disable-li
 
 const wrapError = (err) => {
   const result = {};
-  if (!is.error(err)) {
+  if (!ateos.isError(err)) {
     result.warning = "not error was thrown! showing json encoded data";
     result.message = JSON.stringify(err, null, 4);
   }
@@ -126,7 +126,7 @@ class Hook {
   }
 
   failed() {
-    return !is.null(this._failed);
+    return !ateos.isNull(this._failed);
   }
 
   cause() {
@@ -135,7 +135,7 @@ class Hook {
 
   timeout(ms = ateos.null) {
     if (ms !== ateos.null) {
-      if (is.number(ms) && ms > SET_TIMEOUT_MAX) {
+      if (ateos.isNumber(ms) && ms > SET_TIMEOUT_MAX) {
         ms = SET_TIMEOUT_MAX;
       }
       this._timeout = ms;
@@ -250,7 +250,7 @@ class Block {
     if (!options) {
       return;
     }
-    if (!this.isExclusive() && is.propertyOwned(options, "skip")) { // no explicit skip + skip option provided
+    if (!this.isExclusive() && ateos.isPropertyOwned(options, "skip")) { // no explicit skip + skip option provided
       const { skip } = options;
       const type = ateos.typeOf(skip);
       switch (type) {
@@ -274,7 +274,7 @@ class Block {
         }
       }
     }
-    if (is.propertyOwned(options, "timeout")) {
+    if (ateos.isPropertyOwned(options, "timeout")) {
       const { timeout } = options;
       const type = ateos.typeOf(timeout);
       switch (type) {
@@ -402,7 +402,7 @@ class Block {
 
   timeout(ms = ateos.null) {
     if (ms !== ateos.null) {
-      if (is.number(ms) && ms > SET_TIMEOUT_MAX) {
+      if (ateos.isNumber(ms) && ms > SET_TIMEOUT_MAX) {
         ms = SET_TIMEOUT_MAX;
       }
       this._timeout = ms;
@@ -418,10 +418,10 @@ class Block {
   }
 
   level(level) {
-    if (!is.undefined(level)) {
+    if (!ateos.isUndefined(level)) {
       this._level = level;
       return this;
-    } else if (is.null(this._level)) {
+    } else if (ateos.isNull(this._level)) {
       this._level = this.parent ? this.parent.level() + 1 : 0;
     }
     return this._level;
@@ -477,7 +477,7 @@ class Test {
     if (!options) {
       return;
     }
-    if (!this.isExclusive() && is.propertyOwned(options, "skip")) { // no explicit skip + skip option provided
+    if (!this.isExclusive() && ateos.isPropertyOwned(options, "skip")) { // no explicit skip + skip option provided
       const { skip } = options;
       const type = ateos.typeOf(skip);
       switch (type) {
@@ -501,7 +501,7 @@ class Test {
         }
       }
     }
-    if (is.propertyOwned(options, "timeout")) {
+    if (ateos.isPropertyOwned(options, "timeout")) {
       const { timeout } = options;
       const type = ateos.typeOf(timeout);
       switch (type) {
@@ -528,8 +528,8 @@ class Test {
         }
       }
     }
-    const hasBefore = is.propertyOwned(options, "before");
-    const hasAfter = is.propertyOwned(options, "after");
+    const hasBefore = ateos.isPropertyOwned(options, "before");
+    const hasAfter = ateos.isPropertyOwned(options, "after");
     if (hasBefore || hasAfter) {
       const handle = async (hookType) => {
         const { [hookType]: hook } = options;
@@ -548,23 +548,23 @@ class Test {
               if (item.length !== 2) {
                 throw new error.IllegalStateException(`${hookType}: not enough arguments for [description, callback]`);
               }
-              if (!is.function(item[1])) {
+              if (!ateos.isFunction(item[1])) {
                 throw new error.InvalidArgumentException(`${hookType}: callback must be a function for [description, callback]`);
               }
               this[hookType](...item);
             };
             if (hook.length !== 0) {
-              if (is.string(hook[0])) {
+              if (ateos.isString(hook[0])) {
                 hookWithDescription(hook);
               } else {
                 for (const item of hook) {
-                  if (is.array(item)) {
-                    if (is.string(item[0])) {
+                  if (ateos.isArray(item)) {
+                    if (ateos.isString(item[0])) {
                       hookWithDescription(item);
                     } else {
                       throw new error.InvalidArgumentException(`${hookType}: invalid value, must be [description, callback]`);
                     }
-                  } else if (is.function(item)) {
+                  } else if (ateos.isFunction(item)) {
                     this[hookType](item);
                   } else {
                     throw new error.InvalidArgumentException(`${hookType}: invalid value, must be callback or [description, callback]`);
@@ -698,7 +698,7 @@ class Test {
 
   timeout(ms = ateos.null) {
     if (ms !== ateos.null) {
-      if (is.number(ms) && ms > SET_TIMEOUT_MAX) {
+      if (ateos.isNumber(ms) && ms > SET_TIMEOUT_MAX) {
         ms = SET_TIMEOUT_MAX;
       }
       this._timeout = ms;
@@ -713,7 +713,7 @@ class Test {
   }
 
   after(description, callback) {
-    if (is.function(description)) {
+    if (ateos.isFunction(description)) {
       [description, callback] = ["", description];
     }
     const hook = new Hook(this.block, description, callback, this.runtimeContext, this.meta); // use current test location ??
@@ -722,7 +722,7 @@ class Test {
   }
 
   before(description, callback) {
-    if (is.function(description)) {
+    if (ateos.isFunction(description)) {
       [description, callback] = ["", description];
     }
     const hook = new Hook(this.block, description, callback, this.runtimeContext, this.meta); // use current test location ??
@@ -793,7 +793,7 @@ class ConfigLoader {
     } else {
       const m = ateos.require(p);
       config = m.default;
-      if (!is.function(config) && !is.undefined(config)) {
+      if (!ateos.isFunction(config) && !ateos.isUndefined(config)) {
         throw new error.IllegalStateException(`Failed to load .shanirc.js file: ${p}. Expected default export to be a function or undefined, but got: ${ateos.typeOf(config)}`);
       }
     }
@@ -939,11 +939,11 @@ export class Engine {
     const _describe = (...args) => {
       const callback = args.pop();
 
-      if (!is.function(callback)) {
+      if (!ateos.isFunction(callback)) {
         throw new error.InvalidArgumentException("The last argument must be a function");
       }
 
-      const options = args.length > 0 && is.plainObject(args[args.length - 1]) ? args.pop() : null;
+      const options = args.length > 0 && ateos.isPlainObject(args[args.length - 1]) ? args.pop() : null;
 
       if (args.length === 0) {
         throw new error.InvalidArgumentException("A describe must have a name");
@@ -960,7 +960,7 @@ export class Engine {
       runtimeContext.skip = block.skip.bind(block);
       runtimeContext.timeout = block.timeout.bind(block);
 
-      if (is.promise(callback.call(runtimeContext))) {
+      if (ateos.isPromise(callback.call(runtimeContext))) {
         throw new Error("It is not allowed to use asynchronous functions as a describe callback");
       }
 
@@ -984,7 +984,7 @@ export class Engine {
     }, ["skip", "only", "slow", "todo"]);
 
     const _it = (description, options, callback) => {
-      if (is.function(options)) {
+      if (ateos.isFunction(options)) {
         [options, callback] = [null, options];
       }
       const meta = { location: getCurrentLocation() };
@@ -1004,7 +1004,7 @@ export class Engine {
     }, ["skip", "only", "slow", "todo"]);
 
     const before = (description, callback) => {
-      if (is.function(description)) {
+      if (ateos.isFunction(description)) {
         [description, callback] = ["", description];
       }
       const meta = { location: getCurrentLocation() };
@@ -1013,7 +1013,7 @@ export class Engine {
     };
 
     const after = (description, callback) => {
-      if (is.function(description)) {
+      if (ateos.isFunction(description)) {
         [description, callback] = ["", description];
       }
       const meta = { location: getCurrentLocation() };
@@ -1022,7 +1022,7 @@ export class Engine {
     };
 
     const beforeEach = (description, callback) => {
-      if (is.function(description)) {
+      if (ateos.isFunction(description)) {
         [description, callback] = ["", description];
       }
       const meta = { location: getCurrentLocation() };
@@ -1031,7 +1031,7 @@ export class Engine {
     };
 
     const afterEach = (description, callback) => {
-      if (is.function(description)) {
+      if (ateos.isFunction(description)) {
         [description, callback] = ["", description];
       }
       const meta = { location: getCurrentLocation() };
@@ -1543,7 +1543,7 @@ export class Engine {
       const getSource = () => {
         const { stack } = new Error();
         const res = stack.split("\n")[3].trim().match(/\((.+?):(\d+):(\d+)\)/);
-        if (is.null(res)) {
+        if (ateos.isNull(res)) {
           return null;
         }
         return {
@@ -1563,7 +1563,7 @@ export class Engine {
             obj[prop] = function (...args) {
               try {
                 const source = getSource();
-                if (!is.null(source)) {
+                if (!ateos.isNull(source)) {
                   const location = `${ateos.std.path.relative(cwd, source.filename)}:${source.line}:${source.column}`;
                   if (prop === "dir") {
                     // it does not support rest args..
@@ -2028,7 +2028,7 @@ export const consoleReporter = ({
               log(ateos.text.indent(err.diff, 2));
             }
             log();
-            if (is.string(err.stack)) {
+            if (ateos.isString(err.stack)) {
               const stackMsg = filterShaniFrames(err.stack.split("\n")).slice(1).map((x) => `    ${x.trim()}`).join("\n");
               log(`{grey-fg}{escape}${stackMsg}{/escape}{/}`);
             }
@@ -2050,7 +2050,7 @@ export const consoleReporter = ({
               log(`{red-fg}{escape}${err}{/escape}{/}`);
             }
 
-            if (is.string(err.stack)) {
+            if (ateos.isString(err.stack)) {
               const stackMsg = err.stack.split("\n").slice(1).map((x) => `    ${x.trim()}`).join("\n");
               log(`{grey-fg}{escape}${stackMsg}{/escape}{/}`);
             }
@@ -2075,7 +2075,7 @@ export const consoleReporter = ({
               log(`{magenta-fg}{escape}${err}{/escape}{/}`);
             }
 
-            if (is.string(err.stack)) {
+            if (ateos.isString(err.stack)) {
               const stackMsg = err.stack.split("\n").slice(1).map((x) => `    ${x.trim()}`).join("\n");
               log(`{grey-fg}{escape}${stackMsg}{/escape}{/}`);
             }
@@ -2093,7 +2093,7 @@ export const consoleReporter = ({
               log(`{#ff9500-fg}${idx}) {escape}${err}{/escape}{/}`);
             }
 
-            if (is.string(err.stack)) {
+            if (ateos.isString(err.stack)) {
               const stackMsg = err.stack.split("\n").slice(1).map((x) => `    ${x.trim()}`).join("\n");
               log(`{grey-fg}{escape}${stackMsg}{/escape}{/}`);
             }
@@ -2299,7 +2299,7 @@ export const minimalReporter = () => {
               log(ateos.text.indent(err.diff, 2));
             }
             log();
-            if (is.string(err.stack)) {
+            if (ateos.isString(err.stack)) {
               const stackMsg = filterShaniFrames(err.stack.split("\n")).slice(1).map((x) => `    ${x.trim()}`).join("\n");
               log(`{grey-fg}{escape}${stackMsg}{/escape}{/}`);
             }
@@ -2317,7 +2317,7 @@ export const minimalReporter = () => {
               log(`{#ff9500-fg}${idx}) {escape}${err}{/escape}{/}`);
             }
 
-            if (is.string(err.stack)) {
+            if (ateos.isString(err.stack)) {
               const stackMsg = err.stack.split("\n").slice(1).map((x) => `    ${x.trim()}`).join("\n");
               log(`{grey-fg}{escape}${stackMsg}{/escape}{/}`);
             }
@@ -2548,7 +2548,7 @@ export const simpleReporter = ({
               log();
               log(ateos.text.indent(err.diff, 2));
             }
-            if (is.string(err.stack)) {
+            if (ateos.isString(err.stack)) {
               const stackMsg = filterShaniFrames(err.stack.split("\n")).slice(1).map((x) => `    ${x.trim()}`).join("\n");
               log(`{grey-fg}{escape}${stackMsg}{/escape}{/}`);
             }
@@ -2571,7 +2571,7 @@ export const simpleReporter = ({
               log(`{red-fg}{escape}${err}{/escape}{/}`);
             }
 
-            if (is.string(err.stack)) {
+            if (ateos.isString(err.stack)) {
               const stackMsg = err.stack.split("\n").slice(1).map((x) => `    ${x.trim()}`).join("\n");
               log(`{grey-fg}{escape}${stackMsg}{/escape}{/}`);
             }
@@ -2596,7 +2596,7 @@ export const simpleReporter = ({
               log(`{magenta-fg}{escape}${err}{/escape}{/}`);
             }
 
-            if (is.string(err.stack)) {
+            if (ateos.isString(err.stack)) {
               const stackMsg = err.stack.split("\n").slice(1).map((x) => `    ${x.trim()}`).join("\n");
               log(`{grey-fg}{escape}${stackMsg}{/escape}{/}`);
             }
@@ -2614,7 +2614,7 @@ export const simpleReporter = ({
               log(`{#ff9500-fg}${idx}) {escape}${err}{/escape}{/}`);
             }
 
-            if (is.string(err.stack)) {
+            if (ateos.isString(err.stack)) {
               const stackMsg = err.stack.split("\n").slice(1).map((x) => `    ${x.trim()}`).join("\n");
               log(`{grey-fg}{escape}${stackMsg}{/escape}{/}`);
             }

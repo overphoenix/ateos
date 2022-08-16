@@ -41,7 +41,7 @@ class DBRef {
       this.fields
     );
 
-    if (!is.nil(this.db)) {
+    if (!ateos.isNil(this.db)) {
       o.$db = this.db;
     }
     return o;

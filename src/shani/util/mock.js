@@ -62,7 +62,7 @@ class Mock {
     const object = this.object;
     if (this.proxies) {
       for (const proxy of this.proxies) {
-        if (is.function(object[proxy].restore)) {
+        if (ateos.isFunction(object[proxy].restore)) {
           object[proxy].restore();
         }
       }
@@ -155,7 +155,7 @@ class Mock {
 }
 
 export default function mock(object) {
-  if (!object || is.string(object)) {
+  if (!object || ateos.isString(object)) {
     return util.expectation.create(object ? object : "Anonymous mock");
   }
   return mock.create(object);

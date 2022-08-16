@@ -18,7 +18,7 @@ export default (fs) => {
     }
     
     _getEncoding() {
-      if (is.null(this._encoding)) {
+      if (ateos.isNull(this._encoding)) {
         return "buffer";
       }
       return this._encoding;
@@ -69,7 +69,7 @@ export default (fs) => {
     }
     
     normalizedPath() {
-      return is.windows ? ateos.util.normalizePath(this._path) : this._path;
+      return ateos.isWindows ? ateos.util.normalizePath(this._path) : this._path;
     }
     
     dirname() {
@@ -105,9 +105,9 @@ export default (fs) => {
     
     async create({ mode = 0o755, contents, atime = null, mtime = null } = {}) {
       await this.write(contents, { mode });
-      if (!is.null(atime) || !is.null(mtime)) {
+      if (!ateos.isNull(atime) || !ateos.isNull(mtime)) {
         // TODO: -1 will be converted to now, ok?
-        await this.utimes(is.null(atime) ? -1 : atime, is.null(mtime) ? -1 : mtime);
+        await this.utimes(ateos.isNull(atime) ? -1 : atime, ateos.isNull(mtime) ? -1 : mtime);
       }
     }
     

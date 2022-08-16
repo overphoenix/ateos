@@ -19,7 +19,7 @@ export default function escape(str) {
     return str;
   }
 
-  const string = is.string(str) ? str : String(str);
+  const string = ateos.isString(str) ? str : String(str);
 
   let out = "";
   for (let i = 0; i < string.length; ++i) {

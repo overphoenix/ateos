@@ -23,7 +23,7 @@ export default () => ({
 
     for (; ;) {
             const entry = await zipfile.readEntry(); // eslint-disable-line
-      if (is.null(entry)) {
+      if (ateos.isNull(entry)) {
         break;
       }
       const entryFile = file.clone();

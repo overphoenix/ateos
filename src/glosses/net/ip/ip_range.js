@@ -7,7 +7,7 @@ const {
 
 export default class IPRange {
   constructor(start, end) {
-    if (is.string(start) && is.string(end)) {
+    if (ateos.isString(start) && ateos.isString(end)) {
       const t = std.net.isIP(start);
       if (!t) {
         throw new error.InvalidArgumentException("Invalid start address");

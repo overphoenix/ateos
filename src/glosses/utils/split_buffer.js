@@ -3,21 +3,21 @@ const {
 } = ateos;
 
 const bufferIndexOf = function (buffer, search, offset, encoding) {
-  if (!is.buffer(buffer)) {
+  if (!ateos.isBuffer(buffer)) {
     throw new ateos.error.InvalidArgumentException("'buffer' is not a Buffer");
   }
 
   // allow optional offset when providing an encoding
-  if (is.undefined(encoding) && is.string(offset)) {
+  if (ateos.isUndefined(encoding) && ateos.isString(offset)) {
     encoding = offset;
     offset = undefined;
   }
 
-  if (is.string(search)) {
+  if (ateos.isString(search)) {
     search = Buffer.from(search, encoding || "utf8");
-  } else if (is.number(search) && !isNaN(search)) {
+  } else if (ateos.isNumber(search) && !isNaN(search)) {
     search = Buffer.from([search]);
-  } else if (!is.buffer(search)) {
+  } else if (!ateos.isBuffer(search)) {
     throw new ateos.error.InvalidArgumentException("'search' is not a bufferable object");
   }
 
@@ -25,9 +25,9 @@ const bufferIndexOf = function (buffer, search, offset, encoding) {
     return -1;
   }
 
-  if (is.undefined(offset) || (is.number(offset) && isNaN(offset))) {
+  if (ateos.isUndefined(offset) || (ateos.isNumber(offset) && isNaN(offset))) {
     offset = 0;
-  } else if (!is.number(offset)) {
+  } else if (!ateos.isNumber(offset)) {
     throw new ateos.error.InvalidArgumentException("'offset' is not a number");
   }
 
@@ -79,7 +79,7 @@ export default function (buf, splitBuf, includeDelim) {
   const lines = [];
   const move = includeDelim ? splitBuf.length : 0;
 
-  if (is.string(buf)) {
+  if (ateos.isString(buf)) {
     buf = Buffer.from(buf);
   }
 

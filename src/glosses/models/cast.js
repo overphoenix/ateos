@@ -6,13 +6,13 @@ const {
 } = ateos;
 
 export const schema = function (Joi, config) {
-  if (!is.nil(config) && typeof config === "object") {
+  if (!ateos.isNil(config) && typeof config === "object") {
 
     if (config.isJoi) {
       return config;
     }
 
-    if (is.array(config)) {
+    if (ateos.isArray(config)) {
       return Joi.alternatives().try(config);
     }
 
@@ -27,15 +27,15 @@ export const schema = function (Joi, config) {
     return Joi.object().keys(config);
   }
 
-  if (is.string(config)) {
+  if (ateos.isString(config)) {
     return Joi.string().valid(config);
   }
 
-  if (is.number(config)) {
+  if (ateos.isNumber(config)) {
     return Joi.number().valid(config);
   }
 
-  if (is.boolean(config)) {
+  if (ateos.isBoolean(config)) {
     return Joi.boolean().valid(config);
   }
 
@@ -43,7 +43,7 @@ export const schema = function (Joi, config) {
     return Joi.valid(config);
   }
 
-  assert(is.null(config), config ? `Invalid schema content: ${config}` : "Invalid schema content: ");
+  assert(ateos.isNull(config), config ? `Invalid schema content: ${config}` : "Invalid schema content: ");
 
   return Joi.valid(null);
 };

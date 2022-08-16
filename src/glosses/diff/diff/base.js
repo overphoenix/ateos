@@ -7,7 +7,7 @@ export default function Diff() {}
 Diff.prototype = {
   diff(oldString, newString, options = {}) {
     let callback = options.callback;
-    if (is.function(options)) {
+    if (ateos.isFunction(options)) {
       callback = options;
       options = {};
     }
@@ -223,7 +223,7 @@ function buildValues(diff, components, newString, oldString, useLongestToken) {
   // This is only available for string mode.
   const lastComponent = components[componentLen - 1];
   if (componentLen > 1
-      && is.string(lastComponent.value)
+      && ateos.isString(lastComponent.value)
       && (lastComponent.added || lastComponent.removed)
       && diff.equals("", lastComponent.value)) {
     components[componentLen - 2].value += lastComponent.value;

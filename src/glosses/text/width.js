@@ -5,7 +5,7 @@ const {
 } = ateos;
 
 export default (str) => {
-  if (!is.string(str) || str.length === 0) {
+  if (!ateos.isString(str) || str.length === 0) {
     return 0;
   }
 

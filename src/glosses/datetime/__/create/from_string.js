@@ -57,7 +57,7 @@ export const configFromISO = function (config) {
         break;
       }
     }
-    if (is.nil(dateFormat)) {
+    if (ateos.isNil(dateFormat)) {
       config._isValid = false;
       return;
     }
@@ -69,12 +69,12 @@ export const configFromISO = function (config) {
           break;
         }
       }
-      if (is.nil(timeFormat)) {
+      if (ateos.isNil(timeFormat)) {
         config._isValid = false;
         return;
       }
     }
-    if (!allowTime && is.exist(timeFormat)) {
+    if (!allowTime && ateos.isExist(timeFormat)) {
       config._isValid = false;
       return;
     }
@@ -193,7 +193,7 @@ export const configFromRFC2822 = (config) => {
 export const configFromString = (config) => {
   const matched = aspNetJsonRegex.exec(config._i);
 
-  if (!is.null(matched)) {
+  if (!ateos.isNull(matched)) {
     config._d = new Date(Number(matched[1]));
     return;
   }

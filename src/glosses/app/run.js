@@ -13,7 +13,7 @@ const _bootstrapApp = async (app, {
   version,
   ...restOptions
 }) => {
-  if (is.null(ateos.__app__)) {
+  if (ateos.isNull(ateos.__app__)) {
     ateos.__app__ = app;
 
     // From Node.js docs: SIGTERM and SIGINT have default handlers on non-Windows platforms that resets
@@ -40,7 +40,7 @@ const _bootstrapApp = async (app, {
     process.on("rejectionHandled", rejectionHandled);
     process.on("beforeExit", beforeExit);
 
-    // if (ateos.is.nodejs && process.stdout.isTTY && process.stdin.isTTY) {
+    // if (ateos.ateos.isNodejs && process.stdout.isTTY && process.stdin.isTTY) {
     //     // Track cursor if tty mode is enabled
     //     await new Promise((resolve) => ateos.cli.trackCursor(resolve));
     // }
@@ -69,13 +69,13 @@ const _bootstrapApp = async (app, {
           appHelper.defineMainCommand(sysMeta.mainCommand);
         }
 
-        if (is.array(sysMeta.commandsGroups)) {
+        if (ateos.isArray(sysMeta.commandsGroups)) {
           for (const group of sysMeta.commandsGroups) {
             appHelper.defineCommandsGroup(group);
           }
         }
 
-        if (is.array(sysMeta.optionsGroups)) {
+        if (ateos.isArray(sysMeta.optionsGroups)) {
           for (const group of sysMeta.optionsGroups) {
             appHelper.defineOptionsGroup(group);
           }
@@ -85,19 +85,19 @@ const _bootstrapApp = async (app, {
       await app.configure(restOptions);
 
       if (sysMeta) {
-        if (is.array(sysMeta.commands)) {
+        if (ateos.isArray(sysMeta.commands)) {
           for (const command of sysMeta.commands) {
             appHelper.defineCommand(command);
           }
         }
 
-        if (is.array(sysMeta.options)) {
+        if (ateos.isArray(sysMeta.options)) {
           for (const option of sysMeta.options) {
             appHelper.defineOption(option);
           }
         }
 
-        if (is.array(sysMeta.subsystems)) {
+        if (ateos.isArray(sysMeta.subsystems)) {
           for (const ss of sysMeta.subsystems) {
             // eslint-disable-next-line
                         await appHelper.defineCommandFromSubsystem({
@@ -119,7 +119,8 @@ const _bootstrapApp = async (app, {
       if (errors.length) {
         console.log(`${command.getUsageMessage()}\n`);
         for (const error of errors) {
-          ateos.log.bright.red.error.noLocate(error);
+          console.error(error);
+          // ateos.log.bright.red.error.noLocate(error);
         }
         await app.stop(1);
       }
@@ -138,7 +139,7 @@ const _bootstrapApp = async (app, {
 
     app._setErrorScope(false);
 
-    if (is.integer(code)) {
+    if (ateos.isInteger(code)) {
       await app.stop(code);
       return;
     }
@@ -146,7 +147,8 @@ const _bootstrapApp = async (app, {
     if (app._isAppErrorScope()) {
       return app.fireException(err);
     }
-    ateos.log.bright.red.error.noLocate(err);
+    console.error(err);
+    // ateos.log.bright.red.error.noLocate(err);
     return app.stop(1);
   }
 };
@@ -156,7 +158,7 @@ export default async (App, {
   version,
   ...restOptions
 } = {}) => {
-  if (is.null(ateos.__app__) && is.class(App)) {
+  if (ateos.isNull(ateos.__app__) && ateos.isClass(App)) {
     const app = new App();
     if (useArgs) {
       // mark the default main as internal to be able to distinguish internal from user-defined handlers
@@ -176,17 +178,17 @@ export default async (App, {
   }
 
   // surrogate application, use only own properties
-  const _App = is.class(App) ? App.prototype : App;
+  const _App = ateos.isClass(App) ? App.prototype : App;
   const allProps = util.entries(_App, { enumOnly: false });
 
-  if (!is.null(ateos.__app__)) {
+  if (!ateos.isNull(ateos.__app__)) {
     await ateos.__app__.uninitialize();
     ateos.__app__.removeProcessHandlers();
     ateos.__app__ = null;
   }
 
   // redefine argv
-  if (is.array(ateos.__argv__)) {
+  if (ateos.isArray(ateos.__argv__)) {
     process.argv = ateos.__argv__;
     delete ateos.__argv__;
   }
@@ -196,7 +198,7 @@ export default async (App, {
   const props = [];
 
   for (const [name, value] of allProps) {
-    if (is.function(value)) {
+    if (ateos.isFunction(value)) {
       XApplication.prototype[name] = value;
     } else {
       props.push(name);

@@ -1,5 +1,4 @@
 const {
-  is,
   std,
   cli: { chalk }
 } = ateos;
@@ -68,7 +67,7 @@ class ParsedError {
     this._kind = "Error";
     this._wrapper = "";
 
-    if (!is.nil(this.error.wrapper)) {
+    if (!ateos.isNil(this.error.wrapper)) {
       this._wrapper = String(this.error.wrapper);
     }
 
@@ -77,17 +76,17 @@ class ParsedError {
     } else {
       this._stack = this.error.stack;
 
-      if (!is.nil(this.error.kind)) {
+      if (!ateos.isNil(this.error.kind)) {
         this._kind = String(this.error.kind);
-      } else if (is.string(this._stack)) {
+      } else if (ateos.isString(this._stack)) {
         let m;
         if (m = this._stack.match(/^([a-zA-Z0-9\_\$]+):\ /)) {
           this._kind = m[1];
         }
       }
 
-      this._message = ((!is.nil(this.error.message)) && String(this.error.message)) || "";
-      if (is.string(this._stack)) {
+      this._message = ((!ateos.isNil(this.error.message)) && String(this.error.message)) || "";
+      if (ateos.isString(this._stack)) {
         this._parseStack();
       }
     }
@@ -196,13 +195,13 @@ class ParsedError {
       addr = m[1].trim();
     }
 
-    if (!is.nil(addr)) {
+    if (!ateos.isNil(addr)) {
       what = text.substr(0, text.length - addr.length - 2);
       what = what.trim();
     }
 
     // might not have a 'what' clause
-    if (is.nil(addr)) {
+    if (ateos.isNil(addr)) {
       addr = text.trim();
     }
 
@@ -225,7 +224,7 @@ class ParsedError {
     }
 
     // file and dir
-    if (!is.nil(path)) {
+    if (!ateos.isNil(path)) {
       file = std.path.basename(path);
       dir = std.path.dirname(path);
 
@@ -238,7 +237,7 @@ class ParsedError {
       dir = this._fixPath(dir);
     }
 
-    if (!is.nil(dir)) {
+    if (!ateos.isNil(dir)) {
       const d = dir.replace(/[\\]{1,2}/g, "/");
       if (m = d.match(new RegExp("\
 node_modules/([^/]+)(?!.*node_modules.*)\
@@ -249,12 +248,12 @@ node_modules/([^/]+)(?!.*node_modules.*)\
       }
     }
 
-    if (is.nil(jsLine)) {
+    if (ateos.isNil(jsLine)) {
       jsLine = line;
       jsCol = col;
     }
 
-    if (!is.nil(path)) {
+    if (!ateos.isNil(path)) {
       const r = this._rectifyPath(path);
       shortenedPath = r.path;
       shortenedAddr = shortenedPath + addr.substr(path.length, addr.length);
@@ -323,7 +322,7 @@ node_modules/([^/]+)(?!.*node_modules.*)\
     const parts = [];
     const packages = [];
 
-    if (is.string(nameForCurrentPackage)) {
+    if (ateos.isString(nameForCurrentPackage)) {
       parts.push(`[${nameForCurrentPackage}]`);
       packages.push(`[${nameForCurrentPackage}]`);
     } else {
@@ -396,7 +395,7 @@ const fn = (e, { maxItems = 16, skipNodeFiles = false } = {}) => {
 
   for (let i = 0; i < e.trace.length; i++) {
     const trace = e.trace[i];
-    if (is.nil(trace)) {
+    if (ateos.isNil(trace)) {
       continue;
     }
 
@@ -412,24 +411,24 @@ const fn = (e, { maxItems = 16, skipNodeFiles = false } = {}) => {
       break;
     }
 
-    if (is.string(trace)) {
+    if (ateos.isString(trace)) {
       traceItems.push({ custom: trace });
     } else {
       let what = "";
-      if ((is.string(trace.what)) && (trace.what.trim().length > 0)) {
+      if ((ateos.isString(trace.what)) && (trace.what.trim().length > 0)) {
         what = trace.what;
       }
             
       result += `${chalk.grey("-")}`;
-      if (!is.nil(trace.file)) {
+      if (!ateos.isNil(trace.file)) {
         result += ` ${chalk.yellow.bold(trace.file)}`;
-        if (is.number(trace.line)) {
+        if (ateos.isNumber(trace.line)) {
           result += `${chalk.grey(":")}${chalk.yellow.bold(trace.line.toString())}`;
         }
       }
       result += ` ${chalk.white(what)}\n  ${chalk.grey.italic(trace.shortenedAddr)}`;
 
-      if (!is.nil(trace.extra)) {
+      if (!ateos.isNil(trace.extra)) {
         result += `\n  ${trace.extra}`;
       }
     }

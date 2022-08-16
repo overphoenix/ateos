@@ -91,7 +91,7 @@ export default class Snapdragon {
      * @returns {object} Returns an object with an `output` property with the rendered string.
      */
   render(ast, options) {
-    if (is.string(ast)) {
+    if (ateos.isString(ast)) {
       ast = this.parse(ast, options);
     }
     return this.compile(ast, options).output;

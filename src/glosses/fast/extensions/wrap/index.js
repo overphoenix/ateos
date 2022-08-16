@@ -7,8 +7,8 @@ export default function plugin() {
   } = ateos;
 
   return function wrap(template, data, options) {
-    if (is.object(template) && !is.function(template)) {
-      if (!is.string(template.src)) {
+    if (ateos.isObject(template) && !ateos.isFunction(template)) {
+      if (!ateos.isString(template.src)) {
         throw new error.InvalidArgumentException("Expecting `src` option");
       }
       template = new Promise((resolve, reject) => {
@@ -17,7 +17,7 @@ export default function plugin() {
         });
       });
     } else {
-      if (!is.string(template) && !is.function(template)) {
+      if (!ateos.isString(template) && !ateos.isFunction(template)) {
         throw new error.InvalidArgumentException("Template must be a string or a function");
       }
       template = Promise.resolve(template);
@@ -47,10 +47,10 @@ export default function plugin() {
         // is a buffer
         contents = file.contents;
       }
-      if (is.function(data)) {
+      if (ateos.isFunction(data)) {
         data = data(file);
       }
-      if (is.function(options)) {
+      if (ateos.isFunction(options)) {
         options = options(file);
       }
       data = data || {};
@@ -78,7 +78,7 @@ export default function plugin() {
       }
       const newData = _.extend({ file }, options, data, file.data, { contents });
       let t = await template;
-      if (is.function(t)) {
+      if (ateos.isFunction(t)) {
         t = t(newData);
       }
       const result = _.template(t, options)(newData);

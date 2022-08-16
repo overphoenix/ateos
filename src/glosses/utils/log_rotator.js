@@ -106,7 +106,7 @@ export default class LogRotator extends ateos.EventEmitter {
     } catch (err) {
       this.emit("rotateError", err);
     } finally {
-      if (!is.null(fd)) {
+      if (!ateos.isNull(fd)) {
         await fs.close(fd);
       }
       this._rotating = false;

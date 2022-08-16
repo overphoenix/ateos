@@ -195,7 +195,7 @@ function serializeRegExp(buffer, key, value, index, isArray) {
   // Encode the name
   index = index + numberOfWrittenBytes;
   buffer[index++] = 0;
-  if (value.source && !is.nil(value.source.match(regexp))) {
+  if (value.source && !ateos.isNil(value.source.match(regexp))) {
     throw Error(`value ${value.source} must not contain null bytes`);
   }
   // Adjust the index
@@ -230,7 +230,7 @@ function serializeBSONRegExp(buffer, key, value, index, isArray) {
   buffer[index++] = 0;
 
   // Check the pattern for 0 bytes
-  if (!is.nil(value.pattern.match(regexp))) {
+  if (!ateos.isNil(value.pattern.match(regexp))) {
     // The BSON spec doesn't allow keys with null bytes because keys are
     // null-terminated.
     throw Error(`pattern ${value.pattern} must not contain null bytes`);
@@ -258,7 +258,7 @@ function serializeBSONRegExp(buffer, key, value, index, isArray) {
 
 function serializeMinMax(buffer, key, value, index, isArray) {
   // Write the type of either min or max key
-  if (is.null(value)) {
+  if (ateos.isNull(value)) {
     buffer[index++] = constants.BSON_DATA_NULL;
   } else if (value._bsontype === "MinKey") {
     buffer[index++] = constants.BSON_DATA_MIN_KEY;
@@ -289,7 +289,7 @@ function serializeObjectId(buffer, key, value, index, isArray) {
   buffer[index++] = 0;
 
   // Write the objectId into the shared buffer
-  if (is.string(value.id)) {
+  if (ateos.isString(value.id)) {
     buffer.write(value.id, index, "binary");
   } else if (value.id && value.id.copy) {
     value.id.copy(buffer, index, 0, 12);
@@ -348,7 +348,7 @@ function serializeObject(
   // Push value to stack
   path.push(value);
   // Write the type
-  buffer[index++] = is.array(value) ? constants.BSON_DATA_ARRAY : constants.BSON_DATA_OBJECT;
+  buffer[index++] = ateos.isArray(value) ? constants.BSON_DATA_ARRAY : constants.BSON_DATA_OBJECT;
   // Number of written bytes
   const numberOfWrittenBytes = !isArray
     ? buffer.write(key, index, "utf8")
@@ -504,7 +504,7 @@ function serializeCode(
 
     // Serialize the function
     // Get the function string
-    const functionString = is.string(value.code) ? value.code : value.code.toString();
+    const functionString = ateos.isString(value.code) ? value.code : value.code.toString();
     // Index adjustment
     index = index + 4;
     // Write string into buffer
@@ -654,7 +654,7 @@ function serializeDBRef(buffer, key, value, index, depth, serializeFunctions, is
     $id: value.oid
   };
 
-  if (!is.nil(value.db)) {
+  if (!ateos.isNil(value.db)) {
     output.$db = value.db;
   }
 
@@ -692,7 +692,7 @@ function serializeInto(
   let index = startingIndex + 4;
 
   // Special case isArray
-  if (is.array(object)) {
+  if (ateos.isArray(object)) {
     // Get object keys
     for (let i = 0; i < object.length; i++) {
       const key = `${i}`;
@@ -700,7 +700,7 @@ function serializeInto(
 
       // Is there an override value
       if (value && value.toBSON) {
-        if (!is.function(value.toBSON)) {
+        if (!ateos.isFunction(value.toBSON)) {
           throw new TypeError("toBSON is not a function");
         }
         value = value.toBSON();
@@ -715,17 +715,17 @@ function serializeInto(
         index = serializeBoolean(buffer, key, value, index, true);
       } else if (value instanceof Date || isDate(value)) {
         index = serializeDate(buffer, key, value, index, true);
-      } else if (is.undefined(value)) {
+      } else if (ateos.isUndefined(value)) {
         index = serializeNull(buffer, key, value, index, true);
-      } else if (is.null(value)) {
+      } else if (ateos.isNull(value)) {
         index = serializeNull(buffer, key, value, index, true);
       } else if (value._bsontype === "ObjectId" || value._bsontype === "ObjectID") {
         index = serializeObjectId(buffer, key, value, index, true);
-      } else if (is.buffer(value)) {
+      } else if (ateos.isBuffer(value)) {
         index = serializeBuffer(buffer, key, value, index, true);
       } else if (value instanceof RegExp || isRegExp(value)) {
         index = serializeRegExp(buffer, key, value, index, true);
-      } else if (type === "object" && is.nil(value._bsontype)) {
+      } else if (type === "object" && ateos.isNil(value._bsontype)) {
         index = serializeObject(
           buffer,
           key,
@@ -744,7 +744,7 @@ function serializeInto(
         index = serializeLong(buffer, key, value, index, true);
       } else if (value._bsontype === "Double") {
         index = serializeDouble(buffer, key, value, index, true);
-      } else if (is.function(value) && serializeFunctions) {
+      } else if (ateos.isFunction(value) && serializeFunctions) {
         index = serializeFunction(
           buffer,
           key,
@@ -779,7 +779,7 @@ function serializeInto(
         index = serializeInt32(buffer, key, value, index, true);
       } else if (value._bsontype === "MinKey" || value._bsontype === "MaxKey") {
         index = serializeMinMax(buffer, key, value, index, true);
-      } else if (!is.undefined(value._bsontype)) {
+      } else if (!ateos.isUndefined(value._bsontype)) {
         throw new TypeError(`Unrecognized or invalid _bsontype: ${value._bsontype}`);
       }
     }
@@ -804,8 +804,8 @@ function serializeInto(
       const type = typeof value;
 
       // Check the key and throw error if it's illegal
-      if (is.string(key) && !ignoreKeys.has(key)) {
-        if (!is.nil(key.match(regexp))) {
+      if (ateos.isString(key) && !ignoreKeys.has(key)) {
+        if (!ateos.isNil(key.match(regexp))) {
           // The BSON spec doesn't allow keys with null bytes because keys are
           // null-terminated.
           throw Error(`key ${key} must not contain null bytes`);
@@ -828,15 +828,15 @@ function serializeInto(
         index = serializeBoolean(buffer, key, value, index);
       } else if (value instanceof Date || isDate(value)) {
         index = serializeDate(buffer, key, value, index);
-      } else if (is.null(value) || (is.undefined(value) && ignoreUndefined === false)) {
+      } else if (ateos.isNull(value) || (ateos.isUndefined(value) && ignoreUndefined === false)) {
         index = serializeNull(buffer, key, value, index);
       } else if (value._bsontype === "ObjectId" || value._bsontype === "ObjectID") {
         index = serializeObjectId(buffer, key, value, index);
-      } else if (is.buffer(value)) {
+      } else if (ateos.isBuffer(value)) {
         index = serializeBuffer(buffer, key, value, index);
       } else if (value instanceof RegExp || isRegExp(value)) {
         index = serializeRegExp(buffer, key, value, index);
-      } else if (type === "object" && is.nil(value._bsontype)) {
+      } else if (type === "object" && ateos.isNil(value._bsontype)) {
         index = serializeObject(
           buffer,
           key,
@@ -866,7 +866,7 @@ function serializeInto(
           serializeFunctions,
           ignoreUndefined
         );
-      } else if (is.function(value) && serializeFunctions) {
+      } else if (ateos.isFunction(value) && serializeFunctions) {
         index = serializeFunction(buffer, key, value, index, checkKeys, depth, serializeFunctions);
       } else if (value._bsontype === "Binary") {
         index = serializeBinary(buffer, key, value, index);
@@ -880,18 +880,18 @@ function serializeInto(
         index = serializeInt32(buffer, key, value, index);
       } else if (value._bsontype === "MinKey" || value._bsontype === "MaxKey") {
         index = serializeMinMax(buffer, key, value, index);
-      } else if (!is.undefined(value._bsontype)) {
+      } else if (!ateos.isUndefined(value._bsontype)) {
         throw new TypeError(`Unrecognized or invalid _bsontype: ${value._bsontype}`);
       }
     }
   } else {
     // Did we provide a custom serialization method
     if (object.toBSON) {
-      if (!is.function(object.toBSON)) {
+      if (!ateos.isFunction(object.toBSON)) {
         throw new TypeError("toBSON is not a function");
       }
       object = object.toBSON();
-      if (!is.nil(object) && typeof object !== "object") {
+      if (!ateos.isNil(object) && typeof object !== "object") {
         throw new TypeError("toBSON function did not return an object");
       }
     }
@@ -901,7 +901,7 @@ function serializeInto(
       let value = object[key];
       // Is there an override value
       if (value && value.toBSON) {
-        if (!is.function(value.toBSON)) {
+        if (!ateos.isFunction(value.toBSON)) {
           throw new TypeError("toBSON is not a function");
         }
         value = value.toBSON();
@@ -911,8 +911,8 @@ function serializeInto(
       const type = typeof value;
 
       // Check the key and throw error if it's illegal
-      if (is.string(key) && !ignoreKeys.has(key)) {
-        if (!is.nil(key.match(regexp))) {
+      if (ateos.isString(key) && !ignoreKeys.has(key)) {
+        if (!ateos.isNil(key.match(regexp))) {
           // The BSON spec doesn't allow keys with null bytes because keys are
           // null-terminated.
           throw Error(`key ${key} must not contain null bytes`);
@@ -935,19 +935,19 @@ function serializeInto(
         index = serializeBoolean(buffer, key, value, index);
       } else if (value instanceof Date || isDate(value)) {
         index = serializeDate(buffer, key, value, index);
-      } else if (is.undefined(value)) {
+      } else if (ateos.isUndefined(value)) {
         if (ignoreUndefined === false) {
           index = serializeNull(buffer, key, value, index);
         }
-      } else if (is.null(value)) {
+      } else if (ateos.isNull(value)) {
         index = serializeNull(buffer, key, value, index);
       } else if (value._bsontype === "ObjectId" || value._bsontype === "ObjectID") {
         index = serializeObjectId(buffer, key, value, index);
-      } else if (is.buffer(value)) {
+      } else if (ateos.isBuffer(value)) {
         index = serializeBuffer(buffer, key, value, index);
       } else if (value instanceof RegExp || isRegExp(value)) {
         index = serializeRegExp(buffer, key, value, index);
-      } else if (type === "object" && is.nil(value._bsontype)) {
+      } else if (type === "object" && ateos.isNil(value._bsontype)) {
         index = serializeObject(
           buffer,
           key,
@@ -977,7 +977,7 @@ function serializeInto(
           serializeFunctions,
           ignoreUndefined
         );
-      } else if (is.function(value) && serializeFunctions) {
+      } else if (ateos.isFunction(value) && serializeFunctions) {
         index = serializeFunction(buffer, key, value, index, checkKeys, depth, serializeFunctions);
       } else if (value._bsontype === "Binary") {
         index = serializeBinary(buffer, key, value, index);
@@ -991,7 +991,7 @@ function serializeInto(
         index = serializeInt32(buffer, key, value, index);
       } else if (value._bsontype === "MinKey" || value._bsontype === "MaxKey") {
         index = serializeMinMax(buffer, key, value, index);
-      } else if (!is.undefined(value._bsontype)) {
+      } else if (!ateos.isUndefined(value._bsontype)) {
         throw new TypeError(`Unrecognized or invalid _bsontype: ${value._bsontype}`);
       }
     }

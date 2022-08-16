@@ -5,7 +5,7 @@ const {
 
 export default (fs) => {
   return (cmd, options, callback) => {
-    if (is.function(options)) {
+    if (ateos.isFunction(options)) {
       callback = options;
       options = {};
     }

@@ -8,14 +8,14 @@ export const addUnitAlias = (unit, shorthand) => {
 };
 
 export const normalizeUnits = (units) => {
-  return is.string(units) ? aliases[units] || aliases[units.toLowerCase()] : undefined;
+  return ateos.isString(units) ? aliases[units] || aliases[units.toLowerCase()] : undefined;
 };
 
 export const normalizeObjectUnits = (inputObject) => {
   const normalizedInput = {};
 
   for (const prop in inputObject) {
-    if (is.propertyOwned(inputObject, prop)) {
+    if (ateos.isPropertyOwned(inputObject, prop)) {
       const normalizedProp = normalizeUnits(prop);
       if (normalizedProp) {
         normalizedInput[normalizedProp] = inputObject[prop];

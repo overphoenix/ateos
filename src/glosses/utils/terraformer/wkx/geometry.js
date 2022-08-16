@@ -19,7 +19,7 @@ export default class Geometry {
 
     if (valueType === "string" || value instanceof WKX.WktParser) {
       return Geometry._parseWkt(value);
-    } else if (is.buffer(value) || value instanceof WKX.BinaryReader) {
+    } else if (ateos.isBuffer(value) || value instanceof WKX.BinaryReader) {
       return Geometry._parseWkb(value, options);
     }
     throw new Error("first argument must be a string or Buffer");
@@ -312,7 +312,7 @@ export default class Geometry {
   _writeWkbType(wkb, geometryType, parentOptions) {
     let dimensionType = 0;
 
-    if (is.undefined(this.srid) && (!parentOptions || is.undefined(parentOptions.srid))) {
+    if (ateos.isUndefined(this.srid) && (!parentOptions || ateos.isUndefined(parentOptions.srid))) {
       if (this.hasZ && this.hasM) {
         dimensionType += 3000;
       } else if (this.hasZ) {

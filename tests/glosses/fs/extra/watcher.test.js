@@ -1576,7 +1576,7 @@ describe("watcher", function watcherTests() {
                 });
 
                 it("should respect depth setting when following symlinks", async () => {
-                    if (is.windows) {
+                    if (ateos.isWindows) {
                         return; // skip on windows
                     }
                     options.depth = 1;
@@ -1592,7 +1592,7 @@ describe("watcher", function watcherTests() {
                 });
 
                 it("should respect depth setting when following a new symlink", async () => {
-                    if (is.windows) {
+                    if (ateos.isWindows) {
                         return; // skip on windows
                     }
                     options.depth = 1;
@@ -1803,7 +1803,7 @@ describe("watcher", function watcherTests() {
                         options.ignorePermissionErrors = false;
                     });
                     it("should not watch files without read permissions", async () => {
-                        if (is.windows) {
+                        if (ateos.isWindows) {
                             return;
                         }
                         const all = spy();

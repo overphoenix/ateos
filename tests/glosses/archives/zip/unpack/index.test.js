@@ -148,7 +148,7 @@ describe("archive", "zip", "unpack", () => {
                             }
                             const fileNameKey = fileName.replace(/\/$/, "");
                             const expectedContents = expectedArchiveContents[fileNameKey];
-                            if (ateos.is.nil(expectedContents)) {
+                            if (ateos.ateos.isNil(expectedContents)) {
                                 throw new Error(`${messagePrefix}not supposed to exist`);
                             }
                             delete expectedArchiveContents[fileNameKey];
@@ -455,7 +455,7 @@ describe("archive", "zip", "unpack", () => {
                 throw new Error(`expected 'a.txt'. got '${entry.fileName}'.`);
             }
             const readStream = await zipfile.openReadStream(entry);
-            if (!ateos.is.null(contents)) {
+            if (!ateos.ateos.isNull(contents)) {
                 const data = await readStream.pipe(ateos.stream.concat.create("string"));
                 if (data.toString() !== contents) {
                     throw new Error(`expected contents:\n${contents}\ngot:\n${data.toString()}\n`);
@@ -517,7 +517,7 @@ describe("archive", "zip", "unpack", () => {
             _readStreamForRange(start, end) {
                 if (this.upcomingByteCounts.length > 0) {
                     const expectedByteCount = this.upcomingByteCounts.shift();
-                    if (!ateos.is.nil(expectedByteCount)) {
+                    if (!ateos.ateos.isNil(expectedByteCount)) {
                         if (expectedByteCount !== end - start) {
                             done(new Error(`expected ${expectedByteCount} got ${end - start} bytes`));
                             return;
@@ -558,18 +558,18 @@ describe("archive", "zip", "unpack", () => {
                 for (const end of [null, 3, 5]) {
                     for (const [index, entry] of ateos.util.enumerate(entries)) {
                         const expectedFileData = expectedFileDatas[index];
-                        const effectiveStart = !ateos.is.nil(start) ? start : 0;
-                        const effectiveEnd = !ateos.is.nil(end) ? end : expectedFileData.length;
+                        const effectiveStart = !ateos.ateos.isNil(start) ? start : 0;
+                        const effectiveEnd = !ateos.ateos.isNil(end) ? end : expectedFileData.length;
                         const expectedSlice = expectedFileData.slice(effectiveStart, effectiveEnd);
                         // the next read will be to check the local file header.
                         // then we assert that yauzl is asking for just the bytes we asked for.
                         zipfileReader.upcomingByteCounts = [null, expectedSlice.length];
 
                         const options = {};
-                        if (!ateos.is.nil(start)) {
+                        if (!ateos.ateos.isNil(start)) {
                             options.start = start;
                         }
-                        if (!ateos.is.nil(end)) {
+                        if (!ateos.ateos.isNil(end)) {
                             options.end = end;
                         }
                         if (entry.isCompressed()) {

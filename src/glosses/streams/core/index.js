@@ -84,7 +84,7 @@ export class Stream extends ateos.EventEmitter {
     }
 
     _createFirstStream(options) {
-        if (!options || !is.object(options)) {
+        if (!options || !ateos.isObject(options)) {
             return new __.PassThrough();
         }
         if (!options.transform) {
@@ -96,14 +96,14 @@ export class Stream extends ateos.EventEmitter {
         if (options.sync === false || options.async === true) {
             return new __.AsyncTransform(options.transform, options.flush);
         }
-        if (is.asyncFunction(options.transform)) {
+        if (ateos.isAsyncFunction(options.transform)) {
             return new __.AsyncTransform(options.transform, options.flush);
         }
         return new __.SyncTransform(options.transform, options.flush);
     }
 
     fromSource(source) {
-        if (is.array(source)) {
+        if (ateos.isArray(source)) {
             for (const i of source) {
                 this.write(i);
             }
@@ -225,17 +225,17 @@ export class Stream extends ateos.EventEmitter {
 
     @checkDestroyed(2)
     through(transform, flush) {
-        return is.asyncFunction(transform)
+        return ateos.isAsyncFunction(transform)
             ? this.throughAsync(transform, flush)
             : this.throughSync(transform, flush);
     }
 
     @checkDestroyed(1)
     map(callback) {
-        if (!is.function(callback)) {
+        if (!ateos.isFunction(callback)) {
             throw new error.InvalidArgumentException("'callback' must be a function");
         }
-        return is.asyncFunction(callback)
+        return ateos.isAsyncFunction(callback)
             ? this.throughAsync(async function (value) {
                 this.push(await callback(value));
             })
@@ -246,15 +246,15 @@ export class Stream extends ateos.EventEmitter {
 
     @checkDestroyed(2)
     mapIf(condition, callback) {
-        if (!is.function(condition)) {
+        if (!ateos.isFunction(condition)) {
             throw new error.InvalidArgumentException("'condition' must be a function");
         }
 
-        if (!is.function(callback)) {
+        if (!ateos.isFunction(callback)) {
             throw new error.InvalidArgumentException("'callback' must be a function");
         }
 
-        return (is.asyncFunction(condition) || is.asyncFunction(callback))
+        return (ateos.isAsyncFunction(condition) || ateos.isAsyncFunction(callback))
             ? this.throughAsync(async function (x) {
                 if (await condition(x)) {
                     this.push(await callback(x));
@@ -273,10 +273,10 @@ export class Stream extends ateos.EventEmitter {
 
     @checkDestroyed(1)
     filter(callback) {
-        if (!is.function(callback)) {
+        if (!ateos.isFunction(callback)) {
             throw new error.InvalidArgumentException("'callback' must be a function");
         }
-        return is.asyncFunction(callback)
+        return ateos.isAsyncFunction(callback)
             ? this.throughAsync(async function (value) {
                 if (await callback(value)) {
                     this.push(value);
@@ -291,10 +291,10 @@ export class Stream extends ateos.EventEmitter {
 
     @checkDestroyed(2)
     forEach(callback, { wait = true, passthrough = false } = {}) {
-        if (!is.function(callback)) {
+        if (!ateos.isFunction(callback)) {
             throw new error.InvalidArgumentException("'callback' must be a function");
         }
-        return is.asyncFunction(callback)
+        return ateos.isAsyncFunction(callback)
             ? (wait)
                 ? this.throughAsync(async function (value) {
                     await callback(value);
@@ -318,7 +318,7 @@ export class Stream extends ateos.EventEmitter {
 
     @checkDestroyed(2)
     done(callback, { passthrough = false } = {}) {
-        if (!is.function(callback)) {
+        if (!ateos.isFunction(callback)) {
             throw new error.InvalidArgumentException("'callback' must be a function");
         }
         return passthrough
@@ -334,7 +334,7 @@ export class Stream extends ateos.EventEmitter {
 
     @checkDestroyed(2)
     toArray(callback, { passthrough = false } = {}) {
-        if (!is.function(callback)) {
+        if (!ateos.isFunction(callback)) {
             throw new error.InvalidArgumentException("'callback' must be a function");
         }
         if (this._last.isEnded()) {
@@ -354,7 +354,7 @@ export class Stream extends ateos.EventEmitter {
 
     @checkDestroyed(1)
     unique(prop = null) {
-        if (!is.null(prop) && !is.function(prop)) {
+        if (!ateos.isNull(prop) && !ateos.isFunction(prop)) {
             throw new error.InvalidArgumentException("'prop' must be a function or null");
         }
         const cache = new Set();
@@ -371,9 +371,9 @@ export class Stream extends ateos.EventEmitter {
     }
 
     stash(name, filter) {
-        if (is.function(name)) {
+        if (ateos.isFunction(name)) {
             [name, filter] = [undefined, name];
-        } else if (!is.function(filter)) {
+        } else if (!ateos.isFunction(filter)) {
             throw new error.InvalidArgumentException("'filter' must be a function");
         }
 
@@ -425,7 +425,7 @@ export class Stream extends ateos.EventEmitter {
     flatten() {
         const flatten = (stream, arr) => {
             for (const i of arr) {
-                if (!is.array(i)) {
+                if (!ateos.isArray(i)) {
                     stream.push(i);
                 } else {
                     flatten(stream, i);
@@ -433,7 +433,7 @@ export class Stream extends ateos.EventEmitter {
             }
         };
         return this.throughSync(function (data) {
-            if (!is.array(data)) {
+            if (!ateos.isArray(data)) {
                 this.push(data);
                 return;
             }

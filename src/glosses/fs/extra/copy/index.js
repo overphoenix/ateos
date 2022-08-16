@@ -257,10 +257,10 @@ export default (fs) => {
   }
 
   return (src, dest, opts, cb) => {
-    if (is.function(opts) && !cb) {
+    if (ateos.isFunction(opts) && !cb) {
       cb = opts;
       opts = {};
-    } else if (is.function(opts)) {
+    } else if (ateos.isFunction(opts)) {
       opts = { filter: opts };
     }
 

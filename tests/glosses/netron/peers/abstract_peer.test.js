@@ -43,7 +43,7 @@ describe("AbstractPeer", () => {
     for (const m of methods) {
       // eslint-disable-next-line
       it(`${m}()`, () => {
-        assert.isTrue(is.function(peer[m]));
+        assert.isTrue(ateos.isFunction(peer[m]));
       });
     }
   });
@@ -62,7 +62,7 @@ describe("AbstractPeer", () => {
     for (const m of methods) {
       // eslint-disable-next-line
       it(`${m}()`, () => {
-        assert.isTrue(is.function(peer[m]));
+        assert.isTrue(ateos.isFunction(peer[m]));
       });
     }
   });
@@ -86,7 +86,7 @@ describe("AbstractPeer", () => {
     for (const m of methods) {
       // eslint-disable-next-line
       it(`${m}()`, () => {
-        assert.isTrue(is.function(peer[m]));
+        assert.isTrue(ateos.isFunction(peer[m]));
         assert.throws(() => peer[m](), error.NotImplementedException);
       });
     }

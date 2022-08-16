@@ -84,14 +84,14 @@ export default class Parser extends ateos.EventEmitter {
     let [fn] = args;
     let idx = 1;
 
-    if (is.string(type) || is.array(type)) {
+    if (ateos.isString(type) || ateos.isArray(type)) {
       fn = wrap(type, fn);
       idx++;
     } else {
       fn = type;
     }
 
-    if (!is.function(fn)) {
+    if (!ateos.isFunction(fn)) {
       throw new TypeError("expected a function");
     }
 
@@ -101,7 +101,7 @@ export default class Parser extends ateos.EventEmitter {
     args.unshift(this);
 
     const val = fn.apply(this, args);
-    if (is.function(val) && !fns.includes(val)) {
+    if (ateos.isFunction(val) && !fns.includes(val)) {
       fns.push(val);
     }
     return this;
@@ -234,17 +234,17 @@ export default class Parser extends ateos.EventEmitter {
     * @returns {boolean}
     */
   isInside(type) {
-    if (is.undefined(type)) {
+    if (ateos.isUndefined(type)) {
       return this.count > 0;
     }
-    if (!is.array(this.sets[type])) {
+    if (!ateos.isArray(this.sets[type])) {
       return false;
     }
     return this.sets[type].length > 0;
   }
 
   isDirectlyInside(type) {
-    if (is.undefined(type)) {
+    if (ateos.isUndefined(type)) {
       return this.count > 0 ? util.last(this.typeStack) : null;
     }
     return util.last(this.typeStack) === type;
@@ -398,7 +398,7 @@ export default class Parser extends ateos.EventEmitter {
     }
 
     let node = pos(this.node(this.append || "", "eos"));
-    if (is.function(this.options.eos)) {
+    if (ateos.isFunction(this.options.eos)) {
       node = this.options.eos.call(this, node);
     }
 
@@ -481,7 +481,7 @@ export default class Parser extends ateos.EventEmitter {
     * @returns {object} Returns an AST with `ast.nodes`
     */
   parse(input) {
-    if (!is.string(input)) {
+    if (!ateos.isString(input)) {
       throw new TypeError("expected a string");
     }
 
@@ -515,7 +515,7 @@ export default class Parser extends ateos.EventEmitter {
     * Visit `node` with the given `fn`
     */
   visit(node, fn) {
-    if (!is.object(node) || node.isNode !== true) {
+    if (!ateos.isObject(node) || node.isNode !== true) {
       throw new Error("expected node to be an instance of Node");
     }
     if (node.visited) {

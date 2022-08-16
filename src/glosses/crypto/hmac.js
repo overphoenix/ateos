@@ -43,8 +43,8 @@ export const create = function () {
      *           or null to reuse the previous key.
      */
   ctx.start = function (md, key) {
-    if (!is.null(md)) {
-      if (is.string(md)) {
+    if (!ateos.isNull(md)) {
+      if (ateos.isString(md)) {
         // create builtin message digest
         md = md.toLowerCase();
         if (md in crypto.md.algorithms) {
@@ -58,11 +58,11 @@ export const create = function () {
       }
     }
 
-    if (is.null(key)) {
+    if (ateos.isNull(key)) {
       // reuse previous key
       key = _key;
     } else {
-      if (is.string(key)) {
+      if (ateos.isString(key)) {
         // convert string into byte buffer
         key = crypto.util.createBuffer(key);
       } else if (crypto.util.isArray(key)) {

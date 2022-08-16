@@ -3,8 +3,8 @@ const {
     std: { childProcess: { exec } }
 } = ateos;
 
-const shell = is.windows ? null : { shell: "/bin/bash" };
-const node = is.windows ? `"${process.execPath}"` : process.execPath;
+const shell = ateos.isWindows ? null : { shell: "/bin/bash" };
+const node = ateos.isWindows ? `"${process.execPath}"` : process.execPath;
 
 const fixture = (...args) => ateos.path.join(__dirname, "fixtures", ...args);
 
@@ -19,7 +19,7 @@ describe("process", "onExit", "signal-exit", () => {
 
     it("receives an exit event when process.exit() is called", (done) => {
         exec(`${node} ${fixture("exit.js")}`, shell, (err, stdout, stderr) => {
-            if (!is.windows) {
+            if (!ateos.isWindows) {
                 expect(err.code).to.be.equal(32);
             }
             expect(stdout).to.match(/exited with process\.exit\(\), 32, null/);
@@ -59,10 +59,10 @@ describe("process", "onExit", "signal-exit", () => {
     it("removes handlers when fully unwrapped", (done) => {
         exec(`${node} ${fixture("unwrap.js")}`, shell, (err, stdout, stderr) => {
             assert(err);
-            if (!is.windows) {
+            if (!ateos.isWindows) {
                 expect(err.signal).to.be.equal("SIGHUP");
             }
-            if (!is.windows) {
+            if (!ateos.isWindows) {
                 expect(err.code).to.equal(null);
             }
             done();
@@ -77,7 +77,7 @@ describe("process", "onExit", "signal-exit", () => {
     });
 
     it("receives an exit event when a process is terminated with sigint", {
-        skip: is.windows
+        skip: ateos.isWindows
     }, (done) => {
         exec(`${node} ${fixture("sigint.js")}`, shell, (err, stdout, stderr) => {
             assert(err);
@@ -87,7 +87,7 @@ describe("process", "onExit", "signal-exit", () => {
     });
 
     it("receives an exit event when a process is terminated with sigterm", {
-        skip: is.windows
+        skip: ateos.isWindows
     }, (done) => {
         exec(`${node} ${fixture("sigterm.js")}`, shell, (err, stdout, stderr) => {
             assert(err);
@@ -97,7 +97,7 @@ describe("process", "onExit", "signal-exit", () => {
     });
 
     it("does not exit on sigpipe", {
-        skip: is.windows
+        skip: ateos.isWindows
     }, (done) => {
         exec(`${node} ${fixture("sigpipe.js")}`, shell, (err, stdout, stderr) => {
             assert.ifError(err);
@@ -108,7 +108,7 @@ describe("process", "onExit", "signal-exit", () => {
     });
 
     it("handles uncatchable signals with grace and poise", {
-        skip: is.windows
+        skip: ateos.isWindows
     }, (done) => {
         exec(`${node} ${fixture("sigkill.js")}`, shell, (err, stdout, stderr) => {
             assert.notExists(err);
@@ -117,7 +117,7 @@ describe("process", "onExit", "signal-exit", () => {
     });
 
     it("does not exit if user handles signal", {
-        skip: is.windows
+        skip: ateos.isWindows
     }, (done) => {
         exec(`${node} ${fixture("signal-listener.js")}`, shell, (err, stdout, stderr) => {
             assert(err);

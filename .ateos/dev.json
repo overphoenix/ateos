@@ -58,7 +58,7 @@
           "task": "tsc"
         },
         "assets": {
-          "description": "Assets",
+          "description": "Glosses assets",
           "task": "copy",
           "src": [
             "src/glosses/**/*",

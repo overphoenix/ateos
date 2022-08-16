@@ -10,13 +10,13 @@ const {
 export function calcLineCount(hunk) {
   const { oldLines, newLines } = calcOldNewLineCount(hunk.lines);
 
-  if (!is.undefined(oldLines)) {
+  if (!ateos.isUndefined(oldLines)) {
     hunk.oldLines = oldLines;
   } else {
     delete hunk.oldLines;
   }
 
-  if (!is.undefined(newLines)) {
+  if (!ateos.isUndefined(newLines)) {
     hunk.newLines = newLines;
   } else {
     delete hunk.newLines;
@@ -100,7 +100,7 @@ export function merge(mine, theirs, base) {
 }
 
 function loadPatch(param, base) {
-  if (is.string(param)) {
+  if (ateos.isString(param)) {
     if ((/^@@/m).test(param) || ((/^Index:/m).test(param))) {
       return parsePatch(param)[0];
     }
@@ -347,11 +347,11 @@ function calcOldNewLineCount(lines) {
   let newLines = 0;
 
   lines.forEach((line) => {
-    if (!is.string(line)) {
+    if (!ateos.isString(line)) {
       const myCount = calcOldNewLineCount(line.mine);
       const theirCount = calcOldNewLineCount(line.theirs);
 
-      if (!is.undefined(oldLines)) {
+      if (!ateos.isUndefined(oldLines)) {
         if (myCount.oldLines === theirCount.oldLines) {
           oldLines += myCount.oldLines;
         } else {
@@ -359,7 +359,7 @@ function calcOldNewLineCount(lines) {
         }
       }
 
-      if (!is.undefined(newLines)) {
+      if (!ateos.isUndefined(newLines)) {
         if (myCount.newLines === theirCount.newLines) {
           newLines += myCount.newLines;
         } else {
@@ -367,10 +367,10 @@ function calcOldNewLineCount(lines) {
         }
       }
     } else {
-      if (!is.undefined(newLines) && (line[0] === "+" || line[0] === " ")) {
+      if (!ateos.isUndefined(newLines) && (line[0] === "+" || line[0] === " ")) {
         newLines++;
       }
-      if (!is.undefined(oldLines) && (line[0] === "-" || line[0] === " ")) {
+      if (!ateos.isUndefined(oldLines) && (line[0] === "-" || line[0] === " ")) {
         oldLines++;
       }
     }

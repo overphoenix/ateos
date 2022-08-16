@@ -1,4 +1,4 @@
-import { lazify, isString } from "../../common";
+import { lazify } from "@recalibratedsystems/common/lazify";
 
 export const exceptionIdMap = {};
 export const stdIdMap = {};
@@ -112,7 +112,7 @@ const cleanInternalStack = (stack) => stack.replace(/\s+at .*aggregate-error\/in
 export class AggregateException extends Exception {
   constructor(errors) {
     // Even though strings are iterable, we don't allow them to prevent subtle user mistakes
-    if (!errors[Symbol.iterator] || isString(errors)) {
+    if (!errors[Symbol.iterator] || ateos.isString(errors)) {
       throw new TypeError(`Expected input to be iterable, got ${typeof errors}`);
     }
 

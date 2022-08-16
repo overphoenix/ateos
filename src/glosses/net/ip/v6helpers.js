@@ -11,7 +11,7 @@ const spanAllZeroes = exports.spanAllZeroes = function (s) {
  * @returns {String} the string with each character contained in a <span>
  */
 exports.spanAll = function (s, optionalOffset) {
-  if (is.undefined(optionalOffset)) {
+  if (ateos.isUndefined(optionalOffset)) {
     optionalOffset = 0;
   }
 

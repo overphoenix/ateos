@@ -14,19 +14,19 @@ describe("interface", () => {
 
             const NumberModel = BasicModel(Number);
 
-            assert.ok(is.function(NumberModel.extend), "test model method extend");
-            assert.ok(is.function(NumberModel.assert), "test model method assert");
-            assert.ok(is.function(NumberModel.test), "test model method test");
-            assert.ok(is.function(NumberModel.validate), "test model method validate");
+            assert.ok(ateos.isFunction(NumberModel.extend), "test model method extend");
+            assert.ok(ateos.isFunction(NumberModel.assert), "test model method assert");
+            assert.ok(ateos.isFunction(NumberModel.test), "test model method test");
+            assert.ok(ateos.isFunction(NumberModel.validate), "test model method validate");
             assert.ok(NumberModel.definition === Number, "test model prop definition");
             assert.ok(typeof NumberModel.assertions === "object", "test model prop assertions");
 
             const NumberModelThroughConstructor = new BasicModel(Number);
 
-            assert.ok(is.function(NumberModelThroughConstructor.extend), "test new model method extend");
-            assert.ok(is.function(NumberModelThroughConstructor.assert), "test new model method assert");
-            assert.ok(is.function(NumberModelThroughConstructor.test), "test new model method test");
-            assert.ok(is.function(NumberModelThroughConstructor.validate), "test new model method validate");
+            assert.ok(ateos.isFunction(NumberModelThroughConstructor.extend), "test new model method extend");
+            assert.ok(ateos.isFunction(NumberModelThroughConstructor.assert), "test new model method assert");
+            assert.ok(ateos.isFunction(NumberModelThroughConstructor.test), "test new model method test");
+            assert.ok(ateos.isFunction(NumberModelThroughConstructor.validate), "test new model method validate");
             assert.ok(NumberModelThroughConstructor.definition === Number, "test new model prop definition");
             assert.ok(typeof NumberModelThroughConstructor.assertions === "object", "test new model prop assertions");
         });
@@ -40,7 +40,7 @@ describe("interface", () => {
 
             const NumberModel = BasicModel(Number);
             NumberModel(0); // should not throw
-            assert.ok(is.number(NumberModel(42)), "should return the original type");
+            assert.ok(ateos.isNumber(NumberModel(42)), "should return the original type");
             assert.ok(NumberModel(17) === 17, "should return the original value");
             assert.throws(() => {
                 NumberModel("12");
@@ -136,7 +136,7 @@ describe("interface", () => {
 
             const PrimeNumber = RealNumber
                 .extend() // to not add next assertions to RealNumber model
-                .assert(is.integer)
+                .assert(ateos.isInteger)
                 .assert(isPrime);
 
             PrimeNumber(83);
@@ -209,7 +209,7 @@ describe("interface", () => {
         it("Extensions", () => {
 
             const PositiveInteger = BasicModel(Number)
-                .assert(is.integer)
+                .assert(ateos.isInteger)
                 .assert((n) => n >= 0, "should be greater or equal to zero");
 
             const isPrime = (n) => {
@@ -293,19 +293,19 @@ describe("interface", () => {
 
             const EmptyObjectModel = ObjectModel({});
 
-            assert.ok(is.function(EmptyObjectModel.extend), "test object model method extend");
-            assert.ok(is.function(EmptyObjectModel.assert), "test object model method assert");
-            assert.ok(is.function(EmptyObjectModel.test), "test object model method test");
-            assert.ok(is.function(EmptyObjectModel.validate), "test object model method validate");
+            assert.ok(ateos.isFunction(EmptyObjectModel.extend), "test object model method extend");
+            assert.ok(ateos.isFunction(EmptyObjectModel.assert), "test object model method assert");
+            assert.ok(ateos.isFunction(EmptyObjectModel.test), "test object model method test");
+            assert.ok(ateos.isFunction(EmptyObjectModel.validate), "test object model method validate");
             assert.ok(typeof EmptyObjectModel.definition === "object", "test object model prop definition");
             assert.ok(typeof EmptyObjectModel.assertions === "object", "test object model prop assertions");
 
             const EmptyObjectModelThroughConstructor = new ObjectModel({});
 
-            assert.ok(is.function(EmptyObjectModelThroughConstructor.extend), "test new model method extend");
-            assert.ok(is.function(EmptyObjectModelThroughConstructor.assert), "test new model method assert");
-            assert.ok(is.function(EmptyObjectModelThroughConstructor.test), "test new model method test");
-            assert.ok(is.function(EmptyObjectModelThroughConstructor.validate), "test new model method validate");
+            assert.ok(ateos.isFunction(EmptyObjectModelThroughConstructor.extend), "test new model method extend");
+            assert.ok(ateos.isFunction(EmptyObjectModelThroughConstructor.assert), "test new model method assert");
+            assert.ok(ateos.isFunction(EmptyObjectModelThroughConstructor.test), "test new model method test");
+            assert.ok(ateos.isFunction(EmptyObjectModelThroughConstructor.validate), "test new model method validate");
             assert.ok(typeof EmptyObjectModelThroughConstructor.definition === "object", "test new model prop definition");
             assert.ok(typeof EmptyObjectModelThroughConstructor.assertions === "object", "test new model prop assertions");
         });
@@ -1501,11 +1501,11 @@ describe("interface", () => {
 
             assert.ok(Operation instanceof FunctionModel, "model instance of FunctionModel");
 
-            assert.ok(is.function(Operation.extend), "test Function model method extend");
-            assert.ok(is.function(Operation.assert), "test Function model method assert");
-            assert.ok(is.function(Operation.test), "test Function model method test");
-            assert.ok(is.function(Operation.validate), "test Function model method validate");
-            assert.ok(is.function(Operation.return), "test Function model method return");
+            assert.ok(ateos.isFunction(Operation.extend), "test Function model method extend");
+            assert.ok(ateos.isFunction(Operation.assert), "test Function model method assert");
+            assert.ok(ateos.isFunction(Operation.test), "test Function model method test");
+            assert.ok(ateos.isFunction(Operation.validate), "test Function model method validate");
+            assert.ok(ateos.isFunction(Operation.return), "test Function model method return");
             assert.equal(Operation.definition.arguments.map((a) => a.name).join(","),
                 "Number,Number", "test Function model prop definition");
             assert.ok(Operation.definition.return === Number, "test Function model prop return");
@@ -1670,10 +1670,10 @@ describe("interface", () => {
 
             assert.ok(Arr instanceof ArrayModel, "Array models can be declared");
 
-            assert.ok(is.function(Arr.extend), "test Array model method extend");
-            assert.ok(is.function(Arr.assert), "test Array model method assert");
-            assert.ok(is.function(Arr.test), "test Array model method test");
-            assert.ok(is.function(Arr.validate), "test Array model method validate");
+            assert.ok(ateos.isFunction(Arr.extend), "test Array model method extend");
+            assert.ok(ateos.isFunction(Arr.assert), "test Array model method assert");
+            assert.ok(ateos.isFunction(Arr.test), "test Array model method test");
+            assert.ok(ateos.isFunction(Arr.validate), "test Array model method validate");
             assert.ok(Arr.definition === Number, "test Array model prop definition");
             assert.ok(typeof Arr.assertions === "object", "test Array model prop assertions");
 
@@ -1892,10 +1892,10 @@ describe("interface", () => {
 
             assert.ok(Dict instanceof MapModel, "Map models can be declared");
 
-            assert.ok(is.function(Dict.extend), "test Map model method extend");
-            assert.ok(is.function(Dict.assert), "test Map model method assert");
-            assert.ok(is.function(Dict.test), "test Map model method test");
-            assert.ok(is.function(Dict.validate), "test Map model method validate");
+            assert.ok(ateos.isFunction(Dict.extend), "test Map model method extend");
+            assert.ok(ateos.isFunction(Dict.assert), "test Map model method assert");
+            assert.ok(ateos.isFunction(Dict.test), "test Map model method test");
+            assert.ok(ateos.isFunction(Dict.validate), "test Map model method validate");
             assert.ok(Dict.definition.key === String, "test Map model prop definition 1/2");
             assert.ok(Dict.definition.value === Number, "test Map model prop definition 2/2");
             assert.ok(typeof Dict.assertions === "object", "test Map model prop assertions");
@@ -2084,10 +2084,10 @@ describe("interface", () => {
 
             assert.ok(MySet instanceof SetModel, "Set models can be declared");
 
-            assert.ok(is.function(MySet.extend), "test Set model method extend");
-            assert.ok(is.function(MySet.assert), "test Set model method assert");
-            assert.ok(is.function(MySet.test), "test Set model method test");
-            assert.ok(is.function(MySet.validate), "test Set model method validate");
+            assert.ok(ateos.isFunction(MySet.extend), "test Set model method extend");
+            assert.ok(ateos.isFunction(MySet.assert), "test Set model method assert");
+            assert.ok(ateos.isFunction(MySet.test), "test Set model method test");
+            assert.ok(ateos.isFunction(MySet.validate), "test Set model method validate");
             assert.ok(MySet.definition === String, "test Set model prop definition");
             assert.ok(typeof MySet.assertions === "object", "test Set model prop assertions");
 

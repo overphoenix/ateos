@@ -79,7 +79,7 @@ describe("custom content type", function () {
 
         for (const [name, field] of Object.entries(FIELDS)) {
             // important to append ReadStreams within the same tick
-            if ((is.function(field.value))) {
+            if ((ateos.isFunction(field.value))) {
                 field.value = field.value();
             }
             form.append(name, field.value, field.options);

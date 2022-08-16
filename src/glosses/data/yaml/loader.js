@@ -201,7 +201,7 @@ const throwWarning = (state, message) => {
 
 const directiveHandlers = new Map([
   ["YAML", function handleYamlDirective(state, name, args) {
-    if (!is.null(state.version)) {
+    if (!ateos.isNull(state.version)) {
       throwError(state, "duplication of %YAML directive");
     }
 
@@ -211,7 +211,7 @@ const directiveHandlers = new Map([
 
     const match = /^([0-9]+)\.([0-9]+)$/.exec(args[0]);
 
-    if (is.null(match)) {
+    if (ateos.isNull(match)) {
       throwError(state, "ill-formed argument of the YAML directive");
     }
 
@@ -240,7 +240,7 @@ const directiveHandlers = new Map([
       throwError(state, "ill-formed tag handle (first argument) of the TAG directive");
     }
 
-    if (is.propertyOwned(state.tagMap, handle)) {
+    if (ateos.isPropertyOwned(state.tagMap, handle)) {
       throwError(state, `there is a previously declared suffix for "${handle}" tag handle`);
     }
 
@@ -273,12 +273,12 @@ const captureSegment = (state, start, end, checkJson) => {
 };
 
 const mergeMappings = (state, destination, source, overridableKeys) => {
-  if (!is.object(source)) {
+  if (!ateos.isObject(source)) {
     throwError(state, "cannot merge mappings; the provided source object is unacceptable");
   }
 
   for (const [k, v] of util.entries(source)) {
-    if (is.propertyOwned(destination, k)) {
+    if (ateos.isPropertyOwned(destination, k)) {
       continue;
     }
     destination[k] = v;
@@ -299,11 +299,11 @@ const storeMappingPair = (
   // The output is a plain object here, so keys can only be strings.
   // We need to convert keyNode to a string, but doing so can hang the process
   // (deeply nested arrays that explode exponentially using aliases).
-  if (is.array(keyNode)) {
+  if (ateos.isArray(keyNode)) {
     keyNode = Array.prototype.slice.call(keyNode);
 
     for (let index = 0, quantity = keyNode.length; index < quantity; index += 1) {
-      if (is.array(keyNode[index])) {
+      if (ateos.isArray(keyNode[index])) {
         throwError(state, "nested arrays are not supported inside keys");
       }
 
@@ -322,12 +322,12 @@ const storeMappingPair = (
 
   keyNode = String(keyNode);
 
-  if (is.null(_result)) {
+  if (ateos.isNull(_result)) {
     _result = {};
   }
 
   if (keyTag === "tag:yaml.org,2002:merge") {
-    if (is.array(valueNode)) {
+    if (ateos.isArray(valueNode)) {
       for (const i of valueNode) {
         mergeMappings(state, _result, i, overridableKeys);
       }
@@ -337,8 +337,8 @@ const storeMappingPair = (
   } else {
     if (
       !state.json &&
-            !is.propertyOwned(overridableKeys, keyNode) &&
-            is.propertyOwned(_result, keyNode)
+            !ateos.isPropertyOwned(overridableKeys, keyNode) &&
+            ateos.isPropertyOwned(_result, keyNode)
     ) {
       state.line = startLine || state.line;
       state.position = startPos || state.position;
@@ -689,7 +689,7 @@ const readFlowCollection = (state, nodeIndent) => {
     return false;
   }
 
-  if (!is.null(state.anchor)) {
+  if (!ateos.isNull(state.anchor)) {
     state.anchorMap[state.anchor] = _result;
   }
 
@@ -928,7 +928,7 @@ const readBlockSequence = (state, nodeIndent) => {
 
   const _result = [];
 
-  if (!is.null(state.anchor)) {
+  if (!ateos.isNull(state.anchor)) {
     state.anchorMap[state.anchor] = _result;
   }
 
@@ -989,7 +989,7 @@ const readBlockMapping = (state, nodeIndent, flowIndent) => {
   const _result = {};
   const overridableKeys = {};
 
-  if (!is.null(state.anchor)) {
+  if (!ateos.isNull(state.anchor)) {
     state.anchorMap[state.anchor] = _result;
   }
 
@@ -1153,7 +1153,7 @@ const readTagProperty = (state) => {
     return false;
   }
 
-  if (!is.null(state.tag)) {
+  if (!ateos.isNull(state.tag)) {
     throwError(state, "duplication of a tag property");
   }
 
@@ -1226,7 +1226,7 @@ const readTagProperty = (state) => {
   if (isVerbatim) {
     state.tag = tagName;
 
-  } else if (is.propertyOwned(state.tagMap, tagHandle)) {
+  } else if (ateos.isPropertyOwned(state.tagMap, tagHandle)) {
     state.tag = state.tagMap[tagHandle] + tagName;
 
   } else if (tagHandle === "!") {
@@ -1249,7 +1249,7 @@ const readAnchorProperty = (state) => {
     return false;
   }
 
-  if (!is.null(state.anchor)) {
+  if (!ateos.isNull(state.anchor)) {
     throwError(state, "duplication of an anchor property");
   }
 
@@ -1298,7 +1298,7 @@ const readAlias = (state) => {
 };
 
 const composeNode = (state, parentIndent, nodeContext, allowToSeek, allowCompact) => {
-  if (!is.null(state.listener)) {
+  if (!ateos.isNull(state.listener)) {
     state.listener("open", state);
   }
 
@@ -1379,19 +1379,19 @@ const composeNode = (state, parentIndent, nodeContext, allowToSeek, allowCompact
         } else if (readAlias(state)) {
           hasContent = true;
 
-          if (!is.null(state.tag) || !is.null(state.anchor)) {
+          if (!ateos.isNull(state.tag) || !ateos.isNull(state.anchor)) {
             throwError(state, "alias node should not have any properties");
           }
 
         } else if (readPlainScalar(state, flowIndent, CONTEXT_FLOW_IN === nodeContext)) {
           hasContent = true;
 
-          if (is.null(state.tag)) {
+          if (ateos.isNull(state.tag)) {
             state.tag = "?";
           }
         }
 
-        if (!is.null(state.anchor)) {
+        if (!ateos.isNull(state.anchor)) {
           state.anchorMap[state.anchor] = state.result;
         }
       }
@@ -1402,7 +1402,7 @@ const composeNode = (state, parentIndent, nodeContext, allowToSeek, allowCompact
     }
   }
 
-  if (!is.null(state.tag) && state.tag !== "!") {
+  if (!ateos.isNull(state.tag) && state.tag !== "!") {
     if (state.tag === "?") {
       for (const type of state.implicitTypes) {
         // Implicit resolving is not allowed for non-scalar types, and '?'
@@ -1412,16 +1412,16 @@ const composeNode = (state, parentIndent, nodeContext, allowToSeek, allowCompact
         if (type.resolve(state.result)) { // `state.result` updated in resolver if matched
           state.result = type.construct(state.result);
           state.tag = type.tag;
-          if (!is.null(state.anchor)) {
+          if (!ateos.isNull(state.anchor)) {
             state.anchorMap[state.anchor] = state.result;
           }
           break;
         }
       }
-    } else if (is.propertyOwned(state.typeMap[state.kind || "fallback"], state.tag)) {
+    } else if (ateos.isPropertyOwned(state.typeMap[state.kind || "fallback"], state.tag)) {
       const type = state.typeMap[state.kind || "fallback"][state.tag];
 
-      if (!is.null(state.result) && type.kind !== state.kind) {
+      if (!ateos.isNull(state.result) && type.kind !== state.kind) {
         throwError(state, `unacceptable node kind for !<${state.tag}> tag; it should be "${type.kind}", not "${state.kind}"`);
       }
 
@@ -1429,7 +1429,7 @@ const composeNode = (state, parentIndent, nodeContext, allowToSeek, allowCompact
         throwError(state, `cannot resolve a node with !<${state.tag}> explicit tag`);
       } else {
         state.result = type.construct(state.result);
-        if (!is.null(state.anchor)) {
+        if (!ateos.isNull(state.anchor)) {
           state.anchorMap[state.anchor] = state.result;
         }
       }
@@ -1438,10 +1438,10 @@ const composeNode = (state, parentIndent, nodeContext, allowToSeek, allowCompact
     }
   }
 
-  if (!is.null(state.listener)) {
+  if (!ateos.isNull(state.listener)) {
     state.listener("close", state);
   }
-  return !is.null(state.tag) || !is.null(state.anchor) || hasContent;
+  return !ateos.isNull(state.tag) || !ateos.isNull(state.anchor) || hasContent;
 };
 
 const readDocument = (state) => {
@@ -1592,7 +1592,7 @@ const loadDocuments = (input, options = {}) => {
 export const loadAll = (input, iterator, options) => {
   const documents = loadDocuments(input, options);
 
-  if (!is.function(iterator)) {
+  if (!ateos.isFunction(iterator)) {
     return documents;
   }
 
@@ -1616,7 +1616,7 @@ export const load = (input, options) => {
 
 
 export const safeLoadAll = (input, output, options) => {
-  if (is.function(output)) {
+  if (ateos.isFunction(output)) {
     loadAll(input, output, { schema: yaml.schema.DEFAULT_FULL, ...options });
   } else {
     return loadAll(input, { schema: yaml.schema.DEFAULT_FULL, ...options });

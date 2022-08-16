@@ -12,7 +12,7 @@ export default (options, stack) => {
 
   if (!options.style) {
     options.style = inspect.defaultStyle;
-  } else if (is.string(options.style)) {
+  } else if (ateos.isString(options.style)) {
     options.style = inspect.style[options.style];
   }
 

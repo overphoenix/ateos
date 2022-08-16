@@ -204,7 +204,7 @@ const restoreInt8x16 = () => {
     alias[12], alias[13], alias[14], alias[15]);
 };
 
-if (is.undefined(SIMD.Bool64x2)) {
+if (ateos.isUndefined(SIMD.Bool64x2)) {
   /**
       * Construct a new instance of bool64x2 number.
       * @constructor
@@ -219,7 +219,7 @@ if (is.undefined(SIMD.Bool64x2)) {
   };
 }
 
-if (is.undefined(SIMD.Bool64x2.check)) {
+if (ateos.isUndefined(SIMD.Bool64x2.check)) {
   /**
       * Check whether the argument is a bool64x2.
       * @param {bool64x2} v An instance of bool64x2.
@@ -233,7 +233,7 @@ if (is.undefined(SIMD.Bool64x2.check)) {
   };
 }
 
-if (is.undefined(SIMD.Bool64x2.splat)) {
+if (ateos.isUndefined(SIMD.Bool64x2.splat)) {
   /**
       * Construct a new instance of bool64x2 with the same value
       * in all lanes.
@@ -245,7 +245,7 @@ if (is.undefined(SIMD.Bool64x2.splat)) {
   };
 }
 
-if (is.undefined(SIMD.Bool64x2.extractLane)) {
+if (ateos.isUndefined(SIMD.Bool64x2.extractLane)) {
   /**
       * @param {bool64x2} v An instance of bool64x2.
       * @param {integer} i Index in concatenation of v for lane i
@@ -261,7 +261,7 @@ if (is.undefined(SIMD.Bool64x2.extractLane)) {
   };
 }
 
-if (is.undefined(SIMD.Bool64x2.replaceLane)) {
+if (ateos.isUndefined(SIMD.Bool64x2.replaceLane)) {
   /**
       * @param {bool64x2} v An instance of bool64x2.
       * @param {integer} i Index in concatenation of v for lane i
@@ -280,7 +280,7 @@ if (is.undefined(SIMD.Bool64x2.replaceLane)) {
   };
 }
 
-if (is.undefined(SIMD.Bool64x2.allTrue)) {
+if (ateos.isUndefined(SIMD.Bool64x2.allTrue)) {
   /**
       * Check if all 2 lanes hold a true value
       * @param {bool64x2} v An instance of bool64x2.
@@ -293,7 +293,7 @@ if (is.undefined(SIMD.Bool64x2.allTrue)) {
   };
 }
 
-if (is.undefined(SIMD.Bool64x2.anyTrue)) {
+if (ateos.isUndefined(SIMD.Bool64x2.anyTrue)) {
   /**
       * Check if any of the 2 lanes hold a true value
       * @param {bool64x2} v An instance of bool64x2.
@@ -306,7 +306,7 @@ if (is.undefined(SIMD.Bool64x2.anyTrue)) {
   };
 }
 
-if (is.undefined(SIMD.Bool64x2.and)) {
+if (ateos.isUndefined(SIMD.Bool64x2.and)) {
   /**
       * @param {bool64x2} a An instance of bool64x2.
       * @param {bool64x2} b An instance of bool64x2.
@@ -320,7 +320,7 @@ if (is.undefined(SIMD.Bool64x2.and)) {
   };
 }
 
-if (is.undefined(SIMD.Bool64x2.or)) {
+if (ateos.isUndefined(SIMD.Bool64x2.or)) {
   /**
       * @param {bool64x2} a An instance of bool64x2.
       * @param {bool64x2} b An instance of bool64x2.
@@ -334,7 +334,7 @@ if (is.undefined(SIMD.Bool64x2.or)) {
   };
 }
 
-if (is.undefined(SIMD.Bool64x2.xor)) {
+if (ateos.isUndefined(SIMD.Bool64x2.xor)) {
   /**
       * @param {bool64x2} a An instance of bool64x2.
       * @param {bool64x2} b An instance of bool64x2.
@@ -348,7 +348,7 @@ if (is.undefined(SIMD.Bool64x2.xor)) {
   };
 }
 
-if (is.undefined(SIMD.Bool64x2.not)) {
+if (ateos.isUndefined(SIMD.Bool64x2.not)) {
   /**
       * @param {bool64x2} a An instance of bool64x2.
       * @return {bool64x2} New instance of bool64x2 with values of !a
@@ -360,7 +360,7 @@ if (is.undefined(SIMD.Bool64x2.not)) {
   };
 }
 
-if (is.undefined(SIMD.Bool64x2.equal)) {
+if (ateos.isUndefined(SIMD.Bool64x2.equal)) {
   /**
       * @param {bool64x2} a An instance of bool64x2.
       * @param {bool64x2} b An instance of bool64x2.
@@ -375,7 +375,7 @@ if (is.undefined(SIMD.Bool64x2.equal)) {
   };
 }
 
-if (is.undefined(SIMD.Bool64x2.notEqual)) {
+if (ateos.isUndefined(SIMD.Bool64x2.notEqual)) {
   /**
       * @param {bool64x2} a An instance of bool64x2.
       * @param {bool64x2} b An instance of bool64x2.
@@ -390,7 +390,7 @@ if (is.undefined(SIMD.Bool64x2.notEqual)) {
   };
 }
 
-if (is.undefined(SIMD.Bool64x2.select)) {
+if (ateos.isUndefined(SIMD.Bool64x2.select)) {
   /**
       * @param {bool64x2} mask Selector mask. An instance of bool64x2
       * @param {bool64x2} trueValue Pick lane from here if corresponding
@@ -410,7 +410,7 @@ if (is.undefined(SIMD.Bool64x2.select)) {
   };
 }
 
-if (is.undefined(SIMD.Bool32x4)) {
+if (ateos.isUndefined(SIMD.Bool32x4)) {
   /**
       * Construct a new instance of Bool32x4 number.
       * @constructor
@@ -427,7 +427,7 @@ if (is.undefined(SIMD.Bool32x4)) {
   };
 }
 
-if (is.undefined(SIMD.Bool32x4.check)) {
+if (ateos.isUndefined(SIMD.Bool32x4.check)) {
   /**
       * Check whether the argument is a Bool32x4.
       * @param {Bool32x4} v An instance of Bool32x4.
@@ -441,7 +441,7 @@ if (is.undefined(SIMD.Bool32x4.check)) {
   };
 }
 
-if (is.undefined(SIMD.Bool32x4.splat)) {
+if (ateos.isUndefined(SIMD.Bool32x4.splat)) {
   /**
       * Construct a new instance of Bool32x4 with the same value
       * in all lanes.
@@ -453,7 +453,7 @@ if (is.undefined(SIMD.Bool32x4.splat)) {
   };
 }
 
-if (is.undefined(SIMD.Bool32x4.extractLane)) {
+if (ateos.isUndefined(SIMD.Bool32x4.extractLane)) {
   /**
       * @param {Bool32x4} v An instance of Bool32x4.
       * @param {integer} i Index in concatenation of v for lane i
@@ -471,7 +471,7 @@ if (is.undefined(SIMD.Bool32x4.extractLane)) {
   };
 }
 
-if (is.undefined(SIMD.Bool32x4.replaceLane)) {
+if (ateos.isUndefined(SIMD.Bool32x4.replaceLane)) {
   /**
       * @param {Bool32x4} v An instance of Bool32x4.
       * @param {integer} i Index in concatenation of v for lane i
@@ -488,7 +488,7 @@ if (is.undefined(SIMD.Bool32x4.replaceLane)) {
   };
 }
 
-if (is.undefined(SIMD.Bool32x4.allTrue)) {
+if (ateos.isUndefined(SIMD.Bool32x4.allTrue)) {
   /**
       * Check if all 4 lanes hold a true value
       * @param {Bool32x4} v An instance of Bool32x4.
@@ -503,7 +503,7 @@ if (is.undefined(SIMD.Bool32x4.allTrue)) {
   };
 }
 
-if (is.undefined(SIMD.Bool32x4.anyTrue)) {
+if (ateos.isUndefined(SIMD.Bool32x4.anyTrue)) {
   /**
       * Check if any of the 4 lanes hold a true value
       * @param {Bool32x4} v An instance of Bool32x4.
@@ -518,7 +518,7 @@ if (is.undefined(SIMD.Bool32x4.anyTrue)) {
   };
 }
 
-if (is.undefined(SIMD.Bool32x4.and)) {
+if (ateos.isUndefined(SIMD.Bool32x4.and)) {
   /**
       * @param {Bool32x4} a An instance of Bool32x4.
       * @param {Bool32x4} b An instance of Bool32x4.
@@ -534,7 +534,7 @@ if (is.undefined(SIMD.Bool32x4.and)) {
   };
 }
 
-if (is.undefined(SIMD.Bool32x4.or)) {
+if (ateos.isUndefined(SIMD.Bool32x4.or)) {
   /**
       * @param {Bool32x4} a An instance of Bool32x4.
       * @param {Bool32x4} b An instance of Bool32x4.
@@ -550,7 +550,7 @@ if (is.undefined(SIMD.Bool32x4.or)) {
   };
 }
 
-if (is.undefined(SIMD.Bool32x4.xor)) {
+if (ateos.isUndefined(SIMD.Bool32x4.xor)) {
   /**
       * @param {Bool32x4} a An instance of Bool32x4.
       * @param {Bool32x4} b An instance of Bool32x4.
@@ -566,7 +566,7 @@ if (is.undefined(SIMD.Bool32x4.xor)) {
   };
 }
 
-if (is.undefined(SIMD.Bool32x4.not)) {
+if (ateos.isUndefined(SIMD.Bool32x4.not)) {
   /**
       * @param {Bool32x4} a An instance of Bool32x4.
       * @return {Bool32x4} New instance of Bool32x4 with values of !a
@@ -580,7 +580,7 @@ if (is.undefined(SIMD.Bool32x4.not)) {
   };
 }
 
-if (is.undefined(SIMD.Bool32x4.equal)) {
+if (ateos.isUndefined(SIMD.Bool32x4.equal)) {
   /**
       * @param {Bool32x4} a An instance of Bool32x4.
       * @param {Bool32x4} b An instance of Bool32x4.
@@ -597,7 +597,7 @@ if (is.undefined(SIMD.Bool32x4.equal)) {
   };
 }
 
-if (is.undefined(SIMD.Bool32x4.notEqual)) {
+if (ateos.isUndefined(SIMD.Bool32x4.notEqual)) {
   /**
       * @param {Bool32x4} a An instance of Bool32x4.
       * @param {Bool32x4} b An instance of Bool32x4.
@@ -614,7 +614,7 @@ if (is.undefined(SIMD.Bool32x4.notEqual)) {
   };
 }
 
-if (is.undefined(SIMD.Bool32x4.select)) {
+if (ateos.isUndefined(SIMD.Bool32x4.select)) {
   /**
       * @param {Bool32x4} mask Selector mask. An instance of Bool32x4
       * @param {Bool32x4} trueValue Pick lane from here if corresponding
@@ -634,7 +634,7 @@ if (is.undefined(SIMD.Bool32x4.select)) {
   };
 }
 
-if (is.undefined(SIMD.Bool16x8)) {
+if (ateos.isUndefined(SIMD.Bool16x8)) {
   /**
       * Construct a new instance of Bool16x8 number.
       * @constructor
@@ -655,7 +655,7 @@ if (is.undefined(SIMD.Bool16x8)) {
   };
 }
 
-if (is.undefined(SIMD.Bool16x8.check)) {
+if (ateos.isUndefined(SIMD.Bool16x8.check)) {
   /**
       * Check whether the argument is a Bool16x8.
       * @param {Bool16x8} v An instance of Bool16x8.
@@ -669,7 +669,7 @@ if (is.undefined(SIMD.Bool16x8.check)) {
   };
 }
 
-if (is.undefined(SIMD.Bool16x8.splat)) {
+if (ateos.isUndefined(SIMD.Bool16x8.splat)) {
   /**
       * Construct a new instance of Bool16x8 with the same value
       * in all lanes.
@@ -681,7 +681,7 @@ if (is.undefined(SIMD.Bool16x8.splat)) {
   };
 }
 
-if (is.undefined(SIMD.Bool16x8.extractLane)) {
+if (ateos.isUndefined(SIMD.Bool16x8.extractLane)) {
   /**
       * @param {Bool16x8} v An instance of Bool16x8.
       * @param {integer} i Index in concatenation of v for lane i
@@ -703,7 +703,7 @@ if (is.undefined(SIMD.Bool16x8.extractLane)) {
   };
 }
 
-if (is.undefined(SIMD.Bool16x8.replaceLane)) {
+if (ateos.isUndefined(SIMD.Bool16x8.replaceLane)) {
   /**
       * @param {Bool16x8} v An instance of Bool16x8.
       * @param {integer} i Index in concatenation of v for lane i
@@ -720,7 +720,7 @@ if (is.undefined(SIMD.Bool16x8.replaceLane)) {
   };
 }
 
-if (is.undefined(SIMD.Bool16x8.allTrue)) {
+if (ateos.isUndefined(SIMD.Bool16x8.allTrue)) {
   /**
       * Check if all 8 lanes hold a true value
       * @param {Bool16x8} v An instance of Bool16x8.
@@ -739,7 +739,7 @@ if (is.undefined(SIMD.Bool16x8.allTrue)) {
   };
 }
 
-if (is.undefined(SIMD.Bool16x8.anyTrue)) {
+if (ateos.isUndefined(SIMD.Bool16x8.anyTrue)) {
   /**
       * Check if any of the 8 lanes hold a true value
       * @param {Bool16x8} v An instance of Int16x8.
@@ -758,7 +758,7 @@ if (is.undefined(SIMD.Bool16x8.anyTrue)) {
   };
 }
 
-if (is.undefined(SIMD.Bool16x8.and)) {
+if (ateos.isUndefined(SIMD.Bool16x8.and)) {
   /**
       * @param {Bool16x8} a An instance of Bool16x8.
       * @param {Bool16x8} b An instance of Bool16x8.
@@ -778,7 +778,7 @@ if (is.undefined(SIMD.Bool16x8.and)) {
   };
 }
 
-if (is.undefined(SIMD.Bool16x8.or)) {
+if (ateos.isUndefined(SIMD.Bool16x8.or)) {
   /**
       * @param {Bool16x8} a An instance of Bool16x8.
       * @param {Bool16x8} b An instance of Bool16x8.
@@ -798,7 +798,7 @@ if (is.undefined(SIMD.Bool16x8.or)) {
   };
 }
 
-if (is.undefined(SIMD.Bool16x8.xor)) {
+if (ateos.isUndefined(SIMD.Bool16x8.xor)) {
   /**
       * @param {Bool16x8} a An instance of Bool16x8.
       * @param {Bool16x8} b An instance of Bool16x8.
@@ -818,7 +818,7 @@ if (is.undefined(SIMD.Bool16x8.xor)) {
   };
 }
 
-if (is.undefined(SIMD.Bool16x8.not)) {
+if (ateos.isUndefined(SIMD.Bool16x8.not)) {
   /**
       * @param {Bool16x8} a An instance of Bool16x8.
       * @return {Bool16x8} New instance of Bool16x8 with values of !a
@@ -836,7 +836,7 @@ if (is.undefined(SIMD.Bool16x8.not)) {
   };
 }
 
-if (is.undefined(SIMD.Bool16x8.equal)) {
+if (ateos.isUndefined(SIMD.Bool16x8.equal)) {
   /**
       * @param {Bool16x8} a An instance of Bool16x8.
       * @param {Bool16x8} b An instance of Bool16x8.
@@ -857,7 +857,7 @@ if (is.undefined(SIMD.Bool16x8.equal)) {
   };
 }
 
-if (is.undefined(SIMD.Bool16x8.notEqual)) {
+if (ateos.isUndefined(SIMD.Bool16x8.notEqual)) {
   /**
       * @param {Bool16x8} a An instance of Bool16x8.
       * @param {Bool16x8} b An instance of Bool16x8.
@@ -878,7 +878,7 @@ if (is.undefined(SIMD.Bool16x8.notEqual)) {
   };
 }
 
-if (is.undefined(SIMD.Bool16x8.select)) {
+if (ateos.isUndefined(SIMD.Bool16x8.select)) {
   /**
       * @param {Bool16x8} mask Selector mask. An instance of Bool16x8
       * @param {Bool16x8} trueValue Pick lane from here if corresponding
@@ -898,7 +898,7 @@ if (is.undefined(SIMD.Bool16x8.select)) {
   };
 }
 
-if (is.undefined(SIMD.Bool8x16)) {
+if (ateos.isUndefined(SIMD.Bool8x16)) {
   /**
       * Construct a new instance of Bool8x16 number.
       * @constructor
@@ -929,7 +929,7 @@ if (is.undefined(SIMD.Bool8x16)) {
   };
 }
 
-if (is.undefined(SIMD.Bool8x16.check)) {
+if (ateos.isUndefined(SIMD.Bool8x16.check)) {
   /**
       * Check whether the argument is a Bool8x16.
       * @param {Bool8x16} v An instance of Bool8x16.
@@ -943,7 +943,7 @@ if (is.undefined(SIMD.Bool8x16.check)) {
   };
 }
 
-if (is.undefined(SIMD.Bool8x16.splat)) {
+if (ateos.isUndefined(SIMD.Bool8x16.splat)) {
   /**
       * Construct a new instance of Bool8x16 with the same value
       * in all lanes.
@@ -956,7 +956,7 @@ if (is.undefined(SIMD.Bool8x16.splat)) {
   };
 }
 
-if (is.undefined(SIMD.Bool8x16.extractLane)) {
+if (ateos.isUndefined(SIMD.Bool8x16.extractLane)) {
   /**
       * @param {Bool8x16} v An instance of Bool8x16.
       * @param {integer} i Index in concatenation of v for lane i
@@ -986,7 +986,7 @@ if (is.undefined(SIMD.Bool8x16.extractLane)) {
   };
 }
 
-if (is.undefined(SIMD.Bool8x16.replaceLane)) {
+if (ateos.isUndefined(SIMD.Bool8x16.replaceLane)) {
   /**
       * @param {Bool8x16} v An instance of Bool8x16.
       * @param {integer} i Index in concatenation of v for lane i
@@ -1003,7 +1003,7 @@ if (is.undefined(SIMD.Bool8x16.replaceLane)) {
   };
 }
 
-if (is.undefined(SIMD.Bool8x16.allTrue)) {
+if (ateos.isUndefined(SIMD.Bool8x16.allTrue)) {
   /**
       * Check if all 16 lanes hold a true value
       * @param {Bool8x16} v An instance of Bool8x16.
@@ -1030,7 +1030,7 @@ if (is.undefined(SIMD.Bool8x16.allTrue)) {
   };
 }
 
-if (is.undefined(SIMD.Bool8x16.anyTrue)) {
+if (ateos.isUndefined(SIMD.Bool8x16.anyTrue)) {
   /**
       * Check if any of the 16 lanes hold a true value
       * @param {Bool8x16} v An instance of Bool16x8.
@@ -1057,7 +1057,7 @@ if (is.undefined(SIMD.Bool8x16.anyTrue)) {
   };
 }
 
-if (is.undefined(SIMD.Bool8x16.and)) {
+if (ateos.isUndefined(SIMD.Bool8x16.and)) {
   /**
       * @param {Bool8x16} a An instance of Bool8x16.
       * @param {Bool8x16} b An instance of Bool8x16.
@@ -1085,7 +1085,7 @@ if (is.undefined(SIMD.Bool8x16.and)) {
   };
 }
 
-if (is.undefined(SIMD.Bool8x16.or)) {
+if (ateos.isUndefined(SIMD.Bool8x16.or)) {
   /**
       * @param {Bool8x16} a An instance of Bool8x16.
       * @param {Bool8x16} b An instance of Bool8x16.
@@ -1113,7 +1113,7 @@ if (is.undefined(SIMD.Bool8x16.or)) {
   };
 }
 
-if (is.undefined(SIMD.Bool8x16.xor)) {
+if (ateos.isUndefined(SIMD.Bool8x16.xor)) {
   /**
       * @param {Bool8x16} a An instance of Bool8x16.
       * @param {Bool8x16} b An instance of Bool8x16.
@@ -1141,7 +1141,7 @@ if (is.undefined(SIMD.Bool8x16.xor)) {
   };
 }
 
-if (is.undefined(SIMD.Bool8x16.not)) {
+if (ateos.isUndefined(SIMD.Bool8x16.not)) {
   /**
       * @param {Bool8x16} a An instance of Bool8x16.
       * @return {Bool8x16} New instance of Bool8x16 with values of !a
@@ -1167,7 +1167,7 @@ if (is.undefined(SIMD.Bool8x16.not)) {
   };
 }
 
-if (is.undefined(SIMD.Bool8x16.equal)) {
+if (ateos.isUndefined(SIMD.Bool8x16.equal)) {
   /**
       * @param {Bool8x16} a An instance of Bool8x16.
       * @param {Bool8x16} b An instance of Bool8x16.
@@ -1196,7 +1196,7 @@ if (is.undefined(SIMD.Bool8x16.equal)) {
   };
 }
 
-if (is.undefined(SIMD.Bool8x16.notEqual)) {
+if (ateos.isUndefined(SIMD.Bool8x16.notEqual)) {
   /**
       * @param {Bool8x16} a An instance of Bool8x16.
       * @param {Bool8x16} b An instance of Bool8x16.
@@ -1225,7 +1225,7 @@ if (is.undefined(SIMD.Bool8x16.notEqual)) {
   };
 }
 
-if (is.undefined(SIMD.Bool8x16.select)) {
+if (ateos.isUndefined(SIMD.Bool8x16.select)) {
   /**
       * @param {Bool8x16} mask Selector mask. An instance of Bool8x16
       * @param {Bool8x16} trueValue Pick lane from here if corresponding
@@ -1245,7 +1245,7 @@ if (is.undefined(SIMD.Bool8x16.select)) {
   };
 }
 
-if (is.undefined(SIMD.Float32x4)) {
+if (ateos.isUndefined(SIMD.Float32x4)) {
   /**
       * Construct a new instance of Float32x4 number.
       * @param {double} value used for x lane.
@@ -1266,7 +1266,7 @@ if (is.undefined(SIMD.Float32x4)) {
   };
 }
 
-if (is.undefined(SIMD.Float32x4.extractLane)) {
+if (ateos.isUndefined(SIMD.Float32x4.extractLane)) {
   /**
       * @param {Float32x4} t An instance of Float32x4.
       * @param {integer} i Index in concatenation of t for lane i
@@ -1284,7 +1284,7 @@ if (is.undefined(SIMD.Float32x4.extractLane)) {
   };
 }
 
-if (is.undefined(SIMD.Float32x4.replaceLane)) {
+if (ateos.isUndefined(SIMD.Float32x4.replaceLane)) {
   /**
       * @param {Float32x4} t An instance of Float32x4.
       * @param {integer} i Index in concatenation of t for lane i
@@ -1301,7 +1301,7 @@ if (is.undefined(SIMD.Float32x4.replaceLane)) {
   };
 }
 
-if (is.undefined(SIMD.Float32x4.check)) {
+if (ateos.isUndefined(SIMD.Float32x4.check)) {
   /**
       * Check whether the argument is a Float32x4.
       * @param {Float32x4} v An instance of Float32x4.
@@ -1315,7 +1315,7 @@ if (is.undefined(SIMD.Float32x4.check)) {
   };
 }
 
-if (is.undefined(SIMD.Float32x4.splat)) {
+if (ateos.isUndefined(SIMD.Float32x4.splat)) {
   /**
       * Construct a new instance of Float32x4 with the same value
       * in all lanes.
@@ -1327,7 +1327,7 @@ if (is.undefined(SIMD.Float32x4.splat)) {
   };
 }
 
-if (is.undefined(SIMD.Float32x4.fromFloat64x2)) {
+if (ateos.isUndefined(SIMD.Float32x4.fromFloat64x2)) {
   /**
       * @param {Float64x2} t An instance of Float64x2.
       * @return {Float32x4} A Float32x4 with .x and .y from t
@@ -1339,7 +1339,7 @@ if (is.undefined(SIMD.Float32x4.fromFloat64x2)) {
   };
 }
 
-if (is.undefined(SIMD.Float32x4.fromInt32x4)) {
+if (ateos.isUndefined(SIMD.Float32x4.fromInt32x4)) {
   /**
       * @param {Int32x4} t An instance of Int32x4.
       * @return {Float32x4} An integer to float conversion copy of t.
@@ -1353,7 +1353,7 @@ if (is.undefined(SIMD.Float32x4.fromInt32x4)) {
   };
 }
 
-if (is.undefined(SIMD.Float32x4.fromFloat64x2Bits)) {
+if (ateos.isUndefined(SIMD.Float32x4.fromFloat64x2Bits)) {
   /**
      * @param {Float64x2} t An instance of Float64x2.
      * @return {Float32x4} a bit-wise copy of t as a Float32x4.
@@ -1364,7 +1364,7 @@ if (is.undefined(SIMD.Float32x4.fromFloat64x2Bits)) {
   };
 }
 
-if (is.undefined(SIMD.Float32x4.fromInt32x4Bits)) {
+if (ateos.isUndefined(SIMD.Float32x4.fromInt32x4Bits)) {
   /**
      * @param {Int32x4} t An instance of Int32x4.
      * @return {Float32x4} a bit-wise copy of t as a Float32x4.
@@ -1375,7 +1375,7 @@ if (is.undefined(SIMD.Float32x4.fromInt32x4Bits)) {
   };
 }
 
-if (is.undefined(SIMD.Float32x4.fromInt16x8Bits)) {
+if (ateos.isUndefined(SIMD.Float32x4.fromInt16x8Bits)) {
   /**
      * @param {Int16x8} t An instance of Int16x8.
      * @return {Float32x4} a bit-wise copy of t as a Float32x4.
@@ -1386,7 +1386,7 @@ if (is.undefined(SIMD.Float32x4.fromInt16x8Bits)) {
   };
 }
 
-if (is.undefined(SIMD.Float32x4.fromInt8x16Bits)) {
+if (ateos.isUndefined(SIMD.Float32x4.fromInt8x16Bits)) {
   /**
      * @param {Int8x16} t An instance of Int8x16.
      * @return {Float32x4} a bit-wise copy of t as a Float32x4.
@@ -1429,7 +1429,7 @@ if (!Object.hasOwnProperty(SIMD.Float32x4.prototype, "valueOf")) {
   };
 }
 
-if (is.undefined(SIMD.Float64x2)) {
+if (ateos.isUndefined(SIMD.Float64x2)) {
   /**
       * Construct a new instance of Float64x2 number.
       * @param {double} value used for x lane.
@@ -1447,7 +1447,7 @@ if (is.undefined(SIMD.Float64x2)) {
   };
 }
 
-if (is.undefined(SIMD.Float64x2.extractLane)) {
+if (ateos.isUndefined(SIMD.Float64x2.extractLane)) {
   /**
       * @param {Float64x2} t An instance of Float64x2.
       * @param {integer} i Index in concatenation of t for lane i
@@ -1463,7 +1463,7 @@ if (is.undefined(SIMD.Float64x2.extractLane)) {
   };
 }
 
-if (is.undefined(SIMD.Float64x2.replaceLane)) {
+if (ateos.isUndefined(SIMD.Float64x2.replaceLane)) {
   /**
       * @param {Float64x2} t An instance of Float64x2.
       * @param {integer} i Index in concatenation of t for lane i
@@ -1480,7 +1480,7 @@ if (is.undefined(SIMD.Float64x2.replaceLane)) {
   };
 }
 
-if (is.undefined(SIMD.Float64x2.check)) {
+if (ateos.isUndefined(SIMD.Float64x2.check)) {
   /**
       * Check whether the argument is a Float64x2.
       * @param {Float64x2} v An instance of Float64x2.
@@ -1494,7 +1494,7 @@ if (is.undefined(SIMD.Float64x2.check)) {
   };
 }
 
-if (is.undefined(SIMD.Float64x2.splat)) {
+if (ateos.isUndefined(SIMD.Float64x2.splat)) {
   /**
       * Construct a new instance of Float64x2 with the same value
       * in all lanes.
@@ -1506,7 +1506,7 @@ if (is.undefined(SIMD.Float64x2.splat)) {
   };
 }
 
-if (is.undefined(SIMD.Float64x2.fromFloat32x4)) {
+if (ateos.isUndefined(SIMD.Float64x2.fromFloat32x4)) {
   /**
       * @param {Float32x4} t An instance of Float32x4.
       * @return {Float64x2} A Float64x2 with .x and .y from t
@@ -1518,7 +1518,7 @@ if (is.undefined(SIMD.Float64x2.fromFloat32x4)) {
   };
 }
 
-if (is.undefined(SIMD.Float64x2.fromInt32x4)) {
+if (ateos.isUndefined(SIMD.Float64x2.fromInt32x4)) {
   /**
       * @param {Int32x4} t An instance of Int32x4.
       * @return {Float64x2} A Float64x2 with .x and .y from t
@@ -1530,7 +1530,7 @@ if (is.undefined(SIMD.Float64x2.fromInt32x4)) {
   };
 }
 
-if (is.undefined(SIMD.Float64x2.fromFloat32x4Bits)) {
+if (ateos.isUndefined(SIMD.Float64x2.fromFloat32x4Bits)) {
   /**
      * @param {Float32x4} t An instance of Float32x4.
      * @return {Float64x2} a bit-wise copy of t as a Float64x2.
@@ -1541,7 +1541,7 @@ if (is.undefined(SIMD.Float64x2.fromFloat32x4Bits)) {
   };
 }
 
-if (is.undefined(SIMD.Float64x2.fromInt32x4Bits)) {
+if (ateos.isUndefined(SIMD.Float64x2.fromInt32x4Bits)) {
   /**
      * @param {Int32x4} t An instance of Int32x4.
      * @return {Float64x2} a bit-wise copy of t as a Float64x2.
@@ -1552,7 +1552,7 @@ if (is.undefined(SIMD.Float64x2.fromInt32x4Bits)) {
   };
 }
 
-if (is.undefined(SIMD.Float64x2.fromInt16x8Bits)) {
+if (ateos.isUndefined(SIMD.Float64x2.fromInt16x8Bits)) {
   /**
      * @param {Int16x8} t An instance of Int16x8.
      * @return {Float64x2} a bit-wise copy of t as a Float64x2.
@@ -1563,7 +1563,7 @@ if (is.undefined(SIMD.Float64x2.fromInt16x8Bits)) {
   };
 }
 
-if (is.undefined(SIMD.Float64x2.fromInt8x16Bits)) {
+if (ateos.isUndefined(SIMD.Float64x2.fromInt8x16Bits)) {
   /**
      * @param {Int8x16} t An instance of Int8x16.
      * @return {Float64x2} a bit-wise copy of t as a Float64x2.
@@ -1603,7 +1603,7 @@ if (!Object.hasOwnProperty(SIMD.Float64x2.prototype, "valueOf")) {
 }
 
 
-if (is.undefined(SIMD.Int32x4)) {
+if (ateos.isUndefined(SIMD.Int32x4)) {
   /**
       * Construct a new instance of Int32x4 number.
       * @param {integer} 32-bit value used for x lane.
@@ -1624,7 +1624,7 @@ if (is.undefined(SIMD.Int32x4)) {
   };
 }
 
-if (is.undefined(SIMD.Int32x4.extractLane)) {
+if (ateos.isUndefined(SIMD.Int32x4.extractLane)) {
   /**
       * @param {Int32x4} t An instance of Int32x4.
       * @param {integer} i Index in concatenation of t for lane i
@@ -1642,7 +1642,7 @@ if (is.undefined(SIMD.Int32x4.extractLane)) {
   };
 }
 
-if (is.undefined(SIMD.Int32x4.replaceLane)) {
+if (ateos.isUndefined(SIMD.Int32x4.replaceLane)) {
   /**
       * @param {Int32x4} t An instance of Int32x4.
       * @param {integer} i Index in concatenation of t for lane i
@@ -1659,7 +1659,7 @@ if (is.undefined(SIMD.Int32x4.replaceLane)) {
   };
 }
 
-if (is.undefined(SIMD.Int32x4.check)) {
+if (ateos.isUndefined(SIMD.Int32x4.check)) {
   /**
       * Check whether the argument is a Int32x4.
       * @param {Int32x4} v An instance of Int32x4.
@@ -1673,7 +1673,7 @@ if (is.undefined(SIMD.Int32x4.check)) {
   };
 }
 
-if (is.undefined(SIMD.Int32x4.splat)) {
+if (ateos.isUndefined(SIMD.Int32x4.splat)) {
   /**
       * Construct a new instance of Int32x4 with the same value
       * in all lanes.
@@ -1685,7 +1685,7 @@ if (is.undefined(SIMD.Int32x4.splat)) {
   };
 }
 
-if (is.undefined(SIMD.Int32x4.fromFloat32x4)) {
+if (ateos.isUndefined(SIMD.Int32x4.fromFloat32x4)) {
   /**
       * @param {Float32x4} t An instance of Float32x4.
       * @return {Int32x4} with a integer to float conversion of t.
@@ -1699,7 +1699,7 @@ if (is.undefined(SIMD.Int32x4.fromFloat32x4)) {
   };
 }
 
-if (is.undefined(SIMD.Int32x4.fromFloat64x2)) {
+if (ateos.isUndefined(SIMD.Int32x4.fromFloat64x2)) {
   /**
       * @param {Float64x2} t An instance of Float64x2.
       * @return {Int32x4}  An Int32x4 with .x and .y from t
@@ -1713,7 +1713,7 @@ if (is.undefined(SIMD.Int32x4.fromFloat64x2)) {
   };
 }
 
-if (is.undefined(SIMD.Int32x4.fromFloat32x4Bits)) {
+if (ateos.isUndefined(SIMD.Int32x4.fromFloat32x4Bits)) {
   /**
       * @param {Float32x4} t An instance of Float32x4.
       * @return {Int32x4} a bit-wise copy of t as a Int32x4.
@@ -1724,7 +1724,7 @@ if (is.undefined(SIMD.Int32x4.fromFloat32x4Bits)) {
   };
 }
 
-if (is.undefined(SIMD.Int32x4.fromFloat64x2Bits)) {
+if (ateos.isUndefined(SIMD.Int32x4.fromFloat64x2Bits)) {
   /**
      * @param {Float64x2} t An instance of Float64x2.
      * @return {Int32x4} a bit-wise copy of t as an Int32x4.
@@ -1735,7 +1735,7 @@ if (is.undefined(SIMD.Int32x4.fromFloat64x2Bits)) {
   };
 }
 
-if (is.undefined(SIMD.Int32x4.fromInt16x8Bits)) {
+if (ateos.isUndefined(SIMD.Int32x4.fromInt16x8Bits)) {
   /**
       * @param {Int16x8} t An instance of Int16x8.
       * @return {Int32x4} a bit-wise copy of t as a Int32x4.
@@ -1746,7 +1746,7 @@ if (is.undefined(SIMD.Int32x4.fromInt16x8Bits)) {
   };
 }
 
-if (is.undefined(SIMD.Int32x4.fromInt8x16Bits)) {
+if (ateos.isUndefined(SIMD.Int32x4.fromInt8x16Bits)) {
   /**
       * @param {Int8x16} t An instance of Int8x16.
       * @return {Int32x4} a bit-wise copy of t as a Int32x4.
@@ -1789,7 +1789,7 @@ if (!Object.hasOwnProperty(SIMD.Int32x4.prototype, "valueOf")) {
   };
 }
 
-if (is.undefined(SIMD.Int16x8)) {
+if (ateos.isUndefined(SIMD.Int16x8)) {
   /**
       * Construct a new instance of Int16x8 number.
       * @param {integer} 16-bit value used for s0 lane.
@@ -1818,7 +1818,7 @@ if (is.undefined(SIMD.Int16x8)) {
   };
 }
 
-if (is.undefined(SIMD.Int16x8.extractLane)) {
+if (ateos.isUndefined(SIMD.Int16x8.extractLane)) {
   /**
       * @param {Int16x8} t An instance of Int16x8.
       * @param {integer} i Index in concatenation of t for lane i
@@ -1840,7 +1840,7 @@ if (is.undefined(SIMD.Int16x8.extractLane)) {
   };
 }
 
-if (is.undefined(SIMD.Int16x8.replaceLane)) {
+if (ateos.isUndefined(SIMD.Int16x8.replaceLane)) {
   /**
       * @param {Int16x8} t An instance of Int16x8.
       * @param {integer} i Index in concatenation of t for lane i
@@ -1857,7 +1857,7 @@ if (is.undefined(SIMD.Int16x8.replaceLane)) {
   };
 }
 
-if (is.undefined(SIMD.Int16x8.check)) {
+if (ateos.isUndefined(SIMD.Int16x8.check)) {
   /**
       * Check whether the argument is a Int16x8.
       * @param {Int16x8} v An instance of Int16x8.
@@ -1871,7 +1871,7 @@ if (is.undefined(SIMD.Int16x8.check)) {
   };
 }
 
-if (is.undefined(SIMD.Int16x8.splat)) {
+if (ateos.isUndefined(SIMD.Int16x8.splat)) {
   /**
       * Construct a new instance of Int16x8 with the same value
       * in all lanes.
@@ -1883,7 +1883,7 @@ if (is.undefined(SIMD.Int16x8.splat)) {
   };
 }
 
-if (is.undefined(SIMD.Int16x8.fromFloat32x4Bits)) {
+if (ateos.isUndefined(SIMD.Int16x8.fromFloat32x4Bits)) {
   /**
       * @param {Float32x4} t An instance of Float32x4.
       * @return {Int16x8} a bit-wise copy of t as a Int16x8.
@@ -1894,7 +1894,7 @@ if (is.undefined(SIMD.Int16x8.fromFloat32x4Bits)) {
   };
 }
 
-if (is.undefined(SIMD.Int16x8.fromFloat64x2Bits)) {
+if (ateos.isUndefined(SIMD.Int16x8.fromFloat64x2Bits)) {
   /**
      * @param {Float64x2} t An instance of Float64x2.
      * @return {Int16x8} a bit-wise copy of t as an Int16x8.
@@ -1905,7 +1905,7 @@ if (is.undefined(SIMD.Int16x8.fromFloat64x2Bits)) {
   };
 }
 
-if (is.undefined(SIMD.Int16x8.fromInt32x4Bits)) {
+if (ateos.isUndefined(SIMD.Int16x8.fromInt32x4Bits)) {
   /**
       * @param {Int32x4} t An instance of Int32x4.
       * @return {Int16x8} a bit-wise copy of t as a Int16x8.
@@ -1916,7 +1916,7 @@ if (is.undefined(SIMD.Int16x8.fromInt32x4Bits)) {
   };
 }
 
-if (is.undefined(SIMD.Int16x8.fromInt8x16Bits)) {
+if (ateos.isUndefined(SIMD.Int16x8.fromInt8x16Bits)) {
   /**
       * @param {Int8x16} t An instance of Int8x16.
       * @return {Int16x8} a bit-wise copy of t as a Int16x8.
@@ -1967,7 +1967,7 @@ if (!Object.hasOwnProperty(SIMD.Int16x8.prototype, "valueOf")) {
   };
 }
 
-if (is.undefined(SIMD.Int8x16)) {
+if (ateos.isUndefined(SIMD.Int8x16)) {
   /**
       * Construct a new instance of Int8x16 number.
       * @param {integer} 8-bit value used for s0 lane.
@@ -2014,7 +2014,7 @@ if (is.undefined(SIMD.Int8x16)) {
   };
 }
 
-if (is.undefined(SIMD.Int8x16.extractLane)) {
+if (ateos.isUndefined(SIMD.Int8x16.extractLane)) {
   /**
       * @param {Int8x16} t An instance of Int8x16.
       * @param {integer} i Index in concatenation of t for lane i
@@ -2044,7 +2044,7 @@ if (is.undefined(SIMD.Int8x16.extractLane)) {
   };
 }
 
-if (is.undefined(SIMD.Int8x16.replaceLane)) {
+if (ateos.isUndefined(SIMD.Int8x16.replaceLane)) {
   /**
       * @param {Int8x16} t An instance of Int8x16.
       * @param {integer} i Index in concatenation of t for lane i
@@ -2061,7 +2061,7 @@ if (is.undefined(SIMD.Int8x16.replaceLane)) {
   };
 }
 
-if (is.undefined(SIMD.Int8x16.check)) {
+if (ateos.isUndefined(SIMD.Int8x16.check)) {
   /**
       * Check whether the argument is a Int8x16.
       * @param {Int8x16} v An instance of Int8x16.
@@ -2075,7 +2075,7 @@ if (is.undefined(SIMD.Int8x16.check)) {
   };
 }
 
-if (is.undefined(SIMD.Int8x16.splat)) {
+if (ateos.isUndefined(SIMD.Int8x16.splat)) {
   /**
       * Construct a new instance of Int8x16 with the same value
       * in all lanes.
@@ -2088,7 +2088,7 @@ if (is.undefined(SIMD.Int8x16.splat)) {
   };
 }
 
-if (is.undefined(SIMD.Int8x16.fromFloat32x4Bits)) {
+if (ateos.isUndefined(SIMD.Int8x16.fromFloat32x4Bits)) {
   /**
       * @param {Float32x4} t An instance of Float32x4.
       * @return {Int8x16} a bit-wise copy of t as a Int8x16.
@@ -2099,7 +2099,7 @@ if (is.undefined(SIMD.Int8x16.fromFloat32x4Bits)) {
   };
 }
 
-if (is.undefined(SIMD.Int8x16.fromFloat64x2Bits)) {
+if (ateos.isUndefined(SIMD.Int8x16.fromFloat64x2Bits)) {
   /**
      * @param {Float64x2} t An instance of Float64x2.
      * @return {Int8x16} a bit-wise copy of t as an Int8x16.
@@ -2110,7 +2110,7 @@ if (is.undefined(SIMD.Int8x16.fromFloat64x2Bits)) {
   };
 }
 
-if (is.undefined(SIMD.Int8x16.fromInt32x4Bits)) {
+if (ateos.isUndefined(SIMD.Int8x16.fromInt32x4Bits)) {
   /**
       * @param {Int32x4} t An instance of Int32x4.
       * @return {Int8x16} a bit-wise copy of t as a Int8x16.
@@ -2121,7 +2121,7 @@ if (is.undefined(SIMD.Int8x16.fromInt32x4Bits)) {
   };
 }
 
-if (is.undefined(SIMD.Int8x16.fromInt16x8Bits)) {
+if (ateos.isUndefined(SIMD.Int8x16.fromInt16x8Bits)) {
   /**
       * @param {Int16x8} t An instance of Int16x8.
       * @return {Int8x16} a bit-wise copy of t as a Int8x16.
@@ -2188,7 +2188,7 @@ if (!Object.hasOwnProperty(SIMD.Int8x16.prototype, "valueOf")) {
   };
 }
 
-if (is.undefined(SIMD.Float32x4.abs)) {
+if (ateos.isUndefined(SIMD.Float32x4.abs)) {
   /**
      * @param {Float32x4} t An instance of Float32x4.
      * @return {Float32x4} New instance of Float32x4 with absolute values of
@@ -2203,7 +2203,7 @@ if (is.undefined(SIMD.Float32x4.abs)) {
   };
 }
 
-if (is.undefined(SIMD.Float32x4.neg)) {
+if (ateos.isUndefined(SIMD.Float32x4.neg)) {
   /**
       * @param {Float32x4} t An instance of Float32x4.
       * @return {Float32x4} New instance of Float32x4 with negated values of
@@ -2218,7 +2218,7 @@ if (is.undefined(SIMD.Float32x4.neg)) {
   };
 }
 
-if (is.undefined(SIMD.Float32x4.add)) {
+if (ateos.isUndefined(SIMD.Float32x4.add)) {
   /**
       * @param {Float32x4} a An instance of Float32x4.
       * @param {Float32x4} b An instance of Float32x4.
@@ -2235,7 +2235,7 @@ if (is.undefined(SIMD.Float32x4.add)) {
   };
 }
 
-if (is.undefined(SIMD.Float32x4.sub)) {
+if (ateos.isUndefined(SIMD.Float32x4.sub)) {
   /**
       * @param {Float32x4} a An instance of Float32x4.
       * @param {Float32x4} b An instance of Float32x4.
@@ -2252,7 +2252,7 @@ if (is.undefined(SIMD.Float32x4.sub)) {
   };
 }
 
-if (is.undefined(SIMD.Float32x4.mul)) {
+if (ateos.isUndefined(SIMD.Float32x4.mul)) {
   /**
       * @param {Float32x4} a An instance of Float32x4.
       * @param {Float32x4} b An instance of Float32x4.
@@ -2269,7 +2269,7 @@ if (is.undefined(SIMD.Float32x4.mul)) {
   };
 }
 
-if (is.undefined(SIMD.Float32x4.div)) {
+if (ateos.isUndefined(SIMD.Float32x4.div)) {
   /**
       * @param {Float32x4} a An instance of Float32x4.
       * @param {Float32x4} b An instance of Float32x4.
@@ -2286,7 +2286,7 @@ if (is.undefined(SIMD.Float32x4.div)) {
   };
 }
 
-if (is.undefined(SIMD.Float32x4.min)) {
+if (ateos.isUndefined(SIMD.Float32x4.min)) {
   /**
       * @param {Float32x4} t An instance of Float32x4.
       * @param {Float32x4} other An instance of Float32x4.
@@ -2308,7 +2308,7 @@ if (is.undefined(SIMD.Float32x4.min)) {
   };
 }
 
-if (is.undefined(SIMD.Float32x4.max)) {
+if (ateos.isUndefined(SIMD.Float32x4.max)) {
   /**
       * @param {Float32x4} t An instance of Float32x4.
       * @param {Float32x4} other An instance of Float32x4.
@@ -2330,7 +2330,7 @@ if (is.undefined(SIMD.Float32x4.max)) {
   };
 }
 
-if (is.undefined(SIMD.Float32x4.minNum)) {
+if (ateos.isUndefined(SIMD.Float32x4.minNum)) {
   /**
       * @param {Float32x4} t An instance of Float32x4.
       * @param {Float32x4} other An instance of Float32x4.
@@ -2352,7 +2352,7 @@ if (is.undefined(SIMD.Float32x4.minNum)) {
   };
 }
 
-if (is.undefined(SIMD.Float32x4.maxNum)) {
+if (ateos.isUndefined(SIMD.Float32x4.maxNum)) {
   /**
       * @param {Float32x4} t An instance of Float32x4.
       * @param {Float32x4} other An instance of Float32x4.
@@ -2374,7 +2374,7 @@ if (is.undefined(SIMD.Float32x4.maxNum)) {
   };
 }
 
-if (is.undefined(SIMD.Float32x4.reciprocalApproximation)) {
+if (ateos.isUndefined(SIMD.Float32x4.reciprocalApproximation)) {
   /**
       * @param {Float32x4} t An instance of Float32x4.
       * @return {Float32x4} New instance of Float32x4 with an approximation of the
@@ -2386,7 +2386,7 @@ if (is.undefined(SIMD.Float32x4.reciprocalApproximation)) {
   };
 }
 
-if (is.undefined(SIMD.Float32x4.reciprocalSqrtApproximation)) {
+if (ateos.isUndefined(SIMD.Float32x4.reciprocalSqrtApproximation)) {
   /**
       * @param {Float32x4} t An instance of Float32x4.
       * @return {Float32x4} New instance of Float32x4 with an approximation of the
@@ -2398,7 +2398,7 @@ if (is.undefined(SIMD.Float32x4.reciprocalSqrtApproximation)) {
   };
 }
 
-if (is.undefined(SIMD.Float32x4.sqrt)) {
+if (ateos.isUndefined(SIMD.Float32x4.sqrt)) {
   /**
       * @param {Float32x4} t An instance of Float32x4.
       * @return {Float32x4} New instance of Float32x4 with square root of
@@ -2413,7 +2413,7 @@ if (is.undefined(SIMD.Float32x4.sqrt)) {
   };
 }
 
-if (is.undefined(SIMD.Float32x4.swizzle)) {
+if (ateos.isUndefined(SIMD.Float32x4.swizzle)) {
   /**
       * @param {Float32x4} t An instance of Float32x4 to be swizzled.
       * @param {integer} x - Index in t for lane x
@@ -2437,7 +2437,7 @@ if (is.undefined(SIMD.Float32x4.swizzle)) {
   };
 }
 
-if (is.undefined(SIMD.Float32x4.shuffle)) {
+if (ateos.isUndefined(SIMD.Float32x4.shuffle)) {
 
   const _f32x8 = new Float32Array(8);
 
@@ -2470,7 +2470,7 @@ if (is.undefined(SIMD.Float32x4.shuffle)) {
   };
 }
 
-if (is.undefined(SIMD.Float32x4.lessThan)) {
+if (ateos.isUndefined(SIMD.Float32x4.lessThan)) {
   /**
       * @param {Float32x4} t An instance of Float32x4.
       * @param {Float32x4} other An instance of Float32x4.
@@ -2492,7 +2492,7 @@ if (is.undefined(SIMD.Float32x4.lessThan)) {
   };
 }
 
-if (is.undefined(SIMD.Float32x4.lessThanOrEqual)) {
+if (ateos.isUndefined(SIMD.Float32x4.lessThanOrEqual)) {
   /**
       * @param {Float32x4} t An instance of Float32x4.
       * @param {Float32x4} other An instance of Float32x4.
@@ -2514,7 +2514,7 @@ if (is.undefined(SIMD.Float32x4.lessThanOrEqual)) {
   };
 }
 
-if (is.undefined(SIMD.Float32x4.equal)) {
+if (ateos.isUndefined(SIMD.Float32x4.equal)) {
   /**
       * @param {Float32x4} t An instance of Float32x4.
       * @param {Float32x4} other An instance of Float32x4.
@@ -2536,7 +2536,7 @@ if (is.undefined(SIMD.Float32x4.equal)) {
   };
 }
 
-if (is.undefined(SIMD.Float32x4.notEqual)) {
+if (ateos.isUndefined(SIMD.Float32x4.notEqual)) {
   /**
       * @param {Float32x4} t An instance of Float32x4.
       * @param {Float32x4} other An instance of Float32x4.
@@ -2558,7 +2558,7 @@ if (is.undefined(SIMD.Float32x4.notEqual)) {
   };
 }
 
-if (is.undefined(SIMD.Float32x4.greaterThanOrEqual)) {
+if (ateos.isUndefined(SIMD.Float32x4.greaterThanOrEqual)) {
   /**
       * @param {Float32x4} t An instance of Float32x4.
       * @param {Float32x4} other An instance of Float32x4.
@@ -2580,7 +2580,7 @@ if (is.undefined(SIMD.Float32x4.greaterThanOrEqual)) {
   };
 }
 
-if (is.undefined(SIMD.Float32x4.greaterThan)) {
+if (ateos.isUndefined(SIMD.Float32x4.greaterThan)) {
   /**
       * @param {Float32x4} t An instance of Float32x4.
       * @param {Float32x4} other An instance of Float32x4.
@@ -2602,7 +2602,7 @@ if (is.undefined(SIMD.Float32x4.greaterThan)) {
   };
 }
 
-if (is.undefined(SIMD.Float32x4.select)) {
+if (ateos.isUndefined(SIMD.Float32x4.select)) {
   /**
       * @param {Bool32x4} t Selector mask. An instance of Bool32x4
       * @param {Float32x4} trueValue Pick lane from here if corresponding
@@ -2632,7 +2632,7 @@ if (is.undefined(SIMD.Float32x4.select)) {
   };
 }
 
-if (is.undefined(SIMD.Float32x4.load)) {
+if (ateos.isUndefined(SIMD.Float32x4.load)) {
   /**
       * @param {Typed array} tarray An instance of a typed array.
       * @param {Number} index An instance of Number.
@@ -2659,7 +2659,7 @@ if (is.undefined(SIMD.Float32x4.load)) {
   };
 }
 
-if (is.undefined(SIMD.Float32x4.load1)) {
+if (ateos.isUndefined(SIMD.Float32x4.load1)) {
   /**
       * @param {Typed array} tarray An instance of a typed array.
       * @param {Number} index An instance of Number.
@@ -2686,7 +2686,7 @@ if (is.undefined(SIMD.Float32x4.load1)) {
   };
 }
 
-if (is.undefined(SIMD.Float32x4.load2)) {
+if (ateos.isUndefined(SIMD.Float32x4.load2)) {
   /**
       * @param {Typed array} tarray An instance of a typed array.
       * @param {Number} index An instance of Number.
@@ -2716,7 +2716,7 @@ if (is.undefined(SIMD.Float32x4.load2)) {
   };
 }
 
-if (is.undefined(SIMD.Float32x4.load3)) {
+if (ateos.isUndefined(SIMD.Float32x4.load3)) {
   /**
       * @param {Typed array} tarray An instance of a typed array.
       * @param {Number} index An instance of Number.
@@ -2746,7 +2746,7 @@ if (is.undefined(SIMD.Float32x4.load3)) {
   };
 }
 
-if (is.undefined(SIMD.Float32x4.store)) {
+if (ateos.isUndefined(SIMD.Float32x4.store)) {
   /**
       * @param {Typed array} tarray An instance of a typed array.
       * @param {Number} index An instance of Number.
@@ -2781,7 +2781,7 @@ if (is.undefined(SIMD.Float32x4.store)) {
   };
 }
 
-if (is.undefined(SIMD.Float32x4.store1)) {
+if (ateos.isUndefined(SIMD.Float32x4.store1)) {
   /**
       * @param {Typed array} tarray An instance of a typed array.
       * @param {Number} index An instance of Number.
@@ -2819,7 +2819,7 @@ if (is.undefined(SIMD.Float32x4.store1)) {
   };
 }
 
-if (is.undefined(SIMD.Float32x4.store2)) {
+if (ateos.isUndefined(SIMD.Float32x4.store2)) {
   /**
       * @param {Typed array} tarray An instance of a typed array.
       * @param {Number} index An instance of Number.
@@ -2852,7 +2852,7 @@ if (is.undefined(SIMD.Float32x4.store2)) {
   };
 }
 
-if (is.undefined(SIMD.Float32x4.store3)) {
+if (ateos.isUndefined(SIMD.Float32x4.store3)) {
   /**
       * @param {Typed array} tarray An instance of a typed array.
       * @param {Number} index An instance of Number.
@@ -2894,7 +2894,7 @@ if (is.undefined(SIMD.Float32x4.store3)) {
   };
 }
 
-if (is.undefined(SIMD.Float64x2.abs)) {
+if (ateos.isUndefined(SIMD.Float64x2.abs)) {
   /**
      * @param {Float64x2} t An instance of Float64x2.
      * @return {Float64x2} New instance of Float64x2 with absolute values of
@@ -2907,7 +2907,7 @@ if (is.undefined(SIMD.Float64x2.abs)) {
   };
 }
 
-if (is.undefined(SIMD.Float64x2.neg)) {
+if (ateos.isUndefined(SIMD.Float64x2.neg)) {
   /**
       * @param {Float64x2} t An instance of Float64x2.
       * @return {Float64x2} New instance of Float64x2 with negated values of
@@ -2920,7 +2920,7 @@ if (is.undefined(SIMD.Float64x2.neg)) {
   };
 }
 
-if (is.undefined(SIMD.Float64x2.add)) {
+if (ateos.isUndefined(SIMD.Float64x2.add)) {
   /**
       * @param {Float64x2} a An instance of Float64x2.
       * @param {Float64x2} b An instance of Float64x2.
@@ -2935,7 +2935,7 @@ if (is.undefined(SIMD.Float64x2.add)) {
   };
 }
 
-if (is.undefined(SIMD.Float64x2.sub)) {
+if (ateos.isUndefined(SIMD.Float64x2.sub)) {
   /**
       * @param {Float64x2} a An instance of Float64x2.
       * @param {Float64x2} b An instance of Float64x2.
@@ -2950,7 +2950,7 @@ if (is.undefined(SIMD.Float64x2.sub)) {
   };
 }
 
-if (is.undefined(SIMD.Float64x2.mul)) {
+if (ateos.isUndefined(SIMD.Float64x2.mul)) {
   /**
       * @param {Float64x2} a An instance of Float64x2.
       * @param {Float64x2} b An instance of Float64x2.
@@ -2965,7 +2965,7 @@ if (is.undefined(SIMD.Float64x2.mul)) {
   };
 }
 
-if (is.undefined(SIMD.Float64x2.div)) {
+if (ateos.isUndefined(SIMD.Float64x2.div)) {
   /**
       * @param {Float64x2} a An instance of Float64x2.
       * @param {Float64x2} b An instance of Float64x2.
@@ -2980,7 +2980,7 @@ if (is.undefined(SIMD.Float64x2.div)) {
   };
 }
 
-if (is.undefined(SIMD.Float64x2.min)) {
+if (ateos.isUndefined(SIMD.Float64x2.min)) {
   /**
       * @param {Float64x2} t An instance of Float64x2.
       * @param {Float64x2} other An instance of Float64x2.
@@ -2998,7 +2998,7 @@ if (is.undefined(SIMD.Float64x2.min)) {
   };
 }
 
-if (is.undefined(SIMD.Float64x2.max)) {
+if (ateos.isUndefined(SIMD.Float64x2.max)) {
   /**
       * @param {Float64x2} t An instance of Float64x2.
       * @param {Float64x2} other An instance of Float64x2.
@@ -3016,7 +3016,7 @@ if (is.undefined(SIMD.Float64x2.max)) {
   };
 }
 
-if (is.undefined(SIMD.Float64x2.minNum)) {
+if (ateos.isUndefined(SIMD.Float64x2.minNum)) {
   /**
       * @param {Float64x2} t An instance of Float64x2.
       * @param {Float64x2} other An instance of Float64x2.
@@ -3034,7 +3034,7 @@ if (is.undefined(SIMD.Float64x2.minNum)) {
   };
 }
 
-if (is.undefined(SIMD.Float64x2.maxNum)) {
+if (ateos.isUndefined(SIMD.Float64x2.maxNum)) {
   /**
       * @param {Float64x2} t An instance of Float64x2.
       * @param {Float64x2} other An instance of Float64x2.
@@ -3052,7 +3052,7 @@ if (is.undefined(SIMD.Float64x2.maxNum)) {
   };
 }
 
-if (is.undefined(SIMD.Float64x2.reciprocalApproximation)) {
+if (ateos.isUndefined(SIMD.Float64x2.reciprocalApproximation)) {
   /**
       * @param {Float64x2} t An instance of Float64x2.
       * @return {Float64x2} New instance of Float64x2 with an approximation of the
@@ -3064,7 +3064,7 @@ if (is.undefined(SIMD.Float64x2.reciprocalApproximation)) {
   };
 }
 
-if (is.undefined(SIMD.Float64x2.reciprocalSqrtApproximation)) {
+if (ateos.isUndefined(SIMD.Float64x2.reciprocalSqrtApproximation)) {
   /**
       * @param {Float64x2} t An instance of Float64x2.
       * @return {Float64x2} New instance of Float64x2 with an approximation of the
@@ -3076,7 +3076,7 @@ if (is.undefined(SIMD.Float64x2.reciprocalSqrtApproximation)) {
   };
 }
 
-if (is.undefined(SIMD.Float64x2.sqrt)) {
+if (ateos.isUndefined(SIMD.Float64x2.sqrt)) {
   /**
       * @param {Float64x2} t An instance of Float64x2.
       * @return {Float64x2} New instance of Float64x2 with square root of
@@ -3089,7 +3089,7 @@ if (is.undefined(SIMD.Float64x2.sqrt)) {
   };
 }
 
-if (is.undefined(SIMD.Float64x2.swizzle)) {
+if (ateos.isUndefined(SIMD.Float64x2.swizzle)) {
   /**
       * @param {Float64x2} t An instance of Float64x2 to be swizzled.
       * @param {integer} x - Index in t for lane x
@@ -3107,7 +3107,7 @@ if (is.undefined(SIMD.Float64x2.swizzle)) {
   };
 }
 
-if (is.undefined(SIMD.Float64x2.shuffle)) {
+if (ateos.isUndefined(SIMD.Float64x2.shuffle)) {
 
   const _f64x4 = new Float64Array(4);
 
@@ -3132,7 +3132,7 @@ if (is.undefined(SIMD.Float64x2.shuffle)) {
   };
 }
 
-if (is.undefined(SIMD.Float64x2.lessThan)) {
+if (ateos.isUndefined(SIMD.Float64x2.lessThan)) {
   /**
       * @param {Float64x2} t An instance of Float64x2.
       * @param {Float64x2} other An instance of Float64x2.
@@ -3150,7 +3150,7 @@ if (is.undefined(SIMD.Float64x2.lessThan)) {
   };
 }
 
-if (is.undefined(SIMD.Float64x2.lessThanOrEqual)) {
+if (ateos.isUndefined(SIMD.Float64x2.lessThanOrEqual)) {
   /**
       * @param {Float64x2} t An instance of Float64x2.
       * @param {Float64x2} other An instance of Float64x2.
@@ -3168,7 +3168,7 @@ if (is.undefined(SIMD.Float64x2.lessThanOrEqual)) {
   };
 }
 
-if (is.undefined(SIMD.Float64x2.equal)) {
+if (ateos.isUndefined(SIMD.Float64x2.equal)) {
   /**
       * @param {Float64x2} t An instance of Float64x2.
       * @param {Float64x2} other An instance of Float64x2.
@@ -3186,7 +3186,7 @@ if (is.undefined(SIMD.Float64x2.equal)) {
   };
 }
 
-if (is.undefined(SIMD.Float64x2.notEqual)) {
+if (ateos.isUndefined(SIMD.Float64x2.notEqual)) {
   /**
       * @param {Float64x2} t An instance of Float64x2.
       * @param {Float64x2} other An instance of Float64x2.
@@ -3204,7 +3204,7 @@ if (is.undefined(SIMD.Float64x2.notEqual)) {
   };
 }
 
-if (is.undefined(SIMD.Float64x2.greaterThanOrEqual)) {
+if (ateos.isUndefined(SIMD.Float64x2.greaterThanOrEqual)) {
   /**
       * @param {Float64x2} t An instance of Float64x2.
       * @param {Float64x2} other An instance of Float64x2.
@@ -3222,7 +3222,7 @@ if (is.undefined(SIMD.Float64x2.greaterThanOrEqual)) {
   };
 }
 
-if (is.undefined(SIMD.Float64x2.greaterThan)) {
+if (ateos.isUndefined(SIMD.Float64x2.greaterThan)) {
   /**
       * @param {Float64x2} t An instance of Float64x2.
       * @param {Float64x2} other An instance of Float64x2.
@@ -3240,7 +3240,7 @@ if (is.undefined(SIMD.Float64x2.greaterThan)) {
   };
 }
 
-if (is.undefined(SIMD.Float64x2.select)) {
+if (ateos.isUndefined(SIMD.Float64x2.select)) {
   /**
       * @param {bool64x2} t Selector mask. An instance of bool64x2
       * @param {Float64x2} trueValue Pick lane from here if corresponding
@@ -3264,7 +3264,7 @@ if (is.undefined(SIMD.Float64x2.select)) {
   };
 }
 
-if (is.undefined(SIMD.Float64x2.load)) {
+if (ateos.isUndefined(SIMD.Float64x2.load)) {
   /**
       * @param {Typed array} tarray An instance of a typed array.
       * @param {Number} index An instance of Number.
@@ -3294,7 +3294,7 @@ if (is.undefined(SIMD.Float64x2.load)) {
   };
 }
 
-if (is.undefined(SIMD.Float64x2.load1)) {
+if (ateos.isUndefined(SIMD.Float64x2.load1)) {
   /**
       * @param {Typed array} tarray An instance of a typed array.
       * @param {Number} index An instance of Number.
@@ -3324,7 +3324,7 @@ if (is.undefined(SIMD.Float64x2.load1)) {
   };
 }
 
-if (is.undefined(SIMD.Float64x2.store)) {
+if (ateos.isUndefined(SIMD.Float64x2.store)) {
   /**
       * @param {Typed array} tarray An instance of a typed array.
       * @param {Number} index An instance of Number.
@@ -3357,7 +3357,7 @@ if (is.undefined(SIMD.Float64x2.store)) {
   };
 }
 
-if (is.undefined(SIMD.Float64x2.store1)) {
+if (ateos.isUndefined(SIMD.Float64x2.store1)) {
   /**
       * @param {Typed array} tarray An instance of a typed array.
       * @param {Number} index An instance of Number.
@@ -3389,7 +3389,7 @@ if (is.undefined(SIMD.Float64x2.store1)) {
   };
 }
 
-if (is.undefined(SIMD.Int32x4.and)) {
+if (ateos.isUndefined(SIMD.Int32x4.and)) {
   /**
       * @param {Int32x4} a An instance of Int32x4.
       * @param {Int32x4} b An instance of Int32x4.
@@ -3406,7 +3406,7 @@ if (is.undefined(SIMD.Int32x4.and)) {
   };
 }
 
-if (is.undefined(SIMD.Int32x4.or)) {
+if (ateos.isUndefined(SIMD.Int32x4.or)) {
   /**
       * @param {Int32x4} a An instance of Int32x4.
       * @param {Int32x4} b An instance of Int32x4.
@@ -3423,7 +3423,7 @@ if (is.undefined(SIMD.Int32x4.or)) {
   };
 }
 
-if (is.undefined(SIMD.Int32x4.xor)) {
+if (ateos.isUndefined(SIMD.Int32x4.xor)) {
   /**
       * @param {Int32x4} a An instance of Int32x4.
       * @param {Int32x4} b An instance of Int32x4.
@@ -3440,7 +3440,7 @@ if (is.undefined(SIMD.Int32x4.xor)) {
   };
 }
 
-if (is.undefined(SIMD.Int32x4.not)) {
+if (ateos.isUndefined(SIMD.Int32x4.not)) {
   /**
       * @param {Int32x4} t An instance of Int32x4.
       * @return {Int32x4} New instance of Int32x4 with values of ~t
@@ -3454,7 +3454,7 @@ if (is.undefined(SIMD.Int32x4.not)) {
   };
 }
 
-if (is.undefined(SIMD.Int32x4.neg)) {
+if (ateos.isUndefined(SIMD.Int32x4.neg)) {
   /**
       * @param {Int32x4} t An instance of Int32x4.
       * @return {Int32x4} New instance of Int32x4 with values of -t
@@ -3468,7 +3468,7 @@ if (is.undefined(SIMD.Int32x4.neg)) {
   };
 }
 
-if (is.undefined(SIMD.Int32x4.add)) {
+if (ateos.isUndefined(SIMD.Int32x4.add)) {
   /**
       * @param {Int32x4} a An instance of Int32x4.
       * @param {Int32x4} b An instance of Int32x4.
@@ -3485,7 +3485,7 @@ if (is.undefined(SIMD.Int32x4.add)) {
   };
 }
 
-if (is.undefined(SIMD.Int32x4.sub)) {
+if (ateos.isUndefined(SIMD.Int32x4.sub)) {
   /**
       * @param {Int32x4} a An instance of Int32x4.
       * @param {Int32x4} b An instance of Int32x4.
@@ -3502,7 +3502,7 @@ if (is.undefined(SIMD.Int32x4.sub)) {
   };
 }
 
-if (is.undefined(SIMD.Int32x4.mul)) {
+if (ateos.isUndefined(SIMD.Int32x4.mul)) {
   /**
       * @param {Int32x4} a An instance of Int32x4.
       * @param {Int32x4} b An instance of Int32x4.
@@ -3523,7 +3523,7 @@ if (is.undefined(SIMD.Int32x4.mul)) {
   };
 }
 
-if (is.undefined(SIMD.Int32x4.swizzle)) {
+if (ateos.isUndefined(SIMD.Int32x4.swizzle)) {
   /**
       * @param {Int32x4} t An instance of Int32x4 to be swizzled.
       * @param {integer} x - Index in t for lane x
@@ -3547,7 +3547,7 @@ if (is.undefined(SIMD.Int32x4.swizzle)) {
   };
 }
 
-if (is.undefined(SIMD.Int32x4.shuffle)) {
+if (ateos.isUndefined(SIMD.Int32x4.shuffle)) {
 
   const _i32x8 = new Int32Array(8);
 
@@ -3580,7 +3580,7 @@ if (is.undefined(SIMD.Int32x4.shuffle)) {
   };
 }
 
-if (is.undefined(SIMD.Int32x4.select)) {
+if (ateos.isUndefined(SIMD.Int32x4.select)) {
   /**
       * @param {Bool32x4} t Selector mask. An instance of Bool32x4
       * @param {Int32x4} trueValue Pick lane from here if corresponding
@@ -3610,7 +3610,7 @@ if (is.undefined(SIMD.Int32x4.select)) {
   };
 }
 
-if (is.undefined(SIMD.Int32x4.selectBits)) {
+if (ateos.isUndefined(SIMD.Int32x4.selectBits)) {
   /**
       * @param {Int32x4} t Selector mask. An instance of Int32x4
       * @param {Int32x4} trueValue Pick bit from here if corresponding
@@ -3630,7 +3630,7 @@ if (is.undefined(SIMD.Int32x4.selectBits)) {
   };
 }
 
-if (is.undefined(SIMD.Int32x4.equal)) {
+if (ateos.isUndefined(SIMD.Int32x4.equal)) {
   /**
       * @param {Int32x4} t An instance of Int32x4.
       * @param {Int32x4} other An instance of Int32x4.
@@ -3652,7 +3652,7 @@ if (is.undefined(SIMD.Int32x4.equal)) {
   };
 }
 
-if (is.undefined(SIMD.Int32x4.notEqual)) {
+if (ateos.isUndefined(SIMD.Int32x4.notEqual)) {
   /**
       * @param {Int32x4} t An instance of Int32x4.
       * @param {Int32x4} other An instance of Int32x4.
@@ -3674,7 +3674,7 @@ if (is.undefined(SIMD.Int32x4.notEqual)) {
   };
 }
 
-if (is.undefined(SIMD.Int32x4.greaterThan)) {
+if (ateos.isUndefined(SIMD.Int32x4.greaterThan)) {
   /**
       * @param {Int32x4} t An instance of Int32x4.
       * @param {Int32x4} other An instance of Int32x4.
@@ -3696,7 +3696,7 @@ if (is.undefined(SIMD.Int32x4.greaterThan)) {
   };
 }
 
-if (is.undefined(SIMD.Int32x4.greaterThanOrEqual)) {
+if (ateos.isUndefined(SIMD.Int32x4.greaterThanOrEqual)) {
   /**
       * @param {Int32x4} t An instance of Int32x4.
       * @param {Int32x4} other An instance of Int32x4.
@@ -3718,7 +3718,7 @@ if (is.undefined(SIMD.Int32x4.greaterThanOrEqual)) {
   };
 }
 
-if (is.undefined(SIMD.Int32x4.lessThan)) {
+if (ateos.isUndefined(SIMD.Int32x4.lessThan)) {
   /**
       * @param {Int32x4} t An instance of Int32x4.
       * @param {Int32x4} other An instance of Int32x4.
@@ -3740,7 +3740,7 @@ if (is.undefined(SIMD.Int32x4.lessThan)) {
   };
 }
 
-if (is.undefined(SIMD.Int32x4.lessThanOrEqual)) {
+if (ateos.isUndefined(SIMD.Int32x4.lessThanOrEqual)) {
   /**
       * @param {Int32x4} t An instance of Int32x4.
       * @param {Int32x4} other An instance of Int32x4.
@@ -3762,7 +3762,7 @@ if (is.undefined(SIMD.Int32x4.lessThanOrEqual)) {
   };
 }
 
-if (is.undefined(SIMD.Int32x4.shiftLeftByScalar)) {
+if (ateos.isUndefined(SIMD.Int32x4.shiftLeftByScalar)) {
   /**
       * @param {Int32x4} a An instance of Int32x4.
       * @param {integer} bits Bit count to shift by.
@@ -3781,7 +3781,7 @@ if (is.undefined(SIMD.Int32x4.shiftLeftByScalar)) {
   };
 }
 
-if (is.undefined(SIMD.Int32x4.shiftRightLogicalByScalar)) {
+if (ateos.isUndefined(SIMD.Int32x4.shiftRightLogicalByScalar)) {
   /**
       * @param {Int32x4} a An instance of Int32x4.
       * @param {integer} bits Bit count to shift by.
@@ -3800,7 +3800,7 @@ if (is.undefined(SIMD.Int32x4.shiftRightLogicalByScalar)) {
   };
 }
 
-if (is.undefined(SIMD.Int32x4.shiftRightArithmeticByScalar)) {
+if (ateos.isUndefined(SIMD.Int32x4.shiftRightArithmeticByScalar)) {
   /**
       * @param {Int32x4} a An instance of Int32x4.
       * @param {integer} bits Bit count to shift by.
@@ -3819,7 +3819,7 @@ if (is.undefined(SIMD.Int32x4.shiftRightArithmeticByScalar)) {
   };
 }
 
-if (is.undefined(SIMD.Int32x4.load)) {
+if (ateos.isUndefined(SIMD.Int32x4.load)) {
   /**
       * @param {Typed array} tarray An instance of a typed array.
       * @param {Number} index An instance of Number.
@@ -3849,7 +3849,7 @@ if (is.undefined(SIMD.Int32x4.load)) {
   };
 }
 
-if (is.undefined(SIMD.Int32x4.load1)) {
+if (ateos.isUndefined(SIMD.Int32x4.load1)) {
   /**
       * @param {Typed array} tarray An instance of a typed array.
       * @param {Number} index An instance of Number.
@@ -3879,7 +3879,7 @@ if (is.undefined(SIMD.Int32x4.load1)) {
   };
 }
 
-if (is.undefined(SIMD.Int32x4.load2)) {
+if (ateos.isUndefined(SIMD.Int32x4.load2)) {
   /**
       * @param {Typed array} tarray An instance of a typed array.
       * @param {Number} index An instance of Number.
@@ -3909,7 +3909,7 @@ if (is.undefined(SIMD.Int32x4.load2)) {
   };
 }
 
-if (is.undefined(SIMD.Int32x4.load3)) {
+if (ateos.isUndefined(SIMD.Int32x4.load3)) {
   /**
       * @param {Typed array} tarray An instance of a typed array.
       * @param {Number} index An instance of Number.
@@ -3939,7 +3939,7 @@ if (is.undefined(SIMD.Int32x4.load3)) {
   };
 }
 
-if (is.undefined(SIMD.Int32x4.store)) {
+if (ateos.isUndefined(SIMD.Int32x4.store)) {
   /**
       * @param {Typed array} tarray An instance of a typed array.
       * @param {Number} index An instance of Number.
@@ -3974,7 +3974,7 @@ if (is.undefined(SIMD.Int32x4.store)) {
   };
 }
 
-if (is.undefined(SIMD.Int32x4.store1)) {
+if (ateos.isUndefined(SIMD.Int32x4.store1)) {
   /**
       * @param {Typed array} tarray An instance of a typed array.
       * @param {Number} index An instance of Number.
@@ -4012,7 +4012,7 @@ if (is.undefined(SIMD.Int32x4.store1)) {
   };
 }
 
-if (is.undefined(SIMD.Int32x4.store2)) {
+if (ateos.isUndefined(SIMD.Int32x4.store2)) {
   /**
       * @param {Typed array} tarray An instance of a typed array.
       * @param {Number} index An instance of Number.
@@ -4045,7 +4045,7 @@ if (is.undefined(SIMD.Int32x4.store2)) {
   };
 }
 
-if (is.undefined(SIMD.Int32x4.store3)) {
+if (ateos.isUndefined(SIMD.Int32x4.store3)) {
   /**
       * @param {Typed array} tarray An instance of a typed array.
       * @param {Number} index An instance of Number.
@@ -4087,7 +4087,7 @@ if (is.undefined(SIMD.Int32x4.store3)) {
   };
 }
 
-if (is.undefined(SIMD.Int16x8.and)) {
+if (ateos.isUndefined(SIMD.Int16x8.and)) {
   /**
       * @param {Int16x8} a An instance of Int16x8.
       * @param {Int16x8} b An instance of Int16x8.
@@ -4108,7 +4108,7 @@ if (is.undefined(SIMD.Int16x8.and)) {
   };
 }
 
-if (is.undefined(SIMD.Int16x8.or)) {
+if (ateos.isUndefined(SIMD.Int16x8.or)) {
   /**
       * @param {Int16x8} a An instance of Int16x8.
       * @param {Int16x8} b An instance of Int16x8.
@@ -4129,7 +4129,7 @@ if (is.undefined(SIMD.Int16x8.or)) {
   };
 }
 
-if (is.undefined(SIMD.Int16x8.xor)) {
+if (ateos.isUndefined(SIMD.Int16x8.xor)) {
   /**
       * @param {Int16x8} a An instance of Int16x8.
       * @param {Int16x8} b An instance of Int16x8.
@@ -4150,7 +4150,7 @@ if (is.undefined(SIMD.Int16x8.xor)) {
   };
 }
 
-if (is.undefined(SIMD.Int16x8.not)) {
+if (ateos.isUndefined(SIMD.Int16x8.not)) {
   /**
       * @param {Int16x8} t An instance of Int16x8.
       * @return {Int16x8} New instance of Int16x8 with values of ~t
@@ -4168,7 +4168,7 @@ if (is.undefined(SIMD.Int16x8.not)) {
   };
 }
 
-if (is.undefined(SIMD.Int16x8.neg)) {
+if (ateos.isUndefined(SIMD.Int16x8.neg)) {
   /**
       * @param {Int16x8} t An instance of Int16x8.
       * @return {Int16x8} New instance of Int16x8 with values of -t
@@ -4186,7 +4186,7 @@ if (is.undefined(SIMD.Int16x8.neg)) {
   };
 }
 
-if (is.undefined(SIMD.Int16x8.add)) {
+if (ateos.isUndefined(SIMD.Int16x8.add)) {
   /**
       * @param {Int16x8} a An instance of Int16x8.
       * @param {Int16x8} b An instance of Int16x8.
@@ -4207,7 +4207,7 @@ if (is.undefined(SIMD.Int16x8.add)) {
   };
 }
 
-if (is.undefined(SIMD.Int16x8.sub)) {
+if (ateos.isUndefined(SIMD.Int16x8.sub)) {
   /**
       * @param {Int16x8} a An instance of Int16x8.
       * @param {Int16x8} b An instance of Int16x8.
@@ -4228,7 +4228,7 @@ if (is.undefined(SIMD.Int16x8.sub)) {
   };
 }
 
-if (is.undefined(SIMD.Int16x8.mul)) {
+if (ateos.isUndefined(SIMD.Int16x8.mul)) {
   /**
       * @param {Int16x8} a An instance of Int16x8.
       * @param {Int16x8} b An instance of Int16x8.
@@ -4256,7 +4256,7 @@ if (is.undefined(SIMD.Int16x8.mul)) {
   };
 }
 
-if (is.undefined(SIMD.Int16x8.swizzle)) {
+if (ateos.isUndefined(SIMD.Int16x8.swizzle)) {
   /**
       * @param {Int16x8} t An instance of Int16x8 to be swizzled.
       * @param {integer} s0 - Index in t for lane s0
@@ -4293,7 +4293,7 @@ if (is.undefined(SIMD.Int16x8.swizzle)) {
   };
 }
 
-if (is.undefined(SIMD.Int16x8.shuffle)) {
+if (ateos.isUndefined(SIMD.Int16x8.shuffle)) {
 
   const _i16x16 = new Int16Array(16);
 
@@ -4343,7 +4343,7 @@ if (is.undefined(SIMD.Int16x8.shuffle)) {
   };
 }
 
-if (is.undefined(SIMD.Int16x8.addSaturate)) {
+if (ateos.isUndefined(SIMD.Int16x8.addSaturate)) {
   /**
       * @param {Int16x8} a An instance of Int16x8.
       * @param {Int16x8} b An instance of Int16x8.
@@ -4364,7 +4364,7 @@ if (is.undefined(SIMD.Int16x8.addSaturate)) {
   };
 }
 
-if (is.undefined(SIMD.Int16x8.subSaturate)) {
+if (ateos.isUndefined(SIMD.Int16x8.subSaturate)) {
   /**
       * @param {Int16x8} a An instance of Int16x8.
       * @param {Int16x8} b An instance of Int16x8.
@@ -4385,7 +4385,7 @@ if (is.undefined(SIMD.Int16x8.subSaturate)) {
   };
 }
 
-if (is.undefined(SIMD.Int16x8.select)) {
+if (ateos.isUndefined(SIMD.Int16x8.select)) {
   /**
       * @param {Bool16x8} t Selector mask. An instance of Bool16x8
       * @param {Int16x8} trueValue Pick lane from here if corresponding
@@ -4427,7 +4427,7 @@ if (is.undefined(SIMD.Int16x8.select)) {
   };
 }
 
-if (is.undefined(SIMD.Int16x8.selectBits)) {
+if (ateos.isUndefined(SIMD.Int16x8.selectBits)) {
   /**
       * @param {Int16x8} t Selector mask. An instance of Int16x8
       * @param {Int16x8} trueValue Pick bit from here if corresponding
@@ -4447,7 +4447,7 @@ if (is.undefined(SIMD.Int16x8.selectBits)) {
   };
 }
 
-if (is.undefined(SIMD.Int16x8.equal)) {
+if (ateos.isUndefined(SIMD.Int16x8.equal)) {
   /**
       * @param {Int16x8} t An instance of Int16x8.
       * @param {Int16x8} other An instance of Int16x8.
@@ -4477,7 +4477,7 @@ if (is.undefined(SIMD.Int16x8.equal)) {
   };
 }
 
-if (is.undefined(SIMD.Int16x8.notEqual)) {
+if (ateos.isUndefined(SIMD.Int16x8.notEqual)) {
   /**
       * @param {Int16x8} t An instance of Int16x8.
       * @param {Int16x8} other An instance of Int16x8.
@@ -4507,7 +4507,7 @@ if (is.undefined(SIMD.Int16x8.notEqual)) {
   };
 }
 
-if (is.undefined(SIMD.Int16x8.greaterThan)) {
+if (ateos.isUndefined(SIMD.Int16x8.greaterThan)) {
   /**
       * @param {Int16x8} t An instance of Int16x8.
       * @param {Int16x8} other An instance of Int16x8.
@@ -4537,7 +4537,7 @@ if (is.undefined(SIMD.Int16x8.greaterThan)) {
   };
 }
 
-if (is.undefined(SIMD.Int16x8.greaterThanOrEqual)) {
+if (ateos.isUndefined(SIMD.Int16x8.greaterThanOrEqual)) {
   /**
       * @param {Int16x8} t An instance of Int16x8.
       * @param {Int16x8} other An instance of Int16x8.
@@ -4567,7 +4567,7 @@ if (is.undefined(SIMD.Int16x8.greaterThanOrEqual)) {
   };
 }
 
-if (is.undefined(SIMD.Int16x8.lessThan)) {
+if (ateos.isUndefined(SIMD.Int16x8.lessThan)) {
   /**
       * @param {Int16x8} t An instance of Int16x8.
       * @param {Int16x8} other An instance of Int16x8.
@@ -4597,7 +4597,7 @@ if (is.undefined(SIMD.Int16x8.lessThan)) {
   };
 }
 
-if (is.undefined(SIMD.Int16x8.lessThanOrEqual)) {
+if (ateos.isUndefined(SIMD.Int16x8.lessThanOrEqual)) {
   /**
       * @param {Int16x8} t An instance of Int16x8.
       * @param {Int16x8} other An instance of Int16x8.
@@ -4627,7 +4627,7 @@ if (is.undefined(SIMD.Int16x8.lessThanOrEqual)) {
   };
 }
 
-if (is.undefined(SIMD.Int16x8.shiftLeftByScalar)) {
+if (ateos.isUndefined(SIMD.Int16x8.shiftLeftByScalar)) {
   /**
       * @param {Int16x8} a An instance of Int16x8.
       * @param {integer} bits Bit count to shift by.
@@ -4650,7 +4650,7 @@ if (is.undefined(SIMD.Int16x8.shiftLeftByScalar)) {
   };
 }
 
-if (is.undefined(SIMD.Int16x8.shiftRightLogicalByScalar)) {
+if (ateos.isUndefined(SIMD.Int16x8.shiftRightLogicalByScalar)) {
   /**
       * @param {Int16x8} a An instance of Int16x8.
       * @param {integer} bits Bit count to shift by.
@@ -4673,7 +4673,7 @@ if (is.undefined(SIMD.Int16x8.shiftRightLogicalByScalar)) {
   };
 }
 
-if (is.undefined(SIMD.Int16x8.shiftRightArithmeticByScalar)) {
+if (ateos.isUndefined(SIMD.Int16x8.shiftRightArithmeticByScalar)) {
   /**
       * @param {Int16x8} a An instance of Int16x8.
       * @param {integer} bits Bit count to shift by.
@@ -4696,7 +4696,7 @@ if (is.undefined(SIMD.Int16x8.shiftRightArithmeticByScalar)) {
   };
 }
 
-if (is.undefined(SIMD.Int16x8.load)) {
+if (ateos.isUndefined(SIMD.Int16x8.load)) {
   /**
       * @param {Typed array} tarray An instance of a typed array.
       * @param {Number} index An instance of Number.
@@ -4727,7 +4727,7 @@ if (is.undefined(SIMD.Int16x8.load)) {
   };
 }
 
-if (is.undefined(SIMD.Int16x8.store)) {
+if (ateos.isUndefined(SIMD.Int16x8.store)) {
   /**
       * @param {Typed array} tarray An instance of a typed array.
       * @param {Number} index An instance of Number.
@@ -4766,7 +4766,7 @@ if (is.undefined(SIMD.Int16x8.store)) {
   };
 }
 
-if (is.undefined(SIMD.Int8x16.and)) {
+if (ateos.isUndefined(SIMD.Int8x16.and)) {
   /**
       * @param {Int8x16} a An instance of Int8x16.
       * @param {Int8x16} b An instance of Int8x16.
@@ -4795,7 +4795,7 @@ if (is.undefined(SIMD.Int8x16.and)) {
   };
 }
 
-if (is.undefined(SIMD.Int8x16.or)) {
+if (ateos.isUndefined(SIMD.Int8x16.or)) {
   /**
       * @param {Int8x16} a An instance of Int8x16.
       * @param {Int8x16} b An instance of Int8x16.
@@ -4824,7 +4824,7 @@ if (is.undefined(SIMD.Int8x16.or)) {
   };
 }
 
-if (is.undefined(SIMD.Int8x16.xor)) {
+if (ateos.isUndefined(SIMD.Int8x16.xor)) {
   /**
       * @param {Int8x16} a An instance of Int8x16.
       * @param {Int8x16} b An instance of Int8x16.
@@ -4853,7 +4853,7 @@ if (is.undefined(SIMD.Int8x16.xor)) {
   };
 }
 
-if (is.undefined(SIMD.Int8x16.not)) {
+if (ateos.isUndefined(SIMD.Int8x16.not)) {
   /**
       * @param {Int8x16} t An instance of Int8x16.
       * @return {Int8x16} New instance of Int8x16 with values of ~t
@@ -4879,7 +4879,7 @@ if (is.undefined(SIMD.Int8x16.not)) {
   };
 }
 
-if (is.undefined(SIMD.Int8x16.neg)) {
+if (ateos.isUndefined(SIMD.Int8x16.neg)) {
   /**
       * @param {Int8x16} t An instance of Int8x16.
       * @return {Int8x16} New instance of Int8x16 with values of -t
@@ -4905,7 +4905,7 @@ if (is.undefined(SIMD.Int8x16.neg)) {
   };
 }
 
-if (is.undefined(SIMD.Int8x16.add)) {
+if (ateos.isUndefined(SIMD.Int8x16.add)) {
   /**
       * @param {Int8x16} a An instance of Int8x16.
       * @param {Int8x16} b An instance of Int8x16.
@@ -4934,7 +4934,7 @@ if (is.undefined(SIMD.Int8x16.add)) {
   };
 }
 
-if (is.undefined(SIMD.Int8x16.sub)) {
+if (ateos.isUndefined(SIMD.Int8x16.sub)) {
   /**
       * @param {Int8x16} a An instance of Int8x16.
       * @param {Int8x16} b An instance of Int8x16.
@@ -4963,7 +4963,7 @@ if (is.undefined(SIMD.Int8x16.sub)) {
   };
 }
 
-if (is.undefined(SIMD.Int8x16.mul)) {
+if (ateos.isUndefined(SIMD.Int8x16.mul)) {
   /**
       * @param {Int8x16} a An instance of Int8x16.
       * @param {Int8x16} b An instance of Int8x16.
@@ -5007,7 +5007,7 @@ if (is.undefined(SIMD.Int8x16.mul)) {
   };
 }
 
-if (is.undefined(SIMD.Int8x16.swizzle)) {
+if (ateos.isUndefined(SIMD.Int8x16.swizzle)) {
   /**
       * @param {Int8x16} t An instance of Int8x16 to be swizzled.
       * @param {integer} s0 - Index in t for lane s0
@@ -5071,7 +5071,7 @@ if (is.undefined(SIMD.Int8x16.swizzle)) {
   };
 }
 
-if (is.undefined(SIMD.Int8x16.shuffle)) {
+if (ateos.isUndefined(SIMD.Int8x16.shuffle)) {
 
   const _i8x32 = new Int8Array(32);
 
@@ -5156,7 +5156,7 @@ if (is.undefined(SIMD.Int8x16.shuffle)) {
   };
 }
 
-if (is.undefined(SIMD.Int8x16.addSaturate)) {
+if (ateos.isUndefined(SIMD.Int8x16.addSaturate)) {
   /**
       * @param {Int8x16} a An instance of Int8x16.
       * @param {Int8x16} b An instance of Int8x16.
@@ -5177,7 +5177,7 @@ if (is.undefined(SIMD.Int8x16.addSaturate)) {
   };
 }
 
-if (is.undefined(SIMD.Int8x16.subSaturate)) {
+if (ateos.isUndefined(SIMD.Int8x16.subSaturate)) {
   /**
       * @param {Int8x16} a An instance of Int8x16.
       * @param {Int8x16} b An instance of Int8x16.
@@ -5198,7 +5198,7 @@ if (is.undefined(SIMD.Int8x16.subSaturate)) {
   };
 }
 
-if (is.undefined(SIMD.Int8x16.sumOfAbsoluteDifferences)) {
+if (ateos.isUndefined(SIMD.Int8x16.sumOfAbsoluteDifferences)) {
   /**
       * @param {Int8x16} a An instance of Int8x16.
       * @param {Int8x16} b An instance of Int8x16.
@@ -5243,7 +5243,7 @@ if (is.undefined(SIMD.Int8x16.sumOfAbsoluteDifferences)) {
   };
 }
 
-if (is.undefined(SIMD.Int8x16.select)) {
+if (ateos.isUndefined(SIMD.Int8x16.select)) {
   /**
       * @param {Bool8x16} t Selector mask. An instance of Bool8x16
       * @param {Int8x16} trueValue Pick lane from here if corresponding
@@ -5309,7 +5309,7 @@ if (is.undefined(SIMD.Int8x16.select)) {
   };
 }
 
-if (is.undefined(SIMD.Int8x16.selectBits)) {
+if (ateos.isUndefined(SIMD.Int8x16.selectBits)) {
   /**
       * @param {Int8x16} t Selector mask. An instance of Int8x16
       * @param {Int8x16} trueValue Pick bit from here if corresponding
@@ -5329,7 +5329,7 @@ if (is.undefined(SIMD.Int8x16.selectBits)) {
   };
 }
 
-if (is.undefined(SIMD.Int8x16.equal)) {
+if (ateos.isUndefined(SIMD.Int8x16.equal)) {
   /**
       * @param {Int8x16} t An instance of Int8x16.
       * @param {Int8x16} other An instance of Int8x16.
@@ -5376,7 +5376,7 @@ if (is.undefined(SIMD.Int8x16.equal)) {
   };
 }
 
-if (is.undefined(SIMD.Int8x16.notEqual)) {
+if (ateos.isUndefined(SIMD.Int8x16.notEqual)) {
   /**
       * @param {Int8x16} t An instance of Int8x16.
       * @param {Int8x16} other An instance of Int8x16.
@@ -5423,7 +5423,7 @@ if (is.undefined(SIMD.Int8x16.notEqual)) {
   };
 }
 
-if (is.undefined(SIMD.Int8x16.greaterThan)) {
+if (ateos.isUndefined(SIMD.Int8x16.greaterThan)) {
   /**
       * @param {Int8x16} t An instance of Int8x16.
       * @param {Int8x16} other An instance of Int8x16.
@@ -5470,7 +5470,7 @@ if (is.undefined(SIMD.Int8x16.greaterThan)) {
   };
 }
 
-if (is.undefined(SIMD.Int8x16.greaterThanOrEqual)) {
+if (ateos.isUndefined(SIMD.Int8x16.greaterThanOrEqual)) {
   /**
       * @param {Int8x16} t An instance of Int8x16.
       * @param {Int8x16} other An instance of Int8x16.
@@ -5517,7 +5517,7 @@ if (is.undefined(SIMD.Int8x16.greaterThanOrEqual)) {
   };
 }
 
-if (is.undefined(SIMD.Int8x16.lessThan)) {
+if (ateos.isUndefined(SIMD.Int8x16.lessThan)) {
   /**
       * @param {Int8x16} t An instance of Int8x16.
       * @param {Int8x16} other An instance of Int8x16.
@@ -5564,7 +5564,7 @@ if (is.undefined(SIMD.Int8x16.lessThan)) {
   };
 }
 
-if (is.undefined(SIMD.Int8x16.lessThanOrEqual)) {
+if (ateos.isUndefined(SIMD.Int8x16.lessThanOrEqual)) {
   /**
       * @param {Int8x16} t An instance of Int8x16.
       * @param {Int8x16} other An instance of Int8x16.
@@ -5611,7 +5611,7 @@ if (is.undefined(SIMD.Int8x16.lessThanOrEqual)) {
   };
 }
 
-if (is.undefined(SIMD.Int8x16.shiftLeftByScalar)) {
+if (ateos.isUndefined(SIMD.Int8x16.shiftLeftByScalar)) {
   /**
       * @param {Int8x16} a An instance of Int8x16.
       * @param {integer} bits Bit count to shift by.
@@ -5643,7 +5643,7 @@ if (is.undefined(SIMD.Int8x16.shiftLeftByScalar)) {
   };
 }
 
-if (is.undefined(SIMD.Int8x16.shiftRightLogicalByScalar)) {
+if (ateos.isUndefined(SIMD.Int8x16.shiftRightLogicalByScalar)) {
   /**
       * @param {Int8x16} a An instance of Int8x16.
       * @param {integer} bits Bit count to shift by.
@@ -5675,7 +5675,7 @@ if (is.undefined(SIMD.Int8x16.shiftRightLogicalByScalar)) {
   };
 }
 
-if (is.undefined(SIMD.Int8x16.shiftRightArithmeticByScalar)) {
+if (ateos.isUndefined(SIMD.Int8x16.shiftRightArithmeticByScalar)) {
   /**
       * @param {Int8x16} a An instance of Int8x16.
       * @param {integer} bits Bit count to shift by.
@@ -5707,7 +5707,7 @@ if (is.undefined(SIMD.Int8x16.shiftRightArithmeticByScalar)) {
   };
 }
 
-if (is.undefined(SIMD.Int8x16.load)) {
+if (ateos.isUndefined(SIMD.Int8x16.load)) {
   /**
       * @param {Typed array} tarray An instance of a typed array.
       * @param {Number} index An instance of Number.
@@ -5740,7 +5740,7 @@ if (is.undefined(SIMD.Int8x16.load)) {
   };
 }
 
-if (is.undefined(SIMD.Int8x16.store)) {
+if (ateos.isUndefined(SIMD.Int8x16.store)) {
   /**
       * @param {Typed array} tarray An instance of a typed array.
       * @param {Number} index An instance of Number.

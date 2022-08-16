@@ -117,7 +117,7 @@ const excludedSelfInspectors = [ateos, style.none, style.color, style.inline, st
 
 // Some special object are better written down when substituted by something else
 const specialObjectSubstitution = (object, runtime, options) => {
-  if (!is.function(object.constructor)) {
+  if (!ateos.isFunction(object.constructor)) {
     // Some objects have no constructor, e.g.: Object.create(null)
     //console.error( object ) ;
     return;
@@ -182,7 +182,7 @@ const specialObjectSubstitution = (object, runtime, options) => {
     return object.toString();
   }
 
-  if (options.useInspect && !excludedSelfInspectors.includes(object) && is.function(object.inspect)) {
+  if (options.useInspect && !excludedSelfInspectors.includes(object) && ateos.isFunction(object.inspect)) {
     return object.inspect();
   }
 };
@@ -236,14 +236,14 @@ const inspect_ = (runtime, options, obj) => {
 
   let type;
   if (options.native) {
-    type = is.object(obj) && options.asObject ? "object" : typeof obj;
-  } else if (options.asObject && !is.primitive(obj)) {
+    type = ateos.isObject(obj) && options.asObject ? "object" : typeof obj;
+  } else if (options.asObject && !ateos.isPrimitive(obj)) {
     type = "object";
   } else {
     type = ateos.typeOf(obj);
   }
 
-  const isNamespace = is.namespace(obj);
+  const isNamespace = ateos.isNamespace(obj);
   if (!options.native && isNamespace) {
     type = "namespace";
   } else if (type === "function" && isNamespace) {
@@ -258,7 +258,7 @@ const inspect_ = (runtime, options, obj) => {
     return "";
   }
 
-  if (!is.undefined(runtime.key)) {
+  if (!ateos.isUndefined(runtime.key)) {
     if (runtime.descriptor) {
       descriptorStr = [];
 
@@ -300,11 +300,11 @@ const inspect_ = (runtime, options, obj) => {
 
   const pre = runtime.noPre ? "" : indent + key;
 
-  if (is.undefined(obj)) {
+  if (ateos.isUndefined(obj)) {
     str += pre + options.style.constant("undefined") + descriptorStr + options.style.newline;
   } else if (obj === EMPTY) {
     str += pre + options.style.constant("[empty]") + descriptorStr + options.style.newline;
-  } else if (is.null(obj)) {
+  } else if (ateos.isNull(obj)) {
     str += pre + options.style.constant("null") + descriptorStr + options.style.newline;
   } else if (obj === false) {
     str += pre + options.style.constant("false") + descriptorStr + options.style.newline;
@@ -322,7 +322,7 @@ const inspect_ = (runtime, options, obj) => {
       str += `${pre}"${options.style.string(text.escape.control(obj))}"${
         options.noType ? "" : ` ${options.style.type("string")}${options.style.length(`(${obj.length})`)}`}${descriptorStr}${options.style.newline}`;
     }
-  } else if (is.buffer(obj)) {
+  } else if (ateos.isBuffer(obj)) {
     str += pre + options.style.inspect(obj.inspect()) +
             (options.noType ? "" : ` ${options.style.type("Buffer")}${options.style.length(`(${obj.length})`)}`) +
             descriptorStr + options.style.newline;
@@ -337,7 +337,7 @@ const inspect_ = (runtime, options, obj) => {
     }
 
     isArray = false;
-    if (is.array(obj)) {
+    if (ateos.isArray(obj)) {
       isArray = true;
       length = options.style.length(`(${obj.length})`);
     }
@@ -384,7 +384,7 @@ const inspect_ = (runtime, options, obj) => {
     if (isArray && options.noArrayProperty) {
       propertyList = [...Array(obj.length).keys()];
     } else {
-      if (isNamespace && is.propertyDefined(obj, "__proto__")) {
+      if (isNamespace && ateos.isPropertyDefined(obj, "__proto__")) {
         propertyList = ateos.util.keys(obj, { all: true });
       } else {
         propertyList = Object.getOwnPropertyNames(obj);
@@ -400,8 +400,8 @@ const inspect_ = (runtime, options, obj) => {
 
     if (options.protoBlackList && options.protoBlackList.has(proto)) {
       str += options.style.limit("[skip]") + options.style.newline;
-    } else if (!is.undefined(specialObject)) {
-      if (is.string(specialObject)) {
+    } else if (!ateos.isUndefined(specialObject)) {
+      if (ateos.isString(specialObject)) {
         str += `=> ${specialObject}${options.style.newline}`;
       } else {
         str += `=> ${inspect_(
@@ -542,20 +542,20 @@ const inspect = (obj, options = {}) => {
   options.styleName = options.style;
   if (!options.style) {
     options.style = defaultStyle;
-  } else if (is.string(options.style)) {
+  } else if (ateos.isString(options.style)) {
     options.style = style[options.style];
   }
   // else {
   //     options.style = Object.assign({}, defaultStyle, options.style);
   // }
 
-  if (is.undefined(options.depth)) {
+  if (ateos.isUndefined(options.depth)) {
     options.depth = 3;
   }
-  if (is.undefined(options.maxLength)) {
+  if (ateos.isUndefined(options.maxLength)) {
     options.maxLength = 250;
   }
-  if (is.undefined(options.outputMaxLength)) {
+  if (ateos.isUndefined(options.outputMaxLength)) {
     options.outputMaxLength = 64000;
   }
 

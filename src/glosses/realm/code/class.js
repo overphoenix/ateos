@@ -6,17 +6,17 @@ export default class XClass extends ateos.realm.code.Base {
   constructor(options) {
     super(options);
     this.superClassName = null;
-    if (!is.null(this.ast)) {
-      if (!is.null(this.ast.id)) {
+    if (!ateos.isNull(this.ast)) {
+      if (!ateos.isNull(this.ast.id)) {
         this.name = this.ast.id.name;
       }
 
-      if (!is.null(this.ast.superClass)) {
+      if (!ateos.isNull(this.ast.superClass)) {
         const node = this.ast.superClass;
         switch (node.type) {
           case "Identifier": {
             const globalObject = this.xModule.getGlobal(node.name);
-            if (!is.undefined(globalObject)) {
+            if (!ateos.isUndefined(globalObject)) {
               this.superClassName = globalObject.full;
             }
             break;
@@ -39,7 +39,7 @@ export default class XClass extends ateos.realm.code.Base {
 
   references() {
     super.references();
-    if (is.string(this.superClassName)) {
+    if (ateos.isString(this.superClassName)) {
       this._addReference(this.superClassName);
     }
     return this._references;

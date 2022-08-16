@@ -15,7 +15,7 @@ export default class RemoteStub {
   }
 
   get definition() {
-    if (is.null(this._def)) {
+    if (ateos.isNull(this._def)) {
       const origDef = this.iInstance[__.I_DEFINITION_SYMBOL];
       const def = this._def = new Definition();
 
@@ -60,7 +60,7 @@ export default class RemoteStub {
   }
 
   _processArgs(peer, args, isMethod) {
-    if (isMethod && is.array(args)) {
+    if (isMethod && ateos.isArray(args)) {
       for (let i = 0; i < args.length; ++i) {
         this._processObject(peer, args[i]);
       }

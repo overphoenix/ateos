@@ -5,7 +5,7 @@ const {
 export default (obj, options) => {
   let spaces;
   let EOL = "\n";
-  if (typeof options === "object" && !is.null(options)) {
+  if (typeof options === "object" && !ateos.isNull(options)) {
     if (options.spaces) {
       spaces = options.spaces;
     }

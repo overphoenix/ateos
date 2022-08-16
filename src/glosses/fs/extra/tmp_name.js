@@ -10,20 +10,20 @@ const defaultGenerator = () => `${process.pid}${ateos.text.random(12)}`;
 
 export default (fs) => {
   return async ({ tries = 3, template, tmpRootPath = osTmpDir, subDirs, prefix = "tmp-", nameGenerator = defaultGenerator, ext = "" } = {}) => {
-    if (is.nan(tries) || tries < 0) {
+    if (ateos.isNan(tries) || tries < 0) {
       throw new error.NotValidException("Invalid tries");
     }
 
-    if (is.string(template) && !template.match(TEMPLATE_PATTERN)) {
+    if (ateos.isString(template) && !template.match(TEMPLATE_PATTERN)) {
       throw new error.NotValidException("Invalid template provided");
     }
 
     for (let i = 0; i < tries; i++) {
-      if (is.string(subDirs)) {
+      if (ateos.isString(subDirs)) {
         return std.path.join(tmpRootPath, subDirs);
       }
 
-      if (is.string(template)) {
+      if (ateos.isString(template)) {
         return template.replace(TEMPLATE_PATTERN, ateos.text.random(6));
       }
 

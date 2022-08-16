@@ -48,12 +48,12 @@ export default class Netron extends ateos.AsyncEventEmitter {
 
   refContext(peerId, obj) {
     let stubs = this.stubManager.peerStubs.get(peerId);
-    if (is.undefined(stubs)) {
+    if (ateos.isUndefined(stubs)) {
       stubs = [];
       this.stubManager.peerStubs.set(peerId, stubs);
     }
     let stub = stubs.find((s) => s.instance === obj);
-    if (is.undefined(stub)) {
+    if (ateos.isUndefined(stub)) {
       stub = this.stubManager.createStub(obj);
       this.stubManager.addStub(stub);
       stubs.push(stub);
@@ -89,7 +89,7 @@ export default class Netron extends ateos.AsyncEventEmitter {
     // Call this first because it validate instance.
     const r = Reflection.from(instance);
 
-    if (is.null(ctxId)) {
+    if (ateos.isNull(ctxId)) {
       ctxId = instance.__proto__.constructor.name;
     }
     if (this.contexts.has(ctxId)) {
@@ -104,7 +104,7 @@ export default class Netron extends ateos.AsyncEventEmitter {
      */
   detachContext(ctxId, releaseOriginated = true) {
     const stub = this.contexts.get(ctxId);
-    if (is.undefined(stub)) {
+    if (ateos.isUndefined(stub)) {
       throw new error.NotExistsException(`Context '${ctxId}' not exists`);
     }
 
@@ -140,14 +140,14 @@ export default class Netron extends ateos.AsyncEventEmitter {
   }
 
   // setInterfaceTwin(ctxClassName, TwinClass) {
-  //     if (!is.class(TwinClass)) {
+  //     if (!ateos.isClass(TwinClass)) {
   //         throw new error.InvalidArgumentException("TwinClass should be a class");
   //     }
   //     if (!is.netronInterface(new TwinClass())) {
   //         throw new error.InvalidArgumentException("TwinClass should be extended from ateos.netron.Interface");
   //     }
   //     const Class = this._localTwins.get(ctxClassName);
-  //     if (!is.undefined(Class)) {
+  //     if (!ateos.isUndefined(Class)) {
   //         throw new error.ExistsException(`Twin for interface '${ctxClassName}' exists`);
   //     }
   //     this._localTwins.set(ctxClassName, TwinClass);
@@ -164,7 +164,7 @@ export default class Netron extends ateos.AsyncEventEmitter {
   //     const requests = util.arrify(request);
 
   //     for (let request of requests) {
-  //         if (is.string(request)) {
+  //         if (ateos.isString(request)) {
   //             request = {
   //                 id: request
   //             };
@@ -201,7 +201,7 @@ export default class Netron extends ateos.AsyncEventEmitter {
   }
 
   getPeer(something) {
-    if (is.nil(something) || something === this.peer) {
+    if (ateos.isNil(something) || something === this.peer) {
       return this.peer;
     } else if (is.netronOwnPeer(something)) {
       throw new error.UnknownException("Unknown own peer");
@@ -217,14 +217,14 @@ export default class Netron extends ateos.AsyncEventEmitter {
       id = something.id.toB58String();
     } else if (is.peerId(something)) {
       id = something.toB58String();
-    } else if (is.string(something)) { // base58
+    } else if (ateos.isString(something)) { // base58
       id = something;
     } else {
       throw new error.NotValidException(`Invalid type of peer identity: ${ateos.typeOf(something)}`);
     }
 
     const peer = this.peers.get(id);
-    if (is.undefined(peer)) {
+    if (ateos.isUndefined(peer)) {
       throw new error.UnknownException(`Unknown peer with id: '${id}'`);
     }
     return peer;
@@ -247,11 +247,11 @@ export default class Netron extends ateos.AsyncEventEmitter {
   // // }
 
   addTask({ name, task, ...options } = {}) {
-    if (is.class(task)) {
+    if (ateos.isClass(task)) {
       if (!(task.prototype instanceof ateos.task.IsomorphicTask)) {
         throw new error.NotValidException("Invalid task class. Task class should be inherited from ateos.task.IsomorphicTask");
       }
-    } else if (is.function(task)) {
+    } else if (ateos.isFunction(task)) {
       task = class extends ateos.task.IsomorphicTask {
         main(...args) {
           return task(...args);
@@ -278,12 +278,12 @@ export default class Netron extends ateos.AsyncEventEmitter {
   async runTask(peer, task) {
     // Normalize and validate tasks
     const tasks = util.arrify(task).map((val) => {
-      if (is.string(val)) {
+      if (ateos.isString(val)) {
         return {
           task: val
         };
-      } else if (is.object(val)) {
-        if (!is.string(val.task)) {
+      } else if (ateos.isObject(val)) {
+        if (!ateos.isString(val.task)) {
           throw new error.NotValidException("Missing task property");
         }
         return val;
@@ -317,7 +317,7 @@ export default class Netron extends ateos.AsyncEventEmitter {
           peer,
           args: util.arrify(t.args)
                 }); // eslint-disable-line
-        r = is.promise(observer.result)
+        r = ateos.isPromise(observer.result)
           ? observer.result
           : Promise.resolve(observer.result);
       } catch (err) {
@@ -346,7 +346,7 @@ export default class Netron extends ateos.AsyncEventEmitter {
 
   async emitSpecial(event, id, data) {
     let events = this._ownEvents.get(id);
-    if (is.undefined(events)) {
+    if (ateos.isUndefined(events)) {
       events = [event];
       this._ownEvents.set(id, events);
     } else {
@@ -357,7 +357,7 @@ export default class Netron extends ateos.AsyncEventEmitter {
     }
     for (; ;) {
       const eventName = events[0];
-      if (is.undefined(eventName)) {
+      if (ateos.isUndefined(eventName)) {
         break;
       }
       try {
@@ -367,7 +367,7 @@ export default class Netron extends ateos.AsyncEventEmitter {
         console.error(ateos.pretty.error(err));
       }
 
-      if (is.undefined(events.shift())) {
+      if (ateos.isUndefined(events.shift())) {
         break;
       }
     }

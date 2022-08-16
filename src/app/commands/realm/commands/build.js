@@ -1,6 +1,5 @@
 const {
-  app: { Subsystem, CliMainCommand },
-  is
+  app: { Subsystem, CliMainCommand }
 } = ateos;
 
 export default class extends Subsystem {
@@ -27,7 +26,7 @@ export default class extends Subsystem {
         cwd: process.cwd(),
         progress: false
       });
-      await r.observerNotifications("progress")
+      await r.observerNotifications("progress");
       r.notify(this, "progress", {
         text: "building"
       });
@@ -36,13 +35,13 @@ export default class extends Subsystem {
       });
 
       r.notify(this, "progress", {
-        text: `building complete`,
+        text: "building complete",
         status: "succeed"
       });
 
       return 0;
     } catch (err) {
-      if (!is.null(r)) {
+      if (!ateos.isNull(r)) {
         r.stopNotifications(err);
       } else {
         console.error(ateos.pretty.error(err));

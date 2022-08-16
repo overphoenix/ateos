@@ -18,10 +18,10 @@ class CustomEncodingBackend extends EncodingBackend {
 export default (DB) => {
   // eslint-disable-next-line func-style
   function Level(location, options, callback) {
-    if (is.function(options)) {
+    if (ateos.isFunction(options)) {
       callback = options;
     }
-    if (typeof options !== "object" || is.null(options)) {
+    if (typeof options !== "object" || ateos.isNull(options)) {
       options = {};
     }
 
@@ -29,7 +29,7 @@ export default (DB) => {
   }
 
   ["destroy", "repair"].forEach((m) => {
-    if (is.function(DB[m])) {
+    if (ateos.isFunction(DB[m])) {
       Level[m] = function (...args) {
         DB[m].apply(DB, args);
       };

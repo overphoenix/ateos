@@ -28,7 +28,7 @@ function base(ALPHABET: string): base.BaseConverter {
     const iFACTOR = Math.log(256) / Math.log(BASE); // log(256) / log(BASE), rounded up
 
     function encode(source: Buffer): string {
-        if (!is.buffer(source)) {
+        if (!ateos.isBuffer(source)) {
             throw new TypeError("Expected Buffer");
         }
         if (source.length === 0) {
@@ -85,7 +85,7 @@ function base(ALPHABET: string): base.BaseConverter {
     }
 
     function decodeUnsafe(source: string): Buffer | undefined {
-        if (!is.string(source)) {
+        if (!ateos.isString(source)) {
             throw new TypeError("Expected String");
         }
         if (source.length === 0) {

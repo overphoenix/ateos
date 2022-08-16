@@ -11,7 +11,7 @@ const getter = (obj) => (key) => key in obj ? obj[key] : noValue;
 export default class DefaultMap extends Map {
   constructor(factory, ...args) {
     super(...args);
-    if (!is.function(factory)) {
+    if (!ateos.isFunction(factory)) {
       // object
       if (!factory) {
         this.factory = noGetter;

@@ -253,7 +253,7 @@ describe("Generic", () => {
             };
             if (Object.prototype.toString(test) !== "[object foo]") {
                 Object.prototype.toString = function () { // eslint-disable-line no-extend-native
-                    if (typeof this === "object" && is.function(this[Symbol.toStringTag])) {
+                    if (typeof this === "object" && ateos.isFunction(this[Symbol.toStringTag])) {
                         return `[object ${this[Symbol.toStringTag]()}]`;
                     }
                     return originalObjectToString.call(this);

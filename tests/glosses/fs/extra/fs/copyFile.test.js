@@ -6,7 +6,7 @@ const {
 } = ateos;
 
 // Only availible in Node 8.5+
-if (is.function(fs.copyFile)) {
+if (ateos.isFunction(fs.copyFile)) {
     describe("fs.copyFile", () => {
         let TEST_DIR;
 

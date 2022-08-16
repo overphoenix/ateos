@@ -57,12 +57,12 @@ export default class BitSet {
      */
   constructor(nBitsOrKey) {
     let wordCount;
-    if (is.number(nBitsOrKey)) {
+    if (ateos.isNumber(nBitsOrKey)) {
       nBitsOrKey = nBitsOrKey || BITS_PER_INT; // default to 1 word
       wordCount = Math.ceil(nBitsOrKey / BITS_PER_INT);
       this.arr = new Uint32Array(wordCount);
       this.MAX_BIT = nBitsOrKey - 1;
-    } else if (is.undefined(nBitsOrKey)) {
+    } else if (ateos.isUndefined(nBitsOrKey)) {
       this.arr = [];
       this.MAX_BIT = Infinity;
     } else {
@@ -714,7 +714,7 @@ export default class BitSet {
     // TODO: is it allowed for a dynamic bitset?
     let newBS;
     const arr1 = this.arr;
-    if (is.number(bsOrIdx)) {
+    if (ateos.isNumber(bsOrIdx)) {
       const word = this._getWord(bsOrIdx);
       newBS = this.clone();
       if (word !== -1) {

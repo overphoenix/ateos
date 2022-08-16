@@ -1,7 +1,7 @@
 const { is } = ateos;
 
 export default function isFQDN(str, options) {
-  if (!is.string(str)) {
+  if (!ateos.isString(str)) {
     return false;
   }
   options = {

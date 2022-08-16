@@ -108,10 +108,10 @@ const onfield = function (tokens) {
         break;
 
       case ";":
-        if (is.null(field.name)) {
+        if (ateos.isNull(field.name)) {
           throw new Error("Missing field name");
         }
-        if (is.null(field.type)) {
+        if (ateos.isNull(field.type)) {
           throw new Error(`Missing type in message field: ${field.name}`);
         }
         if (field.tag === -1) {
@@ -164,7 +164,7 @@ const onoptionMap = function (tokens) {
 
     switch (tokens[0]) {
       case ":":
-        if (!is.undefined(map[key])) {
+        if (!ateos.isUndefined(map[key])) {
           throw new Error(`Duplicate option map key ${key}`);
         }
 
@@ -188,10 +188,10 @@ const onoptionMap = function (tokens) {
         tokens.shift();
         value = onoptionMap(tokens);
 
-        if (is.undefined(map[key])) {
+        if (ateos.isUndefined(map[key])) {
           map[key] = [];
         }
-        if (!is.array(map[key])) {
+        if (!ateos.isArray(map[key])) {
           throw new Error(`Duplicate option map key ${key}`);
         }
 
@@ -251,7 +251,7 @@ const onoption = function (tokens) {
       }
       case "=":
         tokens.shift();
-        if (is.null(name)) {
+        if (ateos.isNull(name)) {
           throw new Error(`Expected key for option with value: ${tokens[0]}`);
         }
         value = parse(tokens.shift());
@@ -596,7 +596,7 @@ const onrpc = function (tokens) {
 
     if (tokens[0] === "option") {
       const opt = onoption(tokens);
-      if (!is.undefined(rpc.options[opt.name])) {
+      if (!ateos.isUndefined(rpc.options[opt.name])) {
         throw new Error(`Duplicate option ${opt.name}`);
       }
       rpc.options[opt.name] = opt.value;
@@ -647,7 +647,7 @@ const onservice = function (tokens) {
     switch (tokens[0]) {
       case "option": {
         const opt = onoption(tokens);
-        if (!is.undefined(service.options[opt.name])) {
+        if (!ateos.isUndefined(service.options[opt.name])) {
           throw new Error(`Duplicate option ${opt.name}`);
         }
         service.options[opt.name] = opt.value;

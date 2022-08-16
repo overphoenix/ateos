@@ -1,7 +1,5 @@
 const {
   data: { mpak },
-  // crypto: { Identity },
-  // p2p: { PeerInfo },
   netron: { Definition, Definitions, Reference }
 } = ateos;
 
@@ -47,15 +45,5 @@ s.register(109, Definition, (obj, buf) => {
   }
   return defs;
 });
-// TODO
-// .register(106, PeerInfo, (obj, buf) => {
-
-// }, (buf) => {
-
-// }).register(106, Identity, (obj, buf) => {
-
-// }, (buf) => {
-
-// });
 
 export default s;

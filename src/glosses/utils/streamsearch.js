@@ -15,7 +15,7 @@ export default class StreamSearch extends ateos.EventEmitter {
 
     let needle = _needle;
 
-    if (is.string(needle)) {
+    if (ateos.isString(needle)) {
       needle = Buffer.from(needle);
     }
 
@@ -52,7 +52,7 @@ export default class StreamSearch extends ateos.EventEmitter {
   }
 
   push(_chunk, pos) {
-    const chunk = is.buffer(_chunk) ? _chunk : Buffer.from(_chunk, "binary");
+    const chunk = ateos.isBuffer(_chunk) ? _chunk : Buffer.from(_chunk, "binary");
     this._bufpos = pos || 0;
     let r;
     const len = chunk.length;

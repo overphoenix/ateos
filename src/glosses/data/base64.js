@@ -129,7 +129,7 @@ export const encodeVLQ = (aValue) => {
 };
 
 export const encode = (str, { buffer = false } = {}) => {
-  if (!is.buffer(str)) {
+  if (!ateos.isBuffer(str)) {
     str = Buffer.from(str);
   }
   if (!buffer) {

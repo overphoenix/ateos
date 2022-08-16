@@ -6,11 +6,11 @@ const {
   platformGetList
 } = ateos.getPrivate(ateos.process);
 
-const cols = is.darwin ? [3, 8] : is.linux ? [4, 6] : [1, 4];
+const cols = ateos.isDarwin ? [3, 8] : ateos.isLinux ? [4, 6] : [1, 4];
 const isProtocol = (x) => /^\s*(tcp|udp)/i.test(x);
 
 const parsePid = (input) => {
-  if (!is.string(input)) {
+  if (!ateos.isString(input)) {
     return null;
   }
 
@@ -42,7 +42,7 @@ const getList = async () => {
 };
 
 export const getPidByPort = (input) => {
-  if (!is.number(input)) {
+  if (!ateos.isNumber(input)) {
     return Promise.reject(new TypeError(`Expected a number, got ${ateos.typeOf(input)}`));
   }
 
@@ -50,7 +50,7 @@ export const getPidByPort = (input) => {
 };
 
 export const getPidsByPorts = async (input) => {
-  if (!is.array(input)) {
+  if (!ateos.isArray(input)) {
     return Promise.reject(new TypeError(`Expected an array, got ${ateos.typeOf(input)}`));
   }
 

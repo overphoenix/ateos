@@ -5,7 +5,7 @@ const ordering = ["year", "quarter", "month", "week", "day", "hour", "minute", "
 
 const isDurationValid = (m) => {
   for (const key in m) {
-    if (!(ordering.includes(key) && (is.nil(m[key]) || !isNaN(m[key])))) {
+    if (!(ordering.includes(key) && (ateos.isNil(m[key]) || !isNaN(m[key])))) {
       return false;
     }
   }
@@ -144,10 +144,10 @@ const relativeTime = (posNegDuration, withoutSuffix, locale) => {
 
 // This function allows you to set the rounding function for relative time strings
 export const getSetRelativeTimeRounding = (roundingFunction) => {
-  if (is.undefined(roundingFunction)) {
+  if (ateos.isUndefined(roundingFunction)) {
     return round;
   }
-  if (is.function(roundingFunction)) {
+  if (ateos.isFunction(roundingFunction)) {
     round = roundingFunction;
     return true;
   }
@@ -156,10 +156,10 @@ export const getSetRelativeTimeRounding = (roundingFunction) => {
 
 // This function allows you to set a threshold for relative time strings
 export const getSetRelativeTimeThreshold = (threshold, limit) => {
-  if (is.undefined(thresholds[threshold])) {
+  if (ateos.isUndefined(thresholds[threshold])) {
     return false;
   }
-  if (is.undefined(limit)) {
+  if (ateos.isUndefined(limit)) {
     return thresholds[threshold];
   }
   thresholds[threshold] = limit;
@@ -185,7 +185,7 @@ export class Duration {
         d: input._days,
         M: input._months
       };
-    } else if (is.number(input)) {
+    } else if (ateos.isNumber(input)) {
       duration = {};
       if (key) {
         duration[key] = input;
@@ -221,9 +221,9 @@ export class Duration {
         m: parseIso(match[7], sign),
         s: parseIso(match[8], sign)
       };
-    } else if (is.nil(duration)) {
+    } else if (ateos.isNil(duration)) {
       duration = {};
-    } else if (is.object(duration) && ("from" in duration || "to" in duration)) {
+    } else if (ateos.isObject(duration) && ("from" in duration || "to" in duration)) {
       const { createLocal } = __.create;
       diffRes = exDatesDifference(createLocal(duration.from), createLocal(duration.to));
 
@@ -267,7 +267,7 @@ export class Duration {
 
     this._bubble();
 
-    if (isDuration(input) && is.propertyOwned(input, "_locale")) {
+    if (isDuration(input) && ateos.isPropertyOwned(input, "_locale")) {
       this._locale = input._locale;
     }
   }
@@ -476,11 +476,11 @@ export class Duration {
   }
 
   locale(key) {
-    if (is.undefined(key)) {
+    if (ateos.isUndefined(key)) {
       return this._locale._abbr;
     }
     const newLocaleData = __.locale.getLocale(key);
-    if (is.exist(newLocaleData)) {
+    if (ateos.isExist(newLocaleData)) {
       this._locale = newLocaleData;
     }
     return this;

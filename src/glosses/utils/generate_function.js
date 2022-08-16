@@ -68,7 +68,7 @@ for (let i = 0; i < RESERVED.length; i++) {
 }
 
 const isVariable = function (name) {
-  return is.property(name) && !RESERVED_MAP.hasOwnProperty(name);
+  return ateos.isProperty(name) && !RESERVED_MAP.hasOwnProperty(name);
 };
 
 const formats = {
@@ -155,7 +155,7 @@ const genfun = function () {
 
     name = `${name}`;
 
-    if (is.property(name)) {
+    if (ateos.isProperty(name)) {
       return (obj ? `${obj}.${name}` : name);
     }
     return obj ? `${obj}[${JSON.stringify(name)}]` : JSON.stringify(name);

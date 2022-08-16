@@ -5,7 +5,7 @@ export default (fs) => {
   } = ateos;
     
   return (file, data, encoding, callback) => {
-    if (is.function(encoding)) {
+    if (ateos.isFunction(encoding)) {
       callback = encoding;
       encoding = "utf8";
     }

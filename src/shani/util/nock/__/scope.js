@@ -146,7 +146,7 @@ export default class Scope extends ateos.std.events.EventEmitter {
         }
         return candidate;
       };
-    } else if (is.function(args[0])) {
+    } else if (ateos.isFunction(args[0])) {
       return args[0];
     }
   }
@@ -184,8 +184,8 @@ export default class Scope extends ateos.std.events.EventEmitter {
   }
 
   persist(flag) {
-    this._persist = is.nil(flag) ? true : flag;
-    if (!is.boolean(this._persist)) {
+    this._persist = ateos.isNil(flag) ? true : flag;
+    if (!ateos.isBoolean(this._persist)) {
       throw new Error("Invalid arguments: argument should be a boolean");
     }
     return this;

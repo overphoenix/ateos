@@ -215,7 +215,8 @@ export default class extends Subsystem {
 
       return 0;
     } catch (err) {
-      ateos.log.bright.red.error.noLocate(err);
+      console.log(err);
+      // ateos.log.bright.red.error.noLocate(err);
       return 1;
     }
   }

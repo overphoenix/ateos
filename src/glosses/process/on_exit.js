@@ -59,7 +59,7 @@ if (process.platform === "linux") {
 
 let EE = require("events");
 /* istanbul ignore if */
-if (!is.function(EE)) {
+if (!ateos.isFunction(EE)) {
   EE = EE.EventEmitter;
 }
 
@@ -153,7 +153,7 @@ const processReallyExit = function (code) {
 
 const processEmit = function (ev, arg) {
   if (ev === "exit") {
-    if (!is.undefined(arg)) {
+    if (!ateos.isUndefined(arg)) {
       process.exitCode = arg;
     }
     const ret = originalProcessEmit.apply(this, arguments);
@@ -193,7 +193,7 @@ const load = function () {
 };
 
 const onExit = function (cb, opts) {
-  if (!is.function(cb)) {
+  if (!ateos.isFunction(cb)) {
     throw new ateos.error.InvalidArgumentException("A callback must be provided for exit handler");
   }
 

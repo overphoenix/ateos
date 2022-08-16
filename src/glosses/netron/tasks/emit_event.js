@@ -2,7 +2,7 @@ export default class EmitEventTask extends ateos.task.Task {
   main({ peer, args: taskArgs }) {
     const [eventName, ...args] = taskArgs;
     const handlers = peer._remoteEvents.get(eventName);
-    if (!ateos.is.undefined(handlers)) {
+    if (!ateos.ateos.isUndefined(handlers)) {
       const promises = [];
       for (const fn of handlers) {
         try {

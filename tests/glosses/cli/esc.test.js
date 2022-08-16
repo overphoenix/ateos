@@ -21,13 +21,13 @@ describe("cli", "esc", () => {
         });
 
         it("should make groups not be enumerable", () => {
-            assert.isTrue(!is.undefined(Object.getOwnPropertyDescriptor(esc, "modifier")));
+            assert.isTrue(!ateos.isUndefined(Object.getOwnPropertyDescriptor(esc, "modifier")));
             assert.isTrue(!Object.keys(esc).includes("modifier"));
         });
 
 
         it("groups should not be enumerable", () => {
-            assert.isTrue(!is.undefined(Object.getOwnPropertyDescriptor(esc, "modifier")));
+            assert.isTrue(!ateos.isUndefined(Object.getOwnPropertyDescriptor(esc, "modifier")));
             assert.isTrue(!Object.keys(esc).includes("modifier"));
         });
 

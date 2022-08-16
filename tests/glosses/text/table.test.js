@@ -821,7 +821,7 @@ describe("Table", () => {
         };
 
         const checkExpectation = (actualCell, expectedCell, x, y, actualTable) => {
-            if (is.string(expectedCell)) {
+            if (ateos.isString(expectedCell)) {
                 expectedCell = { content: expectedCell };
             }
             const address = `(${y},${x})`;
@@ -851,7 +851,7 @@ describe("Table", () => {
         const checkLayout = (actualTable, expectedTable) => {
             expectedTable.forEach((expectedRow, y) => {
                 expectedRow.forEach((expectedCell, x) => {
-                    if (!is.null(expectedCell)) {
+                    if (!ateos.isNull(expectedCell)) {
                         const actualCell = findCell(actualTable, x, y);
                         checkExpectation(actualCell, expectedCell, x, y, actualTable);
                     }

@@ -68,7 +68,7 @@ const TABLE = new Int32Array([
 ]);
 
 const _crc32 = (buf, previous) => {
-  if (!ateos.is.buffer(buf)) {
+  if (!ateos.ateos.isBuffer(buf)) {
     buf = Buffer.from(buf);
   }
 

@@ -57,9 +57,9 @@ let allowNetConnect;
  * nock.enableNetConnect(/(google|amazon)/);
  */
 add.enableNetConnect = (matcher) => {
-  if (is.string(matcher)) {
+  if (ateos.isString(matcher)) {
     allowNetConnect = new RegExp(matcher);
-  } else if (is.object(matcher) && is.function(matcher.test)) {
+  } else if (ateos.isObject(matcher) && ateos.isFunction(matcher.test)) {
     allowNetConnect = matcher;
   } else {
     allowNetConnect = /.*/;
@@ -283,7 +283,7 @@ add.isActive = () => {
 
   //  If ClientRequest has been overwritten by Nock then originalClientRequest is not undefined.
   //  This means that Nock has been activated.
-  return !is.undefined(originalClientRequest);
+  return !ateos.isUndefined(originalClientRequest);
 
 };
 
@@ -329,7 +329,7 @@ add.activate = () => {
     let req;
     let res;
 
-    if (is.string(options)) {
+    if (ateos.isString(options)) {
       options = parse(options);
     }
     options.proto = proto;

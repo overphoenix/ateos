@@ -90,22 +90,22 @@ describe("assertion", "globalErr", () => {
             undefined
         ];
 
-        if (is.function(Symbol)) {
+        if (ateos.isFunction(Symbol)) {
             vals.push(Symbol());
         }
-        if (is.function(Map)) {
+        if (ateos.isFunction(Map)) {
             vals.push(new Map());
         }
-        if (is.function(WeakMap)) {
+        if (ateos.isFunction(WeakMap)) {
             vals.push(new WeakMap());
         }
-        if (is.function(Set)) {
+        if (ateos.isFunction(Set)) {
             vals.push(new Set());
         }
-        if (is.function(WeakSet)) {
+        if (ateos.isFunction(WeakSet)) {
             vals.push(new WeakSet());
         }
-        if (is.function(Promise)) {
+        if (ateos.isFunction(Promise)) {
             vals.push(new Promise(noop));
         }
 
@@ -125,22 +125,22 @@ describe("assertion", "globalErr", () => {
             null
         ];
 
-        if (is.function(Symbol)) {
+        if (ateos.isFunction(Symbol)) {
             vals.push(Symbol());
         }
-        if (is.function(Map)) {
+        if (ateos.isFunction(Map)) {
             vals.push(new Map());
         }
-        if (is.function(WeakMap)) {
+        if (ateos.isFunction(WeakMap)) {
             vals.push(new WeakMap());
         }
-        if (is.function(Set)) {
+        if (ateos.isFunction(Set)) {
             vals.push(new Set());
         }
-        if (is.function(WeakSet)) {
+        if (ateos.isFunction(WeakSet)) {
             vals.push(new WeakSet());
         }
-        if (is.function(Promise)) {
+        if (ateos.isFunction(Promise)) {
             vals.push(new Promise(noop));
         }
 
@@ -155,7 +155,7 @@ describe("assertion", "globalErr", () => {
 
     describe("skipStackTest", () => {
         // Skip tests if `Error.captureStackTrace` is unsupported
-        if (is.undefined(Error.captureStackTrace)) {
+        if (ateos.isUndefined(Error.captureStackTrace)) {
             return;
         }
 
@@ -163,7 +163,7 @@ describe("assertion", "globalErr", () => {
             throw Error();
         } catch (err) {
             // Skip tests if `err.stack` is unsupported
-            if (is.undefined(err.stack)) {
+            if (ateos.isUndefined(err.stack)) {
                 return;
             }
         }

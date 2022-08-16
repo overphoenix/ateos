@@ -14,12 +14,12 @@ const {
   crypto
 } = ateos;
 
-if (is.undefined(BigInteger)) {
+if (ateos.isUndefined(BigInteger)) {
   var BigInteger = crypto.jsbn.BigInteger;
 }
 
 const ByteBuffer = crypto.util.ByteBuffer;
-const NativeBuffer = is.undefined(Buffer) ? Uint8Array : Buffer;
+const NativeBuffer = ateos.isUndefined(Buffer) ? Uint8Array : Buffer;
 
 /**
  * Ed25519 algorithms, see RFC 8032:
@@ -36,10 +36,10 @@ constants.HASH_BYTE_LENGTH = 64;
 export const generateKeyPair = function (options) {
   options = options || {};
   let seed = options.seed;
-  if (is.undefined(seed)) {
+  if (ateos.isUndefined(seed)) {
     // generate seed
     seed = crypto.random.getBytesSync(constants.SEED_BYTE_LENGTH);
-  } else if (is.string(seed)) {
+  } else if (ateos.isString(seed)) {
     if (seed.length !== constants.SEED_BYTE_LENGTH) {
       throw new TypeError(
         `"seed" must be ${constants.SEED_BYTE_LENGTH
@@ -103,7 +103,7 @@ export const sign = function (options) {
 export const verify = function (options) {
   options = options || {};
   const msg = messageToNativeBuffer(options);
-  if (is.undefined(options.signature)) {
+  if (ateos.isUndefined(options.signature)) {
     throw new TypeError(
       '"options.signature" must be a node.js Buffer, a Uint8Array, a forge ' +
             "ByteBuffer, or a binary string.");
@@ -142,7 +142,7 @@ function messageToNativeBuffer(options) {
   }
 
   let encoding = options.encoding;
-  if (is.undefined(message)) {
+  if (ateos.isUndefined(message)) {
     if (options.md) {
       // TODO: more rigorous validation that `md` is a MessageDigest
       message = options.md.digest().getBytes();
@@ -152,12 +152,12 @@ function messageToNativeBuffer(options) {
     }
   }
 
-  if (is.string(message) && !encoding) {
+  if (ateos.isString(message) && !encoding) {
     throw new TypeError('"options.encoding" must be "binary" or "utf8".');
   }
 
-  if (is.string(message)) {
-    if (!is.undefined(Buffer)) {
+  if (ateos.isString(message)) {
+    if (!ateos.isUndefined(Buffer)) {
       return new Buffer(message, encoding);
     }
     message = new ByteBuffer(message, encoding);
@@ -206,7 +206,7 @@ function sha512(msg, msgLen) {
   const buffer = new ByteBuffer(msg);
   md.update(buffer.getBytes(msgLen), "binary");
   const hash = md.digest().getBytes();
-  if (!is.undefined(Buffer)) {
+  if (!ateos.isUndefined(Buffer)) {
     return new Buffer(hash, "binary");
   }
   const out = new NativeBuffer(constants.HASH_BYTE_LENGTH);

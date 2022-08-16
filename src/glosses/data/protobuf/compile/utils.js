@@ -3,5 +3,5 @@ const {
 } = ateos;
 
 exports.defined = function (val) {
-  return !is.nil(val) && (!is.number(val) || !isNaN(val));
+  return !ateos.isNil(val) && (!ateos.isNumber(val) || !isNaN(val));
 };

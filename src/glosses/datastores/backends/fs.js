@@ -300,20 +300,20 @@ export default class FsDatastore {
       it = map(files, (f) => ({ key: this._decode(f) }));
     }
 
-    if (is.array(q.filters)) {
+    if (ateos.isArray(q.filters)) {
       it = q.filters.reduce((it, f) => filter(it, f), it);
     }
 
-    if (is.array(q.orders)) {
+    if (ateos.isArray(q.orders)) {
       it = q.orders.reduce((it, f) => sortAll(it, f), it);
     }
 
-    if (!is.nil(q.offset)) {
+    if (!ateos.isNil(q.offset)) {
       let i = 0;
       it = filter(it, () => i++ >= q.offset);
     }
 
-    if (!is.nil(q.limit)) {
+    if (!ateos.isNil(q.limit)) {
       it = take(it, q.limit);
     }
 

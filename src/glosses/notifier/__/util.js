@@ -7,7 +7,7 @@ const {
 } = ateos;
 
 const escapeQuotes = function (str) {
-  if (is.string(str)) {
+  if (ateos.isString(str)) {
     return str.replace(/(["$`\\])/g, "\\$1");
   }
   return str;
@@ -33,7 +33,7 @@ const notifySendFlags = {
 };
 
 const shellwordsEscape = function (str) {
-  if (is.nil(str)) {
+  if (ateos.isNil(str)) {
     str = "";
   }
   return str.replace(/([^A-Za-z0-9_\-.,:\/@\n])/g, "\\$1").replace(/\n/g, "'\n'");
@@ -183,7 +183,7 @@ export const mapToGrowl = (options) => {
   options = mapIconShorthand(options);
   options = mapText(options);
 
-  if (options.icon && !is.buffer(options.icon)) {
+  if (options.icon && !ateos.isBuffer(options.icon)) {
     try {
       options.icon = fs.readFileSync(options.icon);
     } catch (ex) {
@@ -237,7 +237,7 @@ export const actionJackerDecorator = async (emitter, options, mapper, fn) => {
 
   let metadata = {};
   // Allow for extra data if resultantData is an object
-  if (resultantData && is.plainObject(resultantData)) {
+  if (resultantData && ateos.isPlainObject(resultantData)) {
     metadata = resultantData;
     resultantData = resultantData.activationType;
   }
@@ -260,7 +260,7 @@ export const actionJackerDecorator = async (emitter, options, mapper, fn) => {
 };
 
 const removeNewLines = (str) => {
-  const excapedNewline = is.windows ? "\\r\\n" : "\\n";
+  const excapedNewline = ateos.isWindows ? "\\r\\n" : "\\n";
   return str.replace(/\r?\n/g, excapedNewline);
 };
 
@@ -271,18 +271,18 @@ export const constructArgumentList = (options, extra = {}) => {
   const initial = extra.initial || [];
   const keyExtra = extra.keyExtra || "";
   const allowedArguments = extra.allowedArguments || [];
-  const noEscape = !is.undefined(extra.noEscape);
-  const checkForAllowed = !is.undefined(extra.allowedArguments);
+  const noEscape = !ateos.isUndefined(extra.noEscape);
+  const checkForAllowed = !ateos.isUndefined(extra.allowedArguments);
   const explicitTrue = Boolean(extra.explicitTrue);
   const keepNewlines = Boolean(extra.keepNewlines);
-  const wrapper = is.undefined(extra.wrapper) ? '"' : extra.wrapper;
+  const wrapper = ateos.isUndefined(extra.wrapper) ? '"' : extra.wrapper;
 
   const escapeFn = function (arg) {
-    if (is.array(arg)) {
+    if (ateos.isArray(arg)) {
       return removeNewLines(arg.join(","));
     }
 
-    if (!is.string(arg)) {
+    if (!ateos.isString(arg)) {
       arg = `${arg}`;
     }
 
@@ -290,7 +290,7 @@ export const constructArgumentList = (options, extra = {}) => {
       arg = escapeQuotes(arg);
     }
     arg = arg.replace(/\0/g, ""); // remove null chars that break sh
-    if (is.string(arg) && !keepNewlines) {
+    if (ateos.isString(arg) && !keepNewlines) {
       arg = removeNewLines(arg);
     }
     return wrapper + arg + wrapper;
@@ -374,7 +374,7 @@ export const mapToWin8 = (options) => {
     delete options.appName;
   }
 
-  if (!is.undefined(options.remove)) {
+  if (!ateos.isUndefined(options.remove)) {
     options.close = options.remove;
     delete options.remove;
   }
@@ -384,7 +384,7 @@ export const mapToWin8 = (options) => {
     delete options.quiet;
   }
 
-  if (!is.undefined(options.sound)) {
+  if (!ateos.isUndefined(options.sound)) {
     options.s = options.sound;
     delete options.sound;
   }
@@ -423,7 +423,7 @@ export const mapToWin8 = (options) => {
 };
 
 const sanitizeNotifuTypeArgument = (type) => {
-  if (is.string(type)) {
+  if (ateos.isString(type)) {
     type = type.toLowerCase();
     if (type === "info") {
       return "info";

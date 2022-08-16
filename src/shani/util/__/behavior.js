@@ -28,11 +28,11 @@ const getCallback = (behavior, args) => {
   const callArgProp = behavior.callArgProp;
 
   for (let i = 0, l = argumentList.length; i < l; ++i) {
-    if (!callArgProp && is.function(argumentList[i])) {
+    if (!callArgProp && ateos.isFunction(argumentList[i])) {
       return argumentList[i];
     }
 
-    if (callArgProp && argumentList[i] && is.function(argumentList[i][callArgProp])) {
+    if (callArgProp && argumentList[i] && ateos.isFunction(argumentList[i][callArgProp])) {
       return argumentList[i][callArgProp];
     }
   }
@@ -63,10 +63,10 @@ const getCallbackError = (behavior, func, args) => {
 };
 
 const callCallback = (behavior, args) => {
-  if (is.number(behavior.callArgAt)) {
+  if (ateos.isNumber(behavior.callArgAt)) {
     const func = getCallback(behavior, args);
 
-    if (!is.function(func)) {
+    if (!ateos.isFunction(func)) {
       throw new error.InvalidArgumentException(getCallbackError(behavior, func, args));
     }
 
@@ -95,13 +95,13 @@ export const proto = {
     return behavior;
   },
   isPresent() {
-    return is.number(this.callArgAt)
+    return ateos.isNumber(this.callArgAt)
             || this.error
             || this.exceptionCreator
-            || is.number(this.returnArgAt)
+            || ateos.isNumber(this.returnArgAt)
             || this.returnThis
             || this.resolveThis
-            || is.number(this.throwArgAt)
+            || ateos.isNumber(this.throwArgAt)
             || this.fakeFn
             || this.returnValueDefined;
   },
@@ -114,11 +114,11 @@ export const proto = {
       this.error = this.exceptionCreator();
       this.exceptionCreator = undefined;
       throw this.error;
-    } else if (is.number(this.returnArgAt)) {
+    } else if (ateos.isNumber(this.returnArgAt)) {
       return args[this.returnArgAt];
     } else if (this.returnThis) {
       return context;
-    } else if (is.number(this.throwArgAt)) {
+    } else if (ateos.isNumber(this.throwArgAt)) {
       if (args.length < this.throwArgAt) {
         throw new error.InvalidArgumentException(`throwArgs failed: ${this.throwArgAt} arguments required but only ${args.length} present`);
       }

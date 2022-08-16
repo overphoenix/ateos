@@ -85,7 +85,7 @@ const setWeekAll = function (weekYear, week, weekday, dow, doy) {
 
 
 export const getSetWeekYearHelper = function (input, week, weekday, dow, doy) {
-  if (is.nil(input)) {
+  if (ateos.isNil(input)) {
     return __.unit.weekCalendar.weekOfYear(this, dow, doy).year;
   }
   const weeksTarget = __.unit.weekCalendar.weeksInYear(input, dow, doy);

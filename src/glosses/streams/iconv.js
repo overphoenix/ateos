@@ -13,7 +13,7 @@ export class EncodeStream extends Transform {
   }
 
   _transform(chunk, encoding, done) {
-    if (!is.string(chunk)) {
+    if (!ateos.isString(chunk)) {
       return done(new error.IllegalStateException("Iconv encoding stream needs strings as its input."));
     }
     try {
@@ -49,7 +49,7 @@ export class DecodeStream extends Transform {
   }
 
   _transform(chunk, encoding, done) {
-    if (!is.buffer(chunk)) {
+    if (!ateos.isBuffer(chunk)) {
       return done(new error.IllegalStateException("Iconv decoding stream needs buffers as its input."));
     }
     try {

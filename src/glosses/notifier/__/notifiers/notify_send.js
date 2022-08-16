@@ -37,7 +37,7 @@ export default class NotifySend extends ateos.EventEmitter {
   async notify(options) {
     options = ateos.util.clone(options || {});
 
-    if (is.string(options)) {
+    if (ateos.isString(options)) {
       options = { title: "", message: options };
     }
 

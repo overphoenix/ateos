@@ -41,13 +41,13 @@ internals.Array = class extends Any {
       value
     };
 
-    if (is.string(value) &&
+    if (ateos.isString(value) &&
             options.convert) {
 
       internals.safeParse(value, result);
     }
 
-    let isArray = is.array(result.value);
+    let isArray = ateos.isArray(result.value);
     const wasArray = isArray;
     if (options.convert && this._flags.single && !isArray) {
       result.value = [result.value];
@@ -113,7 +113,7 @@ internals.Array = class extends Any {
 
       // Sparse
 
-      if (!this._flags.sparse && is.undefined(item)) {
+      if (!this._flags.sparse && ateos.isUndefined(item)) {
         errors.push(this.createError("array.sparse", null, { key: state.key, path: localState.path, pos: i }, options));
 
         if (options.abortEarly) {
@@ -158,7 +158,7 @@ internals.Array = class extends Any {
               internals.fastSplice(items, i);
               --i;
               --il;
-            } else if (!this._flags.sparse && is.undefined(res.value)) {
+            } else if (!this._flags.sparse && ateos.isUndefined(res.value)) {
               errors.push(this.createError("array.sparse", null, { key: state.key, path: localState.path, pos: i }, options));
 
               if (options.abortEarly) {
@@ -198,7 +198,7 @@ internals.Array = class extends Any {
           --j;
           --jl;
 
-          if (!this._flags.sparse && is.undefined(res.value)) {
+          if (!this._flags.sparse && ateos.isUndefined(res.value)) {
             errors.push(this.createError("array.sparse", null, { key: state.key, path: localState.path, pos: i }, options));
 
             if (options.abortEarly) {
@@ -236,7 +236,7 @@ internals.Array = class extends Any {
               internals.fastSplice(items, i);
               --i;
               --il;
-            } else if (!this._flags.sparse && is.undefined(res.value)) {
+            } else if (!this._flags.sparse && ateos.isUndefined(res.value)) {
               errors.push(this.createError("array.sparse", null, { key: state.key, path: localState.path, pos: i }, options));
               errored = true;
             } else {
@@ -457,16 +457,16 @@ internals.Array = class extends Any {
   }
 
   unique(comparator, configs) {
-    assert(is.undefined(comparator) || is.function(comparator) || is.string(comparator), "comparator must be a function or a string");
-    assert(is.undefined(configs) || typeof configs === "object", "configs must be an object");
+    assert(ateos.isUndefined(comparator) || ateos.isFunction(comparator) || ateos.isString(comparator), "comparator must be a function or a string");
+    assert(ateos.isUndefined(configs) || typeof configs === "object", "configs must be an object");
 
     const settings = {
       ignoreUndefined: (configs && configs.ignoreUndefined) || false
     };
 
-    if (is.string(comparator)) {
+    if (ateos.isString(comparator)) {
       settings.path = comparator;
-    } else if (is.function(comparator)) {
+    } else if (ateos.isFunction(comparator)) {
       settings.comparator = comparator;
     }
 
@@ -521,7 +521,7 @@ internals.Array = class extends Any {
 
             records.set(item, i);
           } else {
-            if ((!ignoreUndefined || !is.undefined(item)) && !is.undefined(records[item])) {
+            if ((!ignoreUndefined || !ateos.isUndefined(item)) && !ateos.isUndefined(records[item])) {
               const localState = {
                 key: state.key,
                 path: state.path.concat(i),
@@ -554,7 +554,7 @@ internals.Array = class extends Any {
 
   sparse(enabled) {
 
-    const value = is.undefined(enabled) ? true : Boolean(enabled);
+    const value = ateos.isUndefined(enabled) ? true : Boolean(enabled);
 
     if (this._flags.sparse === value) {
       return this;
@@ -567,7 +567,7 @@ internals.Array = class extends Any {
 
   single(enabled) {
 
-    const value = is.undefined(enabled) ? true : Boolean(enabled);
+    const value = ateos.isUndefined(enabled) ? true : Boolean(enabled);
 
     if (this._flags.single === value) {
       return this;
@@ -626,7 +626,7 @@ internals.safeParse = function (value, result) {
 
   try {
     const converted = JSON.parse(value);
-    if (is.array(converted)) {
+    if (ateos.isArray(converted)) {
       result.value = converted;
     }
   } catch (e) { }

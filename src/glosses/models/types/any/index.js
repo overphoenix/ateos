@@ -236,14 +236,14 @@ export default class Any {
 
     const obj = this.clone();
 
-    const convert = is.undefined(isStrict) ? false : !isStrict;
+    const convert = ateos.isUndefined(isStrict) ? false : !isStrict;
     obj._settings = concat(obj._settings, { convert });
     return obj;
   }
 
   raw(isRaw) {
 
-    const value = is.undefined(isRaw) ? true : isRaw;
+    const value = ateos.isUndefined(isRaw) ? true : isRaw;
 
     if (this._flags.raw === value) {
       return this;
@@ -256,7 +256,7 @@ export default class Any {
 
   error(err) {
 
-    assert(err && (err instanceof Error || is.function(err)), "Must provide a valid Error object or a function");
+    assert(err && (err instanceof Error || ateos.isFunction(err)), "Must provide a valid Error object or a function");
 
     const obj = this.clone();
     obj._flags.error = err;
@@ -270,7 +270,7 @@ export default class Any {
     for (let i = 0; i < values.length; ++i) {
       const value = values[i];
 
-      assert(!is.undefined(value), "Cannot call allow/valid/invalid with undefined");
+      assert(!ateos.isUndefined(value), "Cannot call allow/valid/invalid with undefined");
       obj._invalids.remove(value);
       obj._valids.add(value, obj._refs);
     }
@@ -291,7 +291,7 @@ export default class Any {
     for (let i = 0; i < values.length; ++i) {
       const value = values[i];
 
-      assert(!is.undefined(value), "Cannot call allow/valid/invalid with undefined");
+      assert(!ateos.isUndefined(value), "Cannot call allow/valid/invalid with undefined");
       obj._valids.remove(value);
       obj._invalids.add(value, obj._refs);
     }
@@ -365,7 +365,7 @@ export default class Any {
 
   default(value, description) {
 
-    if (is.function(value) &&
+    if (ateos.isFunction(value) &&
             !__.Ref.isRef(value)) {
 
       if (!value.description &&
@@ -375,7 +375,7 @@ export default class Any {
       }
 
       if (!this._flags.func) {
-        assert(is.string(value.description) && value.description.length > 0, "description must be provided when default value is a function");
+        assert(ateos.isString(value.description) && value.description.length > 0, "description must be provided when default value is a function");
       }
     }
 
@@ -388,7 +388,7 @@ export default class Any {
   empty(schema) {
 
     const obj = this.clone();
-    if (is.undefined(schema)) {
+    if (ateos.isUndefined(schema)) {
       delete obj._flags.empty;
     } else {
       obj._flags.empty = Cast.schema(this._currentModel, schema);
@@ -398,7 +398,7 @@ export default class Any {
 
   when(condition, options) {
     assert(options && typeof options === "object", "Invalid options");
-    assert(!is.undefined(options.then) || !is.undefined(options.otherwise), 'options must have at least one of "then" or "otherwise"');
+    assert(!ateos.isUndefined(options.then) || !ateos.isUndefined(options.otherwise), 'options must have at least one of "then" or "otherwise"');
 
     const then = options.hasOwnProperty("then") ? this.concat(Cast.schema(this._currentModel, options.then)) : undefined;
     const otherwise = options.hasOwnProperty("otherwise") ? this.concat(Cast.schema(this._currentModel, options.otherwise)) : undefined;
@@ -417,7 +417,7 @@ export default class Any {
   }
 
   description(desc) {
-    assert(desc && is.string(desc), "Description must be a non-empty string");
+    assert(desc && ateos.isString(desc), "Description must be a non-empty string");
 
     const obj = this.clone();
     obj._description = desc;
@@ -425,7 +425,7 @@ export default class Any {
   }
 
   notes(notes) {
-    assert(notes && (is.string(notes) || is.array(notes)), "Notes must be a non-empty string or array");
+    assert(notes && (ateos.isString(notes) || ateos.isArray(notes)), "Notes must be a non-empty string or array");
 
     const obj = this.clone();
     obj._notes = obj._notes.concat(notes);
@@ -433,7 +433,7 @@ export default class Any {
   }
 
   tags(tags) {
-    assert(tags && (is.string(tags) || is.array(tags)), "Tags must be a non-empty string or array");
+    assert(tags && (ateos.isString(tags) || ateos.isArray(tags)), "Tags must be a non-empty string or array");
 
     const obj = this.clone();
     obj._tags = obj._tags.concat(tags);
@@ -441,7 +441,7 @@ export default class Any {
   }
 
   meta(meta) {
-    assert(!is.undefined(meta), "Meta cannot be undefined");
+    assert(!ateos.isUndefined(meta), "Meta cannot be undefined");
 
     const obj = this.clone();
     obj._meta = obj._meta.concat(meta);
@@ -458,7 +458,7 @@ export default class Any {
   }
 
   unit(name) {
-    assert(name && is.string(name), "Unit name must be a non-empty string");
+    assert(name && ateos.isString(name), "Unit name must be a non-empty string");
 
     const obj = this.clone();
     obj._unit = name;
@@ -467,7 +467,7 @@ export default class Any {
 
   _prepareEmptyValue(value) {
 
-    if (is.string(value) && this._flags.trim) {
+    if (ateos.isString(value) && this._flags.trim) {
       return value.trim();
     }
 
@@ -491,18 +491,18 @@ export default class Any {
 
       let finalValue;
 
-      if (!is.undefined(value)) {
+      if (!ateos.isUndefined(value)) {
         finalValue = this._flags.raw ? originalValue : value;
       } else if (options.noDefaults) {
         finalValue = value;
       } else if (__.Ref.isRef(this._flags.default)) {
         finalValue = this._flags.default(state.parent, options);
-      } else if (is.function(this._flags.default) &&
+      } else if (ateos.isFunction(this._flags.default) &&
                 !(this._flags.func && !this._flags.default.description)) {
 
         let args;
 
-        if (!is.null(state.parent) &&
+        if (!ateos.isNull(state.parent) &&
                     this._flags.default.length > 0) {
 
           args = [clone(state.parent), options];
@@ -517,10 +517,10 @@ export default class Any {
         finalValue = clone(this._flags.default);
       }
 
-      if (errors.length && is.function(this._flags.error)) {
+      if (errors.length && ateos.isFunction(this._flags.error)) {
         const change = this._flags.error.call(this, errors);
 
-        if (is.string(change)) {
+        if (ateos.isString(change)) {
           errors = [this.createOverrideError("override", { reason: errors }, state, options, change)];
         } else {
           errors = [].concat(change)
@@ -559,8 +559,8 @@ export default class Any {
 
     const presence = this._flags.presence || options.presence;
     if (presence === "optional") {
-      if (is.undefined(value)) {
-        const isDeepDefault = this._flags.hasOwnProperty("default") && is.undefined(this._flags.default);
+      if (ateos.isUndefined(value)) {
+        const isDeepDefault = this._flags.hasOwnProperty("default") && ateos.isUndefined(this._flags.default);
         if (isDeepDefault && this._type === "object") {
           value = {};
         } else {
@@ -568,12 +568,12 @@ export default class Any {
         }
       }
     } else if (presence === "required" &&
-            is.undefined(value)) {
+            ateos.isUndefined(value)) {
 
       errors.push(this.createError("any.required", null, state, options));
       return finish();
     } else if (presence === "forbidden") {
-      if (is.undefined(value)) {
+      if (ateos.isUndefined(value)) {
         return finish();
       }
 
@@ -590,7 +590,7 @@ export default class Any {
     if (this._invalids.has(value, state, options, this._flags.insensitive)) {
       errors.push(this.createError(value === "" ? "any.empty" : "any.invalid", { value, invalids: this._invalids.values({ stripUndefined: true }) }, state, options));
       if (options.abortEarly ||
-                is.undefined(value)) { // No reason to keep validating missing value
+                ateos.isUndefined(value)) { // No reason to keep validating missing value
 
         return finish();
       }
@@ -689,7 +689,7 @@ export default class Any {
 
   validate(value, options, callback) {
 
-    if (is.function(options)) {
+    if (ateos.isFunction(options)) {
       return this._validateWithOptions(value, null, options);
     }
 
@@ -713,7 +713,7 @@ export default class Any {
           } else if (flag === "default") {
             if (__.Ref.isRef(this._flags[flag])) {
               description.flags[flag] = this._flags[flag].toString();
-            } else if (is.function(this._flags[flag])) {
+            } else if (ateos.isFunction(this._flags[flag])) {
               description.flags[flag] = {
                 description: this._flags[flag].description,
                 function: this._flags[flag]
@@ -802,9 +802,9 @@ export default class Any {
           }
         }
 
-        if (is.string(options.description)) {
+        if (ateos.isString(options.description)) {
           item.description = options.description;
-        } else if (is.function(options.description)) {
+        } else if (ateos.isFunction(options.description)) {
           item.description = options.description(item.arg);
         }
       }
@@ -825,7 +825,7 @@ export default class Any {
   }
 
   label(name) {
-    assert(name && is.string(name), "Label name must be a non-empty string");
+    assert(name && ateos.isString(name), "Label name must be a non-empty string");
 
     const obj = this.clone();
     obj._flags.label = name;

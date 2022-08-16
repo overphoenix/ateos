@@ -93,7 +93,7 @@ describe("fast", () => {
         });
 
         it("should create a directory with the origin mode", {
-            skip: is.windows
+            skip: ateos.isWindows
         }, async () => {
             await tmpdir.addDirectory("in", "hello", { mode: 0o700 });
             await fast
@@ -105,7 +105,7 @@ describe("fast", () => {
         });
 
         it("should create a directory with the origin times", {
-            skip: is.windows
+            skip: ateos.isWindows
         }, async () => {
             await tmpdir.addDirectory("in", "hello", {
                 atime: new Date(0),
@@ -122,7 +122,7 @@ describe("fast", () => {
         });
 
         it("should update metadata if receives directory after nested file", {
-            skip: is.windows
+            skip: ateos.isWindows
         }, async () => {
             const helloIn = await tmpdir.addDirectory("in", "hello", {
                 mode: 0o700
@@ -155,7 +155,7 @@ describe("fast", () => {
         });
     });
 
-    describe("symlinks", { skip: is.windows }, () => {
+    describe("symlinks", { skip: ateos.isWindows }, () => {
         it("should handle symlinks", async () => {
             const helloIn = await tmpdir.addDirectory("in", "hello");
             await helloIn.addFile("hello", { contents: "world" });

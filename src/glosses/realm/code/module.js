@@ -10,7 +10,7 @@ const {
  */
 export default class Module {
   constructor({ sandbox, file } = {}) {
-    if (!is.string(file) || file.length === 0) {
+    if (!ateos.isString(file) || file.length === 0) {
       throw new error.NotValidException("Invalid module path");
     } else if (!path.isAbsolute(file)) {
       throw new error.NotValidException("Module path should be absolute");

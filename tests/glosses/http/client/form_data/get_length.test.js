@@ -65,7 +65,7 @@ describe("getLength", function () {
 
             fields.forEach((field) => {
                 form.append(field.name, field.value, field.options);
-                if (is.stream(field.value)) {
+                if (ateos.isStream(field.value)) {
                     expectedLength += 100500;
                 } else {
                     expectedLength += (`${field.value}`).length;

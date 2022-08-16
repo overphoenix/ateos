@@ -16,7 +16,7 @@ const DEFAULTS = {
 };
 
 const validateOptions = async (options) => {
-  if (typeof options !== "object" || is.null(options)) {
+  if (typeof options !== "object" || ateos.isNull(options)) {
     throw new Error("Must specify configuration object");
   }
 
@@ -24,13 +24,13 @@ const validateOptions = async (options) => {
 
   const { files, from, to, ignore, encoding, glob: globOptions } = options;
 
-  if (is.undefined(files)) {
+  if (ateos.isUndefined(files)) {
     throw new Error("Must specify file or files");
   }
-  if (is.undefined(from)) {
+  if (ateos.isUndefined(from)) {
     throw new Error("Must specify string or regex to replace");
   }
-  if (is.undefined(to)) {
+  if (ateos.isUndefined(to)) {
     throw new Error("Must specify a replacement (can be blank string)");
   }
   if (typeof globOptions !== "object") {
@@ -42,7 +42,7 @@ const validateOptions = async (options) => {
   options.files = arrify(files);
   options.ignore = arrify(ignore);
 
-  if (!is.string(encoding) || encoding === "") {
+  if (!ateos.isString(encoding) || encoding === "") {
     options.encoding = "utf-8";
   }
 
@@ -76,30 +76,30 @@ export default (fs) => {
 
       })).then((paths) => [].concat.apply([], paths)));
 
-    const shouldBackup = is.string(options.backupPath);
+    const shouldBackup = ateos.isString(options.backupPath);
     const results = await Promise.all(paths.map(async (file) => {
       const filePath = path.resolve(cwd, file);
       const contents = await fs.readFile(filePath, encoding);
 
       const from = arrify(options.from);
-      const isArray = is.array(to);
+      const isArray = ateos.isArray(to);
 
       let newContents = contents;
       from.forEach((item, i) => {
-        if (is.function(item)) {
+        if (ateos.isFunction(item)) {
           item = item(file);
         }
 
-        let replacement = (isArray && is.undefined(to[i]))
+        let replacement = (isArray && ateos.isUndefined(to[i]))
           ? null
           : (isArray)
             ? to[i]
             : to;
-        if (is.null(replacement)) {
+        if (ateos.isNull(replacement)) {
           return;
         }
 
-        if (is.function(replacement)) {
+        if (ateos.isFunction(replacement)) {
           const original = replacement;
           replacement = (...args) => original(...args, file);
         }

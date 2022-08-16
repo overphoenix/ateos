@@ -5,13 +5,13 @@ const {
   system: { env }
 } = ateos;
 
-const make = is.windows
+const make = ateos.isWindows
   ? "vcbuild.bat"
-  : (is.openbsd || is.freebsd)
+  : (ateos.isOpenbsd || ateos.isFreebsd)
     ? "gmake"
     : "make";
 
-const configure = is.windows
+const configure = ateos.isWindows
   ? "configure.py" :
   "./configure.py";
 
@@ -33,7 +33,7 @@ export default class NodejsCompiler {
   }
 
   async build(options) {
-    return exec(make, [...(is.windows ? ["nosign", "release"] : []), ...options], {
+    return exec(make, [...(ateos.isWindows ? ["nosign", "release"] : []), ...options], {
       env: this.env,
       cwd: this.cwd
     });

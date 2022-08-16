@@ -1,5 +1,4 @@
 const {
-  is,
   util
 } = ateos;
 
@@ -19,7 +18,7 @@ export default (filepath) => {
   for (const stack of stacks) {
     const parentFilepath = stack.getFileName();
 
-    if (!is.string(parentFilepath)) {
+    if (!ateos.isString(parentFilepath)) {
       continue;
     }
 

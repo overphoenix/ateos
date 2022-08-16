@@ -1,7 +1,7 @@
 import check from "./check";
 
 export default (fs) => (path, options = {}, callback) => {
-  if (ateos.is.function(options)) {
+  if (ateos.ateos.isFunction(options)) {
     callback = options;
     options = {};
   }

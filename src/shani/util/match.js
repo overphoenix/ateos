@@ -20,7 +20,7 @@ const assertType = (value, type, name) => {
 };
 
 const assertMethodExists = (value, method, name, methodPath) => {
-  if (is.nil(value[method])) {
+  if (ateos.isNil(value[method])) {
     throw new TypeError(`Expected ${name} to have method ${methodPath}`);
   }
 };
@@ -52,7 +52,7 @@ const matcher = {
 const isMatcher = (object) => matcher.isPrototypeOf(object);
 
 const matchObject = (expectation, actual) => {
-  if (is.nil(actual)) {
+  if (ateos.isNil(actual)) {
     return false;
   }
 
@@ -90,7 +90,7 @@ const TYPE_MAP = {
   object(m, expectation) {
     let array = [];
 
-    if (is.function(expectation.test)) {
+    if (ateos.isFunction(expectation.test)) {
       m.test = (actual) => expectation.test(actual) === true;
       m.message = `match(${ateos.assertion.util.getName(expectation.test)})`;
       return m;
@@ -104,10 +104,10 @@ const TYPE_MAP = {
     return m;
   },
   regexp(m, expectation) {
-    m.test = (actual) => is.string(actual) && expectation.test(actual);
+    m.test = (actual) => ateos.isString(actual) && expectation.test(actual);
   },
   string(m, expectation) {
-    m.test = (actual) => is.string(actual) && actual.indexOf(expectation) !== -1;
+    m.test = (actual) => ateos.isString(actual) && actual.indexOf(expectation) !== -1;
     m.message = `match("${expectation}")`;
   }
 };
@@ -159,7 +159,7 @@ match.isMatcher = isMatcher;
 
 match.any = match(ateos.truly, "any");
 
-match.defined = match((actual) => !is.nil(actual), "defined");
+match.defined = match((actual) => !ateos.isNil(actual), "defined");
 
 match.truthy = match((actual) => Boolean(actual), "truthy");
 
@@ -190,7 +190,7 @@ const createPropertyMatcher = (propertyTest, messagePrefix) => {
     }
     message += ")";
     return match((actual) => {
-      if (is.nil(actual) || !propertyTest(actual, property)) {
+      if (ateos.isNil(actual) || !propertyTest(actual, property)) {
         return false;
       }
       return onlyProperty || lazy.deepEqual(value, actual[property]);
@@ -199,10 +199,10 @@ const createPropertyMatcher = (propertyTest, messagePrefix) => {
 };
 
 match.has = createPropertyMatcher((actual, property) => {
-  if (is.object(actual)) {
+  if (ateos.isObject(actual)) {
     return property in actual;
   }
-  return !is.undefined(actual[property]);
+  return !ateos.isUndefined(actual[property]);
 }, "has");
 
 match.hasOwn = createPropertyMatcher((actual, property) => actual.hasOwnProperty(property), "hasOwn");
@@ -217,7 +217,7 @@ match.hasNested = (...args) => {
   }
   message += ")";
   return match((actual) => {
-    if (is.nil(actual) || is.undefined(lodash.get(actual, property))) {
+    if (ateos.isNil(actual) || ateos.isUndefined(lodash.get(actual, property))) {
       return false;
     }
     return onlyProperty || lazy.deepEqual(value, lodash.get(actual, property));

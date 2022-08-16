@@ -81,7 +81,7 @@ export default class Braces {
      * Decorate `.parse` method
      */
   parse(ast, options) {
-    if (is.object(ast) && ast.nodes) {
+    if (ateos.isObject(ast) && ast.nodes) {
       return ast;
     }
     this.lazyInit(options);
@@ -92,7 +92,7 @@ export default class Braces {
      * Decorate `.compile` method
      */
   compile(ast, options) {
-    if (is.string(ast)) {
+    if (ateos.isString(ast)) {
       ast = this.parse(ast, options);
     } else {
       this.lazyInit(options);

@@ -22,7 +22,7 @@ export default class Service extends ateos.app.Subsystem {
   }
 
   async getConfiguration() {
-    if (is.null(this[CONFIGURATION_SYMBOL])) {
+    if (ateos.isNull(this[CONFIGURATION_SYMBOL])) {
       this[CONFIGURATION_SYMBOL] = await this.parent.iMaintainer.getServiceConfiguration(this.name);
     }
     return this[CONFIGURATION_SYMBOL];

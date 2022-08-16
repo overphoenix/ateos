@@ -1,7 +1,7 @@
 const { data: { yaml }, is } = ateos;
 
 const resolveJavascriptRegExp = (data) => {
-  if (is.null(data)) {
+  if (ateos.isNull(data)) {
     return false;
   }
   if (data.length === 0) {
@@ -67,6 +67,6 @@ export default new yaml.type.Type("tag:yaml.org,2002:js/regexp", {
   kind: "scalar",
   resolve: resolveJavascriptRegExp,
   construct: constructJavascriptRegExp,
-  predicate: is.regexp,
+  predicate: ateos.isRegexp,
   represent: representJavascriptRegExp
 });

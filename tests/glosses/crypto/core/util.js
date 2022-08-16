@@ -35,7 +35,7 @@ describe("util", () => {
     });
 
     it("should put bytes from an Uint8Array into a buffer", () => {
-        if (is.undefined(Uint8Array)) {
+        if (ateos.isUndefined(Uint8Array)) {
             return;
         }
         const data = [1, 2, 3, 4, 0, 0, 0, 4, 1, 2, 3, 255, 255, 255, 255];
@@ -494,7 +494,7 @@ describe("util", () => {
     });
 
     it('should convert "foo" to its UTF-8 representation', () => {
-        if (is.undefined(Uint8Array)) {
+        if (ateos.isUndefined(Uint8Array)) {
             return;
         }
         const result = UTIL.text.utf8.encode("foo");
@@ -505,7 +505,7 @@ describe("util", () => {
     });
 
     it('should convert "foo" from its UTF-8 representation', () => {
-        if (is.undefined(Uint8Array)) {
+        if (ateos.isUndefined(Uint8Array)) {
             return;
         }
         const bytes = new Uint8Array([102, 111, 111]);
@@ -514,7 +514,7 @@ describe("util", () => {
     });
 
     it('should convert "\ud83c\udc00" to its UTF-8 representation', () => {
-        if (is.undefined(Uint8Array)) {
+        if (ateos.isUndefined(Uint8Array)) {
             return;
         }
         const result = UTIL.text.utf8.encode("\ud83c\udc00");
@@ -526,7 +526,7 @@ describe("util", () => {
     });
 
     it('should convert "\ud83c\udc00" from its UTF-8 representation', () => {
-        if (is.undefined(Uint8Array)) {
+        if (ateos.isUndefined(Uint8Array)) {
             return;
         }
         const bytes = new Uint8Array([240, 159, 128, 128]);
@@ -535,7 +535,7 @@ describe("util", () => {
     });
 
     it('should convert "foo" to its UTF-16 representation', () => {
-        if (is.undefined(Uint8Array)) {
+        if (ateos.isUndefined(Uint8Array)) {
             return;
         }
         const result = UTIL.text.utf16.encode("foo");
@@ -549,7 +549,7 @@ describe("util", () => {
     });
 
     it('should convert "foo" from its UTF-16 representation', () => {
-        if (is.undefined(Uint8Array)) {
+        if (ateos.isUndefined(Uint8Array)) {
             return;
         }
         const bytes = new Uint8Array([102, 0, 111, 0, 111, 0]);
@@ -558,7 +558,7 @@ describe("util", () => {
     });
 
     it('should convert "\ud83c\udc00" to its UTF-16 representation', () => {
-        if (is.undefined(Uint8Array)) {
+        if (ateos.isUndefined(Uint8Array)) {
             return;
         }
         const result = UTIL.text.utf16.encode("\ud83c\udc00");
@@ -570,7 +570,7 @@ describe("util", () => {
     });
 
     it('should convert "\ud83c\udc00" from its UTF-16 representation', () => {
-        if (is.undefined(Uint8Array)) {
+        if (ateos.isUndefined(Uint8Array)) {
             return;
         }
         const bytes = new Uint8Array([60, 216, 0, 220]);

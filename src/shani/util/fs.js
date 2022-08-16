@@ -13,11 +13,11 @@ export const createTempFile = async (prefix = spath.join(os.tmpdir(), spath.sep)
 
 export const createStructure = async (root, structure) => {
   for (const item of structure) {
-    if (is.array(item)) {
+    if (ateos.isArray(item)) {
       if (!item.length) {
         continue;
       }
-      if (item.length === 2 && !is.array(item[1])) {
+      if (item.length === 2 && !ateos.isArray(item[1])) {
         await root.addFile(item[0], { contents: item[1] });
         continue;
       }

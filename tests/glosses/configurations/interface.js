@@ -13,15 +13,15 @@ export default (ConfigurationClass) => {
     describe("configuration interface", () => {
         describe("static properties", () => {
             it("configName", () => {
-                assert.isTrue(is.string(ConfigurationClass.configName));
+                assert.isTrue(ateos.isString(ConfigurationClass.configName));
             });
 
             it("default configuration", () => {
-                assert.isTrue(is.plainObject(ConfigurationClass.default));
+                assert.isTrue(ateos.isPlainObject(ConfigurationClass.default));
             });
 
             it("load()", () => {
-                assert.isTrue(is.function(ConfigurationClass.load));
+                assert.isTrue(ateos.isFunction(ConfigurationClass.load));
             });
         });
 

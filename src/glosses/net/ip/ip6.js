@@ -218,7 +218,7 @@ const possibleElisions = (elidedGroups, moreLeft, moreRight) => {
  */
 export default class IP6 {
   constructor(address, optionalGroups) {
-    if (is.undefined(optionalGroups)) {
+    if (ateos.isUndefined(optionalGroups)) {
       this.groups = constants6.GROUPS;
     } else {
       this.groups = optionalGroups;
@@ -304,7 +304,7 @@ export default class IP6 {
      * @returns {String} the first n bits of the address as a string
      */
   mask(optionalMask) {
-    if (is.undefined(optionalMask)) {
+    if (ateos.isUndefined(optionalMask)) {
       optionalMask = this.subnetMask;
     }
 
@@ -320,7 +320,7 @@ export default class IP6 {
      */
   // TODO: probably useful to have a numeric version of this too
   possibleSubnets(optionalSubnetSize) {
-    if (is.undefined(optionalSubnetSize)) {
+    if (ateos.isUndefined(optionalSubnetSize)) {
       optionalSubnetSize = 128;
     }
 
@@ -960,7 +960,7 @@ export default class IP6 {
      * @returns {string}
      */
   regularExpressionString(optionalSubString) {
-    if (is.undefined(optionalSubString)) {
+    if (ateos.isUndefined(optionalSubString)) {
       optionalSubString = false;
     }
 
@@ -1027,7 +1027,7 @@ export default class IP6 {
      * @returns {String} the address in link form with a default port of 80
      */
   href(optionalPort) {
-    if (is.undefined(optionalPort)) {
+    if (ateos.isUndefined(optionalPort)) {
       optionalPort = "";
     } else {
       optionalPort = ateos.sprintf(":%s", optionalPort);
@@ -1044,15 +1044,15 @@ export default class IP6 {
       options = {};
     }
 
-    if (is.undefined(options.className)) {
+    if (ateos.isUndefined(options.className)) {
       options.className = "";
     }
 
-    if (is.undefined(options.prefix)) {
+    if (ateos.isUndefined(options.prefix)) {
       options.prefix = "/#address=";
     }
 
-    if (is.undefined(options.v4)) {
+    if (ateos.isUndefined(options.v4)) {
       options.v4 = false;
     }
 
@@ -1179,7 +1179,7 @@ export default class IP6 {
     if (url.indexOf("[") !== -1 && url.indexOf("]:") !== -1) {
       result = constants6.RE_URL_WITH_PORT.exec(url);
 
-      if (is.null(result)) {
+      if (ateos.isNull(result)) {
         return {
           error: "failed to parse address with port",
           address: null,
@@ -1197,7 +1197,7 @@ export default class IP6 {
       // Parse the address
       result = constants6.RE_URL.exec(url);
 
-      if (is.null(result)) {
+      if (ateos.isNull(result)) {
         return {
           error: "failed to parse address from URL",
           address: null,

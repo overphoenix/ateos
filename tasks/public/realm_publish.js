@@ -15,14 +15,14 @@ const {
 const PUBLISH_CONFIG_FILE = "publish.task";
 const TARGETS = ["gitea", "github"];
 
-@ateos.task.task("realmPublish")
+@ateos.task.Task("realmPublish")
 export default class extends ateos.realm.BaseTask {
   async main({ realm, tag, auth } = {}) {
     this.manager.notify(this, "progress", {
       text: "[publish] checking"
     });
 
-    if (is.string(realm)) {
+    if (ateos.isString(realm)) {
       realm = new ateos.realm.RealmManager({ cwd: realm });
     }
 
@@ -133,7 +133,7 @@ export default class extends ateos.realm.BaseTask {
       text: `[publish] creating release with tag ${tag}`
     });
 
-    let releaseInfo; 
+    let releaseInfo;
     try {
       releaseInfo = await repos.repoCreateRelease({
         owner,

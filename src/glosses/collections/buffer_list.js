@@ -66,11 +66,11 @@ BufferList.prototype.get = function get(index) {
 };
 
 BufferList.prototype.slice = function slice(start, end) {
-  if (is.number(start) && start < 0) {
+  if (ateos.isNumber(start) && start < 0) {
     start += this.length;
   }
 
-  if (is.number(end) && end < 0) {
+  if (ateos.isNumber(end) && end < 0) {
     end += this.length;
   }
 
@@ -78,11 +78,11 @@ BufferList.prototype.slice = function slice(start, end) {
 };
 
 BufferList.prototype.copy = function copy(dst, dstStart, srcStart, srcEnd) {
-  if (!is.number(srcStart) || srcStart < 0) {
+  if (!ateos.isNumber(srcStart) || srcStart < 0) {
     srcStart = 0;
   }
 
-  if (!is.number(srcEnd) || srcEnd > this.length) {
+  if (!ateos.isNumber(srcEnd) || srcEnd > this.length) {
     srcEnd = this.length;
   }
 
@@ -154,7 +154,7 @@ BufferList.prototype.copy = function copy(dst, dstStart, srcStart, srcEnd) {
 
 BufferList.prototype.shallowSlice = function shallowSlice(start, end) {
   start = start || 0;
-  end = !is.number(end) ? this.length : end;
+  end = !ateos.isNumber(end) ? this.length : end;
 
   if (start < 0) {
     start += this.length;
@@ -216,14 +216,14 @@ BufferList.prototype.duplicate = function duplicate() {
 };
 
 BufferList.prototype.append = function append(buf) {
-  if (is.nil(buf)) {
+  if (ateos.isNil(buf)) {
     return this;
   }
 
   if (buf.buffer) {
     // append a view of the underlying ArrayBuffer
     this._appendBuffer(Buffer.from(buf.buffer, buf.byteOffset, buf.byteLength));
-  } else if (is.array(buf)) {
+  } else if (ateos.isArray(buf)) {
     for (let i = 0; i < buf.length; i++) {
       this.append(buf[i]);
     }
@@ -235,7 +235,7 @@ BufferList.prototype.append = function append(buf) {
   } else {
     // coerce number arguments to strings, since Buffer(number) does
     // uninitialized memory allocation
-    if (is.number(buf)) {
+    if (ateos.isNumber(buf)) {
       buf = buf.toString();
     }
 
@@ -251,22 +251,22 @@ BufferList.prototype._appendBuffer = function appendBuffer(buf) {
 };
 
 BufferList.prototype.indexOf = function (search, offset, encoding) {
-  if (is.undefined(encoding) && is.string(offset)) {
+  if (ateos.isUndefined(encoding) && ateos.isString(offset)) {
     encoding = offset;
     offset = undefined;
   }
 
-  if (is.function(search) || is.array(search)) {
+  if (ateos.isFunction(search) || ateos.isArray(search)) {
     throw new TypeError('The "value" argument must be one of type string, Buffer, BufferList, or Uint8Array.');
-  } else if (is.number(search)) {
+  } else if (ateos.isNumber(search)) {
     search = Buffer.from([search]);
-  } else if (is.string(search)) {
+  } else if (ateos.isString(search)) {
     search = Buffer.from(search, encoding);
   } else if (this._isBufferList(search)) {
     search = search.slice();
-  } else if (is.array(search.buffer)) {
+  } else if (ateos.isArray(search.buffer)) {
     search = Buffer.from(search.buffer, search.byteOffset, search.byteLength);
-  } else if (!is.buffer(search)) {
+  } else if (!ateos.isBuffer(search)) {
     search = Buffer.from(search);
   }
 
@@ -360,7 +360,7 @@ BufferList.prototype._match = function (offset, search) {
 
   for (const m in methods) {
     (function (m) {
-      if (is.null(methods[m])) {
+      if (ateos.isNull(methods[m])) {
         BufferList.prototype[m] = function (offset, byteLength) {
           return this.slice(offset, offset + byteLength)[m](0, byteLength);
         };
@@ -382,7 +382,7 @@ BufferList.prototype._isBufferList = function _isBufferList(b) {
 };
 
 BufferList.isBufferList = function isBufferList(b) {
-  return !is.nil(b) && b[symbol];
+  return !ateos.isNil(b) && b[symbol];
 };
 
 function BufferListStream(callback) {
@@ -390,7 +390,7 @@ function BufferListStream(callback) {
     return new BufferListStream(callback);
   }
 
-  if (is.function(callback)) {
+  if (ateos.isFunction(callback)) {
     this._callback = callback;
 
     const piper = function piper(err) {
@@ -424,7 +424,7 @@ BufferListStream.prototype._new = function _new(callback) {
 BufferListStream.prototype._write = function _write(buf, encoding, callback) {
   this._appendBuffer(buf);
 
-  if (is.function(callback)) {
+  if (ateos.isFunction(callback)) {
     callback();
   }
 };

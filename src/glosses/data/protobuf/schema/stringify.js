@@ -43,7 +43,7 @@ const onoptionMap = function (o, result) {
     const type = typeof v;
 
     if (type === "object") {
-      if (is.array(v)) {
+      if (ateos.isArray(v)) {
         v.forEach((v) => {
           v = onoptionMap(v, []);
           if (v.length) {
@@ -202,7 +202,7 @@ const onservices = function (s, result) {
 
 const indent = function (lvl) {
   return function (line) {
-    if (is.array(line)) {
+    if (ateos.isArray(line)) {
       return line.map(indent(`${lvl}  `)).join("\n");
     }
     return lvl + line;

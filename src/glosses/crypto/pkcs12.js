@@ -276,15 +276,15 @@ function _getBagsByAttribute(safeContents, attrName, attrValue, bagType) {
   for (let i = 0; i < safeContents.length; i++) {
     for (let j = 0; j < safeContents[i].safeBags.length; j++) {
       const bag = safeContents[i].safeBags[j];
-      if (!is.undefined(bagType) && bag.type !== bagType) {
+      if (!ateos.isUndefined(bagType) && bag.type !== bagType) {
         continue;
       }
       // only filter by bag type, no attribute specified
-      if (is.null(attrName)) {
+      if (ateos.isNull(attrName)) {
         result.push(bag);
         continue;
       }
-      if (!is.undefined(bag.attributes[attrName]) &&
+      if (!ateos.isUndefined(bag.attributes[attrName]) &&
                 bag.attributes[attrName].indexOf(attrValue) >= 0) {
         result.push(bag);
       }
@@ -305,10 +305,10 @@ function _getBagsByAttribute(safeContents, attrName, attrValue, bagType) {
  */
 export const pkcs12FromAsn1 = function (obj, strict, password) {
   // handle args
-  if (is.string(strict)) {
+  if (ateos.isString(strict)) {
     password = strict;
     strict = true;
-  } else if (is.undefined(strict)) {
+  } else if (ateos.isUndefined(strict)) {
     strict = true;
   }
 
@@ -350,13 +350,13 @@ export const pkcs12FromAsn1 = function (obj, strict, password) {
       }
 
       // filter on bagType only
-      if (is.undefined(localKeyId) && !("friendlyName" in filter) &&
+      if (ateos.isUndefined(localKeyId) && !("friendlyName" in filter) &&
                 "bagType" in filter) {
         rval[filter.bagType] = _getBagsByAttribute(
           pfx.safeContents, null, null, filter.bagType);
       }
 
-      if (!is.undefined(localKeyId)) {
+      if (!ateos.isUndefined(localKeyId)) {
         rval.localKeyId = _getBagsByAttribute(
           pfx.safeContents, "localKeyId",
           localKeyId, filter.bagType);
@@ -447,7 +447,7 @@ export const pkcs12FromAsn1 = function (obj, strict, password) {
         macKeyBytes = 16;
         break;
     }
-    if (is.null(md)) {
+    if (ateos.isNull(md)) {
       throw new Error(`PKCS#12 uses unsupported MAC algorithm: ${macAlgorithm}`);
     }
 
@@ -656,7 +656,7 @@ function _decodeSafeContents(safeContents, strict, password) {
                  * Afterwards we can handle it like a keyBag,
                  */
         bagAsn1 = pki.decryptPrivateKeyInfo(bagAsn1, password);
-        if (is.null(bagAsn1)) {
+        if (ateos.isNull(bagAsn1)) {
           throw new Error(
             "Unable to decrypt PKCS#8 ShroudedKeyBag, wrong password?");
         }
@@ -708,7 +708,7 @@ function _decodeSafeContents(safeContents, strict, password) {
     }
 
     /* Validate SafeBag value (i.e. CertBag, etc.) and capture data if needed. */
-    if (!is.undefined(validator) &&
+    if (!ateos.isUndefined(validator) &&
             !asn1.validate(bagAsn1, validator, capture, errors)) {
       var error = new Error(`Cannot read PKCS#12 ${validator.name}`);
       error.errors = errors;
@@ -734,7 +734,7 @@ function _decodeSafeContents(safeContents, strict, password) {
 function _decodeBagAttributes(attributes) {
   const decodedAttrs = {};
 
-  if (!is.undefined(attributes)) {
+  if (!ateos.isUndefined(attributes)) {
     for (let i = 0; i < attributes.length; ++i) {
       const capture = {};
       const errors = [];
@@ -745,7 +745,7 @@ function _decodeBagAttributes(attributes) {
       }
 
       const oid = asn1.derToOid(capture.oid);
-      if (is.undefined(pki.oids[oid])) {
+      if (ateos.isUndefined(pki.oids[oid])) {
         // unsupported attribute type, ignore.
         continue;
       }
@@ -807,13 +807,13 @@ export const toPkcs12Asn1 = function (key, cert, password, options) {
 
   let localKeyId = options.localKeyId;
   let bagAttrs;
-  if (!is.null(localKeyId)) {
+  if (!ateos.isNull(localKeyId)) {
     localKeyId = crypto.util.hexToBytes(localKeyId);
   } else if (options.generateLocalKeyId) {
     // use SHA-1 of paired cert, if available
     if (cert) {
       let pairedCert = crypto.util.isArray(cert) ? cert[0] : cert;
-      if (is.string(pairedCert)) {
+      if (ateos.isString(pairedCert)) {
         pairedCert = pki.certificateFromPem(pairedCert);
       }
       var sha1 = crypto.md.sha1.create();
@@ -828,7 +828,7 @@ export const toPkcs12Asn1 = function (key, cert, password, options) {
   }
 
   const attrs = [];
-  if (!is.null(localKeyId)) {
+  if (!ateos.isNull(localKeyId)) {
     attrs.push(
       // localKeyID
       asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
@@ -866,7 +866,7 @@ export const toPkcs12Asn1 = function (key, cert, password, options) {
 
   // create safe bag(s) for certificate chain
   let chain = [];
-  if (!is.null(cert)) {
+  if (!ateos.isNull(cert)) {
     if (crypto.util.isArray(cert)) {
       chain = cert;
     } else {
@@ -878,7 +878,7 @@ export const toPkcs12Asn1 = function (key, cert, password, options) {
   for (let i = 0; i < chain.length; ++i) {
     // convert cert from PEM as necessary
     cert = chain[i];
-    if (is.string(cert)) {
+    if (ateos.isString(cert)) {
       cert = pki.certificateFromPem(cert);
     }
 
@@ -934,10 +934,10 @@ export const toPkcs12Asn1 = function (key, cert, password, options) {
 
   // create safe contents for private key
   let keyBag = null;
-  if (!is.null(key)) {
+  if (!ateos.isNull(key)) {
     // SafeBag
     const pkAsn1 = pki.wrapRsaPrivateKey(pki.privateKeyToAsn1(key));
-    if (is.null(password)) {
+    if (ateos.isNull(password)) {
       // no encryption
       keyBag = asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
         // bagId

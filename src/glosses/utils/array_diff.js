@@ -3,7 +3,7 @@ const {
 } = ateos;
 
 const diffArray = (a, b) => {
-  if (!is.array(b)) {
+  if (!ateos.isArray(b)) {
     return a.slice();
   }
 

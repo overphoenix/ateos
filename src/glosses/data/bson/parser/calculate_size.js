@@ -14,7 +14,7 @@ function isDate(d) {
 function calculateObjectSize(object, serializeFunctions, ignoreUndefined) {
   let totalLength = 4 + 1;
 
-  if (is.array(object)) {
+  if (ateos.isArray(object)) {
     for (let i = 0; i < object.length; i++) {
       totalLength += calculateElement(
         i.toString(),
@@ -61,45 +61,45 @@ function calculateElement(name, value, serializeFunctions, isArray, ignoreUndefi
       ) {
         if (value >= constants.BSON_INT32_MIN && value <= constants.BSON_INT32_MAX) {
           // 32 bit
-          return (!is.nil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) + (4 + 1);
+          return (!ateos.isNil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) + (4 + 1);
         } 
-        return (!is.nil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) + (8 + 1);
+        return (!ateos.isNil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) + (8 + 1);
         
       } 
       // 64 bit
-      return (!is.nil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) + (8 + 1);
+      return (!ateos.isNil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) + (8 + 1);
       
     case "undefined":
       if (isArray || !ignoreUndefined) {
-        return (!is.nil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) + 1; 
+        return (!ateos.isNil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) + 1; 
       }
       return 0;
     case "boolean":
-      return (!is.nil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) + (1 + 1);
+      return (!ateos.isNil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) + (1 + 1);
     case "object":
-      if (is.nil(value) || value._bsontype === "MinKey" || value._bsontype === "MaxKey") {
-        return (!is.nil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) + 1;
+      if (ateos.isNil(value) || value._bsontype === "MinKey" || value._bsontype === "MaxKey") {
+        return (!ateos.isNil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) + 1;
       } else if (value._bsontype === "ObjectId" || value._bsontype === "ObjectID") {
-        return (!is.nil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) + (12 + 1);
+        return (!ateos.isNil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) + (12 + 1);
       } else if (value instanceof Date || isDate(value)) {
-        return (!is.nil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) + (8 + 1);
-      } else if (!is.undefined(Buffer) && is.buffer(value)) {
+        return (!ateos.isNil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) + (8 + 1);
+      } else if (!ateos.isUndefined(Buffer) && ateos.isBuffer(value)) {
         return (
-          (!is.nil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) + (1 + 4 + 1) + value.length
+          (!ateos.isNil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) + (1 + 4 + 1) + value.length
         );
       } else if (
         value._bsontype === "Long" ||
         value._bsontype === "Double" ||
         value._bsontype === "Timestamp"
       ) {
-        return (!is.nil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) + (8 + 1);
+        return (!ateos.isNil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) + (8 + 1);
       } else if (value._bsontype === "Decimal128") {
-        return (!is.nil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) + (16 + 1);
+        return (!ateos.isNil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) + (16 + 1);
       } else if (value._bsontype === "Code") {
         // Calculate size depending on the availability of a scope
-        if (!is.nil(value.scope) && Object.keys(value.scope).length > 0) {
+        if (!ateos.isNil(value.scope) && Object.keys(value.scope).length > 0) {
           return (
-            (!is.nil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) +
+            (!ateos.isNil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) +
             1 +
             4 +
             4 +
@@ -109,7 +109,7 @@ function calculateElement(name, value, serializeFunctions, isArray, ignoreUndefi
           );
         } 
         return (
-          (!is.nil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) +
+          (!ateos.isNil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) +
             1 +
             4 +
             Buffer.byteLength(value.code.toString(), "utf8") +
@@ -120,17 +120,17 @@ function calculateElement(name, value, serializeFunctions, isArray, ignoreUndefi
         // Check what kind of subtype we have
         if (value.sub_type === Binary.SUBTYPE_BYTE_ARRAY) {
           return (
-            (!is.nil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) +
+            (!ateos.isNil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) +
             (value.position + 1 + 4 + 1 + 4)
           );
         } 
         return (
-          (!is.nil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) + (value.position + 1 + 4 + 1)
+          (!ateos.isNil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) + (value.position + 1 + 4 + 1)
         );
         
       } else if (value._bsontype === "Symbol") {
         return (
-          (!is.nil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) +
+          (!ateos.isNil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) +
           Buffer.byteLength(value.value, "utf8") +
           4 +
           1 +
@@ -147,12 +147,12 @@ function calculateElement(name, value, serializeFunctions, isArray, ignoreUndefi
         );
 
         // Add db reference if it exists
-        if (!is.nil(value.db)) {
+        if (!ateos.isNil(value.db)) {
           ordered_values.$db = value.db;
         }
 
         return (
-          (!is.nil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) +
+          (!ateos.isNil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) +
           1 +
           calculateObjectSize(ordered_values, serializeFunctions, ignoreUndefined)
         );
@@ -161,7 +161,7 @@ function calculateElement(name, value, serializeFunctions, isArray, ignoreUndefi
         Object.prototype.toString.call(value) === "[object RegExp]"
       ) {
         return (
-          (!is.nil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) +
+          (!ateos.isNil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) +
           1 +
           Buffer.byteLength(value.source, "utf8") +
           1 +
@@ -172,7 +172,7 @@ function calculateElement(name, value, serializeFunctions, isArray, ignoreUndefi
         );
       } else if (value._bsontype === "BSONRegExp") {
         return (
-          (!is.nil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) +
+          (!ateos.isNil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) +
           1 +
           Buffer.byteLength(value.pattern, "utf8") +
           1 +
@@ -181,7 +181,7 @@ function calculateElement(name, value, serializeFunctions, isArray, ignoreUndefi
         );
       } 
       return (
-        (!is.nil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) +
+        (!ateos.isNil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) +
           calculateObjectSize(value, serializeFunctions, ignoreUndefined) +
           1
       );
@@ -194,7 +194,7 @@ function calculateElement(name, value, serializeFunctions, isArray, ignoreUndefi
         String.call(value) === "[object RegExp]"
       ) {
         return (
-          (!is.nil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) +
+          (!ateos.isNil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) +
           1 +
           Buffer.byteLength(value.source, "utf8") +
           1 +
@@ -204,9 +204,9 @@ function calculateElement(name, value, serializeFunctions, isArray, ignoreUndefi
           1
         );
       } 
-      if (serializeFunctions && !is.nil(value.scope) && Object.keys(value.scope).length > 0) {
+      if (serializeFunctions && !ateos.isNil(value.scope) && Object.keys(value.scope).length > 0) {
         return (
-          (!is.nil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) +
+          (!ateos.isNil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) +
             1 +
             4 +
             4 +
@@ -216,7 +216,7 @@ function calculateElement(name, value, serializeFunctions, isArray, ignoreUndefi
         );
       } else if (serializeFunctions) {
         return (
-          (!is.nil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) +
+          (!ateos.isNil(name) ? Buffer.byteLength(name, "utf8") + 1 : 0) +
             1 +
             4 +
             Buffer.byteLength(normalizedFunctionString(value), "utf8") +

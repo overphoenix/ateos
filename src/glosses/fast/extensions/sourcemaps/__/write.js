@@ -11,19 +11,19 @@ const {
 export default function writeInternals(destPath, options) {
   const setSourceRoot = (file) => {
     const { sourceMap } = file;
-    if (is.function(options.sourceRoot)) {
+    if (ateos.isFunction(options.sourceRoot)) {
       sourceMap.sourceRoot = options.sourceRoot(file);
     } else {
       sourceMap.sourceRoot = options.sourceRoot;
     }
-    if (is.null(sourceMap.sourceRoot)) {
+    if (ateos.isNull(sourceMap.sourceRoot)) {
       sourceMap.sourceRoot = undefined;
     }
   };
 
   const mapSources = (file) => {
     //NOTE: make sure source mapping happens after content has been loaded
-    if (options.mapSources && is.function(options.mapSources)) {
+    if (options.mapSources && ateos.isFunction(options.mapSources)) {
       file.sourceMap.sources = file.sourceMap.sources.map((path) => options.mapSources(path, file));
       return;
     }
@@ -68,14 +68,14 @@ export default function writeInternals(destPath, options) {
     let comment;
     const commentFormatter = __.util.getCommentFormatter(file);
 
-    if (is.nil(destPath)) {
+    if (ateos.isNil(destPath)) {
       // encode source map into comment
       const base64Map = Buffer.from(JSON.stringify(sourceMap)).toString("base64");
       comment = commentFormatter(`data:application/json;charset=${options.charset};base64,${base64Map}`);
     } else {
       let mapFile = `${path.join(destPath, file.relative)}.map`;
       // custom map file name
-      if (options.mapFile && is.function(options.mapFile)) {
+      if (options.mapFile && ateos.isFunction(options.mapFile)) {
         mapFile = options.mapFile(mapFile);
       }
 
@@ -86,7 +86,7 @@ export default function writeInternals(destPath, options) {
         const destSourceMapPath = path.join(file.cwd, options.destPath, mapFile);
         const destFilePath = path.join(file.cwd, options.destPath, file.relative);
         sourceMap.file = util.normalizePath(path.relative(path.dirname(destSourceMapPath), destFilePath));
-        if (is.undefined(sourceMap.sourceRoot)) {
+        if (ateos.isUndefined(sourceMap.sourceRoot)) {
           sourceMap.sourceRoot = util.normalizePath(path.relative(path.dirname(destSourceMapPath), file.base));
         } else if (sourceMap.sourceRoot === "" || (sourceMap.sourceRoot && sourceMap.sourceRoot[0] === ".")) {
           sourceMap.sourceRoot = util.normalizePath(
@@ -127,7 +127,7 @@ export default function writeInternals(destPath, options) {
 
       if (options.sourceMappingURLPrefix) {
         let prefix = "";
-        if (is.function(options.sourceMappingURLPrefix)) {
+        if (ateos.isFunction(options.sourceMappingURLPrefix)) {
           prefix = options.sourceMappingURLPrefix(file);
         } else {
           prefix = options.sourceMappingURLPrefix;
@@ -136,7 +136,7 @@ export default function writeInternals(destPath, options) {
       }
       comment = commentFormatter(sourceMapPathRelative.split("\\").join("/"));
 
-      if (options.sourceMappingURL && is.function(options.sourceMappingURL)) {
+      if (options.sourceMappingURL && ateos.isFunction(options.sourceMappingURL)) {
         comment = commentFormatter(options.sourceMappingURL(file));
       }
     }

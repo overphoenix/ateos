@@ -10,7 +10,7 @@ export default function plugin() {
     if (!(type.slice(1) in ateos.archive)) {
       throw new error.InvalidArgumentException(`Unknown archive type: ${type}`);
     }
-    if (is.string(packerOptions)) {
+    if (ateos.isString(packerOptions)) {
       packerOptions = { filename: packerOptions };
     }
     const {
@@ -18,7 +18,7 @@ export default function plugin() {
       mode = 0o644
     } = packerOptions;
 
-    if (!is.string(filename)) {
+    if (!ateos.isString(filename)) {
       throw new error.InvalidArgumentException("Invalid filename argument");
     }
 

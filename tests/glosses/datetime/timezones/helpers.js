@@ -5,7 +5,7 @@ const parent = global;
 const oldIntl = parent.Intl;
 
 function getUTCOffset(m) {
-    if (!is.undefined(m.utcOffset)) {
+    if (!ateos.isUndefined(m.utcOffset)) {
         return m.utcOffset();
     }
     return -m.zone();

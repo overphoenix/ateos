@@ -24,7 +24,7 @@ const expectedCallCountInWords = (expectation) => {
 
   const { util: { timesInWords } } = __;
 
-  if (is.number(min) && is.number(max)) {
+  if (ateos.isNumber(min) && ateos.isNumber(max)) {
     let str = timesInWords(min);
 
     if (min !== max) {
@@ -34,7 +34,7 @@ const expectedCallCountInWords = (expectation) => {
     return str;
   }
 
-  if (is.number(min)) {
+  if (ateos.isNumber(min)) {
     return `at least ${timesInWords(min)}`;
   }
 
@@ -42,12 +42,12 @@ const expectedCallCountInWords = (expectation) => {
 };
 
 const receivedMinCalls = (expectation) => {
-  const hasMinLimit = is.number(expectation.minCalls);
+  const hasMinLimit = ateos.isNumber(expectation.minCalls);
   return !hasMinLimit || expectation.callCount >= expectation.minCalls;
 };
 
 const receivedMaxCalls = (expectation) => {
-  if (!is.number(expectation.maxCalls)) {
+  if (!ateos.isNumber(expectation.maxCalls)) {
     return false;
   }
 
@@ -77,7 +77,7 @@ const expectation = {
     return util.spy.invoke.apply(this, args);
   },
   atLeast(num) {
-    if (!is.number(num)) {
+    if (!ateos.isNumber(num)) {
       throw new InvalidArgument(`'${__.util.valueToString(num)}' is not number`);
     }
 
@@ -91,7 +91,7 @@ const expectation = {
     return this;
   },
   atMost(num) {
-    if (!is.number(num)) {
+    if (!ateos.isNumber(num)) {
       throw new InvalidArgument(`'${__.util.valueToString(num)}' is not number`);
     }
 
@@ -117,7 +117,7 @@ const expectation = {
     return this.exactly(3);
   },
   exactly(num) {
-    if (!is.number(num)) {
+    if (!ateos.isNumber(num)) {
       throw new InvalidArgument(`'${__.util.valueToString(num)}' is not a number`);
     }
 

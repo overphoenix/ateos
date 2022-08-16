@@ -7,7 +7,7 @@ export default function stubEntireObject(stub, object) {
     if (
       propOwner !== Object.prototype &&
             prop !== "constructor" &&
-            is.function(__.util.getPropertyDescriptor(propOwner, prop).value)
+            ateos.isFunction(__.util.getPropertyDescriptor(propOwner, prop).value)
     ) {
       stub(object, prop);
     }

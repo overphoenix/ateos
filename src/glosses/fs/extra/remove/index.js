@@ -8,7 +8,7 @@ export default (fs) => {
   const rmkids = (p, options, cb) => {
     assert(p);
     assert(options);
-    assert(is.function(cb));
+    assert(ateos.isFunction(cb));
     
     fs.readdir(p, (er, files) => {
       if (er) {
@@ -44,7 +44,7 @@ export default (fs) => {
     if (originalEr) {
       assert(originalEr instanceof Error);
     }
-    assert(is.function(cb));
+    assert(ateos.isFunction(cb));
     
     // try to rmdir first, and only readdir on ENOTEMPTY or EEXIST (SunOS)
     // if we guessed wrong, and it's not a directory, then
@@ -64,7 +64,7 @@ export default (fs) => {
   const fixWinEPERM = (p, options, er, cb) => {
     assert(p);
     assert(options);
-    assert(is.function(cb));
+    assert(ateos.isFunction(cb));
     if (er) {
       assert(er instanceof Error);
     }
@@ -100,7 +100,7 @@ export default (fs) => {
   const rimraf_ = (p, options, cb) => {
     assert(p);
     assert(options);
-    assert(is.function(cb));
+    assert(ateos.isFunction(cb));
     
     // sunos lets the root user unlink directories, which is... weird.
     // so we have to lstat here and make sure it's not a dir.
@@ -110,7 +110,7 @@ export default (fs) => {
       }
     
       // Windows can EPERM on stat.  Life is suffering.
-      if (er && er.code === "EPERM" && is.windows) {
+      if (er && er.code === "EPERM" && ateos.isWindows) {
         return fixWinEPERM(p, options, er, cb);
       }
     
@@ -124,7 +124,7 @@ export default (fs) => {
             return cb(null);
           }
           if (er.code === "EPERM") {
-            return (is.windows)
+            return (ateos.isWindows)
               ? fixWinEPERM(p, options, er, cb)
               : rmdir(p, options, er, cb);
           }
@@ -140,7 +140,7 @@ export default (fs) => {
   const remove = (p, options, cb) => {
     let busyTries = 0;
     
-    if (is.function(options)) {
+    if (ateos.isFunction(options)) {
       cb = options;
       options = {};
     }

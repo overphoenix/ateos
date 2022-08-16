@@ -8,12 +8,12 @@ describe("process", "list processes", () => {
     } = ateos;
 
     it("list()", async () => {
-        const binName = is.windows ? "node.exe" : "node";
+        const binName = ateos.isWindows ? "node.exe" : "node";
         const result = await list();
 
         assert.isTrue(result.some((x) => x.name.includes(binName)));
-        assert.isTrue(result.every((x) => is.number(x.pid) && is.string(x.name) && is.string(x.cmd)));
+        assert.isTrue(result.every((x) => ateos.isNumber(x.pid) && ateos.isString(x.name) && ateos.isString(x.cmd)));
 
-        (!is.windows) && assert.isTrue(result.every((x) => is.string(x.cpu)));
+        (!ateos.isWindows) && assert.isTrue(result.every((x) => ateos.isString(x.cpu)));
     });
 });

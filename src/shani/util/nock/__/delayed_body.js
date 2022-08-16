@@ -18,9 +18,9 @@ export default class DelayedBody extends stream.PassThrough {
     let data = "";
     let ended = false;
 
-    if (is.stream(body)) {
+    if (ateos.isStream(body)) {
       body.on("data", (chunk) => {
-        data += is.buffer(chunk) ? chunk.toString() : chunk;
+        data += ateos.isBuffer(chunk) ? chunk.toString() : chunk;
       });
 
       body.once("end", () => {
@@ -31,7 +31,7 @@ export default class DelayedBody extends stream.PassThrough {
     }
 
     setTimeout(() => {
-      if (is.stream(body) && !ended) {
+      if (ateos.isStream(body) && !ended) {
         body.once("end", () => {
           self.end(data);
         });

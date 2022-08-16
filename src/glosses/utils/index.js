@@ -50,7 +50,7 @@ ateos.lazify({
   }),
   shebang: "./shebang",
   reinterval: "./reinterval",
-  throttle: "./throttle",
+  throttle: "@recalibratedsystems/common/throttle",
   fakeClock: "./fake_clock",
   ltgt: "./ltgt",
   LogRotator: "./log_rotator",
@@ -231,9 +231,9 @@ export const getCallsites = () => {
 const objectOwnProps = Object.getOwnPropertyNames({}.__proto__);
 
 export const arrify = (val) => {
-  return is.undefined(val)
+  return ateos.isUndefined(val)
     ? []
-    : !is.array(val)
+    : !ateos.isArray(val)
       ? [val]
       : val;
 };
@@ -248,7 +248,7 @@ export const slice = (args, sliceStart = 0, sliceEnd) => {
 
   const start = (sliceStart < 0 ? Math.max(0, sliceStart + len) : sliceStart);
 
-  if (!is.undefined(sliceEnd)) {
+  if (!ateos.isUndefined(sliceEnd)) {
     len = sliceEnd < 0 ? sliceEnd + len : sliceEnd;
   }
 
@@ -268,7 +268,7 @@ export const spliceOne = (list, index) => {
 };
 
 export const normalizePath = (str, stripTrailing = false) => {
-  if (!is.string(str)) {
+  if (!ateos.isString(str)) {
     throw new TypeError("path must be a string");
   }
   str = str.replace(/[\\/]+/g, "/");
@@ -279,13 +279,13 @@ export const normalizePath = (str, stripTrailing = false) => {
 };
 
 export const pluralizeWord = (str, plural, count) => {
-  if (is.number(plural)) {
+  if (ateos.isNumber(plural)) {
     count = plural;
   }
 
   if (str in irregularPlurals) {
     plural = irregularPlurals[str];
-  } else if (!is.string(plural)) {
+  } else if (!ateos.isString(plural)) {
     plural = (`${str.replace(/(?:s|x|z|ch|sh)$/i, "$&e").replace(/([^aeiou])y$/i, "$1ie")}s`)
       .replace(/i?e?s$/i, (m) => {
         const isTailLowerCase = str.slice(-1) === str.slice(-1).toLowerCase();
@@ -321,7 +321,7 @@ export const zip = function* (...iterables) {
     return;
   }
   const iterators = iterables.map((obj) => {
-    if (!is.iterable(obj)) {
+    if (!ateos.isIterable(obj)) {
       throw new error.InvalidArgumentException("Only iterables are supported");
     }
     return obj[Symbol.iterator]();
@@ -392,7 +392,7 @@ const _keys = (object, enumOnly, followProto) => {
 };
 
 export const keys = (object, { enumOnly = true, followProto = false, all = false } = {}) => {
-  if (is.nil(object)) {
+  if (ateos.isNil(object)) {
     return [];
   }
 
@@ -404,7 +404,7 @@ export const keys = (object, { enumOnly = true, followProto = false, all = false
 };
 
 export const values = (object, { enumOnly = true, followProto = false, all = false } = {}) => {
-  if (is.nil(object)) {
+  if (ateos.isNil(object)) {
     return [];
   }
 
@@ -424,7 +424,7 @@ export const values = (object, { enumOnly = true, followProto = false, all = fal
 };
 
 export const entries = (object, { enumOnly = true, followProto = false, all = false } = {}) => {
-  if (is.nil(object)) {
+  if (ateos.isNil(object)) {
     return [];
   }
 
@@ -449,18 +449,18 @@ export const toDotNotation = (object) => {
   const stack = collection.Stack.from([[object, ""]]);
   while (!stack.empty) {
     const [object, prefix] = stack.pop();
-    const it = is.array(object) ? enumerate(object) : entries(object);
+    const it = ateos.isArray(object) ? enumerate(object) : entries(object);
     for (let [k, v] of it) { // eslint-disable-line prefer-const
       let nextPrefix;
-      if (!is.identifier(k)) {
-        if (!is.number(k) && !is.digits(k)) {
+      if (!ateos.isIdentifier(k)) {
+        if (!ateos.isNumber(k) && !ateos.isDigits(k)) {
           k = `"${k}"`;
         }
         nextPrefix = prefix ? `${prefix}[${k}]` : `[${k}]`;
       } else {
         nextPrefix = prefix ? `${prefix}.${k}` : k;
       }
-      if (is.object(v)) {
+      if (ateos.isObject(v)) {
         stack.push([v, nextPrefix]);
       } else {
         result[nextPrefix] = v;
@@ -474,7 +474,7 @@ export const flatten = (array, { depth = Infinity } = {}) => {
   const result = [];
   for (let i = 0; i < array.length; ++i) {
     let item = array[i];
-    if (is.array(item)) {
+    if (ateos.isArray(item)) {
       if (depth > 1) {
         item = flatten(item, { depth: depth - 1 });
       }
@@ -497,12 +497,12 @@ export const toFastProperties = (() => {
     // A prototype object will have "fast properties" enabled once it is checked
     // against the inline property cache of a function, e.g. fastProto.property:
     // https://github.com/v8/v8/blob/6.0.122/test/mjsunit/fast-prototype.js#L48-L63
-    if (!is.null(fastProto) && typeof fastProto.property) {
+    if (!ateos.isNull(fastProto) && typeof fastProto.property) {
       const result = fastProto;
       fastProto = FastObject.prototype = null;
       return result;
     }
-    fastProto = FastObject.prototype = is.nil(o) ? Object.create(null) : o;
+    fastProto = FastObject.prototype = ateos.isNil(o) ? Object.create(null) : o;
     return new FastObject();
   };
 
@@ -516,7 +516,7 @@ export const sortKeys = (object, { deep = false, compare } = {}) => {
   const obj = {};
   const keys = Object.keys(object).sort(compare);
   for (const key of keys) {
-    obj[key] = deep && is.object(obj[key]) ? sortKeys(object[key]) : object[key];
+    obj[key] = deep && ateos.isObject(obj[key]) ? sortKeys(object[key]) : object[key];
   }
   return obj;
 };
@@ -540,21 +540,21 @@ const units = new Map();
 }
 
 export const parseSize = (str) => {
-  if (is.number(str)) {
+  if (ateos.isNumber(str)) {
     return Math.floor(str);
   }
-  if (!is.string(str)) {
+  if (!ateos.isString(str)) {
     return null;
   }
   const match = str.match(sizeRegexp);
-  if (is.null(match)) {
+  if (ateos.isNull(match)) {
     return null;
   }
 
   const value = Number(match[1]);
   const unit = match[2];
 
-  if (is.undefined(unit)) {
+  if (ateos.isUndefined(unit)) {
     return Math.floor(value);
   }
 
@@ -564,14 +564,14 @@ export const parseSize = (str) => {
 const timeRegExp = /^(\d+|\d*\.\d+|\d+\.\d*)\s?([^\d]*)$/i;
 
 export const parseTime = (str) => {
-  if (is.number(str)) {
+  if (ateos.isNumber(str)) {
     return Math.floor(str);
   }
-  if (!is.string(str)) {
+  if (!ateos.isString(str)) {
     return null;
   }
   const match = str.match(timeRegExp);
-  if (is.null(match)) {
+  if (ateos.isNull(match)) {
     return null;
   }
   const value = Number(match[1]);
@@ -632,7 +632,7 @@ export const once = (fn, { silent = true } = {}) => {
 };
 
 export const asyncWaterfall = (tasks, callback = noop) => {
-  if (!is.array(tasks)) {
+  if (!ateos.isArray(tasks)) {
     return callback(new error.InvalidArgumentException("First argument to waterfall must be an array of functions"));
   }
   if (!tasks.length) {
@@ -663,7 +663,7 @@ export const asyncWaterfall = (tasks, callback = noop) => {
 };
 
 export const xrange = function* (start = null, stop = null, step = 1) {
-  if (is.null(stop)) {
+  if (ateos.isNull(stop)) {
     [start, stop] = [0, start];
   }
 
@@ -695,11 +695,11 @@ export const reFindAll = (regexp, str) => {
 export const assignDeep = (target, ...sources) => {
   target = target || {};
   for (const src of sources) {
-    if (!is.plainObject(src)) {
+    if (!ateos.isPlainObject(src)) {
       continue;
     }
     for (const [key, value] of entries(src)) {
-      if (is.plainObject(value) && is.plainObject(target[key])) {
+      if (ateos.isPlainObject(value) && ateos.isPlainObject(target[key])) {
         assignDeep(target[key], value);
       } else {
         target[key] = ateos.util.clone(value);

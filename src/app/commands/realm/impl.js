@@ -94,7 +94,7 @@ const subCommand = (name) => ateos.path.join(__dirname, "commands", name);
 class RealmCommand extends app.Subsystem {
   resolvePath(args, opts) {
     let path = args.has("path") ? args.get("path") : null;
-    if (is.string(path) && opts.has("re")) {
+    if (ateos.isString(path) && opts.has("re")) {
       path = new RegExp(path);
     }
     return path;
@@ -102,7 +102,7 @@ class RealmCommand extends app.Subsystem {
 
   async connectRealm({ cwd } = {}) {
     let manager;
-    if (is.string(cwd)) {
+    if (ateos.isString(cwd)) {
       manager = new realm.RealmManager({ cwd });
     } else {
       manager = realm.rootRealm;

@@ -24,7 +24,7 @@ const {
 } = ateos.getPrivate(vault);
 
 const createDB = (options) => {
-  return (is.string(options.location))
+  return (ateos.isString(options.location))
     ? new level.LevelDB(options.location, ateos.util.omit(options, ["location"]))
     : new level.MemoryDB();
 };
@@ -47,7 +47,7 @@ export default class Vault {
         type: "mpak"
       }
     };
-    if (is.class(this.options.ValuableClass)) {
+    if (ateos.isClass(this.options.ValuableClass)) {
       this.Valuable = this.options.ValuableClass;
       delete this.options.ValuableClass;
     } else {
@@ -162,7 +162,7 @@ export default class Vault {
   async get(name, { Valuable = this.Valuable } = {}) {
     const id = this._getVid(name);
     let valuable = this._vcache.get(id);
-    if (is.undefined(valuable)) {
+    if (ateos.isUndefined(valuable)) {
       const metaData = await this._getMeta(valuableId(id));
       valuable = new Valuable(this, id, metaData, await this.tags(metaData.tids));
 
@@ -238,7 +238,7 @@ export default class Vault {
   async toJSON({ valuable, includeStats = false } = {}) {
     const result = {};
 
-    if (is.plainObject(valuable)) {
+    if (ateos.isPlainObject(valuable)) {
       const valuables = [];
       for (const name of this.nameIdMap.keys()) {
         // eslint-disable-next-line no-await-in-loop
@@ -299,11 +299,11 @@ export default class Vault {
     }
 
     const vals = [...this.tagsMap.values()];
-    return (is.array(ids) ? vals.filter((t) => ids.includes(t.id)).map(factory) : vals.map(factory));
+    return (ateos.isArray(ids) ? vals.filter((t) => ids.includes(t.id)).map(factory) : vals.map(factory));
   }
 
   tagNames(ids) {
-    if (is.array(ids)) {
+    if (ateos.isArray(ids)) {
       return [...this.tagsMap.values()].filter((t) => ids.includes(t.id)).map((t) => t.tag.name);
     }
     return [...this.tagsMap.values()].map((t) => t.tag.name);
@@ -346,7 +346,7 @@ export default class Vault {
 
   _getVid(name) {
     const id = this.nameIdMap.get(name);
-    if (is.undefined(id)) {
+    if (ateos.isUndefined(id)) {
       throw new ateos.error.NotExistsException(`Not exists: '${name}'`);
     }
     return id;
@@ -365,11 +365,11 @@ export default class Vault {
     let needUpdate = false;
 
     for (const tag of tags) {
-      if (!is.string(tag.name)) {
+      if (!ateos.isString(tag.name)) {
         throw new ateos.error.NotValidException("The tag must be a string or an object with at least one property: 'name'");
       }
       let tagMetaData = this.tagsMap.get(tag.name);
-      if (is.undefined(tagMetaData)) {
+      if (ateos.isUndefined(tagMetaData)) {
         needUpdate = true;
         // eslint-disable-next-line no-await-in-loop
         const id = await this._getNextId(NEXT_TAG_ID);
@@ -379,7 +379,7 @@ export default class Vault {
           tag,
           vids: []
         };
-        if (!is.null(vid)) {
+        if (!ateos.isNull(vid)) {
           tagMetaData.vids.push(vid);
         }
         this.tagsMap.set(tag.name, tagMetaData);

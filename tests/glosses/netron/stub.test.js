@@ -69,13 +69,13 @@ describe("Stub", () => {
 
         it("call sync method", () => {
             const result = stub.get("methodB", [], netron.peer);
-            assert.isFalse(is.promise(result));
+            assert.isFalse(ateos.isPromise(result));
             assert.equal(result, "bbb");
         });
 
         it("call async method", async () => {
             const result = stub.get("asyncB", [], netron.peer);
-            assert.isTrue(is.promise(result));
+            assert.isTrue(ateos.isPromise(result));
             assert.equal(await result, "ok");
         });
 
@@ -135,7 +135,7 @@ describe("Stub", () => {
 
         it("call async mrthod", async () => {
             const result = stub.set("asyncB", [], netron.peer);
-            assert.isTrue(is.promise(result));
+            assert.isTrue(ateos.isPromise(result));
             await result;
         });
 

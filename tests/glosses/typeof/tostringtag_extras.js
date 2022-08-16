@@ -3,8 +3,8 @@ const {
     is
 } = ateos;
 
-const symbolExists = is.function(Symbol);
-const symbolToStringTagExists = symbolExists && !is.undefined(Symbol.toStringTag);
+const symbolExists = ateos.isFunction(Symbol);
+const symbolToStringTagExists = symbolExists && !ateos.isUndefined(Symbol.toStringTag);
 
 const describeIf = (condition) => {
     return condition ? describe : describe.skip;

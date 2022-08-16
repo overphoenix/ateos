@@ -67,11 +67,11 @@ const {
   crypto
 } = ateos;
 
-if (is.undefined(BigInteger)) {
+if (ateos.isUndefined(BigInteger)) {
   var { BigInteger } = crypto.jsbn;
 }
 
-const _crypto = is.nodejs ? require("crypto") : null;
+const _crypto = ateos.isNodejs ? require("crypto") : null;
 
 // shortcut for asn.1 API
 const { asn1, util } = crypto;
@@ -480,7 +480,7 @@ export const createKeyPairGenerationState = function (bits, e, options) {
   // TODO: migrate step-based prime generation code to crypto.prime
 
   // set default bits
-  if (is.string(bits)) {
+  if (ateos.isString(bits)) {
     bits = parseInt(bits, 10);
   }
   bits = bits || 2048;
@@ -579,7 +579,7 @@ export const stepKeyPairGenerationState = function (state, n) {
   let t1 = Number(new Date());
   let t2;
   let total = 0;
-  while (is.null(state.keys) && (n <= 0 || total < n)) {
+  while (ateos.isNull(state.keys) && (n <= 0 || total < n)) {
     // generate p or q
     if (state.state === 0) {
       /**
@@ -590,7 +590,7 @@ export const stepKeyPairGenerationState = function (state, n) {
              * When we generate a random number, we always align it at 30k + 1. Each
              * time the number is determined not to be prime we add to get to the
              */
-      const bits = (is.null(state.p)) ? state.pBits : state.qBits;
+      const bits = (ateos.isNull(state.p)) ? state.pBits : state.qBits;
       const bits1 = bits - 1;
 
       // get a random number
@@ -627,14 +627,14 @@ export const stepKeyPairGenerationState = function (state, n) {
       } else if (state.pqState === 3) {
         // store p or q
         state.pqState = 0;
-        if (is.null(state.p)) {
+        if (ateos.isNull(state.p)) {
           state.p = state.num;
         } else {
           state.q = state.num;
         }
 
         // advance state if both p and q are ready
-        if (!is.null(state.p) && !is.null(state.q)) {
+        if (!ateos.isNull(state.p) && !ateos.isNull(state.q)) {
           ++state.state;
         }
         state.num = null;
@@ -695,7 +695,7 @@ export const stepKeyPairGenerationState = function (state, n) {
     t1 = t2;
   }
 
-  return !is.null(state.keys);
+  return !ateos.isNull(state.keys);
 };
 
 /**
@@ -734,17 +734,17 @@ export const generateKeyPair = function (bits, e, options, callback) {
     if (typeof bits === "object") {
       options = bits;
       bits = undefined;
-    } else if (is.function(bits)) {
+    } else if (ateos.isFunction(bits)) {
       callback = bits;
       bits = undefined;
     }
   } else if (arguments.length === 2) {
     // (bits, e), (bits, options), (bits, callback), (options, callback)
-    if (is.number(bits)) {
-      if (is.function(e)) {
+    if (ateos.isNumber(bits)) {
+      if (ateos.isFunction(e)) {
         callback = e;
         e = undefined;
-      } else if (!is.number(e)) {
+      } else if (!ateos.isNumber(e)) {
         options = e;
         e = undefined;
       }
@@ -756,8 +756,8 @@ export const generateKeyPair = function (bits, e, options, callback) {
     }
   } else if (arguments.length === 3) {
     // (bits, e, options), (bits, e, callback), (bits, options, callback)
-    if (is.number(e)) {
-      if (is.function(options)) {
+    if (ateos.isNumber(e)) {
+      if (ateos.isFunction(options)) {
         callback = options;
         options = undefined;
       }
@@ -768,10 +768,10 @@ export const generateKeyPair = function (bits, e, options, callback) {
     }
   }
   options = options || {};
-  if (is.undefined(bits)) {
+  if (ateos.isUndefined(bits)) {
     bits = options.bits || 2048;
   }
-  if (is.undefined(e)) {
+  if (ateos.isUndefined(e)) {
     e = options.e || 0x10001;
   }
 
@@ -922,9 +922,9 @@ export const setPublicKey = crypto.pki.setRsaPublicKey = function (n, e) {
      * @return the encrypted byte string.
      */
   key.encrypt = function (data, scheme, schemeOptions) {
-    if (is.string(scheme)) {
+    if (ateos.isString(scheme)) {
       scheme = scheme.toUpperCase();
-    } else if (is.undefined(scheme)) {
+    } else if (ateos.isUndefined(scheme)) {
       scheme = "RSAES-PKCS1-V1_5";
     }
 
@@ -946,7 +946,7 @@ export const setPublicKey = crypto.pki.setRsaPublicKey = function (n, e) {
           return e;
         }
       };
-    } else if (is.string(scheme)) {
+    } else if (ateos.isString(scheme)) {
       throw new Error(`Unsupported encryption scheme: "${scheme}".`);
     }
 
@@ -987,9 +987,9 @@ export const setPublicKey = crypto.pki.setRsaPublicKey = function (n, e) {
      * @return true if the signature was verified, false if not.
      */
   key.verify = function (digest, signature, scheme) {
-    if (is.string(scheme)) {
+    if (ateos.isString(scheme)) {
       scheme = scheme.toUpperCase();
-    } else if (is.undefined(scheme)) {
+    } else if (ateos.isUndefined(scheme)) {
       scheme = "RSASSA-PKCS1-V1_5";
     }
 
@@ -1004,7 +1004,7 @@ export const setPublicKey = crypto.pki.setRsaPublicKey = function (n, e) {
           return digest === obj.value[1].value;
         }
       };
-    } else if (scheme === "NONE" || scheme === "NULL" || is.null(scheme)) {
+    } else if (scheme === "NONE" || scheme === "NULL" || ateos.isNull(scheme)) {
       scheme = {
         verify(digest, d) {
           // remove padding
@@ -1064,9 +1064,9 @@ export const setPrivateKey = function (
      * @return the decrypted byte string.
      */
   key.decrypt = function (data, scheme, schemeOptions) {
-    if (is.string(scheme)) {
+    if (ateos.isString(scheme)) {
       scheme = scheme.toUpperCase();
-    } else if (is.undefined(scheme)) {
+    } else if (ateos.isUndefined(scheme)) {
       scheme = "RSAES-PKCS1-V1_5";
     }
 
@@ -1124,14 +1124,14 @@ export const setPrivateKey = function (
     // private key operation
     let bt = false;
 
-    if (is.string(scheme)) {
+    if (ateos.isString(scheme)) {
       scheme = scheme.toUpperCase();
     }
 
-    if (is.undefined(scheme) || scheme === "RSASSA-PKCS1-V1_5") {
+    if (ateos.isUndefined(scheme) || scheme === "RSASSA-PKCS1-V1_5") {
       scheme = { encode: emsaPkcs1v15encode };
       bt = 0x01;
-    } else if (scheme === "NONE" || scheme === "NULL" || is.null(scheme)) {
+    } else if (scheme === "NONE" || scheme === "NULL" || ateos.isNull(scheme)) {
       scheme = {
         encode() {
           return md;
@@ -1354,7 +1354,7 @@ function _decodePkcs1_v1_5(em, key, pub, ml) {
   if (first !== 0x00 ||
         (pub && bt !== 0x00 && bt !== 0x01) ||
         (!pub && bt != 0x02) ||
-        (pub && bt === 0x00 && is.undefined(ml))) {
+        (pub && bt === 0x00 && ateos.isUndefined(ml))) {
     throw new Error("Encryption block is invalid.");
   }
 
@@ -1413,7 +1413,7 @@ function _decodePkcs1_v1_5(em, key, pub, ml) {
  * @param callback(err, keypair) called once the operation completes.
  */
 function _generateKeyPair(state, options, callback) {
-  if (is.function(options)) {
+  if (ateos.isFunction(options)) {
     callback = options;
     options = {};
   }
@@ -1442,7 +1442,7 @@ function _generateKeyPair(state, options, callback) {
         return callback(err);
       }
       state.p = num;
-      if (!is.null(state.q)) {
+      if (!ateos.isNull(state.q)) {
         return finish(err, state.q);
       }
       getPrime(state.qBits, finish);
@@ -1576,7 +1576,7 @@ function _getMillerRabinTests(bits) {
  * @return true if detected, false if not.
  */
 function _detectNodeCrypto(fn) {
-  return is.nodejs && is.function(_crypto[fn]);
+  return ateos.isNodejs && ateos.isFunction(_crypto[fn]);
 }
 
 /**
@@ -1587,10 +1587,10 @@ function _detectNodeCrypto(fn) {
  * @return true if detected, false if not.
  */
 function _detectSubtleCrypto(fn) {
-  return (!is.undefined(util.globalScope) &&
+  return (!ateos.isUndefined(util.globalScope) &&
         typeof util.globalScope.crypto === "object" &&
         typeof util.globalScope.crypto.subtle === "object" &&
-        is.function(util.globalScope.crypto.subtle[fn]));
+        ateos.isFunction(util.globalScope.crypto.subtle[fn]));
 }
 
 /**
@@ -1603,10 +1603,10 @@ function _detectSubtleCrypto(fn) {
  * @return true if detected, false if not.
  */
 function _detectSubtleMsCrypto(fn) {
-  return (!is.undefined(util.globalScope) &&
+  return (!ateos.isUndefined(util.globalScope) &&
         typeof util.globalScope.msCrypto === "object" &&
         typeof util.globalScope.msCrypto.subtle === "object" &&
-        is.function(util.globalScope.msCrypto.subtle[fn]));
+        ateos.isFunction(util.globalScope.msCrypto.subtle[fn]));
 }
 
 function _intToUint8Array(x) {

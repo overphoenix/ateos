@@ -115,10 +115,10 @@ describe("crypto", "murmurHash3", () => {
             // error expected
         }
         murmurHash3.inputValidation = true;
-        expect(is.undefined(murmurHash3.x86.hash32("invalid input"))).to.equal(true);
-        expect(is.undefined(murmurHash3.x86.hash128(["another", "one"]))).to.equal(true);
-        expect(is.undefined(murmurHash3.x64.hash128([1234, 5678, 9999]))).to.equal(true);
-        expect(is.undefined(murmurHash3.x86.hash32(10010))).to.equal(true);
-        expect(is.undefined(murmurHash3.x86.hash32(undefined))).to.equal(true);
+        expect(ateos.isUndefined(murmurHash3.x86.hash32("invalid input"))).to.equal(true);
+        expect(ateos.isUndefined(murmurHash3.x86.hash128(["another", "one"]))).to.equal(true);
+        expect(ateos.isUndefined(murmurHash3.x64.hash128([1234, 5678, 9999]))).to.equal(true);
+        expect(ateos.isUndefined(murmurHash3.x86.hash32(10010))).to.equal(true);
+        expect(ateos.isUndefined(murmurHash3.x86.hash32(undefined))).to.equal(true);
     });
 });

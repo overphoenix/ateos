@@ -287,7 +287,7 @@ describe("realm", "common tasks", () => {
 
         afterEach(async () => {
             await fs.remove(tmpTestPath);
-            if (is.string(tmpPath) && await fs.exists(tmpPath)) {
+            if (ateos.isString(tmpPath) && await fs.exists(tmpPath)) {
                 await fs.remove(tmpPath);
             }
         });

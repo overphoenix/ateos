@@ -13,7 +13,7 @@ internals.stringify = function (value, wrapArrays) {
 
   const type = typeof value;
 
-  if (is.null(value)) {
+  if (ateos.isNull(value)) {
     return "null";
   }
 
@@ -26,7 +26,7 @@ internals.stringify = function (value, wrapArrays) {
   }
 
   if (type === "object") {
-    if (is.array(value)) {
+    if (ateos.isArray(value)) {
       let partial = "";
 
       for (let i = 0; i < value.length; ++i) {
@@ -62,7 +62,7 @@ export class Err {
       this.context.label = this.flags.label;
     } else if (localized && // language can be null for arrays exclusion check
             (this.context.label === "" ||
-                is.null(this.context.label))) {
+                ateos.isNull(this.context.label))) {
       this.context.label = localized.root || locale.root;
     }
   }
@@ -83,16 +83,16 @@ export class Err {
 
     format = format || reach(localized, this.type) || reach(locale, this.type);
 
-    if (is.undefined(format)) {
+    if (ateos.isUndefined(format)) {
       return `Error code "${this.type}" is not defined, your custom type is missing the correct language definition`;
     }
 
     let wrapArrays = reach(localized, "messages.wrapArrays");
-    if (!is.boolean(wrapArrays)) {
+    if (!ateos.isBoolean(wrapArrays)) {
       wrapArrays = locale.messages.wrapArrays;
     }
 
-    if (is.null(format)) {
+    if (ateos.isNull(format)) {
       const childrenString = internals.stringify(this.context.reason, wrapArrays);
       if (wrapArrays) {
         return childrenString.slice(1, -1);
@@ -109,7 +109,7 @@ export class Err {
 
     if (!hasKey && !skipKey) {
       const localizedKey = reach(localized, "key");
-      if (is.string(localizedKey)) {
+      if (ateos.isString(localizedKey)) {
         format = localizedKey + format;
       } else {
         format = reach(locale, "key") + format;
@@ -147,12 +147,12 @@ export const process = function (errs, object) {
         return item;
       }
 
-      if (item.flags.error && !is.function(item.flags.error)) {
+      if (item.flags.error && !ateos.isFunction(item.flags.error)) {
         return item.flags.error;
       }
 
       let itemMessage;
-      if (is.undefined(parent)) {
+      if (ateos.isUndefined(parent)) {
         itemMessage = item.toString();
         message = message + (message ? ". " : "") + itemMessage;
       }
@@ -233,7 +233,7 @@ internals.serializer = function () {
     if (value) {
       const annotations = value[internals.annotations];
       if (annotations) {
-        if (is.array(value)) {
+        if (ateos.isArray(value)) {
           const annotated = [];
 
           for (let i = 0; i < value.length; ++i) {
@@ -263,8 +263,8 @@ internals.serializer = function () {
       }
     }
 
-    if (value === Infinity || value === -Infinity || is.nan(value) ||
-            is.function(value) || is.symbol(value)) {
+    if (value === Infinity || value === -Infinity || ateos.isNan(value) ||
+            ateos.isFunction(value) || ateos.isSymbol(value)) {
       return `[${value.toString()}]`;
     }
 
@@ -298,7 +298,7 @@ internals.annotate = function (stripColorCodes) {
 
       if (j + 1 < path.length &&
                 ref[seg] &&
-                !is.string(ref[seg])) {
+                !ateos.isString(ref[seg])) {
 
         ref = ref[seg];
       } else {
@@ -306,7 +306,7 @@ internals.annotate = function (stripColorCodes) {
         const value = ref[seg];
         const cacheKey = seg || error.context.label;
 
-        if (!is.undefined(value)) {
+        if (!ateos.isUndefined(value)) {
           refAnnotations.errors[cacheKey] = refAnnotations.errors[cacheKey] || [];
           refAnnotations.errors[cacheKey].push(pos);
         } else {

@@ -297,7 +297,7 @@ export default class Requestable {
               .split("=")
               .pop()
           );
-          if (!(options && !is.number(options.page))) {
+          if (!(options && !ateos.isNumber(options.page))) {
             return this._requestAllPages(nextUrl, options, cb, results);
           }
         }

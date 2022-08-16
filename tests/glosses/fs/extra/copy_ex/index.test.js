@@ -143,7 +143,7 @@ describe("fs", "copy", () => {
         return subject.mkdirp = mkdirp;
 
         function mkdirp(path, mode, callback) {
-            if ((arguments.length === 2) && (is.function(mode))) {
+            if ((arguments.length === 2) && (ateos.isFunction(mode))) {
                 callback = mode;
                 mode = undefined;
             }
@@ -168,7 +168,7 @@ describe("fs", "copy", () => {
         };
 
         function symlink(srcPath, dstPath, type, callback) {
-            if ((arguments.length === 3) && (is.function(type))) {
+            if ((arguments.length === 3) && (ateos.isFunction(type))) {
                 callback = type;
                 type = undefined;
             }

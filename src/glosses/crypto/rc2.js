@@ -71,7 +71,7 @@ const ror = function (word, bits) {
  * @return the expanded RC2 key (ByteBuffer of 128 bytes)
  */
 export const expandKey = function (key, effKeyBits) {
-  if (is.string(key)) {
+  if (ateos.isString(key)) {
     key = crypto.util.createBuffer(key);
   }
   effKeyBits = effKeyBits || 128;
@@ -193,7 +193,7 @@ const createCipher = function (key, bits, encrypt) {
     for (i = 0; i < 4; i++) {
       let val = _input.getInt16Le();
 
-      if (!is.null(_iv)) {
+      if (!ateos.isNull(_iv)) {
         if (encrypt) {
           /**
                      * We're encrypting, apply the IV first.
@@ -224,7 +224,7 @@ const createCipher = function (key, bits, encrypt) {
 
     /* Write back result to output buffer. */
     for (i = 0; i < 4; i++) {
-      if (!is.null(_iv)) {
+      if (!ateos.isNull(_iv)) {
         if (encrypt) {
           /**
                      * We're encrypting in CBC-mode, feed back encrypted bytes into
@@ -257,7 +257,7 @@ const createCipher = function (key, bits, encrypt) {
     start(iv, output) {
       if (iv) {
         /* CBC mode */
-        if (is.string(iv)) {
+        if (ateos.isString(iv)) {
           iv = crypto.util.createBuffer(iv);
         }
       }

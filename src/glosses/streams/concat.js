@@ -4,16 +4,16 @@ const {
 } = ateos;
 
 const isArrayish = (arr) => /Array\]$/.test(Object.prototype.toString.call(arr));
-const isBufferish = (p) => is.string(p) || isArrayish(p) || (p && is.function(p.subarray));
+const isBufferish = (p) => ateos.isString(p) || isArrayish(p) || (p && ateos.isFunction(p.subarray));
 
 const stringConcat = function (parts) {
   let strings = [];
 
   for (let i = 0; i < parts.length; i++) {
     const p = parts[i];
-    if (is.string(p)) {
+    if (ateos.isString(p)) {
       strings.push(p);
-    } else if (is.buffer(p)) {
+    } else if (ateos.isBuffer(p)) {
       strings.push(p);
     } else if (isBufferish(p)) {
       strings.push(Buffer.from(p));
@@ -21,7 +21,7 @@ const stringConcat = function (parts) {
       strings.push(Buffer.from(String(p)));
     }
   }
-  if (is.buffer(parts[0])) {
+  if (ateos.isBuffer(parts[0])) {
     strings = Buffer.concat(strings);
     strings = strings.toString("utf8");
   } else {
@@ -34,7 +34,7 @@ const bufferConcat = function (parts) {
   const bufs = [];
   for (let i = 0; i < parts.length; i++) {
     const p = parts[i];
-    if (is.buffer(p)) {
+    if (ateos.isBuffer(p)) {
       bufs.push(p);
     } else if (isBufferish(p)) {
       bufs.push(Buffer.from(p));
@@ -56,7 +56,7 @@ const arrayConcat = function (parts) {
 const u8Concat = function (parts) {
   let len = 0;
   for (let i = 0; i < parts.length; i++) {
-    if (is.string(parts[i])) {
+    if (ateos.isString(parts[i])) {
       parts[i] = Buffer.from(parts[i]);
     }
     len += parts[i].length;
@@ -73,10 +73,10 @@ const u8Concat = function (parts) {
 
 export class Stream extends Writable {
   constructor(opts, cb) {
-    if (is.function(opts)) {
+    if (ateos.isFunction(opts)) {
       cb = opts;
       opts = {};
-    } else if (is.string(opts)) {
+    } else if (ateos.isString(opts)) {
       opts = {
         encoding: opts
       };
@@ -121,17 +121,17 @@ export class Stream extends Writable {
   }
 
   inferEncoding(buff) {
-    const firstBuffer = is.undefined(buff) ? this.body[0] : buff;
-    if (is.buffer(firstBuffer)) {
+    const firstBuffer = ateos.isUndefined(buff) ? this.body[0] : buff;
+    if (ateos.isBuffer(firstBuffer)) {
       return "buffer";
     }
-    if (!is.undefined(Uint8Array) && firstBuffer instanceof Uint8Array) {
+    if (!ateos.isUndefined(Uint8Array) && firstBuffer instanceof Uint8Array) {
       return "uint8array";
     }
-    if (is.array(firstBuffer)) {
+    if (ateos.isArray(firstBuffer)) {
       return "array";
     }
-    if (is.string(firstBuffer)) {
+    if (ateos.isString(firstBuffer)) {
       return "string";
     }
     if (Object.prototype.toString.call(firstBuffer) === "[object Object]") {

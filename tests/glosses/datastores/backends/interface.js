@@ -233,8 +233,8 @@ module.exports = (test) => {
             }
 
             const expected = t[2];
-            if (is.array(expected)) {
-                if (is.nil(t[1].orders)) {
+            if (ateos.isArray(expected)) {
+                if (ateos.isNil(t[1].orders)) {
                     expect(res).to.have.length(expected.length);
                     const s = (a, b) => {
                         if (a.key.toString() < b.key.toString()) {
@@ -249,7 +249,7 @@ module.exports = (test) => {
                     res.forEach((r, i) => {
                         expect(r.key.toString()).to.be.eql(exp[i].key.toString());
 
-                        if (is.nil(r.value)) {
+                        if (ateos.isNil(r.value)) {
                             expect(exp[i].value).to.not.exist();
                         } else {
                             expect(r.value.equals(exp[i].value)).to.be.eql(true);
@@ -258,7 +258,7 @@ module.exports = (test) => {
                 } else {
                     expect(res).to.be.eql(t[2]);
                 }
-            } else if (is.number(expected)) {
+            } else if (ateos.isNumber(expected)) {
                 expect(res).to.have.length(expected);
             }
         }));

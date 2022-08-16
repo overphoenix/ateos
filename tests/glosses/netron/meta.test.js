@@ -172,7 +172,7 @@ describe("meta", () => {
                 assert.strictEqual(r.getMethodMeta("method2").description, "method2 info");
 
                 const baseMethodMeta = r.getMethodMeta("baseMethod");
-                assert.isTrue(is.undefined(baseMethodMeta.description));
+                assert.isTrue(ateos.isUndefined(baseMethodMeta.description));
                 assert.strictEqual(baseMethodMeta.type, String);
             });
 

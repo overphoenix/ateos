@@ -3743,10 +3743,10 @@ describe("shani", "util", "nock", "intercept", () => {
       assert.equal(res.statusCode, 200);
       res.on("readable", () => {
         let chunk;
-        while (!is.null(chunk = res.read())) {
+        while (!ateos.isNull(chunk = res.read())) {
           responseBody += chunk.toString();
         }
-        if (is.null(chunk) && !ended) {
+        if (ateos.isNull(chunk) && !ended) {
           ended = true;
           assert.equal(responseBody, "this is the response body yeah");
           done();

@@ -344,8 +344,8 @@ describe("asn1", () => {
                 test.equal ? "" : "not "}equal: ${
                 test.name || `#${index}`}`;
             it(name, () => {
-                const obj1 = is.function(test.obj1) ? test.obj1() : test.obj1;
-                const obj2 = is.function(test.obj2) ? test.obj2() : test.obj2;
+                const obj1 = ateos.isFunction(test.obj1) ? test.obj1() : test.obj1;
+                const obj2 = ateos.isFunction(test.obj2) ? test.obj2() : test.obj2;
                 if (test.mutate) {
                     test.mutate(obj1, obj2);
                 }
@@ -386,7 +386,7 @@ describe("asn1", () => {
         tests.forEach((test, index) => {
             const name = `should check ASN.1 copy: ${test.name || `#${index}`}`;
             it(name, () => {
-                const obj = is.function(test.obj) ? test.obj() : test.obj;
+                const obj = ateos.isFunction(test.obj) ? test.obj() : test.obj;
                 assert.equal(ASN1.equals(ASN1.copy(obj), obj), true);
             });
         });

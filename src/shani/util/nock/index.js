@@ -46,10 +46,10 @@ createScope.load = (path) => createScope.define(createScope.loadDefs(path));
 
 const getStatusFromDefinition = (nockDef) => {
   //  Backward compatibility for when `status` was encoded as string in `reply`.
-  if (!is.undefined(nockDef.reply)) {
+  if (!ateos.isUndefined(nockDef.reply)) {
     //  Try parsing `reply` property.
     const parsedReply = parseInt(nockDef.reply, 10);
-    if (is.number(parsedReply)) {
+    if (ateos.isNumber(parsedReply)) {
       return parsedReply;
     }
   }
@@ -61,10 +61,10 @@ const getStatusFromDefinition = (nockDef) => {
 const getScopeFromDefinition = (nockDef) => {
 
   //  Backward compatibility for when `port` was part of definition.
-  if (!is.undefined(nockDef.port)) {
+  if (!ateos.isUndefined(nockDef.port)) {
     //  Include `port` into scope if it doesn't exist.
     const options = url.parse(nockDef.scope);
-    if (is.null(options.port)) {
+    if (ateos.isNull(options.port)) {
       return `${nockDef.scope}:${nockDef.port}`;
     }
     if (parseInt(options.port) !== parseInt(nockDef.port)) {
@@ -113,7 +113,7 @@ createScope.define = (nockDefs) => {
     if (!nockDef.response) {
       response = "";
     } else {
-      response = is.string(nockDef.response) ? tryJsonParse(nockDef.response) : nockDef.response;
+      response = ateos.isString(nockDef.response) ? tryJsonParse(nockDef.response) : nockDef.response;
     }
 
     let nock;
@@ -124,7 +124,7 @@ createScope.define = (nockDefs) => {
     } else {
       nock = createScope(nscope, options);
       //  If request headers were specified filter by them.
-      if (!is.emptyObject(reqheaders)) {
+      if (!ateos.isEmptyObject(reqheaders)) {
         for (const k in reqheaders) {
           nock.matchHeader(k, reqheaders[k]);
         }

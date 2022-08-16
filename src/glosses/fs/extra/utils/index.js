@@ -54,7 +54,7 @@ export default (fs) => {
   };
 
   const timeRemoveMillis = (timestamp) => {
-    if (is.number(timestamp)) {
+    if (ateos.isNumber(timestamp)) {
       return Math.floor(timestamp / 1000) * 1000;
     } else if (timestamp instanceof Date) {
       return new Date(Math.floor(timestamp.getTime() / 1000) * 1000);

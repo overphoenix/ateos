@@ -6,7 +6,7 @@ const {
 const fixtures = require("./fixtures");
 
 const compare = function (a, b) {
-    if (!is.undefined(Buffer)) {
+    if (!ateos.isUndefined(Buffer)) {
         b = Buffer.from(b);
         return assert.strictEqual(b.compare(a), 0);
     }

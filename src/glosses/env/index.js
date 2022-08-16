@@ -5,18 +5,18 @@ const {
 const { os } = std;
 
 export const user = () => {
-  let result = is.windows ? `${process.env.USERDOMAIN}\\${process.env.USERNAME}` : process.env.USER;
-  if (is.undefined(result)) {
+  let result = ateos.isWindows ? `${process.env.USERDOMAIN}\\${process.env.USERNAME}` : process.env.USER;
+  if (ateos.isUndefined(result)) {
     result = ateos.system.user.username(); // fallback
   }
   return result;
 };
-export const prompt = () => is.windows ? process.env.PROMPT : process.env.PS1;
+export const prompt = () => ateos.isWindows ? process.env.PROMPT : process.env.PS1;
 export const hostname = () => os.hostname();
 export const tmpdir = () => os.tmpdir();
 export const home = () => os.homedir();
 
-export const pathKey = () => is.windows
+export const pathKey = () => ateos.isWindows
   ? Object.keys(process.env).find((key) => key.toUpperCase() === "PATH") || "Path"
   : "PATH";
 
@@ -38,8 +38,8 @@ export const path = ({ cwd = process.cwd(), path: customPath } = {}) => {
   return [...result, ...customPath];
 };
 
-export const editor = () => process.env.EDITOR || process.env.VISUAL || (is.windows ? "notepad.exe" : "vi");
-export const shell = () => is.windows ? process.env.ComSpec || "cmd" : process.env.SHELL || "bash";
+export const editor = () => process.env.EDITOR || process.env.VISUAL || (ateos.isWindows ? "notepad.exe" : "vi");
+export const shell = () => ateos.isWindows ? process.env.ComSpec || "cmd" : process.env.SHELL || "bash";
 
 
 export const all = (options = {}) => {

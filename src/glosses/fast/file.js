@@ -63,10 +63,10 @@ export default class File {
   }
 
   set contents(value) {
-    if (is.string(value)) {
+    if (ateos.isString(value)) {
       value = Buffer.from(value);
     }
-    if (!is.null(value) && !is.buffer(value) && !is.stream(value)) {
+    if (!ateos.isNull(value) && !ateos.isBuffer(value) && !ateos.isStream(value)) {
       throw new error.Exception("Invalid contents value");
     }
     this._.set("contents", value);
@@ -98,15 +98,15 @@ export default class File {
   }
 
   isBuffer() {
-    return is.buffer(this.contents);
+    return ateos.isBuffer(this.contents);
   }
 
   isStream() {
-    return is.stream(this.contents);
+    return ateos.isStream(this.contents);
   }
 
   isNull() {
-    return is.null(this.contents);
+    return ateos.isNull(this.contents);
   }
 
   isDirectory() {
@@ -122,7 +122,7 @@ export default class File {
   }
 
   set cwd(value) {
-    if (!value || !is.string(value)) {
+    if (!value || !ateos.isString(value)) {
       throw new error.Exception("Invalid value");
     }
     this._.set("cwd", removeTrailingSep(aPath.normalize(value)));
@@ -133,11 +133,11 @@ export default class File {
   }
 
   set base(value) {
-    if (is.null(value)) {
+    if (ateos.isNull(value)) {
       this._.delete("base");
       return;
     }
-    if (!is.string(value) || !value) {
+    if (!ateos.isString(value) || !value) {
       throw new error.Exception("Invalid value");
     }
     const base = removeTrailingSep(aPath.normalize(value));

@@ -11,7 +11,7 @@ export default (instance, mock = {}) => {
     if (key.startsWith("__private_")) {
       continue;
     }
-    if (is.function(instance[key])) {
+    if (ateos.isFunction(instance[key])) {
       mock[key] = (...args) => instance[key].apply(instance, args);
     } else {
       const descriptor = Object.getOwnPropertyDescriptor(instance, key);

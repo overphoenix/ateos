@@ -50,7 +50,7 @@ export default (code, options, styleName = "none") => {
 
   if (meta.isNamed) {
     result += `${style.funcName(meta.name)}`;
-  } else if (is.function(code)) {
+  } else if (ateos.isFunction(code)) {
     result += `${style.funcName(code.name)}`;
   }
   result += style.sym("(");
@@ -71,7 +71,7 @@ export default (code, options, styleName = "none") => {
       const arg = meta.args[i];
       result += style.arg(arg);
       const defVal = meta.defaults[arg];
-      if (!is.undefined(defVal)) {
+      if (!ateos.isUndefined(defVal)) {
         result += ` ${style.sym("=")} ${style.def(defVal)}`;
       }
       if ((meta.args.length - 1) > i) {

@@ -3,7 +3,7 @@ const {
 } = ateos;
 
 export default (ms) => {
-  if (!is.number(ms)) {
+  if (!ateos.isNumber(ms)) {
     throw new TypeError(`${ms} is not a number`);
   }
 

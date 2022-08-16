@@ -334,7 +334,7 @@ describe("util", "ltgt", () => {
     make(elements.map(String), ranges.map((e) => {
         const r = {};
         for (const k in e.range) {
-            if (is.number(e.range[k])) {
+            if (ateos.isNumber(e.range[k])) {
                 r[k] = e.range.toString();
             }
         }

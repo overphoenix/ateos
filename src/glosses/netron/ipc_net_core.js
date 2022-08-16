@@ -69,7 +69,7 @@ export default class IPCNetCore extends AbstractNetCore {
   }
 
   stop() {
-    if (!is.null(this.node)) {
+    if (!ateos.isNull(this.node)) {
       if (this[STARTED]) {
         return new Promise((resolve, reject) => {
           this.node.stop((err) => {
@@ -90,9 +90,9 @@ export default class IPCNetCore extends AbstractNetCore {
     await this._createNode();
 
     let peerInfo;
-    if (ateos.multiformat.multiaddr.isMultiaddr(addr) || is.string(addr)) {
+    if (ateos.multiformat.multiaddr.isMultiaddr(addr) || ateos.isString(addr)) {
       let ma = addr;
-      if (is.string(addr)) {
+      if (ateos.isString(addr)) {
         ma = new ateos.multiformat.multiaddr(addr);
       }
       const peerIdB58Str = ma.getPeerId();
@@ -116,7 +116,7 @@ export default class IPCNetCore extends AbstractNetCore {
       } catch (err) {
         // fresh peer...
       }
-    } else if (is.string(netron)) {
+    } else if (ateos.isString(netron)) {
       protocol = netron;
     }
 

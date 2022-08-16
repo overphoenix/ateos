@@ -26,7 +26,7 @@ const isEscaped = (node) => {
  * @return {Boolean}
  */
 const isType = (node, type) => {
-  return !is.undefined(node) && node.type === type;
+  return !ateos.isUndefined(node) && node.type === type;
 };
 
 
@@ -73,7 +73,7 @@ const noInner = (node) => {
  * @return {Boolean}
  */
 const hasQueue = (node) => {
-  return is.array(node.queue) && node.queue.length;
+  return ateos.isArray(node.queue) && node.queue.length;
 };
 
 
@@ -235,7 +235,7 @@ export default function (braces, options) {
         queue.push(ele);
       }
 
-      if (close && is.string(ele) && ele.length === 1) {
+      if (close && ateos.isString(ele) && ele.length === 1) {
         open = "";
         close = "";
       }
@@ -245,7 +245,7 @@ export default function (braces, options) {
         queue = util.flatten(_util.join(queue, close));
       }
 
-      if (is.undefined(last)) {
+      if (ateos.isUndefined(last)) {
         prev.queue = [queue];
       } else {
         prev.queue.push(util.flatten(_util.join(last, queue)));
@@ -262,7 +262,7 @@ export default function (braces, options) {
 
       if (options.optimize !== false) {
         this.output = _util.last(util.flatten(this.ast.queue));
-      } else if (is.array(_util.last(this.ast.queue))) {
+      } else if (ateos.isArray(_util.last(this.ast.queue))) {
         this.output = util.flatten(this.ast.queue.pop());
       } else {
         this.output = util.flatten(this.ast.queue);

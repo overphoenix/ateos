@@ -2348,13 +2348,13 @@ describe("core", () => {
                     let hadNumbers = false;
 
                     const values = await core.create([1, 2, 3, 4, 5, "a", "b", "c", ["key"], ["value"]])
-                        .stash("numbers", (x) => is.number(x))
-                        .stash("strings", (x) => is.string(x))
+                        .stash("numbers", (x) => ateos.isNumber(x))
+                        .stash("strings", (x) => ateos.isString(x))
                         .map((x) => {
                             expect(x).to.be.an("array");
                             return x;
                         })
-                        .stash("arrays", (x) => is.array(x))
+                        .stash("arrays", (x) => ateos.isArray(x))
                         .unstash("numbers")
                         .map((x) => {
                             hadNumbers = true;

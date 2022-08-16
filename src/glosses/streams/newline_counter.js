@@ -5,7 +5,7 @@ const NEWLINE = "\n".charCodeAt(0);
 const counters = new Map();
 
 const processByte = (stream, byte) => {
-  if (!is.number(byte)) {
+  if (!ateos.isNumber(byte)) {
     throw new ateos.error.NotValidException("Invalid byte data for stream");
   }
 
@@ -22,7 +22,7 @@ export const install = (stream) => {
 
   const write = stream.write;
   let prototypedWrite = true;
-  if (is.propertyOwned(stream, "write")) {
+  if (ateos.isPropertyOwned(stream, "write")) {
     prototypedWrite = false;
   }
   counters.set(stream, {
@@ -39,7 +39,7 @@ export const install = (stream) => {
         let i = 0;
         const l = chunk.length;
 
-        if (is.string(chunk)) {
+        if (ateos.isString(chunk)) {
           for (; i < l; i++) {
             if (processByte(stream, chunk.charCodeAt(i))) {
               counter++;
@@ -74,7 +74,7 @@ export const install = (stream) => {
 export const uninstall = (stream) => {
   if (stream[NEWLINER_SYMBOL] === true) {
     const streamData = counters.get(stream);
-    if (is.undefined(streamData)) {
+    if (ateos.isUndefined(streamData)) {
       throw new ateos.error.NotFoundException("New line counter is not found for stream");
     }
 

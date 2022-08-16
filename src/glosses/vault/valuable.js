@@ -58,8 +58,8 @@ export default class Valuable {
     let keyMeta = this._getKeyUnsafe(name);
     let id;
     let shouldUpdateMeta = false;
-    type = (is.undefined(type) ? ateos.typeOf(value) : type);
-    if (is.undefined(keyMeta)) {
+    type = (ateos.isUndefined(type) ? ateos.typeOf(value) : type);
+    if (ateos.isUndefined(keyMeta)) {
       id = this[VALUABLE_META].nextKeyId++;
       keyMeta = {
         id,
@@ -69,7 +69,7 @@ export default class Valuable {
       this[VALUABLE_META].kids.push(id);
       await this._updateMeta();
       this[VALUABLE_KEYS].set(name, keyMeta);
-      if (value && is.number(value.length)) {
+      if (value && ateos.isNumber(value.length)) {
         keyMeta.size = value.length;
       }
       shouldUpdateMeta = true;
@@ -79,7 +79,7 @@ export default class Valuable {
         keyMeta.type = type;
         shouldUpdateMeta = true;
       }
-      if (value && is.number(value.length) && (is.undefined(keyMeta.size) || keyMeta.size !== value.length)) {
+      if (value && ateos.isNumber(value.length) && (ateos.isUndefined(keyMeta.size) || keyMeta.size !== value.length)) {
         keyMeta.size = value.length;
         shouldUpdateMeta = true;
       }
@@ -209,22 +209,22 @@ export default class Valuable {
 
   async fromJSON(json) {
     await this.clear();
-    if (is.string(json.notes) && json.notes !== this[VALUABLE_META].notes) {
+    if (ateos.isString(json.notes) && json.notes !== this[VALUABLE_META].notes) {
       this[VALUABLE_META].notes = json.notes;
     }
 
-    if (is.array(json.entries)) {
+    if (ateos.isArray(json.entries)) {
       const order = [];
       for (const entry of json.entries) {
         const id = await this.set(entry.name, entry.value); // eslint-disable-line
         order.push(id);
       }
       this[VALUABLE_META].order = order;
-    } else if (is.plainObject(json.entries)) {
+    } else if (ateos.isPlainObject(json.entries)) {
       await this.setMulti(json.entries);
     }
 
-    if (is.array(json.tags)) {
+    if (ateos.isArray(json.tags)) {
       for (const tag of json.tags) {
         await this.addTag(tag, true); // eslint-disable-line
       }
@@ -234,7 +234,7 @@ export default class Valuable {
   }
 
   async addTag(tag, _isWeak = false) {
-    if (is.array(tag)) {
+    if (ateos.isArray(tag)) {
       const result = [];
       for (const t of tag) {
         if (!hasTag(this[VALUABLE_TAGS], t)) {
@@ -304,7 +304,7 @@ export default class Valuable {
 
   _getKey(name) {
     const keyMeta = this._getKeyUnsafe(name);
-    if (is.undefined(keyMeta)) {
+    if (ateos.isUndefined(keyMeta)) {
       throw new error.NotExistsException(`Key not exists: ${name}`);
     }
     return keyMeta;

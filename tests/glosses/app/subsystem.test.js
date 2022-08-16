@@ -135,7 +135,7 @@ describe("Subsystem", () => {
             expect(state).to.be.equal(expectedStates.shift()).mark();
           });
 
-          if (is.array(cAse.returns)) {
+          if (ateos.isArray(cAse.returns)) {
             expect(await ss.configure(...cAse.args)).to.have.members(cAse.returns).mark();
           } else {
             expect(await ss.configure(...cAse.args)).to.be.equal(cAse.returns).mark();
@@ -153,7 +153,7 @@ describe("Subsystem", () => {
           });
 
 
-          if (is.array(cAse.returns)) {
+          if (ateos.isArray(cAse.returns)) {
             expect(await ss.configure(...cAse.args)).to.have.members(cAse.returns).mark();
           } else {
             expect(await ss.configure(...cAse.args)).to.be.equal(cAse.returns).mark();
@@ -171,7 +171,7 @@ describe("Subsystem", () => {
             expect(state).to.be.equal(expectedStates.shift()).mark();
           });
 
-          if (is.array(cAse.returns)) {
+          if (ateos.isArray(cAse.returns)) {
             expect(await ss.configure(...cAse.args)).to.have.members(cAse.returns).mark();
             expect(await ss.initialize(...cAse.args)).to.have.members(cAse.returns).mark();
           } else {
@@ -190,7 +190,7 @@ describe("Subsystem", () => {
             expect(state).to.be.equal(expectedStates.shift()).mark();
           });
 
-          if (is.array(cAse.returns)) {
+          if (ateos.isArray(cAse.returns)) {
             expect(await ss.configure(...cAse.args)).to.have.members(cAse.returns).mark();
             expect(await ss.initialize(...cAse.args)).to.have.members(cAse.returns).mark();
           } else {
@@ -210,7 +210,7 @@ describe("Subsystem", () => {
             expect(state).to.be.equal(expectedStates.shift()).mark();
           });
 
-          if (is.array(cAse.returns)) {
+          if (ateos.isArray(cAse.returns)) {
             expect(await ss.configure(...cAse.args)).to.have.members(cAse.returns).mark();
             expect(await ss.initialize(...cAse.args)).to.have.members(cAse.returns).mark();
             expect(await ss.uninitialize(...cAse.args)).to.have.members(cAse.returns).mark();
@@ -231,7 +231,7 @@ describe("Subsystem", () => {
             expect(state).to.be.equal(expectedStates.shift()).mark();
           });
 
-          if (is.array(cAse.returns)) {
+          if (ateos.isArray(cAse.returns)) {
             expect(await ss.configure(...cAse.args)).to.have.members(cAse.returns).mark();
             expect(await ss.initialize(...cAse.args)).to.have.members(cAse.returns).mark();
             expect(await ss.uninitialize(...cAse.args)).to.have.members(cAse.returns).mark();
@@ -253,7 +253,7 @@ describe("Subsystem", () => {
             expect(state).to.be.equal(expectedStates.shift()).mark();
           });
 
-          if (is.array(cAse.returns)) {
+          if (ateos.isArray(cAse.returns)) {
             expect(await ss.configure(...cAse.args)).to.have.members(cAse.returns).mark();
             expect(await ss.initialize(...cAse.args)).to.have.members(cAse.returns).mark();
             expect(await ss.uninitialize(...cAse.args)).to.have.members(cAse.returns).mark();
@@ -276,7 +276,7 @@ describe("Subsystem", () => {
             expect(state).to.be.equal(expectedStates.shift()).mark();
           });
 
-          if (is.array(cAse.returns)) {
+          if (ateos.isArray(cAse.returns)) {
             expect(await ss.configure(...cAse.args)).to.have.members(cAse.returns).mark();
             expect(await ss.initialize(...cAse.args)).to.have.members(cAse.returns).mark();
             expect(await ss.uninitialize(...cAse.args)).to.have.members(cAse.returns).mark();

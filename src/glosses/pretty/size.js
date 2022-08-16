@@ -3,7 +3,7 @@ const {
 } = ateos;
 
 export default (num, space = " ") => {
-  if (!is.number(num) || is.nan(num)) {
+  if (!ateos.isNumber(num) || ateos.isNan(num)) {
     throw new TypeError(`${num} is not a a number`);
   }
 

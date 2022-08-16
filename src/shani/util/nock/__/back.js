@@ -38,11 +38,11 @@ export default function back(fixtureName, options = {}, nockedFn) {
     throw new Error("Back requires nock.back.fixtures to be set");
   }
 
-  if (!is.string(fixtureName)) {
+  if (!ateos.isString(fixtureName)) {
     throw new Error("Parameter fixtureName must be a string");
   }
 
-  if (is.function(options)) {
+  if (ateos.isFunction(options)) {
     [options, nockedFn] = [{}, options];
   }
 
@@ -57,7 +57,7 @@ export default function back(fixtureName, options = {}, nockedFn) {
   };
 
   // If nockedFn is a function then invoke it, otherwise return a promise resolving to nockDone.
-  if (is.function(nockedFn)) {
+  if (ateos.isFunction(nockedFn)) {
     nockedFn.call(context, nockDone);
   } else {
     return Promise.resolve({ nockDone, context });
@@ -69,7 +69,7 @@ const applyHook = (scopes, fn) => {
     return;
   }
 
-  if (!is.function(fn)) {
+  if (!ateos.isFunction(fn)) {
     throw new Error("processing hooks must be a function");
   }
 
@@ -180,7 +180,7 @@ class Record extends Mode {
     if (context.isRecording) {
       let outputs = nock.recorder.play();
 
-      if (is.function(options.afterRecord)) {
+      if (ateos.isFunction(options.afterRecord)) {
         outputs = options.afterRecord(outputs);
       }
 
@@ -221,7 +221,7 @@ const modes = ateos.lazify({
 });
 
 back.setMode = (mode) => {
-  if (!is.propertyDefined(modes, mode)) {
+  if (!ateos.isPropertyDefined(modes, mode)) {
     throw new Error(`Unknown mode: ${mode}`);
   }
 

@@ -179,7 +179,7 @@ Algorithm.prototype.initialize = function (options) {
     it must be 16, 24, or 32 bytes in length. If it is in 32-bit
     integers, it must be 4, 6, or 8 integers long. */
 
-  if (is.string(key) &&
+  if (ateos.isString(key) &&
     (key.length === 16 || key.length === 24 || key.length === 32)) {
     // convert key string into byte buffer
     key = crypto.util.createBuffer(key);

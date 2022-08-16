@@ -3,8 +3,8 @@ export default function plugin() {
     const { is, error, util } = ateos;
 
     let replacePairs = [];
-    if (is.array(search)) {
-      if (!is.array(replacement)) {
+    if (ateos.isArray(search)) {
+      if (!ateos.isArray(replacement)) {
         throw new error.InvalidArgumentException("If 'search' is an array, 'replacement' must be array too");
       }
 
@@ -15,9 +15,9 @@ export default function plugin() {
       for (let i = 0; i < search.length; ++i) {
         replacePairs.push([search[i], replacement[i]]);
       }
-    } else if (is.string(search) || is.regexp(search)) {
+    } else if (ateos.isString(search) || ateos.isRegexp(search)) {
       replacePairs = [[search, replacement]];
-    } else if (is.object(search)) {
+    } else if (ateos.isObject(search)) {
       const replaceObj = search;
       search = util.keys(replaceObj);
 
@@ -44,13 +44,13 @@ export default function plugin() {
         for (let i = 0; i < replacePairs.length; ++i) {
           const [searchNow, replacementNow] = replacePairs[i];
 
-          if (is.regexp(searchNow)) {
+          if (ateos.isRegexp(searchNow)) {
             contents = contents.replace(searchNow, replacementNow);
           } else {
             const chunks = contents.split(searchNow);
 
             let result;
-            if (is.function(replacementNow)) {
+            if (ateos.isFunction(replacementNow)) {
               // Start with the first chunk already in the result
               // Replacements will be added thereafter
               // This is done to avoid checking the value of i in the loop

@@ -34,7 +34,7 @@ export default class Configuration extends ateos.configuration.GenericConfig {
     if (options.ext === ".json" && !options.space) {
       options.space = "  ";
     }
-    return super.save(is.string(cwd) ? aPath.join(cwd, Configuration.configName) : Configuration.configName, options);
+    return super.save(ateos.isString(cwd) ? aPath.join(cwd, Configuration.configName) : Configuration.configName, options);
   }
 
   static async load({ cwd } = {}) {

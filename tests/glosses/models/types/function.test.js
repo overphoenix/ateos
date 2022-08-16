@@ -265,7 +265,7 @@ describe("func", () => {
         value.a = "123";
 
         const validated = await schema.validate(value);
-        assert.isTrue(is.function(validated));
+        assert.isTrue(ateos.isFunction(validated));
         expect(validated()).to.equal("abc");
         expect(validated).to.not.equal(value);
     });
@@ -285,7 +285,7 @@ describe("func", () => {
         };
 
         const validated = await schema.validate(value);
-        assert.isTrue(is.function(validated));
+        assert.isTrue(ateos.isFunction(validated));
         const p = new validated();
         expect(p.get()).to.equal("o");
         expect(validated).to.not.equal(value);
@@ -304,7 +304,7 @@ describe("func", () => {
         value.a = "123";
 
         const validated = await schema.validate(value);
-        assert.isTrue(is.function(validated));
+        assert.isTrue(ateos.isFunction(validated));
         expect(validated()).to.equal("abc");
         expect(validated).to.equal(value);
     });

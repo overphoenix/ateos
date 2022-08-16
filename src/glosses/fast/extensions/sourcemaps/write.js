@@ -1,7 +1,7 @@
 export default function plugin({ __ }) {
   const { is, error, util } = ateos;
   return function write(destPath, options) {
-    if (is.undefined(options) && !is.string(destPath)) {
+    if (ateos.isUndefined(options) && !ateos.isString(destPath)) {
       options = destPath;
       destPath = undefined;
     }

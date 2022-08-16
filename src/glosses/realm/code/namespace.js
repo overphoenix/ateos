@@ -57,8 +57,8 @@ export default class XNamespace {
         const moduleExports = nsModule.exports();
         const numberOfExports = nsModule.numberOfExports();
         return !indexRe.test(std.path.basename(x.path)) &&
-                    ((numberOfExports === 1 && realm.code.isFunctionLike(moduleExports.default) && is.string(moduleExports.default.name)) ||
-                        (is.undefined(moduleExports.default) && numberOfExports >= 1));
+                    ((numberOfExports === 1 && realm.code.isFunctionLike(moduleExports.default) && ateos.isString(moduleExports.default.name)) ||
+                        (ateos.isUndefined(moduleExports.default) && numberOfExports >= 1));
       });
       if (isOk) {
         for (const nsModInfo of ns.modules) {
@@ -73,7 +73,7 @@ export default class XNamespace {
   }
 
   get(name) {
-    if (!is.propertyOwned(this.exports, name)) {
+    if (!ateos.isPropertyOwned(this.exports, name)) {
       throw new ateos.error.NotFoundException(`Unknown object: ${this.name}.${name}`);
     }
     return this.exports[name];

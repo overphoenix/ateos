@@ -112,7 +112,7 @@ describe("util", "fakeClock", () => {
             it("returns numeric id or object with numeric id", function () {
                 const result = this.clock.setTimeout("");
 
-                if (is.object(result)) {
+                if (ateos.isObject(result)) {
                     assert.isNumber(result.id);
                 } else {
                     assert.isNumber(result);
@@ -283,7 +283,7 @@ describe("util", "fakeClock", () => {
             it("returns numeric id or object with numeric id", function () {
                 const result = this.clock.setImmediate(noop);
 
-                if (is.object(result)) {
+                if (ateos.isObject(result)) {
                     assert.isNumber(result.id);
                 } else {
                     assert.isNumber(result);
@@ -1254,7 +1254,7 @@ describe("util", "fakeClock", () => {
             it("returns numeric id or object with numeric id", function () {
                 const result = this.clock.setInterval("");
 
-                if (is.object(result)) {
+                if (ateos.isObject(result)) {
                     assert.isNumber(result.id);
                 } else {
                     assert.isNumber(result);
@@ -1625,7 +1625,7 @@ describe("util", "fakeClock", () => {
                 }
 
                 clearTimeout(this.timer);
-                if (is.undefined(this.dateNow)) {
+                if (ateos.isUndefined(this.dateNow)) {
                     delete global.Date.now;
                 } else {
                     global.Date.now = this.dateNow;
@@ -1681,7 +1681,7 @@ describe("util", "fakeClock", () => {
 
                 const to = setTimeout(stb, 1000);
 
-                if (is.object(setTimeout(noop, 0))) {
+                if (ateos.isObject(setTimeout(noop, 0))) {
                     assert.isNumber(to.id);
                     assert.isFunction(to.ref);
                     assert.isFunction(to.unref);
@@ -2104,7 +2104,7 @@ describe("util", "fakeClock", () => {
                 assert.equal(timers.length, 1);
                 assert.equal(timers[0].createdAt, clock.now);
                 assert.equal(timers[0].callAt, clock.now + 100);
-                assert(!is.undefined(timers[0].id));
+                assert(!ateos.isUndefined(timers[0].id));
             });
 
             it("does not return already executed timers on uninstall", () => {
@@ -2116,7 +2116,7 @@ describe("util", "fakeClock", () => {
                 assert.equal(timers.length, 1);
                 assert.equal(timers[0].createdAt, clock.now - 100);
                 assert.equal(timers[0].callAt, clock.now + 100);
-                assert(!is.undefined(timers[0].id));
+                assert(!ateos.isUndefined(timers[0].id));
             });
 
             it("returns multiple timers on uninstall if created", () => {
@@ -2130,7 +2130,7 @@ describe("util", "fakeClock", () => {
                     assert.equal(timers[i].createdAt, clock.now);
                     assert.equal(timers[i].callAt, clock.now + 100 * i);
                 }
-                assert(!is.undefined(timers[0].id));
+                assert(!ateos.isUndefined(timers[0].id));
             });
 
             it("passes arguments when installed - GitHub#122", () => {

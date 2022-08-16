@@ -1860,7 +1860,7 @@ describe("object", () => {
             expect(() => model.object().with("a", "b", "c")).to.throw(message);
 
             const res = model.object().with("a", "b");
-            assert.isTrue(is.object(res));
+            assert.isTrue(ateos.isObject(res));
             assert.isTrue(res.isJoi === true);
         });
 
@@ -1927,7 +1927,7 @@ describe("object", () => {
             expect(() => model.object().without("a", "b", "c")).to.throw(message);
 
             const res = model.object().without("a", "b");
-            assert.isTrue(is.object(res));
+            assert.isTrue(ateos.isObject(res));
             assert.isTrue(res.isJoi === true);
         });
 

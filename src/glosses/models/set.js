@@ -13,16 +13,16 @@ const extendedCheckForValue = function (value, insensitive) {
         return item instanceof Date && value.getTime() === item.getTime();
       };
     }
-    if (is.buffer(value)) {
+    if (ateos.isBuffer(value)) {
       return (item) => {
 
-        return is.buffer(item) && value.length === item.length && value.toString("binary") === item.toString("binary");
+        return ateos.isBuffer(item) && value.length === item.length && value.toString("binary") === item.toString("binary");
       };
     }
   } else if (insensitive && valueType === "string") {
     const lowercaseValue = value.toLowerCase();
     return (item) => {
-      return is.string(item) && lowercaseValue === item.toLowerCase();
+      return ateos.isString(item) && lowercaseValue === item.toLowerCase();
     };
   }
 
@@ -42,7 +42,7 @@ export default class ModelSet {
       return this;
     }
 
-    if (!is.undefined(refs)) { // If it's a merge, we don't have any refs
+    if (!ateos.isUndefined(refs)) { // If it's a merge, we don't have any refs
       pushRef(refs, value);
     }
 
@@ -86,7 +86,7 @@ export default class ModelSet {
         for (let item of this._set) {
           if (isRef(item)) {
             item = item(state.reference || state.parent, options);
-            if (value === item || (is.array(item) && item.includes(value))) {
+            if (value === item || (ateos.isArray(item) && item.includes(value))) {
               return true;
             }
           }
@@ -116,7 +116,7 @@ export default class ModelSet {
       if (checkRef && isRef(item)) { // Only resolve references if there is a state, otherwise it's a merge
         item = item(state.reference || state.parent, options);
 
-        if (is.array(item)) {
+        if (ateos.isArray(item)) {
           if (item.find(isReallyEqual)) {
             return true;
           }
@@ -137,7 +137,7 @@ export default class ModelSet {
       const values = [];
 
       for (const item of this._set) {
-        if (!is.undefined(item)) {
+        if (!ateos.isUndefined(item)) {
           values.push(item);
         }
       }

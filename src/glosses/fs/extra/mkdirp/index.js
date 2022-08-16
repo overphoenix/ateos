@@ -8,7 +8,7 @@ const {
 export default (fs) => {
   const mkdirp = (input, options, callback) => {
     checkPath(input);
-    if (is.function(options)) {
+    if (ateos.isFunction(options)) {
       callback = options;
       options = null;
     }

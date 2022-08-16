@@ -71,11 +71,11 @@ describe("util", "mockInstance", () => {
         assert.equal(mock.a, "aaa");
         assert.equal(mock.b, 8);
         assert.throws(() => mock.b = 10, TypeError);
-        assert.isFalse(is.propertyOwned(instance, "c"));
+        assert.isFalse(ateos.isPropertyOwned(instance, "c"));
         assert.equal(mock.c, 12);
         mock.c = 10;
         assert.equal(mock.c, 10);
-        assert.isFalse(is.propertyOwned(instance, "c"));
+        assert.isFalse(ateos.isPropertyOwned(instance, "c"));
         assert.equal(mock.d, false);
         mock.d = true;
         assert.equal(mock.d, true);

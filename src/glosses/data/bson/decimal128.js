@@ -239,16 +239,16 @@ Decimal128.fromString = function (string) {
     const expNumber = stringMatch[6];
 
     // they provided e, but didn't give an exponent number. for ex "1e"
-    if (e && is.undefined(expNumber)) {
+    if (e && ateos.isUndefined(expNumber)) {
       invalidErr(string, "missing exponent power"); 
     }
 
     // they provided e, but didn't give a number before it. for ex "e1"
-    if (e && is.undefined(unsignedNumber)) {
+    if (e && ateos.isUndefined(unsignedNumber)) {
       invalidErr(string, "missing exponent base"); 
     }
 
-    if (is.undefined(e) && (expSign || expNumber)) {
+    if (ateos.isUndefined(e) && (expSign || expNumber)) {
       invalidErr(string, "missing e before exponent");
     }
   }

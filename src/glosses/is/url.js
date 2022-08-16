@@ -16,7 +16,7 @@ const wrappedIpv6 = /^\[([^\]]+)\](?::([0-9]+))?$/;
 const checkHost = (host, matches) => {
   for (let i = 0; i < matches.length; i++) {
     const match = matches[i];
-    if (host === match || (is.regexp(match) && match.test(host))) {
+    if (host === match || (ateos.isRegexp(match) && match.test(host))) {
       return true;
     }
   }
@@ -96,7 +96,7 @@ export default function isURL(url, options) {
     }
   }
 
-  if (!is.null(portStr)) {
+  if (!ateos.isNull(portStr)) {
     port = parseInt(portStr, 10);
     if (!/^[0-9]+$/.test(portStr) || port <= 0 || port > 65535) {
       return false;

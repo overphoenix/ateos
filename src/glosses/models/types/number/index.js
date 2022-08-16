@@ -27,14 +27,14 @@ internals.Number = class extends Any {
       value
     };
 
-    if (is.string(value) &&
+    if (ateos.isString(value) &&
             options.convert) {
 
       const number = parseFloat(value);
       result.value = (isNaN(number) || !isFinite(value)) ? NaN : number;
     }
 
-    const isNumber = is.number(result.value) && !isNaN(result.value);
+    const isNumber = ateos.isNumber(result.value) && !isNaN(result.value);
 
     if (options.convert && "precision" in this._flags && isNumber) {
 
@@ -52,7 +52,7 @@ internals.Number = class extends Any {
     const isRef_ = isRef(base);
 
     if (!isRef_) {
-      assert(is.number(base) && isFinite(base), "multiple must be a number");
+      assert(ateos.isNumber(base) && isFinite(base), "multiple must be a number");
       assert(base > 0, "multiple must be greater than 0");
     }
 
@@ -60,7 +60,7 @@ internals.Number = class extends Any {
 
       const divisor = isRef_ ? base(state.reference || state.parent, options) : base;
 
-      if (isRef_ && (!is.number(divisor) || !isFinite(divisor))) {
+      if (isRef_ && (!ateos.isNumber(divisor) || !isFinite(divisor))) {
         return this.createError("number.ref", { ref: base.key }, state, options);
       }
 
@@ -144,7 +144,7 @@ internals.compare = function (type, compare) {
   return function (limit) {
 
     const isRef_ = isRef(limit);
-    const isNumber = is.number(limit) && !isNaN(limit);
+    const isNumber = ateos.isNumber(limit) && !isNaN(limit);
 
     assert(isNumber || isRef_, "limit must be a number or reference");
 
@@ -154,7 +154,7 @@ internals.compare = function (type, compare) {
       if (isRef_) {
         compareTo = limit(state.reference || state.parent, options);
 
-        if (!(is.number(compareTo) && !isNaN(compareTo))) {
+        if (!(ateos.isNumber(compareTo) && !isNaN(compareTo))) {
           return this.createError("number.ref", { ref: limit.key }, state, options);
         }
       } else {

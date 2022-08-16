@@ -66,7 +66,7 @@ export class FastLocalStream extends ateos.fast.Stream {
     originTimes = true,
     originOwner = true
   } = {}) {    
-    const isDirFunction = is.function(dir);
+    const isDirFunction = ateos.isFunction(dir);
     if (!isDirFunction) {
       dir = aPath.resolve(cwd, String(dir));
     }

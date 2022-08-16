@@ -209,15 +209,15 @@ const splitToPatterns = (min, max, tok, options) => {
 const padding = (str) => /^-?(0+)\d/.exec(str);
 
 export default function toRegexRange(min, max, options) {
-  if (!is.numeral(min)) {
+  if (!ateos.isNumeral(min)) {
     throw new error.InvalidArgumentException("toRegexRange: first argument is invalid.");
   }
 
-  if (is.undefined(max) || min === max) {
+  if (ateos.isUndefined(max) || min === max) {
     return String(min);
   }
 
-  if (!is.numeral(max)) {
+  if (!ateos.isNumeral(max)) {
     throw new error.InvalidArgumentException("toRegexRange: second argument is invalid.");
   }
 

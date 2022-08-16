@@ -86,7 +86,7 @@ class Request extends ateos.EventEmitter {
   }
 
   expect(fn) {
-    if (!is.function(fn)) {
+    if (!ateos.isFunction(fn)) {
       throw new error.InvalidArgumentException("must be a function");
     }
     this.expects.push(fn);
@@ -97,7 +97,7 @@ class Request extends ateos.EventEmitter {
     this.expect((response) => {
       assert.equal(response.statusCode, code, `Expected code ${code} but got ${response.statusCode}`);
     });
-    if (!is.null(message)) {
+    if (!ateos.isNull(message)) {
       this.expectStatusMessage(message);
     }
     return this;
@@ -124,13 +124,13 @@ class Request extends ateos.EventEmitter {
           }
         }
       }
-      if (is.regexp(body)) {
+      if (ateos.isRegexp(body)) {
         assert(body.test(responseBody.toString()));
-      } else if (is.string(body)) {
+      } else if (ateos.isString(body)) {
         assert.equal(body, responseBody.toString());
-      } else if (is.buffer(body)) {
+      } else if (ateos.isBuffer(body)) {
         assert(Buffer.compare(responseBody, body) === 0);
-      } else if (is.object(body)) {
+      } else if (ateos.isObject(body)) {
         // check if the content type is json?
         assert(is.deepEqual(body, JSON.parse(responseBody)));
       }
@@ -145,7 +145,7 @@ class Request extends ateos.EventEmitter {
 
   expectHeader(key, value) {
     return this.expect((response) => {
-      if (is.regexp(value)) {
+      if (ateos.isRegexp(value)) {
         assert(value.test(response.headers[key.toLowerCase()]));
       } else {
         assert.equal(response.headers[key.toLowerCase()], value);
@@ -170,7 +170,7 @@ class Request extends ateos.EventEmitter {
 
     let mustBeClosed = false;
     let address = server.address();
-    if (is.null(address)) {
+    if (ateos.isNull(address)) {
       mustBeClosed = true;
       if (this.isAdoneServer) {
         await server.bind({ port: 0, host: "127.0.0.1" });
@@ -189,7 +189,7 @@ class Request extends ateos.EventEmitter {
       const { headers } = this;
 
       if (body) {
-        if (is.object(body)) {
+        if (ateos.isObject(body)) {
           headers["Content-Type"] = "application/json";
           body = JSON.stringify(body);
         }

@@ -18,11 +18,11 @@ const _updateList = (config, listName, values) => {
 // Use Ateos jsconfig as default
 export const create = async ({ cwd, include, exclude } = {}) => {
   const ateosJsconfig = await configuration.load(path.join(ateos.HOME, "jsconfig.json"));
-  if (is.array(include)) {
+  if (ateos.isArray(include)) {
     _updateList(ateosJsconfig, "include", include);
   }
 
-  if (is.array(exclude)) {
+  if (ateos.isArray(exclude)) {
     _updateList(ateosJsconfig, "exclude", include);
   }
 

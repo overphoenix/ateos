@@ -5,7 +5,7 @@ class ExtendableError extends Error {
     super(message);
     this.name = this.constructor.name;
     this.message = message;
-    if (is.function(Error.captureStackTrace)) {
+    if (ateos.isFunction(Error.captureStackTrace)) {
       Error.captureStackTrace(this, this.constructor);
     } else {
       this.stack = new Error(message).stack;

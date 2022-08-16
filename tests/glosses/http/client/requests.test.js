@@ -60,7 +60,7 @@ describe("requests", () => {
             expect(reason.code).to.be.equal("ENOTFOUND");
             expect(reason.config.method).to.be.equal("get");
             expect(reason.config.url).to.be.equal("http://suchaservershouldnoexist31337.org/foo");
-            expect(ateos.is.object(reason.request)).to.be.true();
+            expect(ateos.ateos.isObject(reason.request)).to.be.true();
             done();
         };
 
@@ -206,7 +206,7 @@ describe("requests", () => {
         request("http://example.org/foo", {
             responseType: "buffer"
         }).then((response) => {
-            expect(ateos.is.buffer(response.data)).to.be.true;
+            expect(ateos.ateos.isBuffer(response.data)).to.be.true;
             done();
         });
     });

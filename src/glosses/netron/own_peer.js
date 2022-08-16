@@ -12,7 +12,7 @@ export default class OwnPeer extends AbstractPeer {
 
   set(defId, name, data) {
     const stub = this.netron.stubManager.getStub(defId);
-    if (is.undefined(stub)) {
+    if (ateos.isUndefined(stub)) {
       throw new error.NotExistsException(`Context with definition id '${defId}' not exists`);
     }
     return stub.set(name, data, this);
@@ -20,7 +20,7 @@ export default class OwnPeer extends AbstractPeer {
 
   async get(defId, name, defaultData) {
     const stub = this.netron.stubManager.getStub(defId);
-    if (is.undefined(stub)) {
+    if (ateos.isUndefined(stub)) {
       throw new error.NotExistsException(`Context with definition id '${defId}' not exists`);
     }
     const result = await stub.get(name, defaultData, this);
@@ -70,7 +70,7 @@ export default class OwnPeer extends AbstractPeer {
 
   _getContextDefinition(ctxId) {
     const stub = this.netron.contexts.get(ctxId);
-    if (is.undefined(stub)) {
+    if (ateos.isUndefined(stub)) {
       throw new error.NotExistsException(`Context '${ctxId}' not exists`);
     }
     return stub.definition;

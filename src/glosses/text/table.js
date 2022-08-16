@@ -89,7 +89,7 @@ const readState = (line) => {
   const code = codeRegex(true);
   let controlChars = code.exec(line);
   const state = {};
-  while (!is.null(controlChars)) {
+  while (!ateos.isNull(controlChars)) {
     updateState(state, controlChars);
     controlChars = code.exec(line);
   }
@@ -299,13 +299,13 @@ export class Cell {
   }
 
   setOptions(options) {
-    if (is.string(options) || is.number(options) || is.boolean(options)) {
+    if (ateos.isString(options) || ateos.isNumber(options) || ateos.isBoolean(options)) {
       options = { content: `${options}` };
     }
     options = options || {};
     this.options = options;
     const content = options.content;
-    if (is.string(content) || is.number(content) || is.boolean(content)) {
+    if (ateos.isString(content) || ateos.isNumber(content) || ateos.isBoolean(content)) {
       this.content = String(content);
     } else if (!content) {
       this.content = "";
@@ -619,7 +619,7 @@ const makeComputeWidths = (colSpan, desiredWidth, x, forcedMin) => {
     });
 
     vals.forEach((val, index) => {
-      if (is.number(val)) {
+      if (ateos.isNumber(val)) {
         result[index] = val;
       }
     });
@@ -629,18 +629,18 @@ const makeComputeWidths = (colSpan, desiredWidth, x, forcedMin) => {
       const span = cell[colSpan];
       const col = cell[x];
       let existingWidth = result[col];
-      let editableCols = is.number(vals[col]) ? 0 : 1;
+      let editableCols = ateos.isNumber(vals[col]) ? 0 : 1;
       let i;
       for (i = 1; i < span; i++) {
         existingWidth += 1 + result[col + i];
-        if (!is.number(vals[col + i])) {
+        if (!ateos.isNumber(vals[col + i])) {
           editableCols++;
         }
       }
       if (cell[desiredWidth] > existingWidth) {
         i = 0;
         while (editableCols > 0 && cell[desiredWidth] > existingWidth) {
-          if (!is.number(vals[col + i])) {
+          if (!ateos.isNumber(vals[col + i])) {
             const dif = Math.round((cell[desiredWidth] - existingWidth) / editableCols);
             existingWidth += dif;
             result[col + i] += dif;
@@ -796,10 +796,10 @@ export class Table extends Array {
 
   static makeLayout(table) {
     const cells = table.map((row) => {
-      if (!is.array(row)) {
+      if (!ateos.isArray(row)) {
         const key = Object.keys(row)[0];
         row = row[key];
-        if (is.array(row)) {
+        if (ateos.isArray(row)) {
           row = row.slice();
           row.unshift(key);
         } else {

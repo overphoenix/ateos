@@ -48,7 +48,7 @@ export default (fs) => {
   }
 
   function copyFile(srcStat, src, dest, opts) {
-    if (is.function(fs.copyFileSync)) {
+    if (ateos.isFunction(fs.copyFileSync)) {
       fs.copyFileSync(src, dest);
       fs.chmodSync(dest, srcStat.mode);
       if (opts.preserveTimestamps) {
@@ -185,7 +185,7 @@ export default (fs) => {
   }
 
   return (src, dest, opts) => {
-    if (is.function(opts)) {
+    if (ateos.isFunction(opts)) {
       opts = { filter: opts };
     }
 

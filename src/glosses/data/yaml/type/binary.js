@@ -4,7 +4,7 @@ const { data: { yaml }, is } = ateos;
 const BASE64_MAP = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=\n\r";
 
 const resolveYamlBinary = (data) => {
-  if (is.null(data)) {
+  if (ateos.isNull(data)) {
     return false;
   }
 
@@ -113,6 +113,6 @@ export default new yaml.type.Type("tag:yaml.org,2002:binary", {
   kind: "scalar",
   resolve: resolveYamlBinary,
   construct: constructYamlBinary,
-  predicate: is.buffer,
+  predicate: ateos.isBuffer,
   represent: representYamlBinary
 });

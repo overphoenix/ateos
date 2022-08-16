@@ -9,7 +9,7 @@ const {
 
 export default (proc) => {
   try {
-    if (is.number(proc)) {
+    if (ateos.isNumber(proc)) {
       return process.kill(proc, 0);
     }
 

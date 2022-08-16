@@ -6,11 +6,11 @@ const {
 export default async (pid) => {
   let headers = null;
 
-  if (is.number(pid)) {
+  if (ateos.isNumber(pid)) {
     pid = pid.toString();
   }
 
-  if (!is.string(pid)) {
+  if (!ateos.isString(pid)) {
     pid = process.pid.toString();
   }
 
@@ -40,7 +40,7 @@ export default async (pid) => {
   // ```
 
   const normalizeHeader = (str) => {
-    if (!is.windows) {
+    if (!ateos.isWindows) {
       return str;
     }
 
@@ -59,7 +59,7 @@ export default async (pid) => {
   };
 
   let child;
-  if (is.windows) {
+  if (ateos.isWindows) {
     // See also: https://github.com/nodejs/node-v0.x-archive/issues/2318
     child = exec("wmic.exe", ["PROCESS", "GET", "Name,ProcessId,ParentProcessId,Status"], {
       __winShell: true

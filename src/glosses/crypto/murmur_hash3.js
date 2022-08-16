@@ -14,13 +14,13 @@ const library = {
 
 function _validBytes(bytes) {
   // check the input is an array or a typed array
-  if (!is.array(bytes) && !ArrayBuffer.isView(bytes)) {
+  if (!ateos.isArray(bytes) && !ArrayBuffer.isView(bytes)) {
     return false;
   }
 
   // check all bytes are actually bytes
   for (let i = 0; i < bytes.length; i++) {
-    if (!is.integer(bytes[i]) || bytes[i] < 0 || bytes[i] > 255) {
+    if (!ateos.isInteger(bytes[i]) || bytes[i] < 0 || bytes[i] > 255) {
       return false;
     }
   }

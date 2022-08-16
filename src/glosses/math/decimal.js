@@ -122,7 +122,7 @@ const finalise = (x, sd, rm, isTruncated) => {
     const Ctor = x.constructor;
 
     // Don't round if sd is null or undefined.
-    out: if (!is.nil(sd)) {
+    out: if (!ateos.isNil(sd)) {
         xd = x.d;
 
         // Infinity/NaN.
@@ -417,7 +417,7 @@ const divide = (function () {
             e--;
         }
 
-        if (is.nil(pr)) {
+        if (ateos.isNil(pr)) {
             sd = pr = Ctor.precision;
             rm = Ctor.rounding;
         } else if (dp) {
@@ -800,7 +800,7 @@ const checkRoundingDigits = (d, i, rm, repeating) => {
     k = mathpow(10, LOG_BASE - i);
     rd = d[di] % k | 0;
 
-    if (is.nil(repeating)) {
+    if (ateos.isNil(repeating)) {
         if (i < 3) {
             if (i === 0) {
                 rd = rd / 100 | 0;
@@ -1208,7 +1208,7 @@ const naturalLogarithm = (y, sd) => {
         return new Ctor(xd && !xd[0] ? -1 / 0 : x.s !== 1 ? NaN : xd ? 0 : x);
     }
 
-    if (is.nil(sd)) {
+    if (ateos.isNil(sd)) {
         external = false;
         wpr = pr;
     } else {
@@ -1256,7 +1256,7 @@ const naturalLogarithm = (y, sd) => {
         x = naturalLogarithm(new Ctor(`${c0}.${c.slice(1)}`), wpr - guard).plus(t);
         Ctor.precision = pr;
 
-        return is.nil(sd) ? finalise(x, pr, rm, external = true) : x;
+        return ateos.isNil(sd) ? finalise(x, pr, rm, external = true) : x;
     }
 
     // x1 is x reduced to a value near 1.
@@ -1289,7 +1289,7 @@ const naturalLogarithm = (y, sd) => {
             // e.g. with precision: 12, rounding: 1
             // ln(135520028.6126091714265381533) = 18.7246299999 when it should be 18.72463.
             // `wpr - guard` is the index of first rounding digit.
-            if (is.nil(sd)) {
+            if (ateos.isNil(sd)) {
                 if (checkRoundingDigits(sum.d, wpr - guard, rm, rep)) {
                     Ctor.precision = wpr += guard;
                     t = numerator = x = divide(x1.minus(1), x1.plus(1), wpr, 1);
@@ -1363,7 +1363,7 @@ const naturalExponential = (x, sd) => {
             : x.s ? x.s < 0 ? 0 : x : 0 / 0);
     }
 
-    if (is.nil(sd)) {
+    if (ateos.isNil(sd)) {
         external = false;
         wpr = pr;
     } else {
@@ -1403,7 +1403,7 @@ const naturalExponential = (x, sd) => {
             // e.g. with precision: 18, rounding: 1
             // exp(18.404272462595034083567793919843761) = 98372560.1229999999 (should be 98372560.123)
             // `wpr - guard` is the index of first rounding digit.
-            if (is.nil(sd)) {
+            if (ateos.isNil(sd)) {
 
                 if (rep < 3 && checkRoundingDigits(sum.d, wpr - guard, rm, rep)) {
                     Ctor.precision = wpr += 10;
@@ -2760,7 +2760,7 @@ class MetaDecimal {
         const guard = 5;
 
         // Default base is 10.
-        if (is.nil(base)) {
+        if (ateos.isNil(base)) {
             base = new Ctor(10);
             isBase10 = true;
         } else {
@@ -3769,7 +3769,7 @@ class MetaDecimal {
         const k = e % LOG_BASE;
         d.d[0] = mathpow(10, k < 0 ? LOG_BASE + k : k);
 
-        if (is.nil(maxD)) {
+        if (ateos.isNil(maxD)) {
 
         // d is 10**e, the minimum max-denominator needed.
             maxD = e > 0 ? d : n1;
@@ -3855,7 +3855,7 @@ class MetaDecimal {
 
         x = new Ctor(x);
 
-        if (is.nil(y)) {
+        if (ateos.isNil(y)) {
 
             // If x is not finite, return x.
             if (!x.d) {
@@ -4211,7 +4211,7 @@ class MetaDecimal {
      */
     @alias("set")
     static config(obj) {
-        if (!obj || !is.object(obj)) {
+        if (!obj || !ateos.isObject(obj)) {
             throw Error(`${decimalError}Object expected`);
         }
         let i;
@@ -4863,7 +4863,7 @@ class MetaDecimal {
         Decimal.ROUND_HALF_FLOOR = 8;
         Decimal.EUCLID = 9;
 
-        if (is.undefined(obj)) {
+        if (ateos.isUndefined(obj)) {
             obj = {};
         }
         if (obj) {

@@ -19,7 +19,7 @@ export default function (...streams) {
   };
 
   const add = output.add = function (source) {
-    if (is.array(source)) {
+    if (ateos.isArray(source)) {
       source.forEach(add);
       return this;
     }

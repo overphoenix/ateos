@@ -77,11 +77,11 @@ const readConfig = (ts, fileExists, readFile, options) => {
   delete config.options.incremental;
   // Target ES5 output by default (instead of ES3).
   // console.log(config.options.target);
-  if (is.undefined(config.options.target)) {
+  if (ateos.isUndefined(config.options.target)) {
     config.options.target = ts.ScriptTarget.ES5;
   }
   // Target CommonJS modules by default (instead of magically switching to ES6 when the target is ES6).
-  if (is.undefined(config.options.module)) {
+  if (ateos.isUndefined(config.options.module)) {
     config.options.module = ts.ModuleKind.CommonJS;
   }
   return config;

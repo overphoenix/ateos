@@ -426,8 +426,8 @@ describe("collection", "buffer list", () => {
         const random = crypto.randomBytes(65534);
 
         const bl = new BufferList((err, buf) => {
-            assert.ok(is.buffer(buf));
-            assert.ok(is.null(err));
+            assert.ok(ateos.isBuffer(buf));
+            assert.ok(ateos.isNull(err));
             assert.ok(random.equals(bl.slice()));
             assert.ok(random.equals(buf.slice()));
 
@@ -491,7 +491,7 @@ describe("collection", "buffer list", () => {
     it("write nothing, should get empty buffer", (done) => {
         BufferList((err, data) => {
             assert.notOk(err, "no error");
-            assert.ok(is.buffer(data), "got a buffer");
+            assert.ok(ateos.isBuffer(data), "got a buffer");
             assert.equal(0, data.length, "got a zero-length buffer");
             done();
         }).end();

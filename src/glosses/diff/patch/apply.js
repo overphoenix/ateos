@@ -6,11 +6,11 @@ const {
 } = ateos;
 
 export function applyPatch(source, uniDiff, options = {}) {
-  if (is.string(uniDiff)) {
+  if (ateos.isString(uniDiff)) {
     uniDiff = parsePatch(uniDiff);
   }
 
-  if (is.array(uniDiff)) {
+  if (ateos.isArray(uniDiff)) {
     if (uniDiff.length > 1) {
       throw new Error("applyPatch only works with a single input.");
     }
@@ -66,14 +66,14 @@ export function applyPatch(source, uniDiff, options = {}) {
 
     const iterator = distanceIterator(toPos, minLine, maxLine);
 
-    for (; !is.undefined(localOffset); localOffset = iterator()) {
+    for (; !ateos.isUndefined(localOffset); localOffset = iterator()) {
       if (hunkFits(hunk, toPos + localOffset)) {
         hunk.offset = offset += localOffset;
         break;
       }
     }
 
-    if (is.undefined(localOffset)) {
+    if (ateos.isUndefined(localOffset)) {
       return false;
     }
 
@@ -138,7 +138,7 @@ export function applyPatch(source, uniDiff, options = {}) {
 
 // Wrapper that supports multiple file patches via callbacks.
 export function applyPatches(uniDiff, options) {
-  if (is.string(uniDiff)) {
+  if (ateos.isString(uniDiff)) {
     uniDiff = parsePatch(uniDiff);
   }
 

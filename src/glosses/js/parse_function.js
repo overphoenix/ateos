@@ -25,7 +25,7 @@ const plugins = [
     result.isAsync = node.async || false;
     result.isGenerator = node.generator || false;
     result.isExpression = node.expression || false;
-    result.isAnonymous = is.null(node.id);
+    result.isAnonymous = ateos.isNull(node.id);
     result.isNamed = !result.isAnonymous;
 
     // if real anonymous -> set to null,
@@ -74,11 +74,11 @@ export default (code, options) => {
     params: ""
   };
 
-  if (is.function(code)) {
+  if (ateos.isFunction(code)) {
     code = code.toString("utf8");
   }
 
-  if (!is.string(code)) {
+  if (!ateos.isString(code)) {
     code = ""; // makes result.isValid === false
   }
 

@@ -21,7 +21,7 @@ export const control = (str, keepNewLineAndTab = false) => {
     if (keepNewLineAndTab && (match === "\n" || match === "\t")) {
       return match;
     }
-    if (!is.undefined(escapeControlMap[match])) {
+    if (!ateos.isUndefined(escapeControlMap[match])) {
       return escapeControlMap[match];
     }
     let hex = match.charCodeAt(0).toString(16);

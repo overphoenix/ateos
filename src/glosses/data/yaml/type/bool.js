@@ -1,7 +1,7 @@
 const { data: { yaml }, is } = ateos;
 
 const resolveYamlBoolean = (data) => {
-  if (is.null(data)) {
+  if (ateos.isNull(data)) {
     return false;
   }
 
@@ -19,7 +19,7 @@ export default new yaml.type.Type("tag:yaml.org,2002:bool", {
   kind: "scalar",
   resolve: resolveYamlBoolean,
   construct: constructYamlBoolean,
-  predicate: is.boolean,
+  predicate: ateos.isBoolean,
   represent: {
     lowercase(object) {
       return object ? "true" : "false";

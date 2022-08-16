@@ -40,7 +40,7 @@ export const normalizeRequestOptions = (options) => {
  */
 export const isBinaryBuffer = (buffer) => {
 
-  if (!is.buffer(buffer)) {
+  if (!ateos.isBuffer(buffer)) {
     return false;
   }
 
@@ -80,7 +80,7 @@ export const mergeChunks = (chunks) => {
   }
 
   //  We assume that all chunks are Buffer objects if the first is buffer object.
-  const areBuffers = is.buffer(chunks[0]);
+  const areBuffers = ateos.isBuffer(chunks[0]);
 
   if (!areBuffers) {
     //  When the chunks are not buffers we assume that they are strings.
@@ -198,18 +198,18 @@ export const stringifyRequest = (options, body) => {
 };
 
 export const isContentEncoded = (headers) => {
-  const contentEncoding = is.object(headers) && headers["content-encoding"];
-  return is.string(contentEncoding) && contentEncoding !== "";
+  const contentEncoding = ateos.isObject(headers) && headers["content-encoding"];
+  return ateos.isString(contentEncoding) && contentEncoding !== "";
 };
 
 export const contentEncoding = (headers, encoder) => {
-  const contentEncoding = is.object(headers) && headers["content-encoding"];
+  const contentEncoding = ateos.isObject(headers) && headers["content-encoding"];
   return contentEncoding === encoder;
 };
 
 export const isJSONContent = (headers) => {
-  let contentType = is.object(headers) && headers["content-type"];
-  if (is.array(contentType)) {
+  let contentType = ateos.isObject(headers) && headers["content-type"];
+  if (ateos.isArray(contentType)) {
     contentType = contentType[0];
   }
   contentType = (contentType || "").toLocaleLowerCase();
@@ -218,7 +218,7 @@ export const isJSONContent = (headers) => {
 };
 
 export const headersFieldNamesToLowerCase = (headers) => {
-  if (!is.object(headers)) {
+  if (!ateos.isObject(headers)) {
     return headers;
   }
 
@@ -227,7 +227,7 @@ export const headersFieldNamesToLowerCase = (headers) => {
   const lowerCaseHeaders = {};
   for (const [fieldName, fieldVal] of Object.entries(headers)) {
     const lowerCaseFieldName = fieldName.toLowerCase();
-    if (!is.undefined(lowerCaseHeaders[lowerCaseFieldName])) {
+    if (!ateos.isUndefined(lowerCaseHeaders[lowerCaseFieldName])) {
       throw new Error(`Failed to convert header keys to lower case due to field name conflict: ${lowerCaseFieldName}`);
     }
     lowerCaseHeaders[lowerCaseFieldName] = fieldVal;
@@ -246,7 +246,7 @@ export const headersFieldsArrayToLowerCase = (headers) => {
 };
 
 export const headersArrayToObject = (rawHeaders) => {
-  if (!is.array(rawHeaders)) {
+  if (!ateos.isArray(rawHeaders)) {
     return rawHeaders;
   }
 
@@ -257,7 +257,7 @@ export const headersArrayToObject = (rawHeaders) => {
     const value = rawHeaders[i + 1];
 
     if (headers[key]) {
-      headers[key] = is.array(headers[key]) ? headers[key] : [headers[key]];
+      headers[key] = ateos.isArray(headers[key]) ? headers[key] : [headers[key]];
       headers[key].push(value);
     } else {
       headers[key] = value;
@@ -276,7 +276,7 @@ export const headersArrayToObject = (rawHeaders) => {
  */
 export const deleteHeadersField = (headers, fieldNameToDelete) => {
 
-  if (!is.object(headers) || !is.string(fieldNameToDelete)) {
+  if (!ateos.isObject(headers) || !ateos.isString(fieldNameToDelete)) {
     return;
   }
 
@@ -308,9 +308,9 @@ export const percentEncode = (str) => {
 };
 
 export const matchStringOrRegexp = (target, pattern) => {
-  const str = (!is.undefined(target) && target.toString && target.toString()) || "";
+  const str = (!ateos.isUndefined(target) && target.toString && target.toString()) || "";
 
-  return is.regexp(pattern) ? str.match(pattern) : str === String(pattern);
+  return ateos.isRegexp(pattern) ? str.match(pattern) : str === String(pattern);
 };
 
 // return [newKey, newValue]

@@ -123,7 +123,7 @@ export default class P2PNetCore extends AbstractNetCore {
   }
 
   async stop() {
-    if (!is.null(this.node)) {
+    if (!ateos.isNull(this.node)) {
       if (this[STARTED]) {
         await this.node.stop();
         // TODO: need more careful checking before mark as not-STARTED.
@@ -135,7 +135,7 @@ export default class P2PNetCore extends AbstractNetCore {
   async connect({ addr, protocols = [], netron = null } = {}) {
     await this._createNode();
 
-    if (!ateos.multiformat.multiaddr.isMultiaddr(addr) && !is.string(addr) && !is.peerInfo(addr)) {
+    if (!ateos.multiformat.multiaddr.isMultiaddr(addr) && !ateos.isString(addr) && !is.peerInfo(addr)) {
       throw new Error("Incorrect value of `addr`. Should be instance of multiaddr or PeerInfo");
     }
 
@@ -145,7 +145,7 @@ export default class P2PNetCore extends AbstractNetCore {
       this.netron = netron;
       protocols.push(NETRON_PROTOCOL);
 
-      if (is.string(addr)) {
+      if (ateos.isString(addr)) {
         addr = new ateos.multiformat.multiaddr(addr);
       }
 

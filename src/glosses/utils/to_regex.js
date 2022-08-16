@@ -69,11 +69,11 @@ const createKey = (pattern, options) => {
  * @return {RegExp}
  */
 const makeRe = (pattern, options) => {
-  if (is.regexp(pattern)) {
+  if (ateos.isRegexp(pattern)) {
     return pattern;
   }
 
-  if (!is.string(pattern)) {
+  if (!ateos.isString(pattern)) {
     throw new error.InvalidArgumentException("expected a string");
   }
 
@@ -115,7 +115,7 @@ const makeRe = (pattern, options) => {
   }
 
   try {
-    if (opts.negate || is.boolean(opts.strictNegate)) {
+    if (opts.negate || ateos.isBoolean(opts.strictNegate)) {
       pattern = util.regexNot.create(pattern, opts);
     }
     const str = `${open}(?:${pattern})${close}`;
@@ -155,7 +155,7 @@ const makeRe = (pattern, options) => {
  * @return {RegExp}
  */
 export default function toRegex(patterns, options) {
-  if (!is.array(patterns)) {
+  if (!ateos.isArray(patterns)) {
     return makeRe(patterns, options);
   }
   return makeRe(patterns.join("|"), options);

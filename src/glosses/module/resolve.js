@@ -1,7 +1,6 @@
 /* eslint-disable func-style */
 /* eslint-disable camelcase */
 const {
-  is,
   std: { path, fs },
   util: { arrify }
 } = ateos;
@@ -119,7 +118,7 @@ function matchesRange(range) {
 }
 
 function versionIncluded(specifierValue) {
-  if (is.boolean(specifierValue)) {
+  if (ateos.isBoolean(specifierValue)) {
     return specifierValue;
   }
   if (specifierValue && typeof specifierValue === "object") {
@@ -170,7 +169,7 @@ const nodeModulesPaths = function (start, opts, request) {
     ? [].concat(opts.moduleDirectory)
     : ["node_modules"];
 
-  if (opts && is.function(opts.paths)) {
+  if (opts && ateos.isFunction(opts.paths)) {
     return opts.paths(
       request,
       start,
@@ -226,7 +225,7 @@ const defaultIsDir = function (dir) {
 };
 
 const resolve = function (x, options) {
-  if (!is.string(x)) {
+  if (!ateos.isString(x)) {
     throw new TypeError("Path must be a string.");
   }
   const opts = normalizeOptions(x, options);
@@ -365,7 +364,7 @@ const resolve = function (x, options) {
       }
 
       if (pkg.main) {
-        if (!is.string(pkg.main)) {
+        if (!ateos.isString(pkg.main)) {
           const mainError = new TypeError(`package “${pkg.name}” \`main\` must be a string`);
           mainError.code = "INVALID_PACKAGE_MAIN";
           throw mainError;

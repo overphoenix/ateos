@@ -11,7 +11,7 @@ const isOctCode = (c) => c/* 0 */ >= 0x30 && c <= 0x37/* 7 */;
 const isDecCode = (c) => c/* 0 */ >= 0x30 && c <= 0x39/* 9 */;
 
 const resolveYamlInteger = (data) => {
-  if (is.null(data)) {
+  if (ateos.isNull(data)) {
     return false;
   }
 
@@ -181,7 +181,7 @@ export default new yaml.type.Type("tag:yaml.org,2002:int", {
   kind: "scalar",
   resolve: resolveYamlInteger,
   construct: constructYamlInteger,
-  predicate: (object) => is.integer(object) && !is.negativeZero(object),
+  predicate: (object) => ateos.isInteger(object) && !is.negativeZero(object),
   represent: {
     binary: (obj) => obj >= 0 ? `0b${obj.toString(2)}` : `-0b${obj.toString(2).slice(1)}`,
     octal: (obj) => obj >= 0 ? `0${obj.toString(8)}` : `-0${obj.toString(8).slice(1)}`,

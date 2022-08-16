@@ -16,7 +16,7 @@ const {
 
 // const deterministicDecirc = function (val, k, stack, parent) {
 //     let i;
-//     if (typeof val === "object" && !is.null(val)) {
+//     if (typeof val === "object" && !ateos.isNull(val)) {
 //         for (i = 0; i < stack.length; i++) {
 //             if (stack[i] === val) {
 //                 parent[k] = "[Circular]";
@@ -24,12 +24,12 @@ const {
 //                 return;
 //             }
 //         }
-//         if (is.function(val.toJSON)) {
+//         if (ateos.isFunction(val.toJSON)) {
 //             return;
 //         }
 //         stack.push(val);
 //         // Optimize for Arrays. Big arrays could kill the performance otherwise!
-//         if (is.array(val)) {
+//         if (ateos.isArray(val)) {
 //             for (i = 0; i < val.length; i++) {
 //                 deterministicDecirc(val[i], i, stack, val);
 //             }
@@ -42,7 +42,7 @@ const {
 //                 deterministicDecirc(val[key], key, stack, val);
 //                 tmp[key] = val[key];
 //             }
-//             if (!is.undefined(parent)) {
+//             if (!ateos.isUndefined(parent)) {
 //                 arr.push([parent, k, val]);
 //                 parent[k] = tmp;
 //             } else {
@@ -65,10 +65,10 @@ const {
 
 const stableEncode = function (obj, opts) {
   let { space } = opts;
-  if (is.number(space)) {
+  if (ateos.isNumber(space)) {
     space = " ".repeat(space);
   }
-  const cycles = is.boolean(opts.cycles) ? opts.cycles : false;
+  const cycles = ateos.isBoolean(opts.cycles) ? opts.cycles : false;
   const replacer = opts.replacer || ((x, y) => y);
 
   const cmp = opts.cmp && (function (f) {
@@ -86,19 +86,19 @@ const stableEncode = function (obj, opts) {
     const indent = space ? (`\n${space.repeat(level)}`) : "";
     const colonSeparator = space ? ": " : ":";
 
-    if (node && node.toJSON && is.function(node.toJSON)) {
+    if (node && node.toJSON && ateos.isFunction(node.toJSON)) {
       node = node.toJSON();
     }
 
     node = replacer.call(parent, key, node);
 
-    if (is.undefined(node)) {
+    if (ateos.isUndefined(node)) {
       return;
     }
-    if (!is.object(node)) {
+    if (!ateos.isObject(node)) {
       return JSON.stringify(node);
     }
-    if (is.array(node)) {
+    if (ateos.isArray(node)) {
       const out = [];
       for (let i = 0; i < node.length; i++) {
         const item = stringify(node, i, node[i], level + 1) || JSON.stringify(null);

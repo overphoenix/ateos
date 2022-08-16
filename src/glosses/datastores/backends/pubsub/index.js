@@ -49,14 +49,14 @@ class DatastorePubsub {
      * @returns {void}
      */
   put(key, val, callback) {
-    if (!is.buffer(key)) {
+    if (!ateos.isBuffer(key)) {
       const errMsg = "datastore key does not have a valid format";
 
       log.error(errMsg);
       return callback(errcode(new Error(errMsg), "ERR_INVALID_DATASTORE_KEY"));
     }
 
-    if (!is.buffer(val)) {
+    if (!ateos.isBuffer(val)) {
       const errMsg = "received value is not a buffer";
 
       log.error(errMsg);
@@ -78,7 +78,7 @@ class DatastorePubsub {
      * @returns {void}
      */
   get(key, callback) {
-    if (!is.buffer(key)) {
+    if (!ateos.isBuffer(key)) {
       const errMsg = "datastore key does not have a valid format";
 
       log.error(errMsg);
@@ -93,7 +93,7 @@ class DatastorePubsub {
       }
 
       // If already subscribed, just try to get it
-      if (res && is.array(res) && res.indexOf(stringifiedTopic) > -1) {
+      if (res && ateos.isArray(res) && res.indexOf(stringifiedTopic) > -1) {
         return this._getLocal(key, callback);
       }
 
@@ -142,7 +142,7 @@ class DatastorePubsub {
         return callback(errcode(new Error(errMsg), "ERR_NOT_FOUND"));
       }
 
-      if (!is.buffer(dsVal)) {
+      if (!ateos.isBuffer(dsVal)) {
         const errMsg = "found record that we couldn't convert to a value";
 
         log.error(errMsg);

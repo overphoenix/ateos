@@ -72,7 +72,7 @@ export default class NodejsManager {
     const archName = await nodejs.getArchiveName({ version, type, ext, platform, arch });
     const downloadPath = aPath.join(await this.getCachePath(this.cache.downloads), await nodejs.getArchiveName({ version, ext: "", platform: "", arch: "" }));
 
-    if (!is.string(outPath) || outPath.length === 0) {
+    if (!ateos.isString(outPath) || outPath.length === 0) {
       outPath = downloadPath;
     }
 
@@ -105,7 +105,7 @@ export default class NodejsManager {
     // }
 
     // if (progressBar) {
-    //     const progress = util.throttle.create((current, total) => {
+    //     const progress = util.throttle.throttle((current, total) => {
     //         progressBar.update(current / total, {
     //             current: ateos.pretty.size(current),
     //             total: ateos.pretty.size(total)
@@ -148,7 +148,7 @@ export default class NodejsManager {
       type: "headers"
     });
 
-    if (is.windows) {
+    if (ateos.isWindows) {
       const dirName = ateos.std.os.arch() === "x64" ? "win-x64" : "win-x86";
       const url = `https://nodejs.org/download/release/${version}/${dirName}/node.lib`;
       const destPath = aPath.join(nodePath, dirName);
@@ -196,9 +196,9 @@ export default class NodejsManager {
     try {
       if (global) {
         let basePath;
-        if (is.windows) {
+        if (ateos.isWindows) {
 
-        } else if (is.linux) {
+        } else if (ateos.isLinux) {
           basePath = "/usr";
         }
 

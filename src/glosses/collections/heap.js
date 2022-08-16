@@ -22,7 +22,7 @@ const defaultCmp = function (x, y) {
 const _siftdown = function (array, startpos, pos, cmp) {
   let parent;
   let parentpos;
-  if (is.nil(cmp)) {
+  if (ateos.isNil(cmp)) {
     cmp = defaultCmp;
   }
   const newitem = array[pos];
@@ -42,7 +42,7 @@ const _siftdown = function (array, startpos, pos, cmp) {
 const _siftup = function (array, pos, cmp) {
   let childpos;
   let rightpos;
-  if (is.nil(cmp)) {
+  if (ateos.isNil(cmp)) {
     cmp = defaultCmp;
   }
   const endpos = array.length;
@@ -73,16 +73,16 @@ const _siftup = function (array, pos, cmp) {
  */
 const insort = function (a, x, lo, hi, cmp) {
   let mid;
-  if (is.nil(lo)) {
+  if (ateos.isNil(lo)) {
     lo = 0;
   }
-  if (is.nil(cmp)) {
+  if (ateos.isNil(cmp)) {
     cmp = defaultCmp;
   }
   if (lo < 0) {
     throw new Error("lo must be non-negative");
   }
-  if (is.nil(hi)) {
+  if (ateos.isNil(hi)) {
     hi = a.length;
   }
   while (lo < hi) {
@@ -98,7 +98,7 @@ const insort = function (a, x, lo, hi, cmp) {
 
 export default class Heap {
   constructor(cmp) {
-    this.cmp = !is.nil(cmp) ? cmp : defaultCmp;
+    this.cmp = !ateos.isNil(cmp) ? cmp : defaultCmp;
     this.nodes = [];
   }
 
@@ -107,7 +107,7 @@ export default class Heap {
      * Push item onto heap, maintaining the heap invariant.
      */
   push(x) {
-    if (is.nil(this.cmp)) {
+    if (ateos.isNil(this.cmp)) {
       this.cmp = defaultCmp;
     }
     this.nodes.push(x);
@@ -138,7 +138,7 @@ export default class Heap {
      * item = heapreplace(array, item)
      */
   replace(x) {
-    if (is.nil(this.cmp)) {
+    if (ateos.isNil(this.cmp)) {
       this.cmp = defaultCmp;
     }
     const returnitem = this.nodes[0];
@@ -160,7 +160,7 @@ export default class Heap {
      * This function should be called every time the item is being modified.
      */
   updateItem(x) {
-    if (is.nil(this.cmp)) {
+    if (ateos.isNil(this.cmp)) {
       this.cmp = defaultCmp;
     }
     const pos = this.nodes.indexOf(x);
@@ -201,7 +201,7 @@ export default class Heap {
     let _i;
     let _len;
 
-    if (is.nil(cmp)) {
+    if (ateos.isNil(cmp)) {
       cmp = defaultCmp;
     }
     const result = array.slice(0, n);
@@ -230,7 +230,7 @@ export default class Heap {
     let _ref;
     let _ref1;
 
-    if (is.nil(cmp)) {
+    if (ateos.isNil(cmp)) {
       cmp = defaultCmp;
     }
     if (n * 10 <= array.length) {
@@ -263,7 +263,7 @@ export default class Heap {
      */
   static heappop(array, cmp) {
     let returnitem;
-    if (is.nil(cmp)) {
+    if (ateos.isNil(cmp)) {
       cmp = defaultCmp;
     }
     const lastelt = array.pop();
@@ -282,7 +282,7 @@ export default class Heap {
      */
   static pushpop(array, item, cmp) {
     let _ref;
-    if (is.nil(cmp)) {
+    if (ateos.isNil(cmp)) {
       cmp = defaultCmp;
     }
     if (array.length && cmp(array[0], item) < 0) {
@@ -301,7 +301,7 @@ export default class Heap {
     let _len;
     let _results1;
 
-    if (is.nil(cmp)) {
+    if (ateos.isNil(cmp)) {
       cmp = defaultCmp;
     }
     const _ref1 = (function () {

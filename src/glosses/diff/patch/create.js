@@ -8,7 +8,7 @@ export function structuredPatch(oldFileName, newFileName, oldStr, newStr, oldHea
   if (!options) {
     options = {};
   }
-  if (is.undefined(options.context)) {
+  if (ateos.isUndefined(options.context)) {
     options.context = 4;
   }
 
@@ -113,8 +113,8 @@ export function createTwoFilesPatch(oldFileName, newFileName, oldStr, newStr, ol
     ret.push(`Index: ${oldFileName}`);
   }
   ret.push("===================================================================");
-  ret.push(`--- ${diff.oldFileName}${is.undefined(diff.oldHeader) ? "" : `\t${diff.oldHeader}`}`);
-  ret.push(`+++ ${diff.newFileName}${is.undefined(diff.newHeader) ? "" : `\t${diff.newHeader}`}`);
+  ret.push(`--- ${diff.oldFileName}${ateos.isUndefined(diff.oldHeader) ? "" : `\t${diff.oldHeader}`}`);
+  ret.push(`+++ ${diff.newFileName}${ateos.isUndefined(diff.newHeader) ? "" : `\t${diff.newHeader}`}`);
 
   for (let i = 0; i < diff.hunks.length; i++) {
     const hunk = diff.hunks[i];

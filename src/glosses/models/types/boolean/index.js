@@ -27,7 +27,7 @@ internals.Boolean = class extends Any {
       value
     };
 
-    if (is.string(value) &&
+    if (ateos.isString(value) &&
             options.convert) {
 
       const normalized = this._flags.insensitive ? value.toLowerCase() : value;
@@ -35,12 +35,12 @@ internals.Boolean = class extends Any {
         : (normalized === "false" ? false : value));
     }
 
-    if (!is.boolean(result.value)) {
+    if (!ateos.isBoolean(result.value)) {
       result.value = (this._inner.truthySet.has(value, null, null, this._flags.insensitive) ? true
         : (this._inner.falsySet.has(value, null, null, this._flags.insensitive) ? false : value));
     }
 
-    result.errors = (is.boolean(result.value)) ? null : this.createError("boolean.base", null, state, options);
+    result.errors = (ateos.isBoolean(result.value)) ? null : this.createError("boolean.base", null, state, options);
     return result;
   }
 
@@ -51,7 +51,7 @@ internals.Boolean = class extends Any {
     for (let i = 0; i < values.length; ++i) {
       const value = values[i];
 
-      assert(!is.undefined(value), "Cannot call truthy with undefined");
+      assert(!ateos.isUndefined(value), "Cannot call truthy with undefined");
       obj._inner.truthySet.add(value);
     }
     return obj;
@@ -64,7 +64,7 @@ internals.Boolean = class extends Any {
     for (let i = 0; i < values.length; ++i) {
       const value = values[i];
 
-      assert(!is.undefined(value), "Cannot call falsy with undefined");
+      assert(!ateos.isUndefined(value), "Cannot call falsy with undefined");
       obj._inner.falsySet.add(value);
     }
     return obj;
@@ -72,7 +72,7 @@ internals.Boolean = class extends Any {
 
   insensitive(enabled) {
 
-    const insensitive = is.undefined(enabled) ? true : Boolean(enabled);
+    const insensitive = ateos.isUndefined(enabled) ? true : Boolean(enabled);
 
     if (this._flags.insensitive === insensitive) {
       return this;

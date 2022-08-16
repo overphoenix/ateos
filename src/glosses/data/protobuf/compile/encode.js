@@ -37,10 +37,10 @@ const compileEncode = function (m, resolve, enc, oneofs, encodingLength) {
   };
 
   return function encode(obj, buf, offset) {
-    if (is.nil(offset)) {
+    if (ateos.isNil(offset)) {
       offset = 0;
     }
-    if (is.nil(buf)) {
+    if (ateos.isNil(buf)) {
       buf = Buffer.allocUnsafe(encodingLength(obj));
     }
 

@@ -20,7 +20,7 @@ export const regexp = {
 };
 
 export const escapeStringRegexp = (str) => {
-  if (!is.string(str)) {
+  if (!ateos.isString(str)) {
     throw new TypeError("Expected a string");
   }
 
@@ -29,7 +29,7 @@ export const escapeStringRegexp = (str) => {
 
 // Transform camel case to alphanum separated by minus
 export const camelCaseToDashed = (str) => {
-  if (!str || !is.string(str)) {
+  if (!str || !ateos.isString(str)) {
     return "";
   }
   return str.replace(/^([A-Z])|([A-Z])/g, (match, firstLetter, letter) => {
@@ -75,7 +75,7 @@ export const regExpLastIndexOf = (str, regex, index) => {
   return offset;
 };
 
-export const stripAnsi = (str) => (is.string(str) ? str.replace(ateos.regex.ansi(), "") : str);
+export const stripAnsi = (str) => (ateos.isString(str) ? str.replace(ateos.regex.ansi(), "") : str);
 const testAnsiRE = new RegExp(ateos.regex.ansi().source);
 export const hasAnsi = (str) => testAnsiRE.test(str);
 
@@ -216,8 +216,8 @@ export const indent = (string, spaces) => {
 };
 
 export const stripLastNewline = (x) => {
-  const lf = is.string(x) ? "\n" : "\n".charCodeAt();
-  const cr = is.string(x) ? "\r" : "\r".charCodeAt();
+  const lf = ateos.isString(x) ? "\n" : "\n".charCodeAt();
+  const cr = ateos.isString(x) ? "\r" : "\r".charCodeAt();
 
   if (x[x.length - 1] === lf) {
     x = x.slice(0, x.length - 1);
@@ -232,7 +232,7 @@ export const stripLastNewline = (x) => {
 
 export const stripBom = (content) => {
   // we do this because JSON.parse would convert it to a utf8 string if encoding wasn't specified
-  if (is.buffer(content)) {
+  if (ateos.isBuffer(content)) {
     content = content.toString("utf8");
   }
   content = content.replace(/^\uFEFF/, "");

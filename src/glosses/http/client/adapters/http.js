@@ -15,7 +15,7 @@ export default async function adapter(config) {
   let data = config.data;
   const headers = config.headers;
 
-  if (!is.string(headers["User-Agent"]) && !is.string(headers["user-agent"])) {
+  if (!ateos.isString(headers["User-Agent"]) && !ateos.isString(headers["user-agent"])) {
     headers["User-Agent"] = `Ateos/${ateos.package.version}`;
   }
 
@@ -37,7 +37,7 @@ export default async function adapter(config) {
     for (const formKey in config.formData) {
       if (config.formData.hasOwnProperty(formKey)) {
         const formValue = config.formData[formKey];
-        if (is.array(formValue)) {
+        if (ateos.isArray(formValue)) {
           for (let j = 0; j < formValue.length; j++) {
             appendFormValue(formKey, formValue[j]);
           }
@@ -60,12 +60,12 @@ export default async function adapter(config) {
     headers["Content-Length"] = contentLength;
   }
 
-  if (data && !is.stream(data)) {
-    if (is.buffer(data)) {
+  if (data && !ateos.isStream(data)) {
+    if (ateos.isBuffer(data)) {
       // Nothing to do...
     } else if (is.arrayBuffer(data)) {
       data = Buffer.from(new Uint8Array(data));
-    } else if (is.string(data)) {
+    } else if (ateos.isString(data)) {
       data = Buffer.from(data, "utf-8");
     } else {
       throw __.createError("Data after transformation must be a string, an ArrayBuffer, a Buffer, or a Stream'", config);
@@ -73,7 +73,7 @@ export default async function adapter(config) {
 
     // Add Content-Length header if data exists
     headers["Content-Length"] = data.length;
-  } else if (is.nil(data)) {
+  } else if (ateos.isNil(data)) {
     delete headers["Content-Type"];
   }
 
@@ -116,7 +116,7 @@ export default async function adapter(config) {
   }
 
   if (isHttps) {
-    nodeOptions.rejectUnauthorized = is.boolean(config.rejectUnauthorized) ? config.rejectUnauthorized : true;
+    nodeOptions.rejectUnauthorized = ateos.isBoolean(config.rejectUnauthorized) ? config.rejectUnauthorized : true;
   }
 
   let proxy = config.proxy;
@@ -296,10 +296,10 @@ export default async function adapter(config) {
       });
     }
 
-    if (is.nil(data)) {
+    if (ateos.isNil(data)) {
       req.end(data);
       return;
-    } else if (!is.stream(data)) {
+    } else if (!ateos.isStream(data)) {
       if (data.length <= ateos.stream.buffer.DEFAULT_INITIAL_SIZE) {
         req.end(data);
         return;

@@ -27,12 +27,12 @@ export default class StateMachine extends ateos.AsyncEventEmitter {
       throw new error.NotValidException("Initial state is not defined");
     }
 
-    if (!is.array(transitions) || transitions.length === 0) {
+    if (!ateos.isArray(transitions) || transitions.length === 0) {
       throw new error.NotValidException("Transitions are not defined");
     }
 
     this.#state = initial;
-    this.#failState = is.string(fail)
+    this.#failState = ateos.isString(fail)
       ? fail
       : "fail";
 
@@ -41,7 +41,7 @@ export default class StateMachine extends ateos.AsyncEventEmitter {
 
       let onEventMethod;
       let superMethod;
-      if (is.function(this[t.name])) {
+      if (ateos.isFunction(this[t.name])) {
         superMethod = this[t.name];
       } else {
         onEventMethod = createCallbackName(t.name);
@@ -51,7 +51,7 @@ export default class StateMachine extends ateos.AsyncEventEmitter {
           try {
             let toEnter;
             let toLeave;
-            if (is.array(t.to)) {
+            if (ateos.isArray(t.to)) {
               toEnter = t.to[0];
               toLeave = t.to[1];
             } else {
@@ -61,13 +61,13 @@ export default class StateMachine extends ateos.AsyncEventEmitter {
             this.#updateState(toEnter);
 
             let result;
-            if (is.function(superMethod)) {
+            if (ateos.isFunction(superMethod)) {
               result = await superMethod.call(this, ...args);
-            } else if (is.function(this[onEventMethod])) {
+            } else if (ateos.isFunction(this[onEventMethod])) {
               result = await this[onEventMethod](...args);
             }
 
-            if (is.string(toLeave)) {
+            if (ateos.isString(toLeave)) {
               this.#updateState(toLeave);
             }
 
@@ -90,7 +90,7 @@ export default class StateMachine extends ateos.AsyncEventEmitter {
 
   addAllowedState(transitionName, state) {
     const states = this.#allowedStates.get(transitionName);
-    if (is.undefined(states)) {
+    if (ateos.isUndefined(states)) {
       this.#allowedStates.set(transitionName, util.arrify(state));
     } else {
       states.push(...util.arrayDiff(state));
@@ -114,7 +114,7 @@ export default class StateMachine extends ateos.AsyncEventEmitter {
       };
       this.on("state", handler);
     });
-    if (is.number(timeout) && timeout > 0) {
+    if (ateos.isNumber(timeout) && timeout > 0) {
       await this.#timeout(stateUpdate, timeout);
     } else {
       await stateUpdate;
@@ -135,7 +135,7 @@ export default class StateMachine extends ateos.AsyncEventEmitter {
 
       this.on("state", handler);
     });
-    if (is.number(timeout) && timeout > 0) {
+    if (ateos.isNumber(timeout) && timeout > 0) {
       await this.#timeout(stateUpdate, timeout);
     } else {
       await stateUpdate;

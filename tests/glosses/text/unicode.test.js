@@ -1,6 +1,6 @@
 describe("unicode", () => {
     const { unicode } = ateos.text;
-    const result = (main, win) => ateos.is.windows ? win : main;
+    const result = (main, win) => ateos.ateos.isWindows ? win : main;
 
     console.log(`  ${Object.keys(unicode.symbol).map((x) => unicode[x]).join("  ")}\n`);
 

@@ -4,7 +4,7 @@ const {
   path: { delimiter, join }
 } = ateos;
 
-const isWindows = is.windows || process.env.OSTYPE === "cygwin" || process.env.OSTYPE === "msys";
+const isWindows = ateos.isWindows || process.env.OSTYPE === "cygwin" || process.env.OSTYPE === "msys";
 
 export const getNotFoundError = (cmd) => {
   const err = new ateos.error.NotFoundException(`Not found: ${cmd}`);

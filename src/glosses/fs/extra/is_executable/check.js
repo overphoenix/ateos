@@ -4,9 +4,9 @@ const {
 
 let checkStat;
 
-if (is.windows) {
+if (ateos.isWindows) {
   const checkPathExt = (path, options) => {
-    let pathext = !is.undefined(options.pathExt) ? options.pathExt : process.env.PATHEXT;
+    let pathext = !ateos.isUndefined(options.pathExt) ? options.pathExt : process.env.PATHEXT;
 
     if (!pathext) {
       return true;
@@ -34,8 +34,8 @@ if (is.windows) {
     const uid = stat.uid;
     const gid = stat.gid;
 
-    const myUid = !is.undefined(options.uid) ? options.uid : process.getuid && process.getuid();
-    const myGid = !is.undefined(options.gid) ? options.gid : process.getgid && process.getgid();
+    const myUid = !ateos.isUndefined(options.uid) ? options.uid : process.getuid && process.getuid();
+    const myGid = !ateos.isUndefined(options.gid) ? options.gid : process.getgid && process.getgid();
 
     const u = parseInt("100", 8);
     const g = parseInt("010", 8);

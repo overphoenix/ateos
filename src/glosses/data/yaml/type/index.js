@@ -25,7 +25,7 @@ const YAML_NODE_KINDS = new Set([
 const compileStyleAliases = (map) => {
   const result = {};
 
-  if (!is.null(map)) {
+  if (!ateos.isNull(map)) {
     for (const [style, aliases] of util.entries(map)) {
       for (const alias of aliases) {
         result[String(alias)] = style;

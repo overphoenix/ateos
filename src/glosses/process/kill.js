@@ -1,25 +1,24 @@
 const {
-  is,
   process: { getChildPids, getPidByPort, exec, list }
 } = ateos;
 
 const parseInput = (input) => {
-  if (is.string(input) && input[0] === ":") {
+  if (ateos.isString(input) && input[0] === ":") {
     return getPidByPort(parseInt(input.slice(1), 10));
   }
 
   return Promise.resolve(input);
 };
 
-const { 
+const {
   checkProc
 } = ateos.getPrivate(ateos.process);
 
 export default async (input, { force = false, ignoreCase = false, tree = true, windows } = {}) => {
-  const fn = is.windows ? (input) => {
+  const fn = ateos.isWindows ? (input) => {
     const args = [];
 
-    if (is.plainObject(windows)) {
+    if (ateos.isPlainObject(windows)) {
       if (windows.system && windows.username && windows.password) {
         args.push("/s", windows.system, "/u", windows.username, "/p", windows.password);
       }
@@ -37,15 +36,15 @@ export default async (input, { force = false, ignoreCase = false, tree = true, w
       args.push("/t");
     }
 
-    args.push(is.numeral(input) ? "/pid" : "/im", input);
+    args.push(ateos.isNumeral(input) ? "/pid" : "/im", input);
 
     return exec("taskkill", args);
   } : (input) => {
     let cmd;
     const args = [input];
 
-    const isNumeral = is.numeral(input);
-    if (is.darwin) {
+    const isNumeral = ateos.isNumeral(input);
+    if (ateos.isDarwin) {
       cmd = isNumeral ? "kill" : "pkill";
 
       if (!isNumeral && ignoreCase) {
@@ -63,7 +62,7 @@ export default async (input, { force = false, ignoreCase = false, tree = true, w
       args.unshift("-9");
     }
 
-    if (tree && is.numeral(input)) {
+    if (tree && ateos.isNumeral(input)) {
       return getChildPids(input).then((children) => {
         const pids = children.map((child) => child.pid);
         return exec(cmd, [...pids, ...args]);
@@ -76,7 +75,7 @@ export default async (input, { force = false, ignoreCase = false, tree = true, w
 
   input = ateos.util.arrify(input);
   (proc, x) => {
-    if (is.string(proc)) {
+    if (ateos.isString(proc)) {
       return x.name === proc;
     }
 

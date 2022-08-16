@@ -44,7 +44,7 @@ class GNTP {
   }
 
   add(name, val) {
-    if (is.undefined(val)) {
+    if (ateos.isUndefined(val)) {
       return;
     }
 
@@ -146,12 +146,12 @@ class Growly {
   }
 
   async register(appname, appicon, notifications) {
-    if (is.object(appicon)) {
+    if (ateos.isObject(appicon)) {
       notifications = appicon;
       appicon = undefined;
     }
 
-    if (is.undefined(notifications) || !notifications.length) {
+    if (ateos.isUndefined(notifications) || !notifications.length) {
       notifications = [{ label: "default", dispname: "Default Notification", enabled: true }];
     }
 
@@ -167,7 +167,7 @@ class Growly {
     gntp.newline();
 
     notifications.forEach((notif) => {
-      if (is.undefined(notif.enabled)) {
+      if (ateos.isUndefined(notif.enabled)) {
         notif.enabled = true;
       }
       gntp.add("Notification-Name", notif.label);
@@ -228,7 +228,7 @@ export default class Growl extends ateos.EventEmitter {
     growly.setHost(this.options.host, this.options.port);
     options = ateos.util.clone(options);
 
-    if (is.string(options)) {
+    if (ateos.isString(options)) {
       options = { title: "", message: options };
     }
 

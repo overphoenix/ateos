@@ -61,7 +61,7 @@ const captureSet = (options) => (parser) => {
       open.define("match", match);
       parent.define("match", match);
 
-      if (is.function(fn)) {
+      if (ateos.isFunction(fn)) {
         fn.call(this, open, parent);
       }
 
@@ -73,7 +73,7 @@ const captureSet = (options) => (parser) => {
   });
 
   parser.define("captureClose", function (type, regex) {
-    if (is.undefined(this.sets[type])) {
+    if (ateos.isUndefined(this.sets[type])) {
       throw new Error(`an \`.open\` type is not registered for ${type}`);
     }
 

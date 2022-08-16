@@ -486,7 +486,7 @@ describe("Vault", () => {
                 b: "2",
                 c: false
             });
-            if (!is.null(tags)) {
+            if (!ateos.isNull(tags)) {
                 await val.addTag(tags);
             }
 

@@ -64,7 +64,7 @@ addRegexToken("dddd", (isStrict, locale) => {
 addWeekParseToken(["dd", "ddd", "dddd"], (input, week, config, token) => {
   const weekday = config._locale.weekdaysParse(input, token, config._strict);
   // if we didn't get a weekday name, mark the date as invalid
-  if (is.exist(weekday)) {
+  if (ateos.isExist(weekday)) {
     week.d = weekday;
   } else {
     __.create.getParsingFlags(config).invalidWeekday = input;
@@ -80,9 +80,9 @@ addWeekParseToken(["d", "e", "E"], (input, week, config, token) => {
 export const defaultLocaleWeekdays = "Sunday_Monday_Tuesday_Wednesday_Thursday_Friday_Saturday".split("_");
 export const localeWeekdays = function (m, format) {
   if (!m) {
-    return is.array(this._weekdays) ? this._weekdays : this._weekdays.standalone;
+    return ateos.isArray(this._weekdays) ? this._weekdays : this._weekdays.standalone;
   }
-  return is.array(this._weekdays)
+  return ateos.isArray(this._weekdays)
     ? this._weekdays[m.day()]
     : this._weekdays[this._weekdays.isFormat.test(format) ? "format" : "standalone"][m.day()];
 };
@@ -248,7 +248,7 @@ const computeWeekdaysParse = function () {
 const defaultWeekdaysRegex = matchWord;
 export const weekdaysRegex = function (isStrict) {
   if (this._weekdaysParseExact) {
-    if (!is.propertyOwned(this, "_weekdaysRegex")) {
+    if (!ateos.isPropertyOwned(this, "_weekdaysRegex")) {
       computeWeekdaysParse.call(this);
     }
     if (isStrict) {
@@ -257,7 +257,7 @@ export const weekdaysRegex = function (isStrict) {
     return this._weekdaysRegex;
 
   }
-  if (!is.propertyOwned(this, "_weekdaysRegex")) {
+  if (!ateos.isPropertyOwned(this, "_weekdaysRegex")) {
     this._weekdaysRegex = defaultWeekdaysRegex;
   }
   return this._weekdaysStrictRegex && isStrict ?
@@ -268,7 +268,7 @@ export const weekdaysRegex = function (isStrict) {
 const defaultWeekdaysShortRegex = matchWord;
 export const weekdaysShortRegex = function (isStrict) {
   if (this._weekdaysParseExact) {
-    if (!is.propertyOwned(this, "_weekdaysRegex")) {
+    if (!ateos.isPropertyOwned(this, "_weekdaysRegex")) {
       computeWeekdaysParse.call(this);
     }
     if (isStrict) {
@@ -277,7 +277,7 @@ export const weekdaysShortRegex = function (isStrict) {
     return this._weekdaysShortRegex;
 
   }
-  if (!is.propertyOwned(this, "_weekdaysShortRegex")) {
+  if (!ateos.isPropertyOwned(this, "_weekdaysShortRegex")) {
     this._weekdaysShortRegex = defaultWeekdaysShortRegex;
   }
   return this._weekdaysShortStrictRegex && isStrict ?
@@ -288,7 +288,7 @@ export const weekdaysShortRegex = function (isStrict) {
 const defaultWeekdaysMinRegex = matchWord;
 export const weekdaysMinRegex = function (isStrict) {
   if (this._weekdaysParseExact) {
-    if (!is.propertyOwned(this, "_weekdaysRegex")) {
+    if (!ateos.isPropertyOwned(this, "_weekdaysRegex")) {
       computeWeekdaysParse.call(this);
     }
     if (isStrict) {
@@ -297,7 +297,7 @@ export const weekdaysMinRegex = function (isStrict) {
     return this._weekdaysMinRegex;
 
   }
-  if (!is.propertyOwned(this, "_weekdaysMinRegex")) {
+  if (!ateos.isPropertyOwned(this, "_weekdaysMinRegex")) {
     this._weekdaysMinRegex = defaultWeekdaysMinRegex;
   }
   return this._weekdaysMinStrictRegex && isStrict ?

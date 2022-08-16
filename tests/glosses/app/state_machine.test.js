@@ -7,7 +7,7 @@ const {
 
 assertion.use(assertion.extension.checkmark);
 
-describe("fsm", () => {
+describe("StateMachine", () => {
   const scheme0 = {
     initial: "new",
     transitions: [

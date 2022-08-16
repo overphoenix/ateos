@@ -4,9 +4,9 @@ const {
 } = ateos;
 
 const emptyFunction = Function.prototype;
-const symbolExists = is.function(Symbol);
-const setExists = is.function(Set);
-const mapExists = is.function(Map);
+const symbolExists = ateos.isFunction(Symbol);
+const setExists = ateos.isFunction(Set);
+const mapExists = ateos.isFunction(Map);
 const symbolAndMapExist = symbolExists && mapExists;
 const symbolAndSetExist = symbolExists && setExists;
 let supportGenerators = false;
@@ -29,7 +29,7 @@ function describeIf(condition) {
 }
 describe("is", "deepEqual", "ES2015 Specific", () => {
 
-    describeIf(symbolExists && is.function(String.prototype[Symbol.iterator]))("string iterator", () => {
+    describeIf(symbolExists && ateos.isFunction(String.prototype[Symbol.iterator]))("string iterator", () => {
 
         it("returns true for Strings with same entries", () => {
             assert(eql("abc"[Symbol.iterator](), "abc"[Symbol.iterator]()),
@@ -43,7 +43,7 @@ describe("is", "deepEqual", "ES2015 Specific", () => {
 
     });
 
-    describeIf(symbolExists && is.function(Array.prototype[Symbol.iterator]))("array iterator", () => {
+    describeIf(symbolExists && ateos.isFunction(Array.prototype[Symbol.iterator]))("array iterator", () => {
 
         it("returns true for Arrays with same entries", () => {
             assert(eql([1, 2, 3][Symbol.iterator](), [1, 2, 3][Symbol.iterator]()),
@@ -57,7 +57,7 @@ describe("is", "deepEqual", "ES2015 Specific", () => {
 
     });
 
-    describeIf(is.function(Array.prototype.entries))("array iterator (entries)", () => {
+    describeIf(ateos.isFunction(Array.prototype.entries))("array iterator (entries)", () => {
 
         it("returns true for Arrays with same entries", () => {
             assert(eql([1, 2, 3].entries(), [1, 2, 3].entries()),
@@ -99,7 +99,7 @@ describe("is", "deepEqual", "ES2015 Specific", () => {
 
     });
 
-    describeIf(symbolAndMapExist && is.function(Map.prototype[Symbol.iterator]))("map iterator", () => {
+    describeIf(symbolAndMapExist && ateos.isFunction(Map.prototype[Symbol.iterator]))("map iterator", () => {
 
         it("returns true for Map iterators with same entries", () => {
             const mapA = new Map();
@@ -130,7 +130,7 @@ describe("is", "deepEqual", "ES2015 Specific", () => {
 
     });
 
-    describeIf(mapExists && is.function(Map.prototype.entries))("map iterator (entries)", () => {
+    describeIf(mapExists && ateos.isFunction(Map.prototype.entries))("map iterator (entries)", () => {
 
         it("returns true for Map iterators with same entries", () => {
             const mapA = new Map();
@@ -161,7 +161,7 @@ describe("is", "deepEqual", "ES2015 Specific", () => {
 
     });
 
-    describeIf(is.function(WeakMap))("weakmaps", () => {
+    describeIf(ateos.isFunction(WeakMap))("weakmaps", () => {
 
         it("returns true for same WeakMaps", () => {
             const weakMap = new WeakMap();
@@ -242,7 +242,7 @@ describe("is", "deepEqual", "ES2015 Specific", () => {
 
     });
 
-    describeIf(symbolAndSetExist && is.function(Set.prototype[Symbol.iterator]))("set iterator", () => {
+    describeIf(symbolAndSetExist && ateos.isFunction(Set.prototype[Symbol.iterator]))("set iterator", () => {
 
         it("returns true for Sets with same entries", () => {
             const setA = new Set();
@@ -272,7 +272,7 @@ describe("is", "deepEqual", "ES2015 Specific", () => {
 
     });
 
-    describeIf(setExists && is.function(Set.prototype.entries))("set iterator (entries)", () => {
+    describeIf(setExists && ateos.isFunction(Set.prototype.entries))("set iterator (entries)", () => {
 
         it("returns true for Sets with same entries", () => {
             const setA = new Set();
@@ -302,7 +302,7 @@ describe("is", "deepEqual", "ES2015 Specific", () => {
 
     });
 
-    describeIf(is.function(WeakSet))("weaksets", () => {
+    describeIf(ateos.isFunction(WeakSet))("weaksets", () => {
 
         it("returns true for same WeakSets", () => {
             const weakSet = new WeakSet();
@@ -316,7 +316,7 @@ describe("is", "deepEqual", "ES2015 Specific", () => {
 
     });
 
-    describeIf(is.function(Symbol))("symbol", () => {
+    describeIf(ateos.isFunction(Symbol))("symbol", () => {
 
         it("returns true for the same symbols", () => {
             const sym = Symbol();
@@ -330,7 +330,7 @@ describe("is", "deepEqual", "ES2015 Specific", () => {
 
     });
 
-    describeIf(is.function(Promise))("promise", () => {
+    describeIf(ateos.isFunction(Promise))("promise", () => {
 
         it("returns true for the same promises", () => {
             const promiseResolve = Promise.resolve();
@@ -362,7 +362,7 @@ describe("is", "deepEqual", "ES2015 Specific", () => {
 
     });
 
-    describeIf(is.function(Int8Array))("int8array", () => {
+    describeIf(ateos.isFunction(Int8Array))("int8array", () => {
 
         it("returns true for arrays with same values", () => {
             assert(eql(new Int8Array(1, 2, 3, 4), new Int8Array(1, 2, 3, 4)),
@@ -378,7 +378,7 @@ describe("is", "deepEqual", "ES2015 Specific", () => {
 
     });
 
-    describeIf(is.function(Uint8Array))("uint8array", () => {
+    describeIf(ateos.isFunction(Uint8Array))("uint8array", () => {
 
         it("returns true for arrays with same values", () => {
             assert(eql(new Uint8Array(1, 2, 3, 4), new Uint8Array(1, 2, 3, 4)),
@@ -394,7 +394,7 @@ describe("is", "deepEqual", "ES2015 Specific", () => {
 
     });
 
-    describeIf(is.function(Uint8ClampedArray))("uint8clampedarray", () => {
+    describeIf(ateos.isFunction(Uint8ClampedArray))("uint8clampedarray", () => {
 
         it("returns true for arrays with same values", () => {
             assert(eql(new Uint8ClampedArray(1, 2, 3, 4), new Uint8ClampedArray(1, 2, 3, 4)),
@@ -410,7 +410,7 @@ describe("is", "deepEqual", "ES2015 Specific", () => {
 
     });
 
-    describeIf(is.function(Int16Array))("int16array", () => {
+    describeIf(ateos.isFunction(Int16Array))("int16array", () => {
 
         it("returns true for arrays with same values", () => {
             assert(eql(new Int16Array(1, 2, 3, 4), new Int16Array(1, 2, 3, 4)),
@@ -426,7 +426,7 @@ describe("is", "deepEqual", "ES2015 Specific", () => {
 
     });
 
-    describeIf(is.function(Uint16Array))("uint16array", () => {
+    describeIf(ateos.isFunction(Uint16Array))("uint16array", () => {
 
         it("returns true for arrays with same values", () => {
             assert(eql(new Uint16Array(1, 2, 3, 4), new Uint16Array(1, 2, 3, 4)),
@@ -442,7 +442,7 @@ describe("is", "deepEqual", "ES2015 Specific", () => {
 
     });
 
-    describeIf(is.function(Int32Array))("int32array", () => {
+    describeIf(ateos.isFunction(Int32Array))("int32array", () => {
 
         it("returns true for arrays with same values", () => {
             assert(eql(new Int32Array(1, 2, 3, 4), new Int32Array(1, 2, 3, 4)),
@@ -458,7 +458,7 @@ describe("is", "deepEqual", "ES2015 Specific", () => {
 
     });
 
-    describeIf(is.function(Uint32Array))("uint32array", () => {
+    describeIf(ateos.isFunction(Uint32Array))("uint32array", () => {
 
         it("returns true for arrays with same values", () => {
             assert(eql(new Uint32Array(1, 2, 3, 4), new Uint32Array(1, 2, 3, 4)),
@@ -474,7 +474,7 @@ describe("is", "deepEqual", "ES2015 Specific", () => {
 
     });
 
-    describeIf(is.function(Float32Array))("float32array", () => {
+    describeIf(ateos.isFunction(Float32Array))("float32array", () => {
 
         it("returns true for arrays with same values", () => {
             assert(eql(new Float32Array(1, 2, 3, 4), new Float32Array(1, 2, 3, 4)),
@@ -490,7 +490,7 @@ describe("is", "deepEqual", "ES2015 Specific", () => {
 
     });
 
-    describeIf(is.function(Float64Array))("float64array", () => {
+    describeIf(ateos.isFunction(Float64Array))("float64array", () => {
 
         it("returns true for arrays with same values", () => {
             assert(eql(new Float64Array(1, 2, 3, 4), new Float64Array(1, 2, 3, 4)),
@@ -506,7 +506,7 @@ describe("is", "deepEqual", "ES2015 Specific", () => {
 
     });
 
-    describeIf(is.function(DataView))("dataview", () => {
+    describeIf(ateos.isFunction(DataView))("dataview", () => {
 
         it("returns true for arrays with same values", () => {
             const dataViewA = new DataView(new ArrayBuffer(4));
@@ -545,7 +545,7 @@ describe("is", "deepEqual", "ES2015 Specific", () => {
 
     });
 
-    describeIf(is.function(ArrayBuffer))("arraybuffer", () => {
+    describeIf(ateos.isFunction(ArrayBuffer))("arraybuffer", () => {
 
         it("returns true for arrays with same values", () => {
             assert(eql(new ArrayBuffer(1), new ArrayBuffer(1)),

@@ -71,7 +71,7 @@ describe("shani", "util", "match", () => {
             assert(has.test({ callback() { } }));
         });
 
-        if (is.function(additionalTests)) {
+        if (ateos.isFunction(additionalTests)) {
             additionalTests();
         }
     };
@@ -664,7 +664,7 @@ describe("shani", "util", "match", () => {
             assert.isFalse(every.test([1, "b"]));
         });
 
-        if (is.function(Set)) {
+        if (ateos.isFunction(Set)) {
             it("matches an iterable if the predicate is true for every element", () => {
                 const every = match.every(match.number);
                 const set = new Set();
@@ -743,7 +743,7 @@ describe("shani", "util", "match", () => {
             assert.isFalse(some.test(["a", "b"]));
         });
 
-        if (is.function(Set)) {
+        if (ateos.isFunction(Set)) {
             it("matches an iterable if the predicate is true for some element", () => {
                 const some = match.some(match.number);
                 const set = new Set();

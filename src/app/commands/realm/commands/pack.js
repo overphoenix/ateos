@@ -56,7 +56,7 @@ export default class extends Subsystem {
 
       return 0;
     } catch (err) {
-      if (!is.null(rootRealm)) {
+      if (!ateos.isNull(rootRealm)) {
         rootRealm.stopNotifications(err);
       } else {
         console.error(ateos.pretty.error(err));

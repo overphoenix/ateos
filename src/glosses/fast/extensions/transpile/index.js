@@ -12,12 +12,12 @@ const { helper } = ateos.getPrivate(ateos.fast);
 //             ImportDeclaration(p) {
 //                 const source = p.node.source.value;
 //                 const res = map(source, file);
-//                 if (is.array(res)) {
+//                 if (ateos.isArray(res)) {
 //                     const [key, mapTo] = res;
 //                     const sourceRelative = path.relative(key, source);
 //                     const fileBase = base(source, file);
 //                     const mappedRelative = path.resolve(mapTo, sourceRelative);
-//                     if (!is.string(fileBase)) {
+//                     if (!ateos.isString(fileBase)) {
 //                         throw new ateos.error.IllegalStateException("`base` should be a string");
 //                     }
 //                     const mappedFilename = path.resolve(fileBase, file.relative);
@@ -35,10 +35,10 @@ export default function transpilePlugin() {
     // delete options.importReplace;
     // if (importReplace) {
     //     const { base, map } = importReplace;
-    //     if (!is.function(base)) {
+    //     if (!ateos.isFunction(base)) {
     //         importReplace.base = () => base;
     //     }
-    //     if (!is.function(map)) {
+    //     if (!ateos.isFunction(map)) {
     //         const sources = Object.keys(map);
     //         importReplace.map = (source) => {
     //             for (const p of sources) {

@@ -920,7 +920,7 @@ const route = function (fromModel) {
     const toModel = models[i];
     const node = graph[toModel];
 
-    if (is.null(node.parent)) {
+    if (ateos.isNull(node.parent)) {
       // no possible conversion, or this node is the source model.
       continue;
     }
@@ -941,7 +941,7 @@ const wrapRaw = (fn) => {
       return;
     }
 
-    if (args.length === 1 && is.array(args[0])) {
+    if (args.length === 1 && ateos.isArray(args[0])) {
       args = args[0];
     }
 
@@ -962,7 +962,7 @@ const wrapRounded = (fn) => {
       return;
     }
 
-    if (args.length === 1 && is.array(args[0])) {
+    if (args.length === 1 && ateos.isArray(args[0])) {
       args = args[0];
     }
 
@@ -971,7 +971,7 @@ const wrapRounded = (fn) => {
     // we're assuming the result is an array here.
     // see notice in conversions.js; don't use box types
     // in conversion functions.
-    if (is.array(result)) {
+    if (ateos.isArray(result)) {
       for (let len = result.length, i = 0; i < len; i++) {
         result[i] = Math.round(result[i]);
       }

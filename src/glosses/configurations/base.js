@@ -50,11 +50,11 @@ export default class BaseConfig {
     }
 
     let key;
-    if (is.string(args[0]) || is.array(args[0])) {
+    if (ateos.isString(args[0]) || ateos.isArray(args[0])) {
       key = args.shift();
     }
     const obj = this.#getObject(key);
-    if (!is.object(obj)) {
+    if (!ateos.isObject(obj)) {
       return this.set(key, assign(...args));
     }
 
@@ -73,11 +73,11 @@ export default class BaseConfig {
     }
 
     let key;
-    if (is.string(args[0]) || is.array(args[0])) {
+    if (ateos.isString(args[0]) || ateos.isArray(args[0])) {
       key = args.shift();
     }
     const obj = this.#getObject(key);
-    if (!is.object(obj)) {
+    if (!ateos.isObject(obj)) {
       return this.set(key, assign(...args));
     }
 
@@ -100,7 +100,7 @@ export default class BaseConfig {
 
   #getObject(key) {
     let obj;
-    if ((is.string(key) && key !== "") || is.array(key)) {
+    if ((ateos.isString(key) && key !== "") || ateos.isArray(key)) {
       obj = this.get(key);
     } else {
       obj = this.raw;

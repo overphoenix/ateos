@@ -83,7 +83,7 @@ describe("utimes", () => {
             const fakeFd = Math.random();
 
             gracefulFsStub.open = (pathIgnored, flagsIgnored, modeIgnored, callback) => {
-                if (is.function(modeIgnored)) {
+                if (ateos.isFunction(modeIgnored)) {
                     callback = modeIgnored;
                 }
                 process.nextTick(() => callback(null, fakeFd));

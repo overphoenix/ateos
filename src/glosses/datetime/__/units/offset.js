@@ -39,7 +39,7 @@ const chunkOffset = /([\+\-]|\d\d)/gi;
 export const offsetFromString = (matcher, string) => {
   const matches = (string || "").match(matcher);
 
-  if (is.null(matches)) {
+  if (ateos.isNull(matches)) {
     return null;
   }
 
@@ -65,7 +65,7 @@ export const cloneWithOffset = (input, model) => {
   let diff;
   if (model._isUTC) {
     res = model.clone();
-    diff = (is.datetime(input) || is.date(input) ? input.valueOf() : __.create.createLocal(input).valueOf()) - res.valueOf();
+    diff = (is.datetime(input) || ateos.isDate(input) ? input.valueOf() : __.create.createLocal(input).valueOf()) - res.valueOf();
     // Use low-level api, because this fn is low-level api.
     res._d.setTime(res._d.valueOf() + diff);
     hooks.updateOffset(res, false);
@@ -79,7 +79,7 @@ hooks.updateOffset = function (dt, keepTime) {
   const zone = ateos.datetime.defaultZone;
   let offset;
 
-  if (is.undefined(dt._z)) {
+  if (ateos.isUndefined(dt._z)) {
     if (zone && __.tz.needsOffset(dt) && !dt._isUTC) {
       dt._d = ateos.datetime.utc(dt._a)._d;
       dt.utc().add(zone.parse(dt), "minutes");
@@ -91,7 +91,7 @@ hooks.updateOffset = function (dt, keepTime) {
     if (Math.abs(offset) < 16) {
       offset = offset / 60;
     }
-    if (!is.undefined(dt.utcOffset)) {
+    if (!ateos.isUndefined(dt.utcOffset)) {
       dt.utcOffset(-offset, keepTime);
     } else {
       dt.zone(offset, keepTime);

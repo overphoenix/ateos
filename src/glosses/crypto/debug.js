@@ -33,10 +33,10 @@ export let storage = {};
  */
 export const get = function (cat, name) {
   let rval;
-  if (is.undefined(cat)) {
+  if (ateos.isUndefined(cat)) {
     rval = storage;
   } else if (cat in storage) {
-    if (is.undefined(name)) {
+    if (ateos.isUndefined(name)) {
       rval = storage[cat];
     } else {
       rval = storage[cat][name];
@@ -67,10 +67,10 @@ export const set = function (cat, name, data) {
  * @param name name of data to clear or omit to clear entire category.
  */
 export const clear = function (cat, name) {
-  if (is.undefined(cat)) {
+  if (ateos.isUndefined(cat)) {
     storage = {};
   } else if (cat in storage) {
-    if (is.undefined(name)) {
+    if (ateos.isUndefined(name)) {
       delete storage[cat];
     } else {
       delete storage[cat][name];

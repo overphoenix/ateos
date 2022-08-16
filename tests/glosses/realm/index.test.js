@@ -45,12 +45,12 @@ describe("realm", () => {
     });
 
     it("'ateos.realm' namespace", () => {
-        assert.isTrue(is.namespace(ateos.realm));
-        assert.isTrue(is.class(ateos.realm.RealmManager));
-        assert.isTrue(is.class(ateos.realm.BaseTask));
-        assert.isTrue(is.class(ateos.realm.TransformTask));
-        assert.isTrue(is.class(ateos.realm.Configuration));
-        assert.isTrue(is.class(ateos.realm.DevConfiguration));
+        assert.isTrue(ateos.isNamespace(ateos.realm));
+        assert.isTrue(ateos.isClass(ateos.realm.RealmManager));
+        assert.isTrue(ateos.isClass(ateos.realm.BaseTask));
+        assert.isTrue(ateos.isClass(ateos.realm.TransformTask));
+        assert.isTrue(ateos.isClass(ateos.realm.Configuration));
+        assert.isTrue(ateos.isClass(ateos.realm.DevConfiguration));
         assert.isTrue(is.realm(ateos.realm.rootRealm));
     });
 

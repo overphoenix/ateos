@@ -19,8 +19,8 @@ export class Event {
 export class ProgressEvent extends Event {
   constructor(type, progressEventRaw, target) {
     super(type, false, false, target);
-    this.loaded = is.number(progressEventRaw.loaded) ? progressEventRaw.loaded : null;
-    this.total = is.number(progressEventRaw.total) ? progressEventRaw.total : null;
+    this.loaded = ateos.isNumber(progressEventRaw.loaded) ? progressEventRaw.loaded : null;
+    this.total = ateos.isNumber(progressEventRaw.total) ? progressEventRaw.total : null;
     this.lengthComputable = Boolean(progressEventRaw.total);
   }
 }
@@ -54,7 +54,7 @@ export const EventTarget = {
     const listeners = self.eventListeners && self.eventListeners[type] || [];
 
     listeners.forEach((listener) => {
-      if (is.function(listener)) {
+      if (ateos.isFunction(listener)) {
         listener.call(self, event);
       } else {
         listener.handleEvent(event);

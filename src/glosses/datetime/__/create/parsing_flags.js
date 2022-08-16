@@ -21,7 +21,7 @@ const defaultParsingFlags = () => {
 };
 
 export default function getParsingFlags(m) {
-  if (is.nil(m._pf)) {
+  if (ateos.isNil(m._pf)) {
     m._pf = defaultParsingFlags();
   }
   return m._pf;

@@ -4,7 +4,7 @@ const walkInternal = (obj, iterator, context, originalObj, seen) => {
   Object.getOwnPropertyNames(obj).forEach((k) => {
     if (seen[k] !== true) {
       seen[k] = true;
-      const target = is.function(Object.getOwnPropertyDescriptor(obj, k).get)
+      const target = ateos.isFunction(Object.getOwnPropertyDescriptor(obj, k).get)
         ? originalObj
         : obj;
       iterator.call(context, k, target);

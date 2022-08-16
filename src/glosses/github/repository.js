@@ -181,7 +181,7 @@ export default class Repository extends Requestable {
   listCommits(options, cb) {
     options = options || {};
 
-    if (is.function(options)) {
+    if (ateos.isFunction(options)) {
       cb = options;
       options = {};
     }
@@ -201,7 +201,7 @@ export default class Repository extends Requestable {
         */
   listCommitsOnPR(number, options, cb) {
     options = options || {};
-    if (is.function(options)) {
+    if (ateos.isFunction(options)) {
       cb = options;
       options = {};
     }
@@ -285,13 +285,13 @@ export default class Repository extends Requestable {
      * @return {Object} the representation of `content` for the GitHub API
      */
   _getContentObject(content) {
-    if (is.string(content)) {
+    if (ateos.isString(content)) {
       return {
         content: utf8.encode(content),
         encoding: "utf-8"
       };
 
-    } else if (!is.undefined(Buffer) && content instanceof Buffer) {
+    } else if (!ateos.isUndefined(Buffer) && content instanceof Buffer) {
       return {
         content: content.toString("base64"),
         encoding: "base64"
@@ -361,7 +361,7 @@ export default class Repository extends Requestable {
      * @return {Promise} - the promise for the http request
      */
   commit(parent, tree, message, options, cb) {
-    if (is.function(options)) {
+    if (ateos.isFunction(options)) {
       cb = options;
       options = {};
     }
@@ -554,7 +554,7 @@ export default class Repository extends Requestable {
      * @return {Promise} - the promise for the http request
      */
   createBranch(oldBranch, newBranch, cb) {
-    if (is.function(newBranch)) {
+    if (ateos.isFunction(newBranch)) {
       cb = newBranch;
       newBranch = oldBranch;
       oldBranch = "master";
@@ -756,7 +756,7 @@ export default class Repository extends Requestable {
      */
   writeFile(branch, path, content, message, options, cb) {
     options = options || {};
-    if (is.function(options)) {
+    if (ateos.isFunction(options)) {
       cb = options;
       options = {};
     }

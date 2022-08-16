@@ -6,12 +6,12 @@ const inputBuffer = Buffer.from(inputString);
 describe("compressor", "snappy", () => {
     it("compress() string", async () => {
         const buffer = await compress(inputString);
-        assert.isTrue(is.buffer(buffer));
+        assert.isTrue(ateos.isBuffer(buffer));
     });
 
     it("compress() buffer", async () => {
         const buffer = await compress(inputBuffer);
-        assert.isTrue(is.buffer(buffer));
+        assert.isTrue(ateos.isBuffer(buffer));
     });
 
     it("compress() bad input", () => {
@@ -20,12 +20,12 @@ describe("compressor", "snappy", () => {
 
     it("compressSync() string", () => {
         const buffer = compressSync(inputString);
-        assert.isTrue(is.buffer(buffer));
+        assert.isTrue(ateos.isBuffer(buffer));
     });
 
     it("compressSync() buffer", () => {
         const buffer = compressSync(inputBuffer);
-        assert.isTrue(is.buffer(buffer));
+        assert.isTrue(ateos.isBuffer(buffer));
     });
 
     it("isValidCompressed() on valid data", async () => {

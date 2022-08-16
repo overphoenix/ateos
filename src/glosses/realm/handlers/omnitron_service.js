@@ -19,7 +19,7 @@ export default class OmnitronServiceHandler extends realm.TypeHandler {
       await fs.remove(servicePath);
     }
 
-    await fs.symlink(destPath, servicePath, is.windows ? "junction" : undefined);
+    await fs.symlink(destPath, servicePath, ateos.isWindows ? "junction" : undefined);
 
     await omnitron.dispatcher.registerService(ateosConf.raw.name);
   }

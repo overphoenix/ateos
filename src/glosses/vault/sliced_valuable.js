@@ -16,11 +16,11 @@ export default class SlicedValuable {
       throw new error.NotValidException("Not valid parent valuable");
     }
 
-    if (is.string(prefix)) {
+    if (ateos.isString(prefix)) {
       prefix = prefix.split(separator);
     }
 
-    if (is.array(prefix) && prefix.length > 0) {
+    if (ateos.isArray(prefix) && prefix.length > 0) {
       for (let i = 0; i < prefix.length; i++) {
         prefix[i] = prefix[i].trim();
         if (prefix[i].length === 0 || prefix[i] === separator) {
@@ -35,7 +35,7 @@ export default class SlicedValuable {
 
     this[_PARENT_VALUABLE] = valuable;
 
-    if (is.function(this[_PARENT_VALUABLE]._fullName)) {
+    if (ateos.isFunction(this[_PARENT_VALUABLE]._fullName)) {
       this._prefix = this[_PARENT_VALUABLE]._fullName(prefix);
       this._fullName = (name) => this[_PARENT_VALUABLE]._fullName(`${prefix}${name}`);
     } else {
@@ -168,22 +168,22 @@ export default class SlicedValuable {
 
   async fromJSON(json) {
     await this.clear();
-    if (is.string(json.notes) && json.notes !== this.meta.notes) {
+    if (ateos.isString(json.notes) && json.notes !== this.meta.notes) {
       this.meta.notes = json.notes;
     }
 
-    if (is.array(json.entries)) {
+    if (ateos.isArray(json.entries)) {
       const order = [];
       for (const entry of json.entries) {
         const id = await this.set(entry.name, entry.value); // eslint-disable-line
         order.push(id);
       }
       this[_PARENT_VALUABLE][VALUABLE_META].order = order;
-    } else if (is.plainObject(json.entries)) {
+    } else if (ateos.isPlainObject(json.entries)) {
       await this.setMulti(json.entries);
     }
 
-    if (is.array(json.tags)) {
+    if (ateos.isArray(json.tags)) {
       for (const tag of json.tags) {
         await this.addTag(tag, true); // eslint-disable-line
       }

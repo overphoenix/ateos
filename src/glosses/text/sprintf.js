@@ -40,14 +40,14 @@ sprintfFormat = (parseTree, argv) => {
   let isPositive;
   let sign;
   for (i = 0; i < treeLength; i++) {
-    if (is.string(parseTree[i])) {
+    if (ateos.isString(parseTree[i])) {
       output += parseTree[i];
-    } else if (is.object(parseTree[i])) {
+    } else if (ateos.isObject(parseTree[i])) {
       ph = parseTree[i]; // convenience purposes only
       if (ph.keys) { // keyword argument
         arg = argv[cursor];
         for (k = 0; k < ph.keys.length; k++) {
-          if (is.nil(arg)) {
+          if (ateos.isNil(arg)) {
             throw new Error(sprintf('[sprintf] Cannot access property "%s" of undefined value "%s"', ph.keys[k], ph.keys[k - 1]));
           }
           arg = arg[ph.keys[k]];
@@ -62,7 +62,7 @@ sprintfFormat = (parseTree, argv) => {
         arg = arg();
       }
 
-      if (re.numericArg.test(ph.type) && (!is.number(arg) && isNaN(arg))) {
+      if (re.numericArg.test(ph.type) && (!ateos.isNumber(arg) && isNaN(arg))) {
         throw new TypeError(sprintf("[sprintf] expecting number but found %T", arg));
       }
 
@@ -153,22 +153,22 @@ sprintfParse = (fmt) => {
   const parseTree = [];
   let argNames = 0;
   while (_fmt) {
-    if (!is.null(match = re.text.exec(_fmt))) {
+    if (!ateos.isNull(match = re.text.exec(_fmt))) {
       parseTree.push(match[0]);
-    } else if (!is.null(match = re.modulo.exec(_fmt))) {
+    } else if (!ateos.isNull(match = re.modulo.exec(_fmt))) {
       parseTree.push("%");
-    } else if (!is.null(match = re.placeholder.exec(_fmt))) {
+    } else if (!ateos.isNull(match = re.placeholder.exec(_fmt))) {
       if (match[2]) {
         argNames |= 1;
         const fieldList = [];
         let replacementField = match[2];
         let fieldMatch = [];
-        if (!is.null(fieldMatch = re.key.exec(replacementField))) {
+        if (!ateos.isNull(fieldMatch = re.key.exec(replacementField))) {
           fieldList.push(fieldMatch[1]);
           while ((replacementField = replacementField.substring(fieldMatch[0].length)) !== "") {
-            if (!is.null(fieldMatch = re.keyAccess.exec(replacementField))) {
+            if (!ateos.isNull(fieldMatch = re.keyAccess.exec(replacementField))) {
               fieldList.push(fieldMatch[1]);
-            } else if (!is.null(fieldMatch = re.indexAccess.exec(replacementField))) {
+            } else if (!ateos.isNull(fieldMatch = re.indexAccess.exec(replacementField))) {
               fieldList.push(fieldMatch[1]);
             } else {
               throw new SyntaxError("[sprintf] failed to parse named argument key");

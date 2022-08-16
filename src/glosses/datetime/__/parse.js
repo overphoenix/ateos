@@ -29,7 +29,7 @@ export const matchWord = /[0-9]{0,256}['a-z\u00A0-\u05FF\u0700-\uD7FF\uF900-\uFD
 const regexes = {};
 
 export const addRegexToken = (token, regex, strictRegex) => {
-  regexes[token] = is.function(regex) ? regex : function (isStrict) {
+  regexes[token] = ateos.isFunction(regex) ? regex : function (isStrict) {
     return isStrict && strictRegex ? strictRegex : regex;
   };
 };
@@ -44,7 +44,7 @@ const unescapeFormat = (s) => {
 };
 
 export const getParseRegexForToken = (token, config) => {
-  if (!is.propertyOwned(regexes, token)) {
+  if (!ateos.isPropertyOwned(regexes, token)) {
     return new RegExp(unescapeFormat(token));
   }
 
@@ -54,11 +54,11 @@ export const getParseRegexForToken = (token, config) => {
 const tokens = {};
 
 export const addParseToken = (token, callback) => {
-  if (is.string(token)) {
+  if (ateos.isString(token)) {
     token = [token];
   }
   let func = callback;
-  if (is.number(callback)) {
+  if (ateos.isNumber(callback)) {
     func = function (input, array) {
       array[callback] = __.util.toInt(input);
     };
@@ -76,7 +76,7 @@ export const addWeekParseToken = (token, callback) => {
 };
 
 export const addTimeToArrayFromToken = (token, input, config) => {
-  if (is.exist(input) && is.propertyOwned(tokens, token)) {
+  if (ateos.isExist(input) && ateos.isPropertyOwned(tokens, token)) {
     tokens[token](input, config._a, config, token);
   }
 };

@@ -318,10 +318,10 @@ const deepValue = (obj, path, list = []) => {
 
     const value = obj[firstSegment];
 
-    if (!is.nil(value)) {
-      if (!remaining && (is.string(value) || is.number(value))) {
+    if (!ateos.isNil(value)) {
+      if (!remaining && (ateos.isString(value) || ateos.isNumber(value))) {
         list.push(value.toString());
-      } else if (is.array(value)) {
+      } else if (ateos.isArray(value)) {
         // Search each item in the array.
         for (let i = 0, len = value.length; i < len; i += 1) {
           deepValue(value[i], remaining, list);
@@ -447,7 +447,7 @@ export default class Fuzzy {
 
     // Check the first item in the list, if it's a string, then we assume
     // that every item in the list is also a string, and thus it's a flattened array.
-    if (is.string(list[0])) {
+    if (ateos.isString(list[0])) {
       // Iterate over every item
       for (let i = 0, len = list.length; i < len; i += 1) {
         this._analyze({
@@ -474,7 +474,7 @@ export default class Fuzzy {
       // Iterate over every key
       for (let j = 0, keysLen = this.options.keys.length; j < keysLen; j += 1) {
         let key = this.options.keys[j];
-        if (!is.string(key)) {
+        if (!ateos.isString(key)) {
           weights[key.name] = {
             weight: (1 - key.weight) || 1
           };
@@ -507,7 +507,7 @@ export default class Fuzzy {
 
   _analyze({ key, arrayIndex = -1, value, record, index } = {}, { tokenSearchers = [], fullSearcher = [], resultMap = {}, results = [] } = {}) {
     // Check if the texvaluet can be searched
-    if (is.nil(value)) {
+    if (ateos.isNil(value)) {
       return;
     }
 
@@ -515,7 +515,7 @@ export default class Fuzzy {
     let averageScore = -1;
     let numTextMatches = 0;
 
-    if (is.string(value)) {
+    if (ateos.isString(value)) {
       const mainSearchResult = fullSearcher.search(value);
 
       if (this.options.tokenize) {
@@ -597,7 +597,7 @@ export default class Fuzzy {
           results.push(resultMap[index]);
         }
       }
-    } else if (is.array(value)) {
+    } else if (ateos.isArray(value)) {
       for (let i = 0, len = value.length; i < len; i += 1) {
         this._analyze({
           key,

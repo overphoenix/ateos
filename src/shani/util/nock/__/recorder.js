@@ -54,8 +54,8 @@ const getBodyFromChunks = function (chunks, headers) {
   //  of hex strings so that the responses can be mocked one by one.
   if (_util.isContentEncoded(headers)) {
     return chunks.map((chunk) => {
-      if (!is.buffer(chunk)) {
-        if (is.string(chunk)) {
+      if (!ateos.isBuffer(chunk)) {
+        if (ateos.isString(chunk)) {
           chunk = Buffer.from(chunk);
         } else {
           throw new Error("content-encoded responses must all be binary buffers");
@@ -191,14 +191,14 @@ export const record = (recOptions) => {
 
   //  Originaly the parameters was a dontPrint boolean flag.
   //  To keep the existing code compatible we take that case into account.
-  const optionsIsObject = is.object(recOptions);
-  const dontPrint = (is.boolean(recOptions) && recOptions) || (optionsIsObject && recOptions.dontPrint);
+  const optionsIsObject = ateos.isObject(recOptions);
+  const dontPrint = (ateos.isBoolean(recOptions) && recOptions) || (optionsIsObject && recOptions.dontPrint);
   const outputObjects = optionsIsObject && recOptions.outputObjects;
   const enableReqheadersRecording = optionsIsObject && recOptions.enableReqheadersRecording;
   // eslint-disable-next-line no-console
   const logging = (optionsIsObject && recOptions.logging) || console.log;
   let useSeparator = true;
-  if (optionsIsObject && is.propertyDefined(recOptions, "useSeparator")) {
+  if (optionsIsObject && ateos.isPropertyDefined(recOptions, "useSeparator")) {
     useSeparator = recOptions.useSeparator;
   }
 
@@ -215,7 +215,7 @@ export const record = (recOptions) => {
 
     const bodyChunks = [];
 
-    if (is.string(options)) {
+    if (ateos.isString(options)) {
       const url = URL.parse(options);
       options = {
         hostname: url.hostname,
@@ -236,7 +236,7 @@ export const record = (recOptions) => {
 
     const req = overriddenRequest(options, (res) => {
 
-      if (is.string(options)) {
+      if (ateos.isString(options)) {
         options = URL.parse(options);
       }
 
@@ -275,7 +275,7 @@ export const record = (recOptions) => {
 
         if (!dontPrint) {
           if (useSeparator) {
-            if (!is.string(out)) {
+            if (!ateos.isString(out)) {
               out = JSON.stringify(out, null, 2);
             }
             logging(SEPARATOR + out + SEPARATOR);
@@ -322,9 +322,9 @@ export const record = (recOptions) => {
 
     const oldWrite = req.write;
     req.write = function (data, encoding, cb) {
-      if (!is.undefined(data)) {
+      if (!ateos.isUndefined(data)) {
         if (data) {
-          if (!is.buffer(data)) {
+          if (!ateos.isBuffer(data)) {
             data = Buffer.from(data, encoding);
           }
           bodyChunks.push(data);
@@ -338,7 +338,7 @@ export const record = (recOptions) => {
       const oldEnd = req.end;
       req.end = function (data, encoding) {
         if (data) {
-          if (!is.buffer(data)) {
+          if (!ateos.isBuffer(data)) {
             data = Buffer.from(data, encoding);
           }
           bodyChunks.push(data);

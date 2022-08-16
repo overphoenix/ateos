@@ -46,10 +46,10 @@ const _reverseAlphabets = {};
  * @return the baseN-encoded output string.
  */
 export const encode = function (input, alphabet, maxline) {
-  if (!is.string(alphabet)) {
+  if (!ateos.isString(alphabet)) {
     throw new TypeError('"alphabet" must be a string.');
   }
-  if (!is.undefined(maxline) && !is.number(maxline)) {
+  if (!ateos.isUndefined(maxline) && !ateos.isNumber(maxline)) {
     throw new TypeError('"maxline" must be a number.');
   }
 
@@ -103,10 +103,10 @@ export const encode = function (input, alphabet, maxline) {
  * @return the Uint8Array.
  */
 export const decode = function (input, alphabet) {
-  if (!is.string(input)) {
+  if (!ateos.isString(input)) {
     throw new TypeError('"input" must be a string.');
   }
-  if (!is.string(alphabet)) {
+  if (!ateos.isString(alphabet)) {
     throw new TypeError('"alphabet" must be a string.');
   }
 
@@ -127,7 +127,7 @@ export const decode = function (input, alphabet) {
   const bytes = [0];
   for (let i = 0; i < input.length; i++) {
     const value = table[input.charCodeAt(i)];
-    if (is.undefined(value)) {
+    if (ateos.isUndefined(value)) {
       return;
     }
 
@@ -148,7 +148,7 @@ export const decode = function (input, alphabet) {
     bytes.push(0);
   }
 
-  if (!is.undefined(Buffer)) {
+  if (!ateos.isUndefined(Buffer)) {
     return Buffer.from(bytes.reverse());
   }
 

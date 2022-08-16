@@ -171,7 +171,7 @@ const proto = {
   create(func, spyLength) {
     let name;
 
-    if (!is.function(func)) {
+    if (!ateos.isFunction(func)) {
       func = function () { };
     } else {
       name = ateos.assertion.util.getName(func);
@@ -223,7 +223,7 @@ const proto = {
         // Call through with `new`
         returnValue = new (bind.apply(this.func || func, [thisValue].concat(args)))();
 
-        if (is.primitive(returnValue)) {
+        if (ateos.isPrimitive(returnValue)) {
           returnValue = thisValue;
         }
       } else {
@@ -269,7 +269,7 @@ const proto = {
       }
     }
 
-    if (!is.undefined(error)) {
+    if (!ateos.isUndefined(error)) {
       throw error;
     }
 
@@ -430,9 +430,9 @@ const proto = {
     return (format || "").replace(/%(.)/g, (match, specifyer) => {
       formatter = proto.formatters[specifyer];
 
-      if (is.function(formatter)) {
+      if (ateos.isFunction(formatter)) {
         return String(formatter(spyInstance, args));
-      } else if (!is.nan(parseInt(specifyer, 10))) {
+      } else if (!ateos.isNan(parseInt(specifyer, 10))) {
         return __.util.format(args[specifyer - 1]);
       }
 
@@ -511,7 +511,7 @@ delegateToCalls("yieldToOn", false, "yieldToOn", function (property) {
 });
 
 export default function spy(object, property, types) {
-  if (!property && is.function(object)) {
+  if (!property && ateos.isFunction(object)) {
     return spy.create(object);
   }
 

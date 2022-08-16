@@ -164,7 +164,7 @@ export default (fs) => {
         return;
       }
       const watchCallback = (fullPath, flags, info) => {
-        if (!is.undefined(this.options.depth) && depth(fullPath, realPath) > this.options.depth) {
+        if (!ateos.isUndefined(this.options.depth) && depth(fullPath, realPath) > this.options.depth) {
           return;
         }
         const path = transform(aPath.join(watchPath, aPath.relative(watchPath, fullPath)));
@@ -207,7 +207,7 @@ export default (fs) => {
 
               if (info.type === "symlink" && this.options.followSymlinks) {
                 // push symlinks back to the top of the stack to get handled
-                const curDepth = is.undefined(this.options.depth) ? undefined : depth(fullPath, realPath) + 1;
+                const curDepth = ateos.isUndefined(this.options.depth) ? undefined : depth(fullPath, realPath) + 1;
                 return this._addToFsEvents(path, false, true, curDepth);
               }
               // track new paths
@@ -238,7 +238,7 @@ export default (fs) => {
         // correct for wrong events emitted
         const wrongEventFlags = [69888, 70400, 71424, 72704, 73472, 131328, 131840, 262912];
         if (wrongEventFlags.includes(flags) || info.event === "unknown") {
-          if (is.function(this.options.ignored)) {
+          if (ateos.isFunction(this.options.ignored)) {
             std.fs.stat(path, (error, stats) => {
               if (checkIgnored(stats)) {
                 return;
@@ -276,7 +276,7 @@ export default (fs) => {
     _addToFsEvents(path, transform, forceAdd, priorDepth) {
 
       // applies transform if provided, otherwise returns same value
-      const processPath = is.function(transform) ? transform : (x) => x;
+      const processPath = ateos.isFunction(transform) ? transform : (x) => x;
 
       const emitAdd = (newPath, stats) => {
         const pp = processPath(newPath);
@@ -338,7 +338,7 @@ export default (fs) => {
             if (wh.followSymlinks && entry.stat.isSymbolicLink()) {
               // preserve the current depth here since it can't be derived from
               // real paths past the symlink
-              const curDepth = is.undefined(this.options.depth) ? undefined : depth(joinedPath, aPath.resolve(wh.watchPath)) + 1;
+              const curDepth = ateos.isUndefined(this.options.depth) ? undefined : depth(joinedPath, aPath.resolve(wh.watchPath)) + 1;
               this._handleFsEventsSymlink(joinedPath, fullPath, processPath, curDepth);
             } else {
               emitAdd(joinedPath, entry.stat);
@@ -370,7 +370,7 @@ export default (fs) => {
           }
         };
 
-        if (is.function(transform)) {
+        if (ateos.isFunction(transform)) {
           // realpath has already been resolved
           initWatch();
         } else {
@@ -511,7 +511,7 @@ export default (fs) => {
       watcher.on("error", (error) => {
         container.watcherUnusable = true; // documented since Node 10.4.1
         // Workaround for https://github.com/joyent/node/issues/4337
-        if (is.windows && error.code === "EPERM") {
+        if (ateos.isWindows && error.code === "EPERM") {
           std.fs.open(path, "r", (err, fd) => {
             if (!err) {
               std.fs.close(fd, (err) => {
@@ -621,8 +621,8 @@ export default (fs) => {
     };
   };
 
-  const normalizePath = is.windows ? util.normalizePath : ateos.identity;
-  const unnormalizePath = is.windows ? (x) => x.replace(/\//g, "\\") : ateos.identity;
+  const normalizePath = ateos.isWindows ? util.normalizePath : ateos.identity;
+  const unnormalizePath = ateos.isWindows ? (x) => x.replace(/\//g, "\\") : ateos.identity;
 
   class Watcher extends ateos.EventEmitter {
     constructor({
@@ -654,7 +654,7 @@ export default (fs) => {
       this.enableBinaryInterval = binaryInterval !== interval;
 
       // Enable fsevents on OS X when polling isn't explicitly enabled.
-      if (is.null(useFsEvents)) {
+      if (ateos.isNull(useFsEvents)) {
         useFsEvents = !usePolling;
       }
       // If we can't use fsevents, ensure the options reflect it's disabled.
@@ -664,12 +664,12 @@ export default (fs) => {
 
       // Use polling on Mac if not using fsevents.
       // Other platforms use non-polling fs.watch.
-      if (is.null(usePolling) && !useFsEvents) {
-        usePolling = is.darwin;
+      if (ateos.isNull(usePolling) && !useFsEvents) {
+        usePolling = ateos.isDarwin;
       }
 
       // Editor atomic write normalaization enabled by default with fs.watch
-      if (is.null(atomic)) {
+      if (ateos.isNull(atomic)) {
         atomic = !usePolling && useFsEvents;
       }
       if (atomic) {
@@ -735,7 +735,7 @@ export default (fs) => {
       this.closed = false;
       paths = util.flatten(util.arrify(paths));
 
-      if (!paths.every(is.string)) {
+      if (!paths.every(ateos.isString)) {
         throw new TypeError(`Non-string provided as watch path: ${paths}`);
       }
 
@@ -920,7 +920,7 @@ export default (fs) => {
               this.emit("all", ...this._pendingUnlinks[path]);
               delete this._pendingUnlinks[path];
             });
-          }, is.number(this.options.atomic) ? this.options.atomic : 100);
+          }, ateos.isNumber(this.options.atomic) ? this.options.atomic : 100);
           return this;
         } else if (event === "add" && this._pendingUnlinks[path]) {
           event = args[0] = "change";
@@ -1116,14 +1116,14 @@ export default (fs) => {
         let ignored = this.options.ignored;
         if (cwd && ignored) {
           ignored = ignored.map((path) => {
-            if (!is.string(path)) {
+            if (!ateos.isString(path)) {
               return path;
             }
             return ateos.path.normalize(aPath.isAbsolute(path) ? path : aPath.join(cwd, path));
           });
         }
         const paths = util.arrify(ignored)
-          .filter((path) => is.string(path) && !is.glob(path))
+          .filter((path) => ateos.isString(path) && !is.glob(path))
           .map((path) => `${path}/**`);
 
         this._userIgnored = util.matchPath([...this._globIgnored, ...ignored, ...paths]);
@@ -1155,7 +1155,7 @@ export default (fs) => {
       const checkGlobSymlink = (entry) => {
         // only need to resolve once
         // first entry should always have entry.parentDir === ""
-        if (is.nil(globSymlink)) {
+        if (ateos.isNil(globSymlink)) {
           globSymlink = entry.fullParentDir === fullWatchPath ? false : {
             realPath: entry.fullParentDir,
             linkPath: fullWatchPath
@@ -1535,7 +1535,7 @@ export default (fs) => {
 
       let closer;
 
-      if (is.undefined(this.options.depth) || depth <= this.options.depth) {
+      if (ateos.isUndefined(this.options.depth) || depth <= this.options.depth) {
         if (!target) {
           read(dir, initialAdd, callback);
         }
@@ -1680,7 +1680,7 @@ export default (fs) => {
 
       let closer;
       if (this.options.usePolling) {
-        options.interval = this.enableBinaryInterval && is.binaryPath(basename) ? this.options.binaryInterval : this.options.interval;
+        options.interval = this.enableBinaryInterval && ateos.isBinaryPath(basename) ? this.options.binaryInterval : this.options.interval;
         closer = setFsWatchFileListener(path, absolutePath, options, {
           listener,
           rawEmitter: (...args) => this.emit("raw", ...args)

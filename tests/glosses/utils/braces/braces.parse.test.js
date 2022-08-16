@@ -9,6 +9,6 @@ describe("util", "braces", ".parse", () => {
 
     it("should have an array of nodes", () => {
         const ast = braces.parse("a/{b,c}/d");
-        assert(is.array(ast.nodes));
+        assert(ateos.isArray(ast.nodes));
     });
 });

@@ -52,7 +52,7 @@ const op_or = function (x, y) {
  * @return callback(err, num) called once the operation completes.
  */
 export const generateProbablePrime = function (bits, options, callback) {
-  if (is.function(options)) {
+  if (ateos.isFunction(options)) {
     callback = options;
     options = {};
   }
@@ -60,7 +60,7 @@ export const generateProbablePrime = function (bits, options, callback) {
 
   // default to PRIMEINC algorithm
   let algorithm = options.algorithm || "PRIMEINC";
-  if (is.string(algorithm)) {
+  if (ateos.isString(algorithm)) {
     algorithm = { name: algorithm };
   }
   algorithm.options = algorithm.options || {};
@@ -147,7 +147,7 @@ function _primeinc(num, bits, rng, deltaIdx, mrTests, maxBlockTime, callback) {
 // may produce different outputs.
 function primeincFindPrimeWithWorkers(bits, rng, options, callback) {
   // web workers unavailable
-  if (is.undefined(Worker)) {
+  if (ateos.isUndefined(Worker)) {
     return primeincFindPrimeWithoutWorkers(bits, rng, options, callback);
   }
 

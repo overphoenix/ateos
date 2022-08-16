@@ -38,10 +38,10 @@ class ReInterval {
 }
 
 const reinterval = (...args) => {
-  if (!is.function(args[0])) {
+  if (!ateos.isFunction(args[0])) {
     throw new Error("Callback needed");
   }
-  if (!is.number(args[1])) {
+  if (!ateos.isNumber(args[1])) {
     throw new Error("Interval needed");
   }
 

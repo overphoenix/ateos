@@ -12,33 +12,33 @@ export default (value, { replacer, space } = {}) => {
   let quote;
 
   if (
-    !is.nil(replacer) &&
+    !ateos.isNil(replacer) &&
         typeof replacer === "object" &&
-        !is.array(replacer)
+        !ateos.isArray(replacer)
   ) {
     space = replacer.space;
     quote = replacer.quote;
     replacer = replacer.replacer;
   }
 
-  if (is.function(replacer)) {
+  if (ateos.isFunction(replacer)) {
     replacerFunc = replacer;
-  } else if (is.array(replacer)) {
+  } else if (ateos.isArray(replacer)) {
     propertyList = [];
     for (const v of replacer) {
       let item;
 
-      if (is.string(v)) {
+      if (ateos.isString(v)) {
         item = v;
       } else if (
-        is.number(v) ||
+        ateos.isNumber(v) ||
                 v instanceof String ||
                 v instanceof Number
       ) {
         item = String(v);
       }
 
-      if (!is.undefined(item) && !propertyList.includes(item)) {
+      if (!ateos.isUndefined(item) && !propertyList.includes(item)) {
         propertyList.push(item);
       }
     }
@@ -50,12 +50,12 @@ export default (value, { replacer, space } = {}) => {
     space = String(space);
   }
 
-  if (is.number(space)) {
+  if (ateos.isNumber(space)) {
     if (space > 0) {
       space = Math.min(10, Math.floor(space));
       gap = "          ".substr(0, space);
     }
-  } else if (is.string(space)) {
+  } else if (ateos.isString(space)) {
     gap = space.substr(0, 10);
   }
 
@@ -114,10 +114,10 @@ export default (value, { replacer, space } = {}) => {
 
   const serializeProperty = (key, holder) => {
     let value = holder[key];
-    if (!is.nil(value)) {
-      if (is.function(value.toJSON5)) {
+    if (!ateos.isNil(value)) {
+      if (ateos.isFunction(value.toJSON5)) {
         value = value.toJSON5(key);
-      } else if (is.function(value.toJSON)) {
+      } else if (ateos.isFunction(value.toJSON)) {
         value = value.toJSON(key);
       }
     }
@@ -140,16 +140,16 @@ export default (value, { replacer, space } = {}) => {
       case false: return "false";
     }
 
-    if (is.string(value)) {
+    if (ateos.isString(value)) {
       return quoteString(value, false);
     }
 
-    if (is.number(value)) {
+    if (ateos.isNumber(value)) {
       return String(value);
     }
 
     if (typeof value === "object") {
-      return is.array(value) ? serializeArray(value) : serializeObject(value);
+      return ateos.isArray(value) ? serializeArray(value) : serializeObject(value);
     }
 
     return undefined;
@@ -188,7 +188,7 @@ export default (value, { replacer, space } = {}) => {
     const partial = [];
     for (const key of keys) {
       const propertyString = serializeProperty(key, value);
-      if (!is.undefined(propertyString)) {
+      if (!ateos.isUndefined(propertyString)) {
         let member = `${serializeKey(key)}:`;
         if (gap !== "") {
           member += " ";
@@ -231,7 +231,7 @@ export default (value, { replacer, space } = {}) => {
     const partial = [];
     for (let i = 0; i < value.length; i++) {
       const propertyString = serializeProperty(String(i), value);
-      partial.push((!is.undefined(propertyString)) ? propertyString : "null");
+      partial.push((!ateos.isUndefined(propertyString)) ? propertyString : "null");
     }
 
     let final;

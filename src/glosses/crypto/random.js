@@ -116,10 +116,10 @@ const {
   }
 
   if (crypto.options.usePureJavaScript ||
-        (!is.nodejs && !getRandomValues)) {
+        (!ateos.isNodejs && !getRandomValues)) {
     // if this is a web worker, do not use weak entropy, instead register to
     // receive strong entropy asynchronously from the main thread
-    if (is.undefined(window) || is.undefined(window.document)) {
+    if (ateos.isUndefined(window) || ateos.isUndefined(window.document)) {
       // FIXME:
     }
 
@@ -127,11 +127,11 @@ const {
     _ctx.collectInt(Number(new Date()), 32);
 
     // add some entropy from navigator object
-    if (!is.undefined(navigator)) {
+    if (!ateos.isUndefined(navigator)) {
       let _navBytes = "";
       for (const key in navigator) {
         try {
-          if (is.string(navigator[key])) {
+          if (ateos.isString(navigator[key])) {
             _navBytes += navigator[key];
           }
         } catch (e) {
@@ -167,4 +167,4 @@ const {
 
   module.exports = _ctx;
 
-})(!is.undefined(jQuery) ? jQuery : null);
+})(!ateos.isUndefined(jQuery) ? jQuery : null);

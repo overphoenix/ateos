@@ -10,7 +10,7 @@ const {
 } = ateos;
 
 const resolveJavascriptFunction = (data) => {
-  if (is.null(data)) {
+  if (ateos.isNull(data)) {
     return false;
   }
 
@@ -48,6 +48,6 @@ export default new yaml.type.Type("tag:yaml.org,2002:js/function", {
   kind: "scalar",
   resolve: resolveJavascriptFunction,
   construct: constructJavascriptFunction,
-  predicate: is.function,
+  predicate: ateos.isFunction,
   represent: (object) => object.toString()
 });

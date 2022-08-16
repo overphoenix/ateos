@@ -51,12 +51,12 @@ describe("BSON Compliance", () => {
         function translate(doc, object) {
             for (const name in doc) {
                 if (
-                    is.number(doc[name]) ||
-                    is.string(doc[name]) ||
-                    is.boolean(doc[name])
+                    ateos.isNumber(doc[name]) ||
+                    ateos.isString(doc[name]) ||
+                    ateos.isBoolean(doc[name])
                 ) {
                     object[name] = doc[name];
-                } else if (is.array(doc[name])) {
+                } else if (ateos.isArray(doc[name])) {
                     object[name] = translate(doc[name], []);
                 } else if (doc[name].$numberLong) {
                     object[name] = Long.fromString(doc[name].$numberLong);
@@ -85,7 +85,7 @@ describe("BSON Compliance", () => {
                     object[name] = new MaxKey();
                 } else if (doc[name].$code) {
                     object[name] = new Code(doc[name].$code, doc[name].$scope || {});
-                } else if (!is.nil(doc[name]) && typeof doc[name] === "object") {
+                } else if (!ateos.isNil(doc[name]) && typeof doc[name] === "object") {
                     object[name] = translate(doc[name], {});
                 }
             }

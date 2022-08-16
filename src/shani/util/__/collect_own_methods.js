@@ -2,7 +2,7 @@ const { is, shani: { util: { __ } } } = ateos;
 
 const collectMethod = (methods, object, prop, propOwner) => {
   if (
-    is.function(__.util.getPropertyDescriptor(propOwner, prop).value) &&
+    ateos.isFunction(__.util.getPropertyDescriptor(propOwner, prop).value) &&
         object.hasOwnProperty(prop)
   ) {
     methods.push(object[prop]);

@@ -59,13 +59,13 @@ const flatten = (arr) => [].concat(...arr);
  */
 class Key {
   constructor(s, clean) {
-    if (is.string(s)) {
+    if (ateos.isString(s)) {
       this._buf = Buffer.from(s);
-    } else if (is.buffer(s)) {
+    } else if (ateos.isBuffer(s)) {
       this._buf = s;
     }
 
-    if (is.nil(clean)) {
+    if (ateos.isNil(clean)) {
       clean = true;
     }
 

@@ -16,7 +16,7 @@ const mapProps = (o, fn) => Object.keys(o).map(fn);
 
 const merge = (target, src = {}, deep) => {
   for (const key in src) {
-    if (deep && is.plainObject(src[key])) {
+    if (deep && ateos.isPlainObject(src[key])) {
       const o = {};
       merge(o, target[key], deep);
       merge(o, src[key], deep);
@@ -51,10 +51,10 @@ const format = (obj, stack = []) => {
   if (stack.length > 15 || stack.includes(obj)) {
     return "...";
   }
-  if (ateos.is.nil(obj)) {
+  if (ateos.ateos.isNil(obj)) {
     return String(obj);
   }
-  if (is.string(obj)) {
+  if (ateos.isString(obj)) {
     return `"${obj}"`;
   }
   if (isInstance(Model, obj)) {
@@ -63,13 +63,13 @@ const format = (obj, stack = []) => {
 
   stack.unshift(obj);
 
-  if (is.function(obj)) {
+  if (ateos.isFunction(obj)) {
     return obj.name || obj.toString();
   }
   if (isInstance(Map, obj) || isInstance(Set, obj)) {
     return format([...obj]);
   }
-  if (is.array(obj)) {
+  if (ateos.isArray(obj)) {
     return `[${obj.map((item) => format(item, stack)).join(", ")}]`;
   }
   if (obj.toString !== Object.prototype.toString) {
@@ -91,11 +91,11 @@ const formatPath = (path, key) => path ? `${path}.${key}` : key;
 const _validate = Symbol();
 
 const parseDefinition = (def) => {
-  if (is.plainObject(def)) {
+  if (ateos.isPlainObject(def)) {
     mapProps(def, (key) => {
       def[key] = parseDefinition(def[key]);
     });
-  } else if (!is.array(def)) {
+  } else if (!ateos.isArray(def)) {
     return [def];
   } else if (def.length === 1) {
     return [...def, undefined, null];
@@ -107,12 +107,12 @@ const parseDefinition = (def) => {
 const formatDefinition = (def, stack) => parseDefinition(def).map((d) => format(d, stack)).join(" or ");
 
 const extendDefinition = (def, newParts = []) => {
-  if (!is.array(newParts)) {
+  if (!ateos.isArray(newParts)) {
     newParts = [newParts];
   }
   if (newParts.length > 0) {
     def = newParts
-      .reduce((def, ext) => def.concat(ext), is.array(def) ? def.slice() : [def]) // clone to lose ref
+      .reduce((def, ext) => def.concat(ext), ateos.isArray(def) ? def.slice() : [def]) // clone to lose ref
       .filter((value, index, self) => self.indexOf(value) === index); // remove duplicates
   }
 
@@ -129,7 +129,7 @@ const checkDefinition = (obj, def, path, errors, stack) => {
 
   if (isInstance(Model, def)) {
     def[_validate](obj, path, errors, stack.concat(def));
-  } else if (is.plainObject(def)) {
+  } else if (ateos.isPlainObject(def)) {
     mapProps(def, (key) => {
       checkDefinition(obj ? obj[key] : undefined, def[key], formatPath(path, key), errors, stack);
     });
@@ -146,10 +146,10 @@ const checkDefinition = (obj, def, path, errors, stack) => {
 };
 
 const checkDefinitionPart = (obj, def, path, stack) => {
-  if (ateos.is.nil(obj)) {
+  if (ateos.ateos.isNil(obj)) {
     return obj === def;
   }
-  if (is.plainObject(def) || isInstance(Model, def)) { // object or model as part of union type
+  if (ateos.isPlainObject(def) || isInstance(Model, def)) { // object or model as part of union type
     const errors = [];
     checkDefinition(obj, def, path, errors, stack);
     return !errors.length;
@@ -161,7 +161,7 @@ const checkDefinitionPart = (obj, def, path, stack) => {
     return obj.constructor === def && !isNaN(obj);
   }
   return obj === def
-        || (is.function(def) && isInstance(def, obj))
+        || (ateos.isFunction(def) && isInstance(def, obj))
         || obj.constructor === def;
 };
 
@@ -174,7 +174,7 @@ const checkAssertions = (obj, model, path, errors = model.errors) => {
       result = err;
     }
     if (result !== true) {
-      const onFail = is.function(assertion.description) ? assertion.description : (assertionResult, value) =>
+      const onFail = ateos.isFunction(assertion.description) ? assertion.description : (assertionResult, value) =>
         `assertion "${assertion.description}" returned ${format(assertionResult)} `
                 + `for ${path ? `${path} =` : "value"} ${format(value)}`;
       stackError(errors, assertion, obj, path, onFail.call(model, result, obj, path));
@@ -183,7 +183,7 @@ const checkAssertions = (obj, model, path, errors = model.errors) => {
 };
 
 const cast = (obj, defNode = []) => {
-  if (!obj || is.plainObject(defNode) || isModelInstance(obj)) {
+  if (!obj || ateos.isPlainObject(defNode) || isModelInstance(obj)) {
     return obj;
   } // no value or not leaf or already a model instance
 
@@ -223,7 +223,7 @@ const extendModel = (child, parent, newProps) => {
 
 
 export const Model = function (def, params) {
-  return is.plainObject(def) ? new ObjectModel(def, params) : new BasicModel(def);
+  return ateos.isPlainObject(def) ? new ObjectModel(def, params) : new BasicModel(def);
 };
 
 Object.assign(Model.prototype, {
@@ -317,8 +317,8 @@ const unstackErrors = (model, errorCollector = model.errorCollector) => {
   if (nbErrors > 0) {
     const errors = model.errors.map((err) => {
       if (!err.message) {
-        const def = is.array(err.expected) ? err.expected : [err.expected];
-        err.message = `expecting ${err.path ? `${err.path} to be ` : ""}${def.map((d) => format(d)).join(" or ")}, got ${!ateos.is.nil(err.received) ? `${bettertypeof(err.received)} ` : ""}${format(err.received)}`;
+        const def = ateos.isArray(err.expected) ? err.expected : [err.expected];
+        err.message = `expecting ${err.path ? `${err.path} to be ` : ""}${def.map((d) => format(d)).join(" or ")}, got ${!ateos.ateos.isNil(err.received) ? `${bettertypeof(err.received)} ` : ""}${format(err.received)}`;
       }
       return err;
     });
@@ -349,7 +349,7 @@ const controlMutation = (model, def, path, o, key, applyMutation) => {
   const isOwnProperty = has(o, key);
   const initialPropDescriptor = isOwnProperty && Object.getOwnPropertyDescriptor(o, key);
 
-  if (key in def && (isPrivate || (isConstant && !ateos.is.undefined(o[key])))) {
+  if (key in def && (isPrivate || (isConstant && !ateos.ateos.isUndefined(o[key])))) {
     cannot(`modify ${isPrivate ? "private" : "constant"} ${key}`, model);
   }
 
@@ -376,12 +376,12 @@ const controlMutation = (model, def, path, o, key, applyMutation) => {
   return !nbErrors;
 };
 
-const getProxy = (model, obj, def, path) => !is.plainObject(def) ? cast(obj, def) : proxify(obj, {
+const getProxy = (model, obj, def, path) => !ateos.isPlainObject(def) ? cast(obj, def) : proxify(obj, {
 
   getPrototypeOf: () => path ? Object.prototype : getProto(obj),
 
   get(o, key) {
-    if (!is.string(key)) {
+    if (!ateos.isString(key)) {
       return Reflect.get(o, key);
     }
 
@@ -394,15 +394,15 @@ const getProxy = (model, obj, def, path) => !is.plainObject(def) ? cast(obj, def
       return;
     }
 
-    if (o[key] && has(o, key) && !is.plainObject(defPart) && !isModelInstance(o[key])) {
+    if (o[key] && has(o, key) && !ateos.isPlainObject(defPart) && !isModelInstance(o[key])) {
       o[key] = cast(o[key], defPart); // cast nested models
     }
 
-    if (is.function(o[key]) && o[key].bind) {
+    if (ateos.isFunction(o[key]) && o[key].bind) {
       return o[key].bind(o);
     } // auto-bind methods to original object, so they can access private props
 
-    if (is.plainObject(defPart) && !o[key]) {
+    if (ateos.isPlainObject(defPart) && !o[key]) {
       o[key] = {}; // null-safe traversal
     }
 
@@ -433,7 +433,7 @@ const getProxy = (model, obj, def, path) => !is.plainObject(def) ? cast(obj, def
     let descriptor;
     if (!model.conventionForPrivate(key)) {
       descriptor = Object.getOwnPropertyDescriptor(def, key);
-      if (!ateos.is.undefined(descriptor)) {
+      if (!ateos.ateos.isUndefined(descriptor)) {
         descriptor.value = o[key];
       }
     }
@@ -493,7 +493,7 @@ extend(ObjectModel, Model, {
         merge(def, part.definition, true);
         newAssertions.push(...part.assertions);
       }
-      if (is.function(part)) {
+      if (ateos.isFunction(part)) {
         merge(proto, part.prototype, true);
       }
       if (isObject(part)) {
@@ -538,7 +538,7 @@ const checkUndeclaredProps = (obj, def, errors, path) => {
     const subpath = formatPath(path, key);
     if (!has(def, key)) {
       rejectUndeclaredProp(subpath, val, errors);
-    } else if (is.plainObject(val)) {
+    } else if (ateos.isPlainObject(val)) {
       checkUndeclaredProps(val, def[key], errors, subpath);
     }
   });
@@ -568,7 +568,7 @@ export const ArrayModel = function (def) {
       return proxifyModel(array, model, {
         get(arr, key) {
           const val = arr[key];
-          return is.function(val) ? proxifyFn(val, (fn, ctx, args) => {
+          return ateos.isFunction(val) ? proxifyFn(val, (fn, ctx, args) => {
             if (ARRAY_MUTATORS.includes(key)) {
               const testArray = arr.slice();
               fn.apply(testArray, args);
@@ -604,7 +604,7 @@ extend(ArrayModel, Model, {
   },
 
   [_validate](arr, path, errors, stack) {
-    if (is.array(arr)) {
+    if (ateos.isArray(arr)) {
       arr.forEach((a, i) => {
         arr[i] = checkDefinition(a, this.definition, `${path || "Array"}[${i}]`, errors, stack);
       });
@@ -680,7 +680,7 @@ extend(FunctionModel, Model, {
   },
 
   [_validate](f, path, errors) {
-    if (!is.function(f)) {
+    if (!ateos.isFunction(f)) {
       stackError(errors, "Function", f, path);
     }
   }
@@ -706,7 +706,7 @@ export const MapModel = function (key, value) {
     return proxifyModel(map, model, {
       get(map, key) {
         const val = map[key];
-        return is.function(val) ? proxifyFn(val, (fn, ctx, args) => {
+        return ateos.isFunction(val) ? proxifyFn(val, (fn, ctx, args) => {
           if (key === "set") {
             args = castKeyValue(args);
           }
@@ -769,7 +769,7 @@ export const SetModel = function (def) {
     return proxifyModel(set, model, {
       get(set, key) {
         const val = set[key];
-        return is.function(val) ? proxifyFn(val, (fn, ctx, args) => {
+        return ateos.isFunction(val) ? proxifyFn(val, (fn, ctx, args) => {
           if (key === "add") {
             args[0] = castValue(args[0]);
           }
@@ -825,17 +825,17 @@ extend(SetModel, Model, {
 // }).as("Truthy");
 
 // // Numbers
-// export const Integer = BasicModel(Number).assert(is.integer).as("Integer");
+// export const Integer = BasicModel(Number).assert(ateos.isInteger).as("Integer");
 // export const SafeInteger = BasicModel(Number).assert(is.safeInteger).as("SafeInteger");
-// export const FiniteNumber = BasicModel(Number).assert(is.finite).as("FiniteNumber");
+// export const FiniteNumber = BasicModel(Number).assert(ateos.isFinite).as("FiniteNumber");
 // export const PositiveNumber = BasicModel(Number).assert(function isPositive(n) {
 //     return n >= 0;
 // }).as("PositiveNumber");
 // export const NegativeNumber = BasicModel(Number).assert(function isNegative(n) {
 //     return n <= 0;
 // }).as("NegativeNumber");
-// export const PositiveInteger = PositiveNumber.extend().assert(is.integer).as("PositiveInteger");
-// export const NegativeInteger = NegativeNumber.extend().assert(is.integer).as("NegativeInteger");
+// export const PositiveInteger = PositiveNumber.extend().assert(ateos.isInteger).as("PositiveInteger");
+// export const NegativeInteger = NegativeNumber.extend().assert(ateos.isInteger).as("NegativeInteger");
 
 // // Strings
 // export const StringNotBlank = BasicModel(String).assert(function isNotBlank(str) {

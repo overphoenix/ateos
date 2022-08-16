@@ -4,8 +4,8 @@ const {
     std: { childProcess: { exec } }
 } = ateos;
 
-const shell = is.windows ? null : { shell: "/bin/bash" };
-const node = is.windows ? `"${process.execPath}"` : process.execPath;
+const shell = ateos.isWindows ? null : { shell: "/bin/bash" };
+const node = ateos.isWindows ? `"${process.execPath}"` : process.execPath;
 
 describe("process", "onExit", "all-signals-integration-test", () => {
     // These are signals that are aliases for other signals, so
@@ -23,7 +23,7 @@ describe("process", "onExit", "all-signals-integration-test", () => {
     // Exhaustively test every signal, and a few numbers.
     // signal-exit does not currently support process.kill()
     // on win32.
-    const signals = is.windows ? [] : onExit.signals();
+    const signals = ateos.isWindows ? [] : onExit.signals();
     signals.concat("", 0, 1, 2, 3, 54).forEach((sig) => {
         const js = require.resolve("./fixtures/exiter.js");
         it(`exits properly: ${sig}`, (done) => {
@@ -35,19 +35,19 @@ describe("process", "onExit", "all-signals-integration-test", () => {
             const cmd = `${node} ${js} ${sig}`;
             exec(cmd, shell, (err, stdout, stderr) => {
                 if (sig) {
-                    if (!is.windows) {
+                    if (!ateos.isWindows) {
                         assert(err);
                     }
                     if (!isNaN(sig)) {
-                        if (!is.windows) {
+                        if (!ateos.isWindows) {
                             assert.equal(err.code, sig);
                         }
                     } else if (!weirdSignal(sig)) {
-                        if (!is.windows) {
+                        if (!ateos.isWindows) {
                             expect(err.signal).to.be.equal(sig);
                         }
                     } else if (sig) {
-                        if (!is.windows) {
+                        if (!ateos.isWindows) {
                             assert(err.signal);
                         }
                     }

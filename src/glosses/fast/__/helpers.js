@@ -1,16 +1,15 @@
 const {
-  is,
   fs,
   path: aPath,
   sourcemap
 } = ateos;
 
 export const applySourceMap = (file, sourceMap) => {
-  if (is.string(sourceMap)) {
+  if (ateos.isString(sourceMap)) {
     sourceMap = JSON.parse(sourceMap);
   }
 
-  if (file.sourceMap && is.string(file.sourceMap)) {
+  if (file.sourceMap && ateos.isString(file.sourceMap)) {
     file.sourceMap = JSON.parse(file.sourceMap);
   }
 
@@ -26,7 +25,7 @@ export const applySourceMap = (file, sourceMap) => {
 const getModeDiff = (fsMode, fileMode) => {
   let modeDiff = 0;
 
-  if (is.number(fileMode)) {
+  if (ateos.isNumber(fileMode)) {
     modeDiff = (fileMode ^ fsMode) & 0o7777;
   }
 
@@ -34,7 +33,7 @@ const getModeDiff = (fsMode, fileMode) => {
 };
 
 const isValidDate = (str) => {
-  return !is.nan(Date.parse(str));
+  return !ateos.isNan(Date.parse(str));
 };
 
 const getTimesDiff = (fsStat, fileStat) => {
@@ -62,7 +61,7 @@ const getTimesDiff = (fsStat, fileStat) => {
 };
 
 const isValidUnixId = (id) => {
-  if (!is.number(id)) {
+  if (!ateos.isNumber(id)) {
     return false;
   }
 
@@ -102,8 +101,8 @@ const getOwnerDiff = (fsStat, fileStat) => {
 };
 
 const isOwner = (fsStat) => {
-  const hasGetuid = is.function(process.getuid);
-  const hasGeteuid = is.function(process.geteuid);
+  const hasGetuid = ateos.isFunction(process.getuid);
+  const hasGeteuid = ateos.isFunction(process.geteuid);
 
   // If we don't have either, assume we don't have permissions.
   // This should only happen on Windows.

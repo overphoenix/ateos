@@ -15,7 +15,7 @@ const getFakes = (fakeCollection) => {
 export default class Collection {
   each(method) {
     const fakes = getFakes(this);
-    const matchingFakes = filter.call(fakes, (fake) => is.function(fake[method]));
+    const matchingFakes = filter.call(fakes, (fake) => ateos.isFunction(fake[method]));
 
     matchingFakes.forEach((fake) => fake[method]());
   }
@@ -46,7 +46,7 @@ export default class Collection {
     };
 
     getFakes(this).forEach((fake) => {
-      if (is.function(fake)) {
+      if (ateos.isFunction(fake)) {
         privateResetHistory(fake);
         return;
       }
@@ -95,19 +95,19 @@ export default class Collection {
   }
 
   createStubInstance(constructor) {
-    if (!is.function(constructor)) {
+    if (!ateos.isFunction(constructor)) {
       throw new TypeError("The constructor should be a function.");
     }
     return this.stub(Object.create(constructor.prototype));
   }
 
   stub(object, property, ...args) {
-    if (object && !is.undefined(property) && !(property in object)) {
+    if (object && !ateos.isUndefined(property) && !(property in object)) {
       throw new TypeError(`Cannot stub non-existent own property ${__.util.valueToString(property)}`);
     }
 
     const stubbed = util.stub(object, property, ...args);
-    const isStubbingEntireObject = is.undefined(property) && is.object(object);
+    const isStubbingEntireObject = ateos.isUndefined(property) && ateos.isObject(object);
 
     if (isStubbingEntireObject) {
       const ownMethods = __.collectOwnMethods(stubbed);

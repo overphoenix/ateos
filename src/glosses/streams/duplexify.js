@@ -99,7 +99,7 @@ export default class Duplexify extends stream.Duplex {
       return;
     }
 
-    if (is.null(writable) || writable === false) {
+    if (ateos.isNull(writable) || writable === false) {
       this.end();
       return;
     }
@@ -143,7 +143,7 @@ export default class Duplexify extends stream.Duplex {
       return;
     }
 
-    if (is.null(readable) || readable === false) {
+    if (ateos.isNull(readable) || readable === false) {
       this.push(null);
       this.resume();
       return;
@@ -189,7 +189,7 @@ export default class Duplexify extends stream.Duplex {
 
     let data;
 
-    while (this._drained && !is.null(data = shift(this._readable2))) {
+    while (this._drained && !ateos.isNull(data = shift(this._readable2))) {
       if (this.destroyed) {
         continue;
       }
@@ -270,10 +270,10 @@ export default class Duplexify extends stream.Duplex {
   }
 
   end(data, enc, cb) {
-    if (is.function(data)) {
+    if (ateos.isFunction(data)) {
       return this.end(null, null, data);
     }
-    if (is.function(enc)) {
+    if (ateos.isFunction(enc)) {
       return this.end(data, null, enc);
     }
     this._ended = true;

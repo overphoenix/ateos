@@ -3,16 +3,16 @@ const {
 } = ateos;
 
 export default (obj, props) => {
-  if (!is.object(obj)) {
+  if (!ateos.isObject(obj)) {
     return {};
   }
 
   let isShouldOmit;
-  if (is.function(props)) {
+  if (ateos.isFunction(props)) {
     isShouldOmit = props;
-  } else if (is.array(props)) {
+  } else if (ateos.isArray(props)) {
     isShouldOmit = (name) => props.includes(name);
-  } else if (is.string(props)) {
+  } else if (ateos.isString(props)) {
     isShouldOmit = (val) => val === props;
   } else if (props === true) {
     return {};

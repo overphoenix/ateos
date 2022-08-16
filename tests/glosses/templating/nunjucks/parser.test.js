@@ -25,24 +25,24 @@ describe("templating", "nunjucks", "parser", () => {
 
                 if (value instanceof nodes.Node) {
                     _isAST(ofield, value);
-                } else if (is.array(ofield) && is.array(value)) {
+                } else if (ateos.isArray(ofield) && ateos.isArray(value)) {
                     expect(`num-children: ${ofield.length}`).to.be.equal(`num-children: ${value.length}`);
 
                     ofield.forEach((v, i) => {
                         if (ofield[i] instanceof nodes.Node) {
                             _isAST(ofield[i], value[i]);
-                        } else if (!is.null(ofield[i]) && !is.null(value[i])) {
+                        } else if (!ateos.isNull(ofield[i]) && !ateos.isNull(value[i])) {
                             expect(ofield[i]).to.be.equal(value[i]);
                         }
                     });
-                } else if ((!is.null(ofield) || !is.null(value)) &&
-                    (!is.undefined(ofield) || !is.undefined(value))) {
-                    if (is.null(ofield)) {
+                } else if ((!ateos.isNull(ofield) || !ateos.isNull(value)) &&
+                    (!ateos.isUndefined(ofield) || !ateos.isUndefined(value))) {
+                    if (ateos.isNull(ofield)) {
                         throw new Error(`${value} expected for "${field
                         }", null found`);
                     }
 
-                    if (is.null(value)) {
+                    if (ateos.isNull(value)) {
                         throw new Error(`${ofield} expected to be null for "${
                             field}"`);
                     }
@@ -51,7 +51,7 @@ describe("templating", "nunjucks", "parser", () => {
                     // whichever object exists
                     if (!ofield) {
                         expect(value).to.be.equal(ofield);
-                    } else if (!is.null(ofield) && ofield instanceof RegExp) {
+                    } else if (!ateos.isNull(ofield) && ofield instanceof RegExp) {
                         // This conditional check for RegExp is needed because /a/ != /a/
                         expect(String(ofield)).to.be.equal(String(value));
                     } else {
@@ -66,7 +66,7 @@ describe("templating", "nunjucks", "parser", () => {
     // of "AST literal" that you can specify with arrays. This
     // transforms it into a real AST.
     const toNodes = (ast) => {
-        if (!(ast && is.array(ast))) {
+        if (!(ast && ateos.isArray(ast))) {
             return ast;
         }
 
@@ -84,7 +84,7 @@ describe("templating", "nunjucks", "parser", () => {
             return new type(0, 0, ast.slice(1).map(toNodes));
         } else if (dummy instanceof nodes.CallExtension) {
             return new type(ast[1], ast[2], ast[3] ? toNodes(ast[3]) : ast[3],
-                is.array(ast[4]) ? ast[4].map(toNodes) : ast[4]);
+                ateos.isArray(ast[4]) ? ast[4].map(toNodes) : ast[4]);
         }
         return new type(0, 0,
             toNodes(ast[1]),

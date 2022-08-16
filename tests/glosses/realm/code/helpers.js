@@ -14,7 +14,7 @@ export const createSandbox = (options) => {
 export const createModule = async (path, { sandbox, load } = {}) => {
     const mod = new code.Module({ sandbox, file: path });
     if (load) {
-        await mod.load(is.object(load) ? load : {});
+        await mod.load(ateos.isObject(load) ? load : {});
     }
     return mod;
 };

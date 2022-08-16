@@ -2262,7 +2262,7 @@ describe("fs", "custom", "memory2", () => {
                 }
             },
             read: (fd, buffer, position) => {
-                if (!is.null(ttyInFd) && fs) {
+                if (!ateos.isNull(ttyInFd) && fs) {
                     // $FlowFixMe: position parameter allows null
                     return fs.readSync(ttyInFd, buffer, 0, buffer.length, null);
                 }
@@ -2270,7 +2270,7 @@ describe("fs", "custom", "memory2", () => {
 
             },
             write: (fd, buffer, position, extraFlags) => {
-                if (!is.null(ttyOutFd) && fs) {
+                if (!ateos.isNull(ttyOutFd) && fs) {
                     return fs.writeSync(ttyOutFd, buffer);
                 }
                 // console.log(buffer.toString());

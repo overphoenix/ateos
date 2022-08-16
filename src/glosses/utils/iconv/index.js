@@ -37,7 +37,7 @@ class StripBOM {
 
     if (res[0] === BOMChar) {
       res = res.slice(1);
-      if (is.function(this.options.stripBOM)) {
+      if (ateos.isFunction(this.options.stripBOM)) {
         this.options.stripBOM();
       }
     }
@@ -146,7 +146,7 @@ export const encode = (str, encoding, options) => {
 };
 
 export const decode = (buf, encoding, options) => {
-  if (is.string(buf)) {
+  if (ateos.isString(buf)) {
     buf = Buffer.from(buf, "binary"); // Ensure buffer.
   }
 

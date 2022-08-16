@@ -63,11 +63,11 @@ export default class GenericConfig extends ateos.configuration.BaseConfig {
   }
 
   registerExtension(ext, decode, encode) {
-    if (!is.function(encode)) {
+    if (!ateos.isFunction(encode)) {
       throw new error.InvalidArgumentException(`Invalid encode function for '${ext}'`);
     }
 
-    if (!is.function(decode)) {
+    if (!ateos.isFunction(decode)) {
       throw new error.InvalidArgumentException(`Invalid decode function for '${ext}'`);
     }
     GenericConfig.serializer[ext] = {
@@ -98,7 +98,7 @@ export default class GenericConfig extends ateos.configuration.BaseConfig {
 
   async save(confPath, { ext, ...options } = {}) {
     const info = this._checkPath(confPath, false, ext);
-    if (!is.function(info.serializer.encode)) {
+    if (!ateos.isFunction(info.serializer.encode)) {
       throw new error.NotSupportedException(`Unsupported operation for '${info.serializer.ext}'`);
     }
     await fs.mkdirp(aPath.dirname(info.path));

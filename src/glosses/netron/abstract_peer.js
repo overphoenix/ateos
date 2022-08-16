@@ -216,7 +216,7 @@ export default class AbstractPeer extends ateos.AsyncEventEmitter {
 
   // // _removeRelatedDefinitions(proxyDef) {
   // //     for (let [defId, def] of this._defs.entries()) {
-  // //         if (is.propertyDefined(def, "$proxyDef") && def.$proxyDef === proxyDef) {
+  // //         if (ateos.isPropertyDefined(def, "$proxyDef") && def.$proxyDef === proxyDef) {
   // //             this._defs.delete(defId);
   // //         }
   // //     }

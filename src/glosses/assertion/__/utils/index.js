@@ -26,7 +26,7 @@ const util = ateos.lazify({
   getActual: "./get_actual",
   getProperties: "./get_properties",
   eql: () => ateos.is.deepEqual,
-  eqlArray: () => ateos.is.equalArrays,
+  eqlArray: () => ateos.isEqualArrays,
   getPathInfo: () => util.pathval.getPathInfo,
   hasProperty: () => util.pathval.hasProperty
 }, exports, require, {

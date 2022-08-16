@@ -28,7 +28,7 @@ describe("fs", "isExecutable", () => {
         await fs.remove(fixture);
     });
 
-    if (!is.windows) {
+    if (!ateos.isWindows) {
         it("meow async", async () => {
             assert.isTrue(await fs.isExecutable(meow));
         });
@@ -87,7 +87,7 @@ describe("fs", "isExecutable", () => {
         assert.isFalse(await fs.isExecutable(__dirname, options));
     };
 
-    if (!is.windows) {
+    if (!ateos.isWindows) {
         it("access", async () => {
             await runTest();
         });

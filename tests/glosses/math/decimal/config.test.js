@@ -636,7 +636,7 @@ describe("math", "Decimal", function () {
         t(Decimal.rounding === 4);
         t(Decimal.toExpNeg === -7);
         t(Decimal.toExpPos === 21);
-        t(is.undefined(Decimal.defaults));
+        t(ateos.isUndefined(Decimal.defaults));
 
         Decimal.rounding = 3;
 

@@ -115,10 +115,10 @@ export const memoize = (target, namespaces) => {
  */
 export const createOptions = (...args) => {
   const opts = Object.assign({}, ...args);
-  if (is.boolean(opts.expand)) {
+  if (ateos.isBoolean(opts.expand)) {
     opts.optimize = !opts.expand;
   }
-  if (is.boolean(opts.optimize)) {
+  if (ateos.isBoolean(opts.optimize)) {
     opts.expand = !opts.optimize;
   }
   if (opts.optimize === true) {
@@ -148,7 +148,7 @@ export const join = (a, b, options) => {
 
   while (++idx < len) {
     const val = a[idx];
-    if (is.array(val)) {
+    if (ateos.isArray(val)) {
       for (let i = 0; i < val.length; i++) {
         val[i] = join(val[i], b, options);
       }
@@ -159,7 +159,7 @@ export const join = (a, b, options) => {
     for (let j = 0; j < b.length; j++) {
       const bval = b[j];
 
-      if (is.array(bval)) {
+      if (ateos.isArray(bval)) {
         arr.push(join(val, bval, options));
       } else {
         arr.push(val + bval);
@@ -239,7 +239,7 @@ export const escapeBrackets = (options) => (tok) => {
  */
 export const split = (str, options) => {
   const opts = { sep: ",", ...options };
-  if (!is.boolean(opts.keepQuotes)) {
+  if (!ateos.isBoolean(opts.keepQuotes)) {
     opts.keepQuotes = true;
   }
   if (opts.unescape === false) {

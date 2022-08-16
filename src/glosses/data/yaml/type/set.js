@@ -1,15 +1,15 @@
 const { data: { yaml }, is, util } = ateos;
 
 const resolveYamlSet = (data) => {
-  if (!is.null(data)) {
+  if (!ateos.isNull(data)) {
     return true;
   }
 
-  return util.values(data).every(is.null);
+  return util.values(data).every(ateos.isNull);
 };
 
 export default new yaml.type.Type("tag:yaml.org,2002:set", {
   kind: "mapping",
   resolve: resolveYamlSet,
-  construct: (data) => !is.null(data) ? data : {}
+  construct: (data) => !ateos.isNull(data) ? data : {}
 });

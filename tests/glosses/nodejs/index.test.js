@@ -110,14 +110,14 @@ describe("nodejs", () => {
             const version = "11.0.0";
             const sums = await nodejs.getSHASUMS({ version, type: "object" });
             // console.log(ateos.inspect(sums));
-            assert.isTrue(is.plainObject(sums));
+            assert.isTrue(ateos.isPlainObject(sums));
             assert.isTrue((await nodejs.getArchiveName({ version })) in sums);
         });
 
         it("get sha sums as array", async () => {
             const version = "11.0.0";
             const sums = await nodejs.getSHASUMS({ version, type: "array" });
-            assert.isTrue(is.array(sums));
+            assert.isTrue(ateos.isArray(sums));
             const name = await nodejs.getArchiveName({ version });
             assert.isTrue(sums.findIndex((i) => i.name === name) > 0);
         });
@@ -125,7 +125,7 @@ describe("nodejs", () => {
         it("get sha sums as buffer", async () => {
             const version = "11.0.0";
             const sums = await nodejs.getSHASUMS({ version, type: "buffer" });
-            assert.isTrue(is.buffer(sums));
+            assert.isTrue(ateos.isBuffer(sums));
             assert.isTrue(sums.includes(await nodejs.getArchiveName({ version })));
         });
     });

@@ -59,7 +59,7 @@ export default (fs) => {
     
       const res = await promise;
     
-      if (is.error(res)) {
+      if (ateos.isError(res)) {
         throw res;
       }
       return res;
@@ -103,13 +103,13 @@ export default (fs) => {
       } catch (err) {
         if (err.code === "ENOENT") {
           st = null;
-        } else if (err.code === "EPERM" && is.windows) {
+        } else if (err.code === "EPERM" && ateos.isWindows) {
           // Windows can EPERM on stat. Life is suffering.
           st = await this.fixWinEPERM(p);
         }
       }
     
-      if (is.null(st)) {
+      if (ateos.isNull(st)) {
         return true;
       }
     
@@ -124,7 +124,7 @@ export default (fs) => {
           return true; // has been deleted
         }
         if (err.code === "EPERM") {
-          if (is.windows) {
+          if (ateos.isWindows) {
             await this.fixWinEPERM(p);
           }
           return this.rmdir(p);
@@ -224,7 +224,7 @@ export default (fs) => {
         // handle everything via glob
         const res = await ateos.glob(path, {
           cwd: this.cwd,
-          ...(is.plainObject(this.glob) ? this.glob : undefined),
+          ...(ateos.isPlainObject(this.glob) ? this.glob : undefined),
           lstatCache: this.lstatCache
         });
         for (const i of res) {

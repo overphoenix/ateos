@@ -64,7 +64,7 @@ export default class ShardingDatastore {
   static async create(store, shard) {
     const exists = await store.has(shardKey);
     if (!exists) {
-      const put = is.function(store.putRaw) ? store.putRaw.bind(store) : store.put.bind(store);
+      const put = ateos.isFunction(store.putRaw) ? store.putRaw.bind(store) : store.put.bind(store);
       return Promise.all([put(shardKey, Buffer.from(`${shard.toString()}\n`)), put(shardReadmeKey, Buffer.from(sh.readme))]);
     }
 
@@ -108,13 +108,13 @@ export default class ShardingDatastore {
       ]
     };
 
-    if (!is.nil(q.prefix)) {
+    if (!ateos.isNil(q.prefix)) {
       tq.filters.push((e) => {
         return this._invertKey(e.key).toString().startsWith(q.prefix);
       });
     }
 
-    if (!is.nil(q.filters)) {
+    if (!ateos.isNil(q.filters)) {
       const filters = q.filters.map((f) => (e) => {
         return f(Object.assign({}, e, {
           key: this._invertKey(e.key)
@@ -123,7 +123,7 @@ export default class ShardingDatastore {
       tq.filters = tq.filters.concat(filters);
     }
 
-    if (!is.nil(q.orders)) {
+    if (!ateos.isNil(q.orders)) {
       tq.orders = q.orders.map((o) => async (res) => {
         res.forEach((e) => {
           e.key = this._invertKey(e.key);

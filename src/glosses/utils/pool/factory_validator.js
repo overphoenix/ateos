@@ -1,17 +1,17 @@
 const { is } = ateos;
 
 export default function (factory) {
-  if (!is.function(factory.create)) {
+  if (!ateos.isFunction(factory.create)) {
     throw new TypeError("factory.create must be a function");
   }
 
-  if (!is.function(factory.destroy)) {
+  if (!ateos.isFunction(factory.destroy)) {
     throw new TypeError("factory.destroy must be a function");
   }
 
   if (
-    !is.undefined(factory.validate) &&
-        !is.function(factory.validate)
+    !ateos.isUndefined(factory.validate) &&
+        !ateos.isFunction(factory.validate)
   ) {
     throw new TypeError("factory.validate must be a function");
   }

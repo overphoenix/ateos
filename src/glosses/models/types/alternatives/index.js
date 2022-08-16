@@ -88,7 +88,7 @@ internals.Alternatives = class extends Any {
   when(condition, options) {
 
     let schemaCondition = false;
-    assert(isRef(condition) || is.string(condition) || (schemaCondition = condition instanceof Any), `Invalid condition: ${condition}`);
+    assert(isRef(condition) || ateos.isString(condition) || (schemaCondition = condition instanceof Any), `Invalid condition: ${condition}`);
     assert(options, "Missing options");
     assert(typeof options === "object", "Invalid options");
     if (schemaCondition) {
@@ -96,7 +96,7 @@ internals.Alternatives = class extends Any {
     } else {
       assert(options.hasOwnProperty("is"), 'Missing "is" directive');
     }
-    assert(!is.undefined(options.then) || !is.undefined(options.otherwise), 'options must have at least one of "then" or "otherwise"');
+    assert(!ateos.isUndefined(options.then) || !ateos.isUndefined(options.otherwise), 'options must have at least one of "then" or "otherwise"');
 
     const obj = this.clone();
     let is;
@@ -114,8 +114,8 @@ internals.Alternatives = class extends Any {
       ref: schemaCondition ? null : Cast.ref(condition),
       peek: schemaCondition ? condition : null,
       is,
-      then: !is.undefined(options.then) ? Cast.schema(this._currentModel, options.then) : undefined,
-      otherwise: !is.undefined(options.otherwise) ? Cast.schema(this._currentModel, options.otherwise) : undefined
+      then: !ateos.isUndefined(options.then) ? Cast.schema(this._currentModel, options.then) : undefined,
+      otherwise: !ateos.isUndefined(options.otherwise) ? Cast.schema(this._currentModel, options.otherwise) : undefined
     };
 
     if (obj._baseType) {

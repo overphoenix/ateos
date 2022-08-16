@@ -95,7 +95,7 @@ export const addZone = (packed) => {
   let split;
   let normalized;
 
-  if (is.string(packed)) {
+  if (ateos.isString(packed)) {
     packed = [packed];
   }
 
@@ -115,7 +115,7 @@ export const addLink = (aliases) => {
   let normal0;
   let normal1;
 
-  if (is.string(aliases)) {
+  if (ateos.isString(aliases)) {
     aliases = [aliases];
   }
 
@@ -260,7 +260,7 @@ export const getZone = (name, caller) => {
     return zone;
   }
 
-  if (is.string(zone)) {
+  if (ateos.isString(zone)) {
     zone = new Zone(zone);
     zones[name] = zone;
     return zone;
@@ -460,7 +460,7 @@ export const getNames = () => {
 
 export const needsOffset = (m) => {
   const isUnixTimestamp = (m._f === "X" || m._f === "x");
-  return Boolean(m._a && (is.undefined(m._tzm)) && !isUnixTimestamp);
+  return Boolean(m._a && (ateos.isUndefined(m._tzm)) && !isUnixTimestamp);
 };
 
 export const reload = () => {

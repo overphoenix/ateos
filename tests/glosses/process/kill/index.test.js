@@ -71,7 +71,7 @@ describe("process", "kill", () => {
         await noopProcessKilled(pid);
     });
 
-    if (is.windows) {
+    if (ateos.isWindows) {
         it("title", async () => {
             const title = "notepad.exe";
             const pid = childProcess.spawn(title).pid;
@@ -143,11 +143,11 @@ describe("process", "kill", () => {
             try {
                 await promise.delay(1000);
                 const children = await getChildPids(child.pid);
-                expect(children).to.have.lengthOf(is.windows ? 11 : 10);
+                expect(children).to.have.lengthOf(ateos.isWindows ? 11 : 10);
                 await Promise.all([
                     kill(child.pid, {
                         tree: true,
-                        force: is.windows
+                        force: ateos.isWindows
                     }),
                     exit.waitForCall()
                 ]);

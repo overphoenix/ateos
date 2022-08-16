@@ -6,7 +6,7 @@ const {
   path
 } = ateos;
 
-const normalize = !is.windows ? ateos.identity : (name) => name.replace(/\\/g, "/").replace(/[:?<>|]/g, "_");
+const normalize = !ateos.isWindows ? ateos.identity : (name) => name.replace(/\\/g, "/").replace(/[:?<>|]/g, "_");
 
 const head = (list) => list.length ? list[list.length - 1] : null;
 
@@ -70,9 +70,9 @@ export const packStream = (cwd = process.cwd(), opts = {}) => {
   const mapStream = opts.mapStream || ateos.identity;
   const statNext = statAll(opts.dereference ? fs.stat : fs.lstat, cwd, ignore, opts.entries, opts.sort);
   const strict = opts.strict !== false;
-  const umask = is.number(opts.umask) ? ~opts.umask : ~processUmask();
-  let dmode = is.number(opts.dmode) ? opts.dmode : 0;
-  let fmode = is.number(opts.fmode) ? opts.fmode : 0;
+  const umask = ateos.isNumber(opts.umask) ? ~opts.umask : ~processUmask();
+  let dmode = ateos.isNumber(opts.dmode) ? opts.dmode : 0;
+  let fmode = ateos.isNumber(opts.fmode) ? opts.fmode : 0;
   const pack = opts.pack || new ateos.archive.tar.RawPackStream();
   const finish = opts.finish || noop;
 
@@ -189,13 +189,13 @@ export const unpackStream = (cwd = process.cwd(), opts = {}) => {
   const ignore = opts.ignore || ateos.noop;
   let map = opts.map || ateos.noop;
   const mapStream = opts.mapStream || ateos.identity;
-  const own = opts.chown !== false && !ateos.is.windows && processGetuid() === 0;
+  const own = opts.chown !== false && !ateos.ateos.isWindows && processGetuid() === 0;
   const unpack = opts.unpack || new ateos.archive.tar.RawUnpackStream();
   const stack = [];
   const now = new Date();
-  const umask = is.number(opts.umask) ? ~opts.umask : ~processUmask();
-  let dmode = is.number(opts.dmode) ? opts.dmode : 0;
-  let fmode = is.number(opts.fmode) ? opts.fmode : 0;
+  const umask = ateos.isNumber(opts.umask) ? ~opts.umask : ~processUmask();
+  let dmode = ateos.isNumber(opts.dmode) ? opts.dmode : 0;
+  let fmode = ateos.isNumber(opts.fmode) ? opts.fmode : 0;
   const strict = opts.strict !== false;
 
   if (opts.strip) {
@@ -284,7 +284,7 @@ export const unpackStream = (cwd = process.cwd(), opts = {}) => {
         if (err) {
           return next(err);
         }
-        if (is.windows) {
+        if (ateos.isWindows) {
           return next();
         }
         chperm(name, header, next);
@@ -292,7 +292,7 @@ export const unpackStream = (cwd = process.cwd(), opts = {}) => {
     };
 
     const onsymlink = () => {
-      if (is.windows) {
+      if (ateos.isWindows) {
         return next(); // skip symlinks on win for now before it can be tested
       }
       fs.unlink(name, () => {
@@ -317,7 +317,7 @@ export const unpackStream = (cwd = process.cwd(), opts = {}) => {
     };
 
     const onlink = () => {
-      if (is.windows) {
+      if (ateos.isWindows) {
         return next(); // skip links on win for now before it can be tested
       }
       fs.unlink(name, () => {

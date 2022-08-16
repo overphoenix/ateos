@@ -200,7 +200,7 @@ export const privateKeyInfoToPem = function (pki, maxline) {
 
 // from rsa.js
 
-if (is.undefined(BigInteger)) {
+if (ateos.isUndefined(BigInteger)) {
   var { BigInteger } = crypto.jsbn;
 }
 
@@ -850,7 +850,7 @@ export const decryptRsaPrivateKey = function (pem, password) {
     rval = asn1.fromDer(rval);
   }
 
-  if (!is.null(rval)) {
+  if (!ateos.isNull(rval)) {
     rval = crypto.pki.privateKeyFromAsn1(rval);
   }
 

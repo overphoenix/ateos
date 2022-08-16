@@ -69,10 +69,10 @@ export const getPort = async function (options) {
   let ports;
 
   if (options) {
-    ports = is.number(options.port) ? [options.port] : options.port;
+    ports = ateos.isNumber(options.port) ? [options.port] : options.port;
   }
 
-  if (is.undefined(interval)) {
+  if (ateos.isUndefined(interval)) {
     interval = setInterval(() => {
       lockedPorts.old = lockedPorts.young;
       lockedPorts.young = new Set();
@@ -111,7 +111,7 @@ export const getPort = async function (options) {
 };
 
 export const portNumbers = function (from, to) {
-  if (!is.integer(from) || !is.integer(to)) {
+  if (!ateos.isInteger(from) || !ateos.isInteger(to)) {
     throw new TypeError("`from` and `to` must be integer numbers");
   }
 

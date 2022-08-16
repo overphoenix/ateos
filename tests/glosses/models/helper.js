@@ -27,9 +27,9 @@ exports.validateOptions = function (schema, config, options, callback) {
             const expectedValueOrError = item[3];
 
             if (!shouldValidate) {
-                expect(is.object(expectedValueOrError)).to.be.true();
-                expect(is.string(expectedValueOrError.message)).to.be.true();
-                expect(is.array(expectedValueOrError.details)).to.be.true();
+                expect(ateos.isObject(expectedValueOrError)).to.be.true();
+                expect(ateos.isString(expectedValueOrError.message)).to.be.true();
+                expect(ateos.isArray(expectedValueOrError.details)).to.be.true();
             }
 
             const result = model.validate(input, compiled, validationOptions || options);
@@ -37,15 +37,15 @@ exports.validateOptions = function (schema, config, options, callback) {
             const err = result.error;
             const value = result.value;
 
-            if (!is.null(err) && shouldValidate) {
+            if (!ateos.isNull(err) && shouldValidate) {
                 console.log(err);
             }
 
-            if (is.null(err) && !shouldValidate) {
+            if (ateos.isNull(err) && !shouldValidate) {
                 console.log(input);
             }
 
-            expect(is.null(err)).to.equal(shouldValidate);
+            expect(ateos.isNull(err)).to.equal(shouldValidate);
 
             if (item.length >= 4) {
                 if (shouldValidate) {

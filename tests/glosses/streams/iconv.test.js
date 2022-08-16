@@ -3,12 +3,12 @@ describe("stream", "iconv", () => {
 
     // Create a source stream that feeds given array of chunks.
     const feeder = (chunks) => {
-        if (!is.array(chunks)) {
+        if (!ateos.isArray(chunks)) {
             chunks = [chunks];
         }
         const opts = {};
         if (chunks.every((chunk) => {
-            return is.string(chunk);
+            return ateos.isString(chunk);
         })) {
             opts.encoding = "utf8";
         }
@@ -18,7 +18,7 @@ describe("stream", "iconv", () => {
             try {
                 if (chunks.length > 0) {
                     let chunk = chunks.shift();
-                    if (is.array(chunk)) {
+                    if (ateos.isArray(chunk)) {
                         chunk = Buffer.from(chunk);
                     }
                     stream.push(chunk, opts.encoding);
@@ -48,7 +48,7 @@ describe("stream", "iconv", () => {
                         assert(err, "Expected error, but got success");
                         if (Object.prototype.toString.call(options.checkError) === "[object RegExp]") {
                             assert(options.checkError.test(err.message));
-                        } else if (is.function(options.checkError)) {
+                        } else if (ateos.isFunction(options.checkError)) {
                             options.checkError(err);
                         } else {
                             assert.fail(null, null, `Invalid type of options.checkError: ${typeof options.checkError}`);
@@ -89,7 +89,7 @@ describe("stream", "iconv", () => {
             stream.on("readable", () => {
                 let chunk;
                 try {
-                    while (!is.null(chunk = stream.read())) {
+                    while (!ateos.isNull(chunk = stream.read())) {
                         if (options.outputType) {
                             if (/^buffer/.test(options.outputType)) {
                                 assert(chunk instanceof Buffer);
@@ -114,10 +114,10 @@ describe("stream", "iconv", () => {
             return feeder(opts.input)
                 .pipe(iconv.encode(opts.encoding, opts.encodingOptions));
         };
-        if (is.nil(opts.outputType)) {
+        if (ateos.isNil(opts.outputType)) {
             opts.outputType = "buffer-hex";
         }
-        if (is.buffer(opts.output) && opts.outputType === "buffer-hex") {
+        if (ateos.isBuffer(opts.output) && opts.outputType === "buffer-hex") {
             opts.output = opts.output.toString("hex");
         }
 
@@ -133,7 +133,7 @@ describe("stream", "iconv", () => {
             return feeder(opts.input)
                 .pipe(iconv.decode(opts.encoding, opts.encodingOptions));
         };
-        if (is.nil(opts.outputType)) {
+        if (ateos.isNil(opts.outputType)) {
             opts.outputType = "string";
         }
         opts.checkOutput = opts.checkOutput || ((res) => {

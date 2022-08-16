@@ -20,7 +20,7 @@ const softMutation = (text) => {
     b: "v",
     d: "z"
   };
-  if (is.undefined(mutationTable[text.charAt(0)])) {
+  if (ateos.isUndefined(mutationTable[text.charAt(0)])) {
     return text;
   }
   return mutationTable[text.charAt(0)] + text.substring(1);

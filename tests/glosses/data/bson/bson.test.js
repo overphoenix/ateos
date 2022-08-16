@@ -40,7 +40,7 @@ BSON.BSON_BINARY_SUBTYPE_USER_DEFINED = 128;
  */
 const ISO_REGEX = /^(\d{4})(-(\d{2})(-(\d{2})(T(\d{2}):(\d{2})(:(\d{2})(\.(\d+))?)?(Z|((\+|-)(\d{2}):(\d{2}))))?)?)?$/;
 const ISODate = function (string) {
-    if (is.function(string.getTime)) {
+    if (ateos.isFunction(string.getTime)) {
         return string;
     }
 
@@ -528,16 +528,16 @@ describe("BSON", () => {
         expect([1, 2, 3]).to.deep.equal(object.array);
         expect(1).to.equal(object.hash.a);
         expect(2).to.equal(object.hash.b);
-        expect(!is.nil(object.date)).to.be.ok;
-        expect(!is.nil(object.oid)).to.be.ok;
-        expect(!is.nil(object.binary)).to.be.ok;
+        expect(!ateos.isNil(object.date)).to.be.ok;
+        expect(!ateos.isNil(object.oid)).to.be.ok;
+        expect(!ateos.isNil(object.binary)).to.be.ok;
         expect(42).to.equal(object.int);
         expect(33.3333).to.equal(object.float);
-        expect(!is.nil(object.regexp)).to.be.ok;
+        expect(!ateos.isNil(object.regexp)).to.be.ok;
         expect(true).to.equal(object.boolean);
-        expect(!is.nil(object.where)).to.be.ok;
-        expect(!is.nil(object.dbref)).to.be.ok;
-        expect(is.nil(object.null)).to.be.ok;
+        expect(!ateos.isNil(object.where)).to.be.ok;
+        expect(!ateos.isNil(object.dbref)).to.be.ok;
+        expect(ateos.isNil(object.null)).to.be.ok;
         done();
     });
 
@@ -1382,7 +1382,7 @@ describe("BSON", () => {
      * @ignore
      */
     it("Should Correctly Serialize and Deserialize Symbol", (done) => {
-        if (!is.nil(BSONSymbol)) {
+        if (!ateos.isNil(BSONSymbol)) {
             // symbols are deprecated, so upgrade to strings... so I'm not sure
             // we really need this test anymore...
             //var doc = { b: [new BSONSymbol('test')] };
@@ -1660,7 +1660,7 @@ describe("BSON", () => {
      * @ignore
      */
     it("Should Correctly handle Forced Doubles to ensure we allocate enough space for cap collections", (done) => {
-        if (!is.nil(Double)) {
+        if (!ateos.isNil(Double)) {
             const doubleValue = new Double(100);
             const doc = { value: doubleValue };
 
@@ -1755,7 +1755,7 @@ describe("BSON", () => {
             ObjectId.createFromHexString("00000000000000000000001");
             expect(false).to.be.ok;
         } catch (err) {
-            expect(!is.nil(err)).to.be.ok;
+            expect(!ateos.isNil(err)).to.be.ok;
         }
 
         done();

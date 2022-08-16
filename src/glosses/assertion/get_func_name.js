@@ -19,12 +19,12 @@ const {
 const toString = Function.prototype.toString;
 const functionNameMatch = /\s*function(?:\s|\s*\/\*[^(?:*\/)]+\*\/\s*)*([^\s\(\/]+)/;
 function getFuncName(aFunc) {
-  if (!is.function(aFunc)) {
+  if (!ateos.isFunction(aFunc)) {
     return null;
   }
 
   let name = "";
-  if (is.undefined(Function.prototype.name) && is.undefined(aFunc.name)) {
+  if (ateos.isUndefined(Function.prototype.name) && ateos.isUndefined(aFunc.name)) {
     // Here we run a polyfill if Function does not support the `name` property and if aFunc.name is not defined
     const match = toString.call(aFunc).match(functionNameMatch);
     if (match) {

@@ -9,7 +9,7 @@ export class REPL {
   }
 
   start() {
-    if (is.string(this.options.banner)) {
+    if (ateos.isString(this.options.banner)) {
       let banner = this.options.banner;
       if (this.options.ts) {
         banner += `, ${ateos.cli.chalk.bold.hex("294e80")("TypeScript")} v${ateos.typescript.version}`;

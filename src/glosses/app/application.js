@@ -42,9 +42,9 @@ export default class Application extends app.Subsystem {
   }
 
   exitOnSignal(...names) {
-    // if (!is.windows) {
+    // if (!ateos.isWindows) {
     for (const sigName of names) {
-      if (is.null(this.#exitSignals)) {
+      if (ateos.isNull(this.#exitSignals)) {
         this.#exitSignals = [];
       }
       if (this.#exitSignals.includes(sigName)) {
@@ -95,7 +95,7 @@ export default class Application extends app.Subsystem {
     process.removeListener("unhandledRejection", this.#handlers.unhandledRejection);
     process.removeListener("rejectionHandled", this.#handlers.rejectionHandled);
     process.removeListener("beforeExit", this.#handlers.beforeExit);
-    if (is.array(this.#exitSignals)) {
+    if (ateos.isArray(this.#exitSignals)) {
       for (const sigName of this.#exitSignals) {
         process.removeListener(sigName, this.#handlers.signalExit);
       }
@@ -104,14 +104,15 @@ export default class Application extends app.Subsystem {
 
   async fireException(err) {
     let errCode;
-    if (is.function(this.error)) {
+    if (ateos.isFunction(this.error)) {
       errCode = await this.error(err);
     } else {
-      log.bright.red.error.noLocate(err);
+      console.erro(err);
+      // log.bright.red.error.noLocate(err);
       // console.error(ateos.pretty.error(err));
       errCode = 1;
     }
-    if (!is.integer(errCode)) {
+    if (!ateos.isInteger(errCode)) {
       errCode = 1;
     }
     return this.stop(errCode);

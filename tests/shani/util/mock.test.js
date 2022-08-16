@@ -237,7 +237,7 @@ describe("shani", "util", "mock", () => {
             });
 
             it("throws with Symbol", function () {
-                if (is.function(Symbol)) {
+                if (ateos.isFunction(Symbol)) {
                     const expectation = this.expectation;
 
                     assert.throws(() => {
@@ -265,7 +265,7 @@ describe("shani", "util", "mock", () => {
             });
 
             it("throws with Symbol", function () {
-                if (is.function(Symbol)) {
+                if (ateos.isFunction(Symbol)) {
                     const expectation = this.expectation;
 
                     assert.throws(() => {
@@ -360,7 +360,7 @@ describe("shani", "util", "mock", () => {
             });
 
             it("throws with Symbol", function () {
-                if (is.function(Symbol)) {
+                if (ateos.isFunction(Symbol)) {
                     const expectation = this.expectation;
 
                     assert.throws(() => {
@@ -649,7 +649,7 @@ describe("shani", "util", "mock", () => {
             });
 
             it("throws if calls on wrong Symbol", () => {
-                if (is.function(Symbol)) {
+                if (ateos.isFunction(Symbol)) {
                     const e = expectation.create("method");
                     e.on(Symbol());
 

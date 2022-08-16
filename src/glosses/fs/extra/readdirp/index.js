@@ -11,7 +11,7 @@ const normalizeFilter = (filter) => {
   const functions = [];
   const other = [];
   for (const x of filter) {
-    if (is.function(x)) {
+    if (ateos.isFunction(x)) {
       functions.push(x);
     } else {
       other.push(x);

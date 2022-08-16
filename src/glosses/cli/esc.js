@@ -136,7 +136,7 @@ styles.bgColor.ansi16m = {
 };
 
 for (let key of Object.keys(colorConvert)) {
-  if (!is.object(colorConvert[key])) {
+  if (!ateos.isObject(colorConvert[key])) {
     continue;
   }
 

@@ -71,7 +71,7 @@ describe("fast", "transform", "pack", () => {
         });
 
         it("should pack directories with proper modes", {
-            skip: is.windows
+            skip: ateos.isWindows
         }, async () => {
             const input = await tmpdir.addDirectory("input");
             await input.addDirectory("a", { mode: 0o755 & (~process.umask()) });
@@ -105,7 +105,7 @@ describe("fast", "transform", "pack", () => {
         // TODO: test nested directories mtime?
 
         it("should set proper file mode", {
-            skip: is.windows
+            skip: ateos.isWindows
         }, async () => {
             const input = await tmpdir.addDirectory("input");
             await input.addFile("hello", { mode: 0o741 });
@@ -174,7 +174,7 @@ describe("fast", "transform", "pack", () => {
         });
 
         it("should handle symlinks", {
-            skip: is.windows
+            skip: ateos.isWindows
         }, async () => {
             const input = await tmpdir.addDirectory("input");
             await input.addFile("hello", { contents: "world" });
@@ -261,7 +261,7 @@ describe("fast", "transform", "pack", () => {
         });
 
         it("should set proper file mode", {
-            skip: is.windows
+            skip: ateos.isWindows
         }, async () => {
             const input = await tmpdir.addDirectory("input");
             await input.addFile("hello", { contents: "world", mode: 0o600 });
@@ -279,7 +279,7 @@ describe("fast", "transform", "pack", () => {
         });
 
         it("should set proper directory mode", {
-            skip: is.windows
+            skip: ateos.isWindows
         }, async () => {
             const input = await tmpdir.addDirectory("input");
             await input.addDirectory("dir", { mode: 0o700 });

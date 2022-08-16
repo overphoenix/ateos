@@ -422,16 +422,16 @@ describe("Full BSON", () => {
         expect([1, 2, 3]).to.deep.equal(object.array);
         expect(1).to.equal(object.hash.a);
         expect(2).to.equal(object.hash.b);
-        expect(!is.nil(object.date)).to.be.ok;
-        expect(!is.nil(object.oid)).to.be.ok;
-        expect(!is.nil(object.binary)).to.be.ok;
+        expect(!ateos.isNil(object.date)).to.be.ok;
+        expect(!ateos.isNil(object.oid)).to.be.ok;
+        expect(!ateos.isNil(object.binary)).to.be.ok;
         expect(42).to.equal(object.int);
         expect(33.3333).to.equal(object.float);
-        expect(!is.nil(object.regexp)).to.be.ok;
+        expect(!ateos.isNil(object.regexp)).to.be.ok;
         expect(true).to.equal(object.boolean);
-        expect(!is.nil(object.where)).to.be.ok;
-        expect(!is.nil(object.dbref)).to.be.ok;
-        expect(is.nil(object.null)).to.be.ok;
+        expect(!ateos.isNil(object.where)).to.be.ok;
+        expect(!ateos.isNil(object.dbref)).to.be.ok;
+        expect(ateos.isNil(object.null)).to.be.ok;
         done();
     });
 

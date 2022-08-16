@@ -20,7 +20,7 @@ export default class InterceptorManager {
 
   forEach(fn) {
     for (const h of this.handlers) {
-      if (!is.null(h)) {
+      if (!ateos.isNull(h)) {
         fn(h);
       }
     }

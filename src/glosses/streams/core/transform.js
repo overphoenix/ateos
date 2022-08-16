@@ -170,7 +170,7 @@ export default class Transform {
           return;
         }
 
-        if (is.asyncFunction(this._flush)) {
+        if (ateos.isAsyncFunction(this._flush)) {
           this._flush().then(() => {
             this._flushed = true;
             if (this._outgoingQueue.empty) {

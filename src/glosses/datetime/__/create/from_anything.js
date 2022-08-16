@@ -3,20 +3,20 @@ const __ = ateos.getPrivate(ateos.datetime);
 
 const configFromInput = (config) => {
   const input = config._i;
-  if (is.undefined(input)) {
+  if (ateos.isUndefined(input)) {
     config._d = new Date(__.util.hooks.now());
-  } else if (is.date(input)) {
+  } else if (ateos.isDate(input)) {
     config._d = new Date(input.valueOf());
-  } else if (is.string(input)) {
+  } else if (ateos.isString(input)) {
     __.create.configFromString(config);
-  } else if (is.array(input)) {
+  } else if (ateos.isArray(input)) {
     config._a = input.slice(0).map((obj) => {
       return parseInt(obj, 10);
     });
     __.create.configFromArray(config);
-  } else if (is.object(input)) {
+  } else if (ateos.isObject(input)) {
     __.create.configFromObject(config);
-  } else if (is.number(input)) {
+  } else if (ateos.isNumber(input)) {
     // from milliseconds
     config._d = new Date(input);
   } else {
@@ -30,19 +30,19 @@ export const prepareConfig = (config) => {
   const format = config._f;
   let input = config._i;
 
-  if (is.null(input) || (is.undefined(format) && input === "")) {
+  if (ateos.isNull(input) || (ateos.isUndefined(format) && input === "")) {
     return __.create.createInvalid({ nullInput: true });
   }
 
-  if (is.string(input)) {
+  if (ateos.isString(input)) {
     config._i = input = config._locale.preparse(input);
   }
 
   if (is.datetime(input)) {
     return new __.datetime.Datetime(__.create.checkOverflow(input));
-  } else if (is.date(input)) {
+  } else if (ateos.isDate(input)) {
     config._d = input;
-  } else if (is.array(format)) {
+  } else if (ateos.isArray(format)) {
     __.create.configFromStringAndArray(config);
   } else if (format) {
     __.create.configFromStringAndFormat(config);
@@ -76,8 +76,8 @@ export const createLocalOrUTC = (input, format, locale, strict, isUTC) => {
     locale = undefined;
   }
 
-  if ((is.array(input) && input.length === 0) ||
-            (is.plainObject(input) && is.emptyObject(input))) {
+  if ((ateos.isArray(input) && input.length === 0) ||
+            (ateos.isPlainObject(input) && ateos.isEmptyObject(input))) {
     input = undefined;
   }
 

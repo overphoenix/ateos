@@ -16,8 +16,8 @@ export default class Point extends WKX.Geometry {
     this.m = m;
     this.srid = srid;
 
-    this.hasZ = !is.undefined(this.z);
-    this.hasM = !is.undefined(this.m);
+    this.hasZ = !ateos.isUndefined(this.z);
+    this.hasM = !ateos.isUndefined(this.m);
   }
 
   static Z(x, y, z, srid) {
@@ -123,8 +123,8 @@ export default class Point extends WKX.Geometry {
   }
 
   toWkt() {
-    if (is.undefined(this.x) && is.undefined(this.y) &&
-            is.undefined(this.z) && is.undefined(this.m)) {
+    if (ateos.isUndefined(this.x) && ateos.isUndefined(this.y) &&
+            ateos.isUndefined(this.z) && ateos.isUndefined(this.m)) {
       return this._getWktType(WKX.Types.wkt.Point, true);
     }
 
@@ -137,7 +137,7 @@ export default class Point extends WKX.Geometry {
     wkb.writeInt8(1);
     this._writeWkbType(wkb, WKX.Types.wkb.Point, parentOptions);
 
-    if (is.undefined(this.x) && is.undefined(this.y)) {
+    if (ateos.isUndefined(this.x) && ateos.isUndefined(this.y)) {
       wkb.writeDoubleLE(NaN);
       wkb.writeDoubleLE(NaN);
 
@@ -170,7 +170,7 @@ export default class Point extends WKX.Geometry {
     const twkb = new WKX.BinaryWriter(0, true);
 
     const precision = WKX.Geometry.getTwkbPrecision(5, 0, 0);
-    const isEmpty = is.undefined(this.x) && is.undefined(this.y);
+    const isEmpty = ateos.isUndefined(this.x) && ateos.isUndefined(this.y);
 
     this._writeTwkbHeader(twkb, WKX.Types.wkb.Point, precision, isEmpty);
 
@@ -219,9 +219,9 @@ export default class Point extends WKX.Geometry {
     const geoJSON = WKX.Geometry.prototype.toGeoJSON.call(this, options);
     geoJSON.type = WKX.Types.geoJSON.Point;
 
-    if (is.undefined(this.x) && is.undefined(this.y)) {
+    if (ateos.isUndefined(this.x) && ateos.isUndefined(this.y)) {
       geoJSON.coordinates = [];
-    } else if (!is.undefined(this.z)) {
+    } else if (!ateos.isUndefined(this.z)) {
       geoJSON.coordinates = [this.x, this.y, this.z];
     } else {
       geoJSON.coordinates = [this.x, this.y];

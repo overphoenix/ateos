@@ -5,7 +5,7 @@ export default (fs) => {
   } = ateos;
     
   return (file, data, options, callback) => {
-    if (is.function(options)) {
+    if (ateos.isFunction(options)) {
       callback = options;
       options = {};
     }

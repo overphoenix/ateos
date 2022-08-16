@@ -6,7 +6,7 @@ export default (fs) => {
   } = ateos;
     
   return (file, obj, options, callback) => {
-    if (is.nil(callback)) {
+    if (ateos.isNil(callback)) {
       callback = options;
       options = {};
     }

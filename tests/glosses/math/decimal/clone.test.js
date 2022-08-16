@@ -127,7 +127,7 @@ describe("math", "Decimal", function () {
         t(Decimal.rounding === 2);
         t(Decimal.toExpNeg === -100);
         t(Decimal.toExpPos === 200);
-        t(is.undefined(Decimal.defaults));
+        t(ateos.isUndefined(Decimal.defaults));
 
         D1 = Decimal.clone({ defaults: true });
 
@@ -135,7 +135,7 @@ describe("math", "Decimal", function () {
         t(D1.rounding === 4);
         t(D1.toExpNeg === -7);
         t(D1.toExpPos === 21);
-        t(is.undefined(D1.defaults));
+        t(ateos.isUndefined(D1.defaults));
 
         D2 = Decimal.clone({ defaults: true, rounding: 5 });
 

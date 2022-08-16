@@ -8,7 +8,7 @@ const percentRegexp = /^(\d{1,3}(?:.\d+)?)%$/;
 
 const coercePercent = (percent, total) => {
   const match = percent.match(percentRegexp);
-  if (is.null(match)) {
+  if (ateos.isNull(match)) {
     throw new error.InvalidArgumentException(`Invalid percent value: ${percent}`);
   }
   const value = parseFloat(match[1]);
@@ -31,8 +31,8 @@ export default function prettyTable(data, {
   // if it is a string then
   // assume it is a percent value and calculate relative width to the terminal
   let tableWidth = null;
-  if (!is.null(width)) {
-    if (is.string(width)) {
+  if (!ateos.isNull(width)) {
+    if (ateos.isString(width)) {
       let bordersWidth = 0;
       if (!borderless) {
         // todo: custom chars?
@@ -41,7 +41,7 @@ export default function prettyTable(data, {
       }
       const maxWidth = process.stdout.columns - bordersWidth;
       tableWidth = coercePercent(width, maxWidth);
-    } else if (is.number(width)) {
+    } else if (ateos.isNumber(width)) {
       tableWidth = width;
     }
   }
@@ -55,14 +55,14 @@ export default function prettyTable(data, {
   let col = 0;
   for (const m of model) {
     !noHeader && head.push(m.header);
-    colAligns.push(is.string(m.align) ? m.align : null);
+    colAligns.push(ateos.isString(m.align) ? m.align : null);
     map[m.id] = ateos.lodash.omit(m, "id");
     map[m.id].col = col++;
 
     if (m.wordWrap) {
-      if (is.string(m.wordWrap)) {
+      if (ateos.isString(m.wordWrap)) {
         map[m.id].wordWrap = { mode: m.wordWrap };
-      } else if (is.object(m.wordWrap)) {
+      } else if (ateos.isObject(m.wordWrap)) {
         map[m.id].wordWrap = Object.assign({ countAnsiEscapeCodes }, m.wordWrap);
       } else {
         map[m.id].wordWrap = { mode: "soft" };
@@ -78,16 +78,16 @@ export default function prettyTable(data, {
   // precise value
   for (const m of model) {
     let colWidth = null;
-    if (is.number(m.width)) {
+    if (ateos.isNumber(m.width)) {
       colWidth = m.width;
-    } else if (!is.null(tableWidth)) {
-      if (is.string(m.width)) {
+    } else if (!ateos.isNull(tableWidth)) {
+      if (ateos.isString(m.width)) {
         colWidth = coercePercent(m.width, tableWidth);
       }
     }
     map[m.id].colWidth = colWidth;
 
-    if (!is.null(colWidth) && !is.null(tableWidth)) {
+    if (!ateos.isNull(colWidth) && !ateos.isNull(tableWidth)) {
       ++predefinedWidthCols;
       remainingWidth -= colWidth;
     }
@@ -97,31 +97,31 @@ export default function prettyTable(data, {
   for (const m of model) {
     let maxWidth = null;
     if (m.maxWidth) {
-      if (is.number(m.maxWidth)) {
+      if (ateos.isNumber(m.maxWidth)) {
         maxWidth = m.maxWidth;
-      } else if (!is.null(tableWidth) && is.string(m.maxWidth)) {
+      } else if (!ateos.isNull(tableWidth) && ateos.isString(m.maxWidth)) {
         maxWidth = coercePercent(m.maxWidth, tableWidth);
       }
     }
-    if (is.null(maxWidth)) {
+    if (ateos.isNull(maxWidth)) {
       map[m.id].maxWidth = null;
       continue;
     }
 
     const colWidth = data.reduce((x, y) => {
       const v = y[m.id];
-      const l = is.nil(v) ? 0 : (countAnsiEscapeCodes ? v.toString() : ateos.text.stripAnsi(v.toString())).length + padLeft + padRight;
+      const l = ateos.isNil(v) ? 0 : (countAnsiEscapeCodes ? v.toString() : ateos.text.stripAnsi(v.toString())).length + padLeft + padRight;
       return Math.max(x, l);
     }, 0);
 
     map[m.id].maxWidth = Math.min(colWidth, maxWidth);
   }
 
-  if (!is.null(tableWidth)) {
+  if (!ateos.isNull(tableWidth)) {
     let colSize = Math.floor(remainingWidth / (model.length - predefinedWidthCols));
 
     for (const m of model) {
-      if (is.null(map[m.id].maxWidth)) {
+      if (ateos.isNull(map[m.id].maxWidth)) {
         continue;
       }
       if (map[m.id].maxWidth < colSize) {
@@ -134,14 +134,14 @@ export default function prettyTable(data, {
     colSize = Math.floor(remainingWidth / (model.length - predefinedWidthCols));
 
     for (const m of model) {
-      if (!is.null(map[m.id].colWidth)) {
+      if (!ateos.isNull(map[m.id].colWidth)) {
         continue;
       }
       map[m.id].colWidth = colSize;
     }
   } else {
     for (const m of model) {
-      if (is.null(map[m.id].maxWidth)) {
+      if (ateos.isNull(map[m.id].maxWidth)) {
         continue;
       }
       map[m.id].colWidth = map[m.id].maxWidth;
@@ -162,13 +162,13 @@ export default function prettyTable(data, {
   for (const item of data) {
     const row = new Array(model.length).fill(null);
     for (const [key, val] of Object.entries(item)) {
-      if (is.plainObject(map[key])) {
+      if (ateos.isPlainObject(map[key])) {
         const m = map[key];
         const style = m.style;
         const styleType = ateos.typeOf(style);
         const formatType = ateos.typeOf(m.format);
         let str;
-        if (is.function(m.handle)) {
+        if (ateos.isFunction(m.handle)) {
           str = m.handle(item);
         } else {
           switch (formatType) {
@@ -197,7 +197,7 @@ export default function prettyTable(data, {
         }
 
         str = cli.parse(str);
-        if (str && m.wordWrap && !is.null(m.colWidth)) {
+        if (str && m.wordWrap && !ateos.isNull(m.colWidth)) {
           str = str.toString();
           const maxLen = m.colWidth - padLeft - padRight;
           if (m.colWidth && str.length > maxLen) {

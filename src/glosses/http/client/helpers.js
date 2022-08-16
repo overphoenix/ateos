@@ -5,7 +5,7 @@ const {
 
 export const forEach = (obj, fn) => {
   // Don't bother if no value provided
-  if (is.nil(obj)) {
+  if (ateos.isNil(obj)) {
     return;
   }
 
@@ -17,7 +17,7 @@ export const forEach = (obj, fn) => {
     obj = [obj];
   }
 
-  if (is.array(obj)) {
+  if (ateos.isArray(obj)) {
     // Iterate over array values
     for (let i = 0, l = obj.length; i < l; i++) {
       fn.call(null, obj[i], i, obj);
@@ -67,7 +67,7 @@ export const deepMerge = (...args) => {
 
 export const extend = (a, b, thisArg) => {
   forEach(b, function assignValue(val, key) {
-    if (thisArg && is.function(val)) {
+    if (thisArg && ateos.isFunction(val)) {
       a[key] = val.bind(thisArg);
     } else {
       a[key] = val;
@@ -95,7 +95,7 @@ const encode = (val) => encodeURIComponent(val).
   replace(/%5D/gi, "]");
 
 
-const isURLSearchParams = (val) => !is.undefined(URLSearchParams) && val instanceof URLSearchParams;
+const isURLSearchParams = (val) => !ateos.isUndefined(URLSearchParams) && val instanceof URLSearchParams;
 
 /**
  * Build a URL by appending params to the end
@@ -119,20 +119,20 @@ export const buildURL = (url, params, paramsSerializer) => {
     const parts = [];
 
     forEach(params, function serialize(val, key) {
-      if (is.nil(val)) {
+      if (ateos.isNil(val)) {
         return;
       }
 
-      if (is.array(val)) {
+      if (ateos.isArray(val)) {
         key = `${key}[]`;
       } else {
         val = [val];
       }
 
       forEach(val, function parseValue(v) {
-        if (is.date(v)) {
+        if (ateos.isDate(v)) {
           v = v.toISOString();
-        } else if (is.object(v)) {
+        } else if (ateos.isObject(v)) {
           v = JSON.stringify(v);
         }
         parts.push(`${encode(key)}=${encode(v)}`);

@@ -32,7 +32,7 @@ class Lazy extends Any {
   }
 
   set(fn) {
-    ateos.assert(is.function(fn), "You must provide a function as first argument");
+    ateos.assert(ateos.isFunction(fn), "You must provide a function as first argument");
 
     const obj = this.clone();
     obj._flags.lazy = fn;

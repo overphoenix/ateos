@@ -43,14 +43,14 @@ export default class Compiler {
     let [fn] = args;
     let idx = 0;
 
-    if (is.string(type) || is.array(type)) {
+    if (ateos.isString(type) || ateos.isArray(type)) {
       fn = wrap(type, fn);
       idx++;
     } else {
       fn = type;
     }
 
-    if (!is.function(fn)) {
+    if (!ateos.isFunction(fn)) {
       throw new TypeError("expected a function");
     }
 
@@ -60,7 +60,7 @@ export default class Compiler {
     args.unshift(this);
 
     const val = fn.apply(this, args);
-    if (is.function(val) && !fns.includes(val)) {
+    if (ateos.isFunction(val) && !fns.includes(val)) {
       fns.push(val);
     }
     return this;
@@ -154,7 +154,7 @@ export default class Compiler {
     this.emitter.emit("node", node);
 
     const fn = this.compilers[node.type] || this.compilers.unknown;
-    if (!is.function(fn)) {
+    if (!ateos.isFunction(fn)) {
       throw this.error(`compiler "${node.type}" is not registered`, node);
     }
 

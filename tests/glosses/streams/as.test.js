@@ -8,10 +8,10 @@ class Through extends stream.PassThrough {
             writableObjectMode: true,
             readableObjectMode
         });
-        if (is.string(data) || is.buffer(data)) {
+        if (ateos.isString(data) || ateos.isBuffer(data)) {
             this.push(data);
         }
-        if (is.array(data)) {
+        if (ateos.isArray(data)) {
             for (const i of data) {
                 this.push(i);
             }
@@ -58,7 +58,7 @@ describe("stream", "as", () => {
 
     it("getStream should not affect additional listeners attached to the stream", async () => {
         const fixture = new Through(["foo", "bar"]);
-        fixture.on("data", (chunk) => assert.isTrue(is.buffer(chunk)));
+        fixture.on("data", (chunk) => assert.isTrue(ateos.isBuffer(chunk)));
         assert.equal(await as.string(fixture), "foobar");
     });
 

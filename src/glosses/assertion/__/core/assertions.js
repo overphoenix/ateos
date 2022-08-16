@@ -2804,7 +2804,7 @@ module.exports = function (assertion, _) {
       flag(this, "object", caughtErr);
     };
 
-    if (ateos.is.asyncFunction(obj)) {
+    if (ateos.ateos.isAsyncFunction(obj)) {
       this._obj = obj().then(() => null, (e) => e).then(handle).then(() => flag(this, "object"));
     } else {
       let caughtErr;

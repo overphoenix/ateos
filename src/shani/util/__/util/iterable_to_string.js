@@ -3,7 +3,7 @@ const { is, shani: { util: { __ } } } = ateos;
 export default function iterableToString(obj) {
   let representation = "";
 
-  const stringify = (item) => is.string(item) ? `'${item}'` : String(item);
+  const stringify = (item) => ateos.isString(item) ? `'${item}'` : String(item);
 
   const mapToString = (map) => {
     map.forEach((value, key) => {

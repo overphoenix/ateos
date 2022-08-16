@@ -19,7 +19,7 @@ const throwYieldError = (proxy, text, args) => {
 
 export default class SpyCall {
   constructor(spy, thisValue, args, returnValue, error, id, errorWithCallStack) {
-    if (!is.number(id)) {
+    if (!ateos.isNumber(id)) {
       throw new error.InvalidArgumentException("Call id is not a number");
     }
     this.proxy = spy;
@@ -81,7 +81,7 @@ export default class SpyCall {
   }
 
   threw(error) {
-    if (is.undefined(error) || !this.error) {
+    if (ateos.isUndefined(error) || !this.error) {
       return Boolean(this.error);
     }
 
@@ -137,7 +137,7 @@ export default class SpyCall {
   }
 
   yieldOn(thisValue, ...args) {
-    const yieldFn = [...this.args].filter(is.function)[0];
+    const yieldFn = [...this.args].filter(ateos.isFunction)[0];
 
     if (!yieldFn) {
       throwYieldError(this.proxy, " cannot yield since no callback was passed.", [...this.args]);
@@ -152,7 +152,7 @@ export default class SpyCall {
 
   yieldToOn(prop, thisValue, ...args) {
     const yieldArg = [...this.args].filter((arg) => {
-      return arg && is.function(arg[prop]);
+      return arg && ateos.isFunction(arg[prop]);
     })[0];
     const yieldFn = yieldArg && yieldArg[prop];
 
@@ -173,7 +173,7 @@ export default class SpyCall {
 
     callStr = `${callStr + formattedArgs.join(", ")})`;
 
-    if (!is.undefined(this.returnValue)) {
+    if (!ateos.isUndefined(this.returnValue)) {
       callStr += ` => ${__.util.format(this.returnValue)}`;
     }
 

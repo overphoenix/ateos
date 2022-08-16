@@ -11,7 +11,7 @@ describe("shani", "util", "issues", () => {
     });
 
     describe("#458", () => {
-        if (!is.undefined(require("fs").readFileSync)) {
+        if (!ateos.isUndefined(require("fs").readFileSync)) {
             describe("on node", () => {
                 it("stub out fs.readFileSync", function () {
                     const fs = require("fs");
@@ -90,7 +90,7 @@ describe("shani", "util", "issues", () => {
             try { // eslint-disable-line no-restricted-syntax
                 var oldWatch = Object.prototype.watch;
 
-                if (!is.function(Object.prototype.watch)) {
+                if (!ateos.isFunction(Object.prototype.watch)) {
                     Object.prototype.watch = function rolex() { }; // eslint-disable-line no-extend-native
                 }
 

@@ -6,7 +6,7 @@ export default function calledInOrder(...spies) {
   const callMap = {};
 
   const hasCallsLeft = (spy) => {
-    if (is.undefined(callMap[spy.id])) {
+    if (ateos.isUndefined(callMap[spy.id])) {
       callMap[spy.id] = 0;
     }
 

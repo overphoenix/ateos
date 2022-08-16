@@ -6,7 +6,7 @@ const {
 } = ateos;
 
 export const create = function (key, options) {
-  assert(is.string(key), `Invalid reference key: ${key}`);
+  assert(ateos.isString(key), `Invalid reference key: ${key}`);
 
   const settings = clone(options); // options can be reused and modified
 
@@ -29,7 +29,7 @@ export const create = function (key, options) {
 };
 
 export const isRef = function (ref) {
-  return is.function(ref) && ref.isJoi;
+  return ateos.isFunction(ref) && ref.isJoi;
 };
 
 export const push = function (array, ref) {

@@ -19,7 +19,7 @@ export default class Variable {
     this.isArg = isArg;
 
 
-    if (!is.null(node)) {
+    if (!ateos.isNull(node)) {
       node.variable = this;
 
       const initNode = node.ast.init;
@@ -37,6 +37,6 @@ export default class Variable {
   }
 
   get isNative() {
-    return is.null(this.node);
+    return ateos.isNull(this.node);
   }
 }

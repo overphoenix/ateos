@@ -12,12 +12,12 @@ const resolveYamlOmap = (data) => {
   for (const pair of data) {
     pairHasKey = false;
 
-    if (!is.object(pair)) {
+    if (!ateos.isObject(pair)) {
       return false;
     }
 
     for (pairKey in pair) {
-      if (is.propertyOwned(pair, pairKey)) {
+      if (ateos.isPropertyOwned(pair, pairKey)) {
         if (!pairHasKey) {
           pairHasKey = true;
         } else {
@@ -43,5 +43,5 @@ const resolveYamlOmap = (data) => {
 export default new yaml.type.Type("tag:yaml.org,2002:omap", {
   kind: "sequence",
   resolve: resolveYamlOmap,
-  construct: (data) => !is.null(data) ? data : []
+  construct: (data) => !ateos.isNull(data) ? data : []
 });

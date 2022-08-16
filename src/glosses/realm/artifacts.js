@@ -23,7 +23,7 @@ const COMMON_FILENAMES = [
   ["shanifile.js", "shanifile"],
   "LICENSE",
   ["README.md", "readme"]
-].map((v) => is.string(v) ? [v, v] : v);
+].map((v) => ateos.isString(v) ? [v, v] : v);
 
 export default class RealmArtifacts {
   #manager;
@@ -49,7 +49,7 @@ export default class RealmArtifacts {
   }
 
   hasArtifact(path) {
-    return !is.undefined(this.#artifacts.find((a) => a.path === path));
+    return !ateos.isUndefined(this.#artifacts.find((a) => a.path === path));
   }
 
   getArtifact(path) {
@@ -84,7 +84,7 @@ export default class RealmArtifacts {
         const fullPath = join(manager.cwd, path);
                 
         let artifact = artifacts.find((a) => a.path === path);
-        if (is.undefined(artifact)) {
+        if (ateos.isUndefined(artifact)) {
           artifact = {
             path,
             attrs: new Set()

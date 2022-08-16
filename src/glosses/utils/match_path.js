@@ -2,12 +2,12 @@ const { is } = ateos;
 
 export default function matchPath(criteria, value = null, { index = false, start = 0, end = null, dot = false } = {}) {
   criteria = ateos.util.arrify(criteria);
-  if (is.null(value)) {
+  if (ateos.isNull(value)) {
     // it means we should create a matcher function
     return (value, opts) => matchPath(criteria, value, opts); // TODO: optimize
   }
   value = ateos.util.arrify(value);
-  if (is.null(end)) {
+  if (ateos.isNull(end)) {
     end = criteria.length;
   }
   // separate negative and non-negative criteria
@@ -16,7 +16,7 @@ export default function matchPath(criteria, value = null, { index = false, start
   for (let i = start; i < end; ++i) {
     let criterion = criteria[i];
     let array = pos;
-    if (ateos.is.string(criterion) && criterion[0] === "!") {
+    if (ateos.ateos.isString(criterion) && criterion[0] === "!") {
       array = neg;
       criterion = criterion.slice(1); // remove the leading "!"
     }
@@ -40,13 +40,13 @@ export default function matchPath(criteria, value = null, { index = false, start
   }
 
   for (const [idx, p] of pos) {
-    if (ateos.is.function(p) && (p(...value) || altValue && p(...altValue))) {
+    if (ateos.ateos.isFunction(p) && (p(...value) || altValue && p(...altValue))) {
       return index ? idx : true;
     }
-    if (ateos.is.regexp(p) && (p.test(string) || (altString && p.test(altString)))) {
+    if (ateos.ateos.isRegexp(p) && (p.test(string) || (altString && p.test(altString)))) {
       return index ? idx : true;
     }
-    if (ateos.is.string(p)) {
+    if (ateos.ateos.isString(p)) {
       if (p === string || (altString && p === altString)) {
         return index ? idx : true;
       }

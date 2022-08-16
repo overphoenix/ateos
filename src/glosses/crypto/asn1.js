@@ -201,7 +201,7 @@ export const copy = function (obj, options) {
     return c;
   }
 
-  if (is.string(obj)) {
+  if (ateos.isString(obj)) {
     // TODO: copy byte buffer if it's a buffer not a string
     return obj;
   }
@@ -244,7 +244,7 @@ export const create = function (tagClass, type, constructed, value, options) {
   if (crypto.util.isArray(value)) {
     const tmp = [];
     for (let i = 0; i < value.length; ++i) {
-      if (!is.undefined(value[i])) {
+      if (!ateos.isUndefined(value[i])) {
         tmp.push(value[i]);
       }
     }
@@ -300,7 +300,7 @@ export const equals = function (obj1, obj2, options) {
     return false;
   }
 
-  if (is.string(obj1)) {
+  if (ateos.isString(obj1)) {
     return obj1 === obj2;
   }
 
@@ -424,13 +424,13 @@ const _getValueLength = function (bytes, remaining) {
  * @return the parsed asn1 object.
  */
 export const fromDer = function (bytes, options) {
-  if (is.undefined(options)) {
+  if (ateos.isUndefined(options)) {
     options = {
       strict: true,
       decodeBitStrings: true
     };
   }
-  if (is.boolean(options)) {
+  if (ateos.isBoolean(options)) {
     options = {
       strict: options,
       decodeBitStrings: true
@@ -444,7 +444,7 @@ export const fromDer = function (bytes, options) {
   }
 
   // wrap in buffer if needed
-  if (is.string(bytes)) {
+  if (ateos.isString(bytes)) {
     bytes = crypto.util.createBuffer(bytes);
   }
 
@@ -485,7 +485,7 @@ const _fromDer = function (bytes, remaining, depth, options) {
   remaining -= start - bytes.length();
 
   // ensure there are enough bytes to get the value
-  if (!is.undefined(length) && length > remaining) {
+  if (!ateos.isUndefined(length) && length > remaining) {
     if (options.strict) {
       const error = new Error("Too few bytes to read ASN.1 value.");
       error.available = bytes.length();
@@ -507,7 +507,7 @@ const _fromDer = function (bytes, remaining, depth, options) {
   if (constructed) {
     // parse child asn1 objects from the value
     value = [];
-    if (is.undefined(length)) {
+    if (ateos.isUndefined(length)) {
       // asn1 object of indefinite length, read until end tag
       for (; ;) {
         _checkBufferLength(bytes, remaining, 2);
@@ -532,7 +532,7 @@ const _fromDer = function (bytes, remaining, depth, options) {
   }
 
   // if a BIT STRING, save the contents including padding
-  if (is.undefined(value) && tagClass === Class.UNIVERSAL &&
+  if (ateos.isUndefined(value) && tagClass === Class.UNIVERSAL &&
         type === Type.BITSTRING) {
     bitStringContents = bytes.bytes(length);
   }
@@ -540,7 +540,7 @@ const _fromDer = function (bytes, remaining, depth, options) {
   // determine if a non-constructed value should be decoded as a composed
   // value that contains other ASN.1 objects. BIT STRINGs (and OCTET STRINGs)
   // can be used this way.
-  if (is.undefined(value) && options.decodeBitStrings &&
+  if (ateos.isUndefined(value) && options.decodeBitStrings &&
         tagClass === Class.UNIVERSAL &&
         // FIXME: OCTET STRINGs not yet supported here
         // .. other parts of forge expect to decode OCTET STRINGs manually
@@ -592,18 +592,18 @@ const _fromDer = function (bytes, remaining, depth, options) {
         //
       }
     }
-    if (is.undefined(value)) {
+    if (ateos.isUndefined(value)) {
       // restore read position
       bytes.read = savedRead;
       remaining = savedRemaining;
     }
   }
 
-  if (is.undefined(value)) {
+  if (ateos.isUndefined(value)) {
     // asn1 not constructed or composed, get raw value
     // TODO: do DER to OID conversion and vice-versa in .toDer?
 
-    if (is.undefined(length)) {
+    if (ateos.isUndefined(length)) {
       if (options.strict) {
         throw new Error("Non-constructed ASN.1 object of indefinite length.");
       }
@@ -624,7 +624,7 @@ const _fromDer = function (bytes, remaining, depth, options) {
   }
 
   // add BIT STRING contents if available
-  const asn1Options = is.undefined(bitStringContents) ? null : {
+  const asn1Options = ateos.isUndefined(bitStringContents) ? null : {
     bitStringContents
   };
 
@@ -672,7 +672,7 @@ export const toDer = function (obj) {
 
     // add all of the child DER bytes together
     for (let i = 0; i < obj.value.length; ++i) {
-      if (!is.undefined(obj.value[i])) {
+      if (!ateos.isUndefined(obj.value[i])) {
         value.putBuffer(toDer(obj.value[i]));
       }
     }
@@ -794,7 +794,7 @@ export const derToOid = function (bytes) {
   let oid;
 
   // wrap in buffer if needed
-  if (is.string(bytes)) {
+  if (ateos.isString(bytes)) {
     bytes = crypto.util.createBuffer(bytes);
   }
 
@@ -1006,7 +1006,7 @@ export const generalizedTimeToDate = function (gentime) {
  */
 export const dateToUtcTime = function (date) {
   // TODO: validate; currently assumes proper format
-  if (is.string(date)) {
+  if (ateos.isString(date)) {
     return date;
   }
 
@@ -1042,7 +1042,7 @@ export const dateToUtcTime = function (date) {
  */
 export const dateToGeneralizedTime = function (date) {
   // TODO: validate; currently assumes proper format
-  if (is.string(date)) {
+  if (ateos.isString(date)) {
     return date;
   }
 
@@ -1106,7 +1106,7 @@ export const integerToDer = function (x) {
  */
 export const derToInteger = function (bytes) {
   // wrap in buffer if needed
-  if (is.string(bytes)) {
+  if (ateos.isString(bytes)) {
     bytes = crypto.util.createBuffer(bytes);
   }
 
@@ -1144,11 +1144,11 @@ export const validate = function (obj, v, capture, errors) {
   let rval = false;
 
   // ensure tag class and type are the same if specified
-  if ((obj.tagClass === v.tagClass || is.undefined(v.tagClass)) &&
-        (obj.type === v.type || is.undefined(v.type))) {
+  if ((obj.tagClass === v.tagClass || ateos.isUndefined(v.tagClass)) &&
+        (obj.type === v.type || ateos.isUndefined(v.type))) {
     // ensure constructed flag is the same if specified
     if (obj.constructed === v.constructed ||
-            is.undefined(v.constructed)) {
+            ateos.isUndefined(v.constructed)) {
       rval = true;
 
       // handle sub values
@@ -1344,7 +1344,7 @@ export const prettyPrint = function (obj, level, indentation) {
     let subvalues = 0;
     let sub = "";
     for (let i = 0; i < obj.value.length; ++i) {
-      if (!is.undefined(obj.value[i])) {
+      if (!ateos.isUndefined(obj.value[i])) {
         subvalues += 1;
         sub += prettyPrint(obj.value[i], level + 1, indentation);
         if ((i + 1) < obj.value.length) {

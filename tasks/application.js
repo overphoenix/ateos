@@ -1,5 +1,4 @@
 const {
-  is,
   project
 } = ateos;
 
@@ -40,7 +39,7 @@ export default class ApplicationTask extends project.BaseTask {
       message: "generating application source files"
     });
 
-    if (!is.string(input.name)) {
+    if (!ateos.isString(input.name)) {
       throw new ateos.error.NotValidException("Name should be a valid string");
     }
     return project.helper.createFile(TEMPLATE, input);

@@ -42,9 +42,9 @@ describe("Map", () => {
         const values = [];
         // Get entries forEach
         m.forEach(function (value, key, map) {
-            expect(!is.nil(value)).to.be.ok;
-            expect(!is.nil(key)).to.be.ok;
-            expect(!is.nil(map)).to.be.ok;
+            expect(!ateos.isNil(value)).to.be.ok;
+            expect(!ateos.isNil(key)).to.be.ok;
+            expect(!ateos.isNil(map)).to.be.ok;
             expect(m === this).to.be.ok;
             values.push([key, value]);
         }, m);

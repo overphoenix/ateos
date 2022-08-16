@@ -28,9 +28,9 @@ export default class Interceptor {
     this.interceptorMatchHeaders = [];
     this.method = method.toUpperCase();
     this.uri = uri;
-    this._key = `${this.method} ${scope.basePath}${scope.basePathname}${is.string(uri) ? "" : "/"}${uri}`;
+    this._key = `${this.method} ${scope.basePath}${scope.basePathname}${ateos.isString(uri) ? "" : "/"}${uri}`;
     this.basePath = this.scope.basePath;
-    this.path = (is.string(uri)) ? scope.basePathname + uri : uri;
+    this.path = (ateos.isString(uri)) ? scope.basePathname + uri : uri;
 
     this.baseUri = `${this.method} ${scope.basePath}${scope.basePathname}`;
     this.options = interceptorOptions || {};
@@ -63,7 +63,7 @@ export default class Interceptor {
   }
 
   reply(statusCode, body, rawHeaders) {
-    if (arguments.length <= 2 && is.function(statusCode)) {
+    if (arguments.length <= 2 && ateos.isFunction(statusCode)) {
       body = statusCode;
       statusCode = 200;
     }
@@ -85,7 +85,7 @@ export default class Interceptor {
       headers.date = this.scope.date.toUTCString();
     }
 
-    if (!is.undefined(headers)) {
+    if (!ateos.isUndefined(headers)) {
       this.rawHeaders = [];
 
       // makes sure all keys in headers are in lower case
@@ -103,10 +103,10 @@ export default class Interceptor {
     //  If the content is not encoded we may need to transform the response body.
     //  Otherwise we leave it as it is.
     if (!_util.isContentEncoded(this.headers)) {
-      if (body && !is.string(body) &&
-                !is.function(body) &&
-                !is.buffer(body) &&
-                !is.stream(body)) {
+      if (body && !ateos.isString(body) &&
+                !ateos.isFunction(body) &&
+                !ateos.isBuffer(body) &&
+                !ateos.isStream(body)) {
         try {
           body = json.encodeSafe(body);
           if (!this.headers) {
@@ -150,7 +150,7 @@ export default class Interceptor {
 
     const reqHeader = this.reqheaders[key];
     let header = options.headers[key];
-    if (header && (!is.string(header)) && header.toString) {
+    if (header && (!ateos.isString(header)) && header.toString) {
       header = header.toString();
     }
 
@@ -158,13 +158,13 @@ export default class Interceptor {
     //  This because 'host' may get inserted by Nock itself and then get recorder.
     //  NOTE: We use lower-case header field names throughout Nock.
     if (key === "host" &&
-            (is.undefined(header) ||
-                is.undefined(reqHeader))) {
+            (ateos.isUndefined(header) ||
+                ateos.isUndefined(reqHeader))) {
       return true;
     }
 
-    if (!is.undefined(reqHeader) && !is.undefined(header)) {
-      if (is.function(reqHeader)) {
+    if (!ateos.isUndefined(reqHeader) && !ateos.isUndefined(header)) {
+      if (ateos.isFunction(reqHeader)) {
         return reqHeader(header);
       } else if (_util.matchStringOrRegexp(header, reqHeader)) {
         return true;
@@ -188,7 +188,7 @@ export default class Interceptor {
     if (this.scope.transformPathFunction) {
       path = this.scope.transformPathFunction(path);
     }
-    if (!is.string(body)) {
+    if (!ateos.isString(body)) {
       body = body.toString();
     }
     if (this.scope.transformRequestBodyFunction) {
@@ -196,7 +196,7 @@ export default class Interceptor {
     }
 
     const checkHeaders = function (header) {
-      if (is.function(header.value)) {
+      if (ateos.isFunction(header.value)) {
         return header.value(options.getHeader(header.name));
       }
       return _util.matchStringOrRegexp(options.getHeader(header.name), header.value);
@@ -215,7 +215,7 @@ export default class Interceptor {
       return false;
     }
 
-    const reqheaderContains = (header) => is.propertyDefined(options.headers, header);
+    const reqheaderContains = (header) => ateos.isPropertyDefined(options.headers, header);
 
     const reqContainsBadHeaders =
             this.badheaders &&
@@ -254,9 +254,9 @@ export default class Interceptor {
       queries = qs.parse(queryString);
 
       // Only check for query string matches if this.queries is an object
-      if (is.object(this.queries)) {
+      if (ateos.isObject(this.queries)) {
 
-        if (is.function(this.queries)) {
+        if (ateos.isFunction(this.queries)) {
           matchQueries = this.queries(queries);
         } else {
           // Make sure that you have an equal number of keys. We are
@@ -273,11 +273,11 @@ export default class Interceptor {
             Object.entries(queries).forEach(function matchOneKeyVal([key, val]) {
               const expVal = self.queries[key];
               let isMatch = true;
-              if (is.undefined(val) || is.undefined(expVal)) {
+              if (ateos.isUndefined(val) || ateos.isUndefined(expVal)) {
                 isMatch = false;
               } else if (expVal instanceof RegExp) {
                 isMatch = _util.matchStringOrRegexp(val, expVal);
-              } else if (is.object(expVal)) {
+              } else if (ateos.isObject(expVal)) {
                 isMatch = is.deepEqual(val, expVal);
               } else {
                 isMatch = _util.matchStringOrRegexp(val, expVal);
@@ -294,7 +294,7 @@ export default class Interceptor {
       }
     }
 
-    if (is.function(this.uri)) {
+    if (ateos.isFunction(this.uri)) {
       matches = matchQueries &&
                 `${method.toUpperCase()} ${proto}://${options.host}` === this.baseUri &&
                 this.uri(path);
@@ -313,7 +313,7 @@ export default class Interceptor {
   }
 
   matchIndependentOfBody(options) {
-    const isRegex = is.regexp(this[nockScopeKey]) && is.regexp(this.path);
+    const isRegex = ateos.isRegexp(this[nockScopeKey]) && ateos.isRegexp(this.path);
 
     const method = (options.method || "GET").toUpperCase();
     let path = options.path;
@@ -348,7 +348,7 @@ export default class Interceptor {
   }
 
   filteringPath(fn) {
-    if (is.function(fn)) {
+    if (ateos.isFunction(fn)) {
       this.scope.transformFunction = fn;
     }
     return this;
@@ -396,7 +396,7 @@ export default class Interceptor {
       return this;
     }
 
-    if (is.function(queries)) {
+    if (ateos.isFunction(queries)) {
       this.queries = queries;
       return this;
     }
@@ -407,7 +407,7 @@ export default class Interceptor {
     }
 
     for (const key in queries) {
-      if (is.undefined(this.queries[key])) {
+      if (ateos.isUndefined(this.queries[key])) {
         const formattedPair = _util.formatQueryValue(key, queries[key], stringFormattingFn);
         this.queries[formattedPair[0]] = formattedPair[1];
       }
@@ -482,9 +482,9 @@ export default class Interceptor {
   delay(opts) {
     let headDelay = 0;
     let bodyDelay = 0;
-    if (is.number(opts)) {
+    if (ateos.isNumber(opts)) {
       headDelay = opts;
-    } else if (is.object(opts)) {
+    } else if (ateos.isObject(opts)) {
       headDelay = opts.head || 0;
       bodyDelay = opts.body || 0;
     } else {

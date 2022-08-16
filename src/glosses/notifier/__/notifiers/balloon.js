@@ -102,7 +102,7 @@ export default class WindowsBalloon extends ateos.EventEmitter {
     const notifierOptions = this.options;
     options = ateos.util.clone(options || {});
 
-    if (is.string(options)) {
+    if (ateos.isString(options)) {
       options = { title: "", message: options };
     }
 

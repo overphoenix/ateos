@@ -114,12 +114,12 @@ export default function jsesc(argument, options) {
   const useDecNumbers = options.numbers === "decimal";
   const useHexNumbers = options.numbers === "hexadecimal";
 
-  if (json && argument && is.function(argument.toJSON)) {
+  if (json && argument && ateos.isFunction(argument.toJSON)) {
     argument = argument.toJSON();
   }
 
-  if (!is.string(argument)) {
-    if (is.map(argument)) {
+  if (!ateos.isString(argument)) {
+    if (ateos.isMap(argument)) {
       if (argument.size === 0) {
         return "new Map()";
       }
@@ -129,19 +129,19 @@ export default function jsesc(argument, options) {
       }
       return `new Map(${jsesc(Array.from(argument), options)})`;
     }
-    if (is.set(argument)) {
+    if (ateos.isSet(argument)) {
       if (argument.size === 0) {
         return "new Set()";
       }
       return `new Set(${jsesc(Array.from(argument), options)})`;
     }
-    if (is.buffer(argument)) {
+    if (ateos.isBuffer(argument)) {
       if (argument.length === 0) {
         return "Buffer.from([])";
       }
       return `Buffer.from(${jsesc(Array.from(argument), options)})`;
     }
-    if (is.array(argument)) {
+    if (ateos.isArray(argument)) {
       result = [];
       options.wrap = true;
       if (inline1) {
@@ -165,7 +165,7 @@ export default function jsesc(argument, options) {
         return `[${result.join(", ")}]`;
       }
       return `[${newLine}${result.join(`,${newLine}`)}${newLine}${compact ? "" : oldIndent}]`;
-    } else if (is.number(argument)) {
+    } else if (ateos.isNumber(argument)) {
       if (json) {
         // Some number values (e.g. `Infinity`) cannot be represented in JSON.
         return JSON.stringify(argument);

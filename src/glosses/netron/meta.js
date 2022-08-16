@@ -7,7 +7,7 @@ const {
 const CONTEXTIFY_SYMBOL = Symbol();
 
 export const contextify = (instance, contextInfo) => {
-  if (is.class(instance)) {
+  if (ateos.isClass(instance)) {
     throw new error.NotValidException("Invalid instance");
   }
 
@@ -35,7 +35,7 @@ const buildMeta = (obj, contextInfo) => {
     props: {}
   };
 
-  if (is.plainObject(contextInfo)) {
+  if (ateos.isPlainObject(contextInfo)) {
     const privateNames = ateos.util.arrify(contextInfo.private);
 
     if (contextInfo.public) {
@@ -51,18 +51,18 @@ const buildMeta = (obj, contextInfo) => {
         entries = entries.filter((entry) => !entry[0].startsWith("_") && !privateNames.includes(entry[0]));
 
         for (const [key, value] of entries) {
-          if (is.function(value)) {
+          if (ateos.isFunction(value)) {
             meta.methods[key] = {
               value,
               meta: {}
             };
           }
         }
-      } else if (is.array(publicInfo)) {
+      } else if (ateos.isArray(publicInfo)) {
         entries = entries.filter((entry) => !privateNames.includes(entry[0]) && publicInfo.includes(entry[0]));
 
         for (const [key, value] of entries) {
-          if (is.function(value)) {
+          if (ateos.isFunction(value)) {
             meta.methods[key] = {
               value,
               meta: {}
@@ -74,12 +74,12 @@ const buildMeta = (obj, contextInfo) => {
             };
           }
         }
-      } else if (is.plainObject(publicInfo)) {
+      } else if (ateos.isPlainObject(publicInfo)) {
         const onlyNames = Object.keys(publicInfo);
         entries = entries.filter((entry) => !privateNames.includes(entry[0]) && onlyNames.includes(entry[0]));
 
         for (const [key, value] of entries) {
-          if (is.function(value)) {
+          if (ateos.isFunction(value)) {
             meta.methods[key] = {
               value,
               meta: publicInfo[key]
@@ -103,7 +103,7 @@ const buildMeta = (obj, contextInfo) => {
 export const Context = (info) => (target) => {
   let contextInfo = info;
 
-  if (is.plainObject(info)) {
+  if (ateos.isPlainObject(info)) {
     if (info.public) {
       const meta = buildMeta(target.prototype, info);
       contextInfo = meta.info;
@@ -129,46 +129,46 @@ export const Public = (info) => Reflect.metadata(PUBLIC_ANNOTATION, info || {});
 // export const Property = (name, info) => Reflect.metadata(PROPERTY_ANNOTATION(name), info || {});
 // export const Method = (name, info) => Reflect.metadata(METHOD_ANNOTATION(name), info || {});
 
-export const isDynamicContext = (obj) => is.plainObject(obj[CONTEXTIFY_SYMBOL]);
+export const isDynamicContext = (obj) => ateos.isPlainObject(obj[CONTEXTIFY_SYMBOL]);
 
 export const getNameOfType = (type) => {
-  if (is.nil(type)) {
+  if (ateos.isNil(type)) {
     return "undefined";
   }
   return type.name;
 };
 
 export const detectType = (target, meta) => {
-  if (is.undefined(meta.type)) {
-    if (is.nil(target)) {
+  if (ateos.isUndefined(meta.type)) {
+    if (ateos.isNil(target)) {
       return undefined;
     }
 
-    if (is.boolean(target)) {
+    if (ateos.isBoolean(target)) {
       return Boolean;
-    } else if (is.function(target)) {
+    } else if (ateos.isFunction(target)) {
       return undefined;
-    } else if (is.string(target)) {
+    } else if (ateos.isString(target)) {
       return String;
-    } else if (is.array(target)) {
+    } else if (ateos.isArray(target)) {
       return Array;
-    } else if (is.number(target)) {
+    } else if (ateos.isNumber(target)) {
       return Number;
-    } else if (is.date(target)) {
+    } else if (ateos.isDate(target)) {
       return Date;
-    } else if (is.error(target)) {
+    } else if (ateos.isError(target)) {
       return Error;
-    } else if (is.regexp(target)) {
+    } else if (ateos.isRegexp(target)) {
       return RegExp;
-    } else if (is.map(target)) {
+    } else if (ateos.isMap(target)) {
       return Map;
-    } else if (is.set(target)) {
+    } else if (ateos.isSet(target)) {
       return Set;
-    } else if (is.symbol(target)) {
+    } else if (ateos.isSymbol(target)) {
       return Symbol;
-    } else if (is.promise(target)) {
+    } else if (ateos.isPromise(target)) {
       return Promise;
-    } else if (is.object(target)) {
+    } else if (ateos.isObject(target)) {
       return Object;
     }
   }
@@ -178,7 +178,7 @@ export const detectType = (target, meta) => {
 export const getMethodInfo = (target, meta) => {
   let args;
 
-  if (!is.nil(target) && target.length > 0) {
+  if (!ateos.isNil(target) && target.length > 0) {
     const strFunc = target.toString();
     args = /\(\s*([^)]+?)\s*\)/.exec(strFunc);
     if (args[1]) {
@@ -188,15 +188,15 @@ export const getMethodInfo = (target, meta) => {
     args = [];
   }
 
-  if (!is.nil(meta.args)) {
+  if (!ateos.isNil(meta.args)) {
     for (let i = 0; i < meta.args.length; i++) {
       const argInfo = meta.args[i];
-      if (is.array(argInfo)) {
+      if (ateos.isArray(argInfo)) {
         if (argInfo.length === 1) {
-          if (is.string(argInfo[0])) {
+          if (ateos.isString(argInfo[0])) {
             args[i] = [undefined, argInfo[0]];
           } else {
-            if (is.undefined(args[i])) {
+            if (ateos.isUndefined(args[i])) {
               args[i] = [argInfo[0], undefined];
             } else {
               args[i] = [argInfo[0], args[i]];
@@ -206,10 +206,10 @@ export const getMethodInfo = (target, meta) => {
           args[i] = argInfo;
         }
       } else {
-        if (is.string(argInfo)) {
+        if (ateos.isString(argInfo)) {
           args[i] = [undefined, argInfo];
         } else {
-          if (is.undefined(args[i])) {
+          if (ateos.isUndefined(args[i])) {
             args[i] = [argInfo, undefined];
           } else {
             args[i] = [argInfo, args[i]];
@@ -220,8 +220,8 @@ export const getMethodInfo = (target, meta) => {
   }
 
   for (let i = 0, argIndex = 0; i < args.length; ++i, ++argIndex) {
-    if (is.array(args[i])) {
-      if (is.undefined((args[i])[1])) {
+    if (ateos.isArray(args[i])) {
+      if (ateos.isUndefined((args[i])[1])) {
         (args[i])[1] = `${getNameOfType((args[i])[0]).toLowerCase().substring(0, 3)}Arg${argIndex}`;
       }
     } else {
@@ -241,7 +241,7 @@ export const getPropertyInfo = (target, meta) => {
     description: meta.description,
     type: detectType(target, meta),
     readonly: meta.readonly,
-    default: is.nil(target) ? undefined : target
+    default: ateos.isNil(target) ? undefined : target
   };
 };
 
@@ -286,7 +286,7 @@ export class Reflection {
   }
 
   hasTwin() {
-    return !is.null(this._twin);
+    return !ateos.isNull(this._twin);
   }
 
   getTwin() {
@@ -295,11 +295,11 @@ export class Reflection {
 
   getMethodSignature(name) {
     const meta = this.getMethodMeta(name);
-    if (is.undefined(meta)) {
+    if (ateos.isUndefined(meta)) {
       return null;
     }
     const args = [];
-    if (!is.nil(meta.args)) {
+    if (!ateos.isNil(meta.args)) {
       for (const arg of meta.args) {
         args.push(`<${getNameOfType(arg[0])}> ${arg[1]}`);
       }
@@ -312,7 +312,7 @@ export class Reflection {
   }
 
   getReadonlyProperties() {
-    if (is.undefined(this._readonlyProperties)) {
+    if (ateos.isUndefined(this._readonlyProperties)) {
       this._readonlyProperties = _getEntriesWherePropIs(this.properties, "readonly", true);
     }
     return this._readonlyProperties;
@@ -328,7 +328,7 @@ export class Reflection {
 
   getPropertySignature(name) {
     const meta = this.getPropertyMeta(name);
-    if (is.undefined(meta)) {
+    if (ateos.isUndefined(meta)) {
       return null;
     }
     return `<${getNameOfType(meta.type)}> ${name}`;
@@ -360,41 +360,41 @@ export class Reflection {
   }
 
   _processPropertyMeta(instance, key, value) {
-    if (is.function(value)) {
+    if (ateos.isFunction(value)) {
       const methodInfo = {};
       const methodMeta = Reflect.getMetadata(PUBLIC_ANNOTATION, instance, key);
-      if (!is.undefined(methodMeta)) {
+      if (!ateos.isUndefined(methodMeta)) {
         Object.assign(methodInfo, getMethodInfo(value, methodMeta));
       }
 
       const exMethodMeta = Reflect.getMetadata(METHOD_ANNOTATION(key), this.class);
-      if (!is.undefined(exMethodMeta)) {
+      if (!ateos.isUndefined(exMethodMeta)) {
         ateos.lodash.merge(methodInfo, getMethodInfo(null, exMethodMeta));
       }
 
-      if (!is.undefined(methodMeta) || !is.undefined(exMethodMeta)) {
+      if (!ateos.isUndefined(methodMeta) || !ateos.isUndefined(exMethodMeta)) {
         this.methods.set(key, methodInfo);
       }
     } else {
       const propertyInfo = {};
       const propertyMeta = Reflect.getMetadata(PUBLIC_ANNOTATION, instance, key);
-      if (!is.undefined(propertyMeta)) {
+      if (!ateos.isUndefined(propertyMeta)) {
         Object.assign(propertyInfo, getPropertyInfo(value, propertyMeta));
       }
 
       const exPropertyMeta = Reflect.getMetadata(PROPERTY_ANNOTATION(key), this.class);
-      if (!is.undefined(exPropertyMeta)) {
+      if (!ateos.isUndefined(exPropertyMeta)) {
         ateos.lodash.merge(propertyInfo, getPropertyInfo(null, exPropertyMeta));
       }
 
-      if (is.nil(propertyInfo.readonly)) {
+      if (ateos.isNil(propertyInfo.readonly)) {
         const propDescr = Object.getOwnPropertyDescriptor(instance, key);
-        if (!is.nil(propDescr)) {
+        if (!ateos.isNil(propDescr)) {
           propertyInfo.readonly = !propDescr.writable;
         }
       }
 
-      if (!is.undefined(propertyMeta) || !is.undefined(exPropertyMeta)) {
+      if (!ateos.isUndefined(propertyMeta) || !ateos.isUndefined(exPropertyMeta)) {
         this.properties.set(key, propertyInfo);
       }
     }
@@ -421,14 +421,14 @@ export class Reflection {
   }
 
   static from(instance) {
-    if (!is.netronContext(instance) || is.class(instance)) {
+    if (!is.netronContext(instance) || ateos.isClass(instance)) {
       throw new error.NotValidException(`'${instance.__proto__.constructor.name}' is not valid instance of netron context`);
     }
 
     const r = new Reflection(instance);
     let info;
 
-    if (is.plainObject(instance[CONTEXTIFY_SYMBOL])) {
+    if (ateos.isPlainObject(instance[CONTEXTIFY_SYMBOL])) {
       const meta = buildMeta(instance, instance[CONTEXTIFY_SYMBOL]);
       // delete instance[CONTEXTIFY_SYMBOL];
       info = meta.info;

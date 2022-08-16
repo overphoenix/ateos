@@ -9,9 +9,9 @@ const useLeftMostCallback = -1;
 const useRightMostCallback = -2;
 
 const throwsException = (fake, error, message) => {
-  if (is.function(error)) {
+  if (ateos.isFunction(error)) {
     fake.exceptionCreator = error;
-  } else if (is.string(error)) {
+  } else if (ateos.isString(error)) {
     fake.exceptionCreator = function () {
       const newException = new Error(message || "");
       newException.name = error;
@@ -37,7 +37,7 @@ const behaviors = {
     fake.fakeFn = fn;
   },
   callsArg(fake, pos) {
-    if (!is.number(pos)) {
+    if (!ateos.isNumber(pos)) {
       throw new InvalidArgument("argument index is not number");
     }
 
@@ -48,7 +48,7 @@ const behaviors = {
     fake.callbackAsync = false;
   },
   callsArgOn(fake, pos, context) {
-    if (!is.number(pos)) {
+    if (!ateos.isNumber(pos)) {
       throw new InvalidArgument("argument index is not number");
     }
 
@@ -59,7 +59,7 @@ const behaviors = {
     fake.callbackAsync = false;
   },
   callsArgWith(fake, pos, ...callbackArguments) {
-    if (!is.number(pos)) {
+    if (!ateos.isNumber(pos)) {
       throw new InvalidArgument("argument index is not number");
     }
 
@@ -70,7 +70,7 @@ const behaviors = {
     fake.callbackAsync = false;
   },
   callsArgOnWith(fake, pos, context, ...callbackArguments) {
-    if (!is.number(pos)) {
+    if (!ateos.isNumber(pos)) {
       throw new InvalidArgument("argument index is not number");
     }
 
@@ -133,14 +133,14 @@ const behaviors = {
     fake.fakeFn = undefined;
   },
   returnsArg(fake, pos) {
-    if (!is.number(pos)) {
+    if (!ateos.isNumber(pos)) {
       throw new InvalidArgument("argument index is not number");
     }
 
     fake.returnArgAt = pos;
   },
   throwsArg(fake, pos) {
-    if (!is.number(pos)) {
+    if (!ateos.isNumber(pos)) {
       throw new InvalidArgument("argument index is not number");
     }
 
@@ -161,7 +161,7 @@ const behaviors = {
   },
   rejects(fake, error, message) {
     let reason;
-    if (is.string(error)) {
+    if (ateos.isString(error)) {
       reason = new Exception(message || "");
       reason.name = error;
     } else if (!error) {

@@ -11,7 +11,7 @@ function normalizeInput(input) {
     ret = input;
   } else if (input instanceof Buffer) {
     ret = new Uint8Array(input);
-  } else if (is.string(input)) {
+  } else if (ateos.isString(input)) {
     ret = new Uint8Array(Buffer.from(input, "utf8"));
   } else {
     throw new Error(ERROR_MSG_INPUT);

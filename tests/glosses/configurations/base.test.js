@@ -14,30 +14,30 @@ describe("configuration", "BaseConfig", () => {
     });
 
     it("should have map-like interface", () => {
-        assert.isTrue(is.propertyOwned(proto, "set") && is.function(proto.set));
-        assert.isTrue(is.propertyOwned(proto, "get") && is.function(proto.get));
-        assert.isTrue(is.propertyOwned(proto, "has") && is.function(proto.has));
-        assert.isTrue(is.propertyOwned(proto, "delete") && is.function(proto.delete));
-        assert.isTrue(is.propertyOwned(proto, "keys") && is.function(proto.keys));
-        assert.isTrue(is.propertyOwned(proto, "values") && is.function(proto.values));
-        assert.isTrue(is.propertyOwned(proto, "entries") && is.function(proto.entries));
+        assert.isTrue(ateos.isPropertyOwned(proto, "set") && ateos.isFunction(proto.set));
+        assert.isTrue(ateos.isPropertyOwned(proto, "get") && ateos.isFunction(proto.get));
+        assert.isTrue(ateos.isPropertyOwned(proto, "has") && ateos.isFunction(proto.has));
+        assert.isTrue(ateos.isPropertyOwned(proto, "delete") && ateos.isFunction(proto.delete));
+        assert.isTrue(ateos.isPropertyOwned(proto, "keys") && ateos.isFunction(proto.keys));
+        assert.isTrue(ateos.isPropertyOwned(proto, "values") && ateos.isFunction(proto.values));
+        assert.isTrue(ateos.isPropertyOwned(proto, "entries") && ateos.isFunction(proto.entries));
     });
 
     it("assign/merge methods should be part of interface", () => {
-        assert.isTrue(is.propertyOwned(proto, "assign") && is.function(proto.assign));
-        assert.isTrue(is.propertyOwned(proto, "merge") && is.function(proto.merge));
+        assert.isTrue(ateos.isPropertyOwned(proto, "assign") && ateos.isFunction(proto.assign));
+        assert.isTrue(ateos.isPropertyOwned(proto, "merge") && ateos.isFunction(proto.merge));
     });
 
     it("save/load methods should be abstract", () => {
-        assert.isTrue(is.propertyOwned(proto, "load") && is.function(proto.load));
-        assert.isTrue(is.propertyOwned(proto, "save") && is.function(proto.set));
+        assert.isTrue(ateos.isPropertyOwned(proto, "load") && ateos.isFunction(proto.load));
+        assert.isTrue(ateos.isPropertyOwned(proto, "save") && ateos.isFunction(proto.set));
 
         assert.throws(() => conf.load(), error.NotImplementedException);
         assert.throws(() => conf.save(), error.NotImplementedException);
     });
 
     it("'raw' object should be plain and accessible", () => {
-        assert.isTrue(is.plainObject(conf.raw));
+        assert.isTrue(ateos.isPlainObject(conf.raw));
     });
 
     it("by default config should not have options", () => {
@@ -165,8 +165,8 @@ describe("configuration", "BaseConfig", () => {
 
     it("should get() value of existence key", () => {
         conf.set("a.b.c", 10);
-        assert.isTrue(is.plainObject(conf.get("a")));
-        assert.isTrue(is.plainObject(conf.get("a.b")));
+        assert.isTrue(ateos.isPlainObject(conf.get("a")));
+        assert.isTrue(ateos.isPlainObject(conf.get("a.b")));
         assert.equal(conf.get("a.b.c"), 10);
         assert.isUndefined(conf.get("a.b.c.d"));
 

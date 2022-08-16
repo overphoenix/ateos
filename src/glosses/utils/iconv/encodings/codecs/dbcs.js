@@ -90,17 +90,17 @@ class DBCSEncoder {
 
       // 2. Convert uCode character.
       let dbcsCode = UNASSIGNED;
-      if (!is.undefined(seqObj) && uCode !== UNASSIGNED) { // We are in the middle of the sequence
+      if (!ateos.isUndefined(seqObj) && uCode !== UNASSIGNED) { // We are in the middle of the sequence
         let resCode = seqObj[uCode];
-        if (is.object(resCode)) { // Sequence continues.
+        if (ateos.isObject(resCode)) { // Sequence continues.
           seqObj = resCode;
           continue;
-        } else if (is.number(resCode)) { // Sequence finished. Write it.
+        } else if (ateos.isNumber(resCode)) { // Sequence finished. Write it.
           dbcsCode = resCode;
-        } else if (is.undefined(resCode)) { // Current character is not part of the sequence.
+        } else if (ateos.isUndefined(resCode)) { // Current character is not part of the sequence.
           // Try default character for this sequence
           resCode = seqObj[DEF_CHAR];
-          if (!is.undefined(resCode)) {
+          if (!ateos.isUndefined(resCode)) {
             dbcsCode = resCode; // Found. Write it.
             nextChar = uCode; // Current character will be written too in the next iteration.
 
@@ -114,7 +114,7 @@ class DBCSEncoder {
         seqObj = undefined;
       } else if (uCode >= 0) { // Regular character
         const subtable = this.encodeTable[uCode >> 8];
-        if (!is.undefined(subtable)) {
+        if (!ateos.isUndefined(subtable)) {
           dbcsCode = subtable[uCode & 0xFF];
         }
 
@@ -160,7 +160,7 @@ class DBCSEncoder {
   }
 
   end() {
-    if (this.leadSurrogate === -1 && is.undefined(this.seqObj)) {
+    if (this.leadSurrogate === -1 && ateos.isUndefined(this.seqObj)) {
       // All clean. Most often case.
       return;
     }
@@ -170,7 +170,7 @@ class DBCSEncoder {
 
     if (this.seqObj) { // We're in the sequence.
       const dbcsCode = this.seqObj[DEF_CHAR];
-      if (!is.undefined(dbcsCode)) { // Write beginning of the sequence.
+      if (!ateos.isUndefined(dbcsCode)) { // Write beginning of the sequence.
         if (dbcsCode < 0x100) {
           newBuf[j++] = dbcsCode;
         } else {
@@ -362,7 +362,7 @@ export default class DBCSCodec {
     if (codecOptions.encodeSkipVals) {
       for (let i = 0; i < codecOptions.encodeSkipVals.length; i++) {
         const val = codecOptions.encodeSkipVals[i];
-        if (is.number(val)) {
+        if (ateos.isNumber(val)) {
           skipEncodeChars[val] = true;
         } else {
           for (let j = val.from; j <= val.to; j++) {
@@ -378,7 +378,7 @@ export default class DBCSCodec {
     // Add more encoding pairs when needed.
     if (codecOptions.encodeAdd) {
       for (const uChar in codecOptions.encodeAdd) {
-        if (is.propertyOwned(codecOptions.encodeAdd, uChar)) {
+        if (ateos.isPropertyOwned(codecOptions.encodeAdd, uChar)) {
           this._setEncodeChar(uChar.charCodeAt(0), codecOptions.encodeAdd[uChar]);
         }
       }
@@ -394,7 +394,7 @@ export default class DBCSCodec {
 
 
     // Load & create GB18030 tables when needed.
-    if (is.function(codecOptions.gb18030)) {
+    if (ateos.isFunction(codecOptions.gb18030)) {
       this.gb18030 = codecOptions.gb18030(); // Load GB18030 ranges.
 
       // Add GB18030 decode tables.
@@ -457,7 +457,7 @@ export default class DBCSCodec {
     // Write all other elements of the chunk to the table.
     for (let k = 1; k < chunk.length; k++) {
       const part = chunk[k];
-      if (is.string(part)) { // String, write as-is.
+      if (ateos.isString(part)) { // String, write as-is.
         for (let l = 0; l < part.length;) {
           const code = part.charCodeAt(l++);
           if (code >= 0xD800 && code < 0xDC00) { // Decode surrogate
@@ -480,7 +480,7 @@ export default class DBCSCodec {
             writeTable[curAddr++] = code;
           } // Basic char
         }
-      } else if (is.number(part)) { // Integer, meaning increasing sequence starting with prev character.
+      } else if (ateos.isNumber(part)) { // Integer, meaning increasing sequence starting with prev character.
         let charCode = writeTable[curAddr - 1] + 1;
         for (let l = 0; l < part; l++) {
           writeTable[curAddr++] = charCode++;
@@ -496,7 +496,7 @@ export default class DBCSCodec {
 
   _getEncodeBucket(uCode) {
     const high = uCode >> 8; // This could be > 0xFF because of astral characters.
-    if (is.undefined(this.encodeTable[high])) {
+    if (ateos.isUndefined(this.encodeTable[high])) {
       this.encodeTable[high] = UNASSIGNED_NODE.slice(0);
     } // Create bucket on demand.
     return this.encodeTable[high];
@@ -535,11 +535,11 @@ export default class DBCSCodec {
     // Traverse the character tree, allocating new nodes as needed.
     for (let j = 1; j < seq.length - 1; j++) {
       const oldVal = node[uCode];
-      if (is.object(oldVal)) {
+      if (ateos.isObject(oldVal)) {
         node = oldVal;
       } else {
         node = node[uCode] = {};
-        if (!is.undefined(oldVal)) {
+        if (!ateos.isUndefined(oldVal)) {
           node[DEF_CHAR] = oldVal;
         }
       }

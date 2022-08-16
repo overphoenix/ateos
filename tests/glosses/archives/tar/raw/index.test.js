@@ -183,7 +183,7 @@ describe("archive", "tar", "raw", () => {
 
     describe("unpack", () => {
         const clamp = function (index, len, defaultValue) {
-            if (!is.number(index)) {
+            if (!ateos.isNumber(index)) {
                 return defaultValue;
             }
             index = ~~index; // Coerce to integer.

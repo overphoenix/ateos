@@ -72,7 +72,7 @@ ateos.app.run({
       if (!config.options.dontUseMap && config.mapping) {
         mapping = async (x) => {
           let res = await config.mapping(x);
-          if (!is.array(res)) {
+          if (!ateos.isArray(res)) {
             res = [res];
           }
           return res;
@@ -88,7 +88,7 @@ ateos.app.run({
       }
     }
     if (!inclusive.length) {
-      let tests = is.array(config.options.tests) ? config.options.tests : [config.options.tests];
+      let tests = ateos.isArray(config.options.tests) ? config.options.tests : [config.options.tests];
       const configDir = path.dirname(configPath);
       tests = tests.map((x) => path.resolve(configDir, x));
       engine.include(...tests);
@@ -151,7 +151,7 @@ ateos.app.run({
     await new Promise((resolve) => emitter.once("done", resolve));
     if (printCoverStats) {
       if (ateos.js.coverage.hasStats()) {
-        const filter = is.string(printCoverStats) && printCoverStats;
+        const filter = ateos.isString(printCoverStats) && printCoverStats;
         ateos.js.coverage.printTable(filter && new RegExp(filter));
       } else {
         console.info("[coverage] no data can be shown");

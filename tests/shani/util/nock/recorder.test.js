@@ -111,8 +111,8 @@ describe("shani", "util", "nock", "recorder", () => {
         assert.typeOf(ret, "object");
         assert.equal(ret.scope, `http://localhost:${port}`);
         assert.equal(ret.method, "POST");
-        assert.ok(!is.undefined(ret.status));
-        assert.ok(!is.undefined(ret.response));
+        assert.ok(!ateos.isUndefined(ret.status));
+        assert.ok(!ateos.isUndefined(ret.response));
     });
 
     it("records and replays objects correctly", async () => {
@@ -247,8 +247,8 @@ describe("shani", "util", "nock", "recorder", () => {
         assert.equal(ret.scope, `http://localhost:${port}`);
         assert.equal(ret.method, "POST");
         assert.ok(ret.body && ret.body.a && ret.body.a === payload.a && ret.body.b && ret.body.b === payload.b);
-        assert.ok(!is.undefined(ret.status));
-        assert.ok(!is.undefined(ret.response));
+        assert.ok(!ateos.isUndefined(ret.status));
+        assert.ok(!ateos.isUndefined(ret.response));
     });
 
     it("rec() throws when reenvoked with already recorder requests", () => {
@@ -288,8 +288,8 @@ describe("shani", "util", "nock", "recorder", () => {
         assert.typeOf(ret, "object");
         assert.equal(ret.scope, `https://localhost:${port}`);
         assert.equal(ret.method, "POST");
-        assert.ok(!is.undefined(ret.status));
-        assert.ok(!is.undefined(ret.response));
+        assert.ok(!ateos.isUndefined(ret.status));
+        assert.ok(!ateos.isUndefined(ret.response));
     });
 
     it("records request headers correctly", async () => {
@@ -600,7 +600,7 @@ describe("shani", "util", "nock", "recorder", () => {
                 res.on("readable", () => {
                     ++readableCount;
                     let chunk;
-                    while (!is.null(chunk = res.read())) {
+                    while (!ateos.isNull(chunk = res.read())) {
                         assert.equal(chunk.toString(), RESPONSE_BODY);
                         ++chunkCount;
                     }

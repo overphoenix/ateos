@@ -9,7 +9,7 @@ const includeParents = (dirs, options) => {
   const topPath = [];
   const bottomPath = [];
 
-  if (is.array(options)) {
+  if (ateos.isArray(options)) {
     topLevels = Math.abs(options[0]);
     bottomLevels = Math.abs(options[1]);
   } else if (options >= 0) {
@@ -34,7 +34,7 @@ const includeParents = (dirs, options) => {
 };
 
 const subPath = (dirs, options) => {
-  if (is.array(options)) {
+  if (ateos.isArray(options)) {
     return dirs.slice(options[0], options[1]);
   }
   return dirs.slice(options);

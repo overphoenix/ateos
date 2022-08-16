@@ -21,7 +21,7 @@ class TestApp extends ateos.app.Application {
 
         const props = [];
         for (const [name, value] of ateos.util.entries(this, { followProto: true })) {
-            if (is.function(value)) {
+            if (ateos.isFunction(value)) {
                 continue;
             }
             props.push(name);

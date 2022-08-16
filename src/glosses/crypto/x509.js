@@ -587,13 +587,13 @@ export const CRIAttributesAsArray = function (attributes) {
  * @return the attribute.
  */
 function _getAttribute(obj, options) {
-  if (is.string(options)) {
+  if (ateos.isString(options)) {
     options = { shortName: options };
   }
 
   let rval = null;
   let attr;
-  for (let i = 0; is.null(rval) && i < obj.attributes.length; ++i) {
+  for (let i = 0; ateos.isNull(rval) && i < obj.attributes.length; ++i) {
     attr = obj.attributes[i];
     if (options.type && options.type === attr.type) {
       rval = attr;
@@ -665,19 +665,19 @@ const _readSignatureParameters = function (oid, obj, fillDefaults) {
     throw error;
   }
 
-  if (!is.undefined(capture.hashOid)) {
+  if (!ateos.isUndefined(capture.hashOid)) {
     params.hash = params.hash || {};
     params.hash.algorithmOid = asn1.derToOid(capture.hashOid);
   }
 
-  if (!is.undefined(capture.maskGenOid)) {
+  if (!ateos.isUndefined(capture.maskGenOid)) {
     params.mgf = params.mgf || {};
     params.mgf.algorithmOid = asn1.derToOid(capture.maskGenOid);
     params.mgf.hash = params.mgf.hash || {};
     params.mgf.hash.algorithmOid = asn1.derToOid(capture.maskGenHashOid);
   }
 
-  if (!is.undefined(capture.saltLength)) {
+  if (!ateos.isUndefined(capture.saltLength)) {
     params.saltLength = capture.saltLength.charCodeAt(0);
   }
 
@@ -1002,13 +1002,13 @@ export const createCertificate = function () {
      * @return the extension or null if not found.
      */
   cert.getExtension = function (options) {
-    if (is.string(options)) {
+    if (ateos.isString(options)) {
       options = { name: options };
     }
 
     let rval = null;
     let ext;
-    for (let i = 0; is.null(rval) && i < cert.extensions.length; ++i) {
+    for (let i = 0; ateos.isNull(rval) && i < cert.extensions.length; ++i) {
       ext = cert.extensions[i];
       if (options.id && ext.id === options.id) {
         rval = ext;
@@ -1070,7 +1070,7 @@ export const createCertificate = function () {
     }
 
     let md = child.md;
-    if (is.null(md)) {
+    if (ateos.isNull(md)) {
       // check signature OID for supported signature types
       if (child.signatureOid in oids) {
         const oid = oids[child.signatureOid];
@@ -1095,7 +1095,7 @@ export const createCertificate = function () {
             break;
         }
       }
-      if (is.null(md)) {
+      if (ateos.isNull(md)) {
         var error = new Error("Could not compute certificate digest. " +
                     "Unknown signature OID.");
         error.signatureOid = child.signatureOid;
@@ -1108,7 +1108,7 @@ export const createCertificate = function () {
       md.update(bytes.getBytes());
     }
 
-    if (!is.null(md)) {
+    if (!ateos.isNull(md)) {
       let scheme;
 
       switch (child.signatureOid) {
@@ -1122,7 +1122,7 @@ export const createCertificate = function () {
                      * initialize mgf
                      */
           hash = oids[child.signatureParameters.mgf.hash.algorithmOid];
-          if (is.undefined(hash) || is.undefined(crypto.md[hash])) {
+          if (ateos.isUndefined(hash) || ateos.isUndefined(crypto.md[hash])) {
             var error = new Error("Unsupported MGF hash function.");
             error.oid = child.signatureParameters.mgf.hash.algorithmOid;
             error.name = hash;
@@ -1130,7 +1130,7 @@ export const createCertificate = function () {
           }
 
           mgf = oids[child.signatureParameters.mgf.algorithmOid];
-          if (is.undefined(mgf) || is.undefined(crypto.mgf[mgf])) {
+          if (ateos.isUndefined(mgf) || ateos.isUndefined(crypto.mgf[mgf])) {
             var error = new Error("Unsupported MGF function.");
             error.oid = child.signatureParameters.mgf.algorithmOid;
             error.name = mgf;
@@ -1143,7 +1143,7 @@ export const createCertificate = function () {
                      * initialize hash function
                      */
           hash = oids[child.signatureParameters.hash.algorithmOid];
-          if (is.undefined(hash) || is.undefined(crypto.md[hash])) {
+          if (ateos.isUndefined(hash) || ateos.isUndefined(crypto.md[hash])) {
             throw {
               message: "Unsupported RSASSA-PSS hash function.",
               oid: child.signatureParameters.hash.algorithmOid,
@@ -1303,17 +1303,17 @@ export const certificateFromAsn1 = function (obj, computeHash) {
   cert.signature = capture.certSignature;
 
   const validity = [];
-  if (!is.undefined(capture.certValidity1UTCTime)) {
+  if (!ateos.isUndefined(capture.certValidity1UTCTime)) {
     validity.push(asn1.utcTimeToDate(capture.certValidity1UTCTime));
   }
-  if (!is.undefined(capture.certValidity2GeneralizedTime)) {
+  if (!ateos.isUndefined(capture.certValidity2GeneralizedTime)) {
     validity.push(asn1.generalizedTimeToDate(
       capture.certValidity2GeneralizedTime));
   }
-  if (!is.undefined(capture.certValidity3UTCTime)) {
+  if (!ateos.isUndefined(capture.certValidity3UTCTime)) {
     validity.push(asn1.utcTimeToDate(capture.certValidity3UTCTime));
   }
-  if (!is.undefined(capture.certValidity4GeneralizedTime)) {
+  if (!ateos.isUndefined(capture.certValidity4GeneralizedTime)) {
     validity.push(asn1.generalizedTimeToDate(
       capture.certValidity4GeneralizedTime));
   }
@@ -1357,7 +1357,7 @@ export const certificateFromAsn1 = function (obj, computeHash) {
           break;
       }
     }
-    if (is.null(cert.md)) {
+    if (ateos.isNull(cert.md)) {
       var error = new Error("Could not compute certificate digest. " +
                 "Unknown signature OID.");
       error.signatureOid = cert.signatureOid;
@@ -1545,7 +1545,7 @@ export const certificateExtensionFromAsn1 = function (ext) {
       } else if (ev.value.length > 1) {
         value = ev.value[1].value;
       }
-      if (!is.null(value)) {
+      if (!ateos.isNull(value)) {
         e.pathLenConstraint = asn1.derToInteger(value);
       }
     } else if (e.name === "extKeyUsage") {
@@ -1701,7 +1701,7 @@ export const certificationRequestFromAsn1 = function (obj, computeHash) {
           break;
       }
     }
-    if (is.null(csr.md)) {
+    if (ateos.isNull(csr.md)) {
       var error = new Error("Could not compute certification request digest. " +
                 "Unknown signature OID.");
       error.signatureOid = csr.signatureOid;
@@ -1845,7 +1845,7 @@ export const createCertificationRequest = function () {
     let rval = false;
 
     let md = csr.md;
-    if (is.null(md)) {
+    if (ateos.isNull(md)) {
       // check signature OID for supported signature types
       if (csr.signatureOid in oids) {
         // TODO: create DRY `OID to md` function
@@ -1871,7 +1871,7 @@ export const createCertificationRequest = function () {
             break;
         }
       }
-      if (is.null(md)) {
+      if (ateos.isNull(md)) {
         var error = new Error(
           "Could not compute certification request digest. " +
                     "Unknown signature OID.");
@@ -1885,7 +1885,7 @@ export const createCertificationRequest = function () {
       md.update(bytes.getBytes());
     }
 
-    if (!is.null(md)) {
+    if (!ateos.isNull(md)) {
       let scheme;
 
       switch (csr.signatureOid) {
@@ -1899,7 +1899,7 @@ export const createCertificationRequest = function () {
                      * initialize mgf
                      */
           hash = oids[csr.signatureParameters.mgf.hash.algorithmOid];
-          if (is.undefined(hash) || is.undefined(crypto.md[hash])) {
+          if (ateos.isUndefined(hash) || ateos.isUndefined(crypto.md[hash])) {
             var error = new Error("Unsupported MGF hash function.");
             error.oid = csr.signatureParameters.mgf.hash.algorithmOid;
             error.name = hash;
@@ -1907,7 +1907,7 @@ export const createCertificationRequest = function () {
           }
 
           mgf = oids[csr.signatureParameters.mgf.algorithmOid];
-          if (is.undefined(mgf) || is.undefined(crypto.mgf[mgf])) {
+          if (ateos.isUndefined(mgf) || ateos.isUndefined(crypto.mgf[mgf])) {
             var error = new Error("Unsupported MGF function.");
             error.oid = csr.signatureParameters.mgf.algorithmOid;
             error.name = mgf;
@@ -1920,7 +1920,7 @@ export const createCertificationRequest = function () {
                      * initialize hash function
                      */
           hash = oids[csr.signatureParameters.hash.algorithmOid];
-          if (is.undefined(hash) || is.undefined(crypto.md[hash])) {
+          if (ateos.isUndefined(hash) || ateos.isUndefined(crypto.md[hash])) {
             var error = new Error("Unsupported RSASSA-PSS hash function.");
             error.oid = csr.signatureParameters.hash.algorithmOid;
             error.name = hash;
@@ -2034,7 +2034,7 @@ function _fillMissingFields(attrs) {
     attr = attrs[i];
 
     // populate missing name
-    if (is.undefined(attr.name)) {
+    if (ateos.isUndefined(attr.name)) {
       if (attr.type && attr.type in crypto.pki.oids) {
         attr.name = crypto.pki.oids[attr.type];
       } else if (attr.shortName && attr.shortName in _shortNames) {
@@ -2043,7 +2043,7 @@ function _fillMissingFields(attrs) {
     }
 
     // populate missing type (OID)
-    if (is.undefined(attr.type)) {
+    if (ateos.isUndefined(attr.type)) {
       if (attr.name && attr.name in crypto.pki.oids) {
         attr.type = crypto.pki.oids[attr.name];
       } else {
@@ -2054,7 +2054,7 @@ function _fillMissingFields(attrs) {
     }
 
     // populate missing shortname
-    if (is.undefined(attr.shortName)) {
+    if (ateos.isUndefined(attr.shortName)) {
       if (attr.name && attr.name in _shortNames) {
         attr.shortName = _shortNames[attr.name];
       }
@@ -2073,7 +2073,7 @@ function _fillMissingFields(attrs) {
       }
     }
 
-    if (is.undefined(attr.value)) {
+    if (ateos.isUndefined(attr.value)) {
       var error = new Error("Attribute value not specified.");
       error.attribute = attr;
       throw error;
@@ -2094,14 +2094,14 @@ function _fillMissingExtensionFields(e, options) {
   options = options || {};
 
   // populate missing name
-  if (is.undefined(e.name)) {
+  if (ateos.isUndefined(e.name)) {
     if (e.id && e.id in crypto.pki.oids) {
       e.name = crypto.pki.oids[e.id];
     }
   }
 
   // populate missing id
-  if (is.undefined(e.id)) {
+  if (ateos.isUndefined(e.id)) {
     if (e.name && e.name in crypto.pki.oids) {
       e.id = crypto.pki.oids[e.name];
     } else {
@@ -2111,7 +2111,7 @@ function _fillMissingExtensionFields(e, options) {
     }
   }
 
-  if (!is.undefined(e.value)) {
+  if (!ateos.isUndefined(e.value)) {
     return e;
   }
 
@@ -2260,7 +2260,7 @@ function _fillMissingExtensionFields(e, options) {
       // handle IP
       if (altName.type === 7 && altName.ip) {
         value = crypto.util.bytesFromIP(altName.ip);
-        if (is.null(value)) {
+        if (ateos.isNull(value)) {
           var error = new Error(
             'Extension "ip" value is not a valid IPv4 or IPv6 address.');
           error.extension = e;
@@ -2342,7 +2342,7 @@ function _fillMissingExtensionFields(e, options) {
       // handle IP
       if (altName.type === 7 && altName.ip) {
         value = crypto.util.bytesFromIP(altName.ip);
-        if (is.null(value)) {
+        if (ateos.isNull(value)) {
           var error = new Error(
             'Extension "ip" value is not a valid IPv4 or IPv6 address.');
           error.extension = e;
@@ -2369,7 +2369,7 @@ function _fillMissingExtensionFields(e, options) {
   }
 
   // ensure value has been defined by now
-  if (is.undefined(e.value)) {
+  if (ateos.isUndefined(e.value)) {
     var error = new Error("Extension value not specified.");
     error.extension = e;
     throw error;
@@ -2390,7 +2390,7 @@ function _signatureParametersToAsn1(oid, params) {
     case oids["RSASSA-PSS"]:
       var parts = [];
 
-      if (!is.undefined(params.hash.algorithmOid)) {
+      if (!ateos.isUndefined(params.hash.algorithmOid)) {
         parts.push(asn1.create(asn1.Class.CONTEXT_SPECIFIC, 0, true, [
           asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
             asn1.create(asn1.Class.UNIVERSAL, asn1.Type.OID, false,
@@ -2400,7 +2400,7 @@ function _signatureParametersToAsn1(oid, params) {
         ]));
       }
 
-      if (!is.undefined(params.mgf.algorithmOid)) {
+      if (!ateos.isUndefined(params.mgf.algorithmOid)) {
         parts.push(asn1.create(asn1.Class.CONTEXT_SPECIFIC, 1, true, [
           asn1.create(asn1.Class.UNIVERSAL, asn1.Type.SEQUENCE, true, [
             asn1.create(asn1.Class.UNIVERSAL, asn1.Type.OID, false,
@@ -2414,7 +2414,7 @@ function _signatureParametersToAsn1(oid, params) {
         ]));
       }
 
-      if (!is.undefined(params.saltLength)) {
+      if (!ateos.isUndefined(params.saltLength)) {
         parts.push(asn1.create(asn1.Class.CONTEXT_SPECIFIC, 2, true, [
           asn1.create(asn1.Class.UNIVERSAL, asn1.Type.INTEGER, false,
             asn1.integerToDer(params.saltLength).getBytes())
@@ -2695,7 +2695,7 @@ export const certificateExtensionToAsn1 = function (ext) {
   }
 
   let value = ext.value;
-  if (!is.string(ext.value)) {
+  if (!ateos.isString(ext.value)) {
     // value is asn.1
     value = asn1.toDer(value).getBytes();
   }
@@ -2783,7 +2783,7 @@ export const createCaStore = function (certs) {
      */
   caStore.addCertificate = function (cert) {
     // convert from pem if necessary
-    if (is.string(cert)) {
+    if (ateos.isString(cert)) {
       cert = crypto.pki.certificateFromPem(cert);
     }
 
@@ -2814,7 +2814,7 @@ export const createCaStore = function (certs) {
      */
   caStore.hasCertificate = function (cert) {
     // convert from pem if necessary
-    if (is.string(cert)) {
+    if (ateos.isString(cert)) {
       cert = crypto.pki.certificateFromPem(cert);
     }
 
@@ -2873,7 +2873,7 @@ export const createCaStore = function (certs) {
     let result;
 
     // convert from pem if necessary
-    if (is.string(cert)) {
+    if (ateos.isString(cert)) {
       cert = crypto.pki.certificateFromPem(cert);
     }
     ensureSubjectHasHash(cert.subject);
@@ -3105,7 +3105,7 @@ export const verifyCertificateChain = function (caStore, chain, options) {
   // if a verify callback is passed as the third parameter, package it within
   // the options object. This is to support a legacy function signature that
   // expected the verify callback as the third parameter.
-  if (is.function(options)) {
+  if (ateos.isFunction(options)) {
     options = { verify: options };
   }
   options = options || {};
@@ -3119,7 +3119,7 @@ export const verifyCertificateChain = function (caStore, chain, options) {
   // if no validityCheckDate is specified, default to the current date. Make
   // sure to maintain the value null because it indicates that the validity
   // period should not be checked.
-  if (is.undefined(validityCheckDate)) {
+  if (ateos.isUndefined(validityCheckDate)) {
     validityCheckDate = new Date();
   }
 
@@ -3150,9 +3150,9 @@ export const verifyCertificateChain = function (caStore, chain, options) {
     }
 
     // 2. verify with parent from chain or CA store
-    if (is.null(error)) {
+    if (ateos.isNull(error)) {
       parent = chain[0] || caStore.getIssuer(cert);
-      if (is.null(parent)) {
+      if (ateos.isNull(parent)) {
         // check for self-signed cert
         if (cert.isIssuer(cert)) {
           selfSigned = true;
@@ -3193,7 +3193,7 @@ export const verifyCertificateChain = function (caStore, chain, options) {
         }
       }
 
-      if (is.null(error) && (!parent || selfSigned) &&
+      if (ateos.isNull(error) && (!parent || selfSigned) &&
                 !caStore.hasCertificate(cert)) {
         // no parent issuer and certificate itself is not trusted
         error = {
@@ -3206,7 +3206,7 @@ export const verifyCertificateChain = function (caStore, chain, options) {
     // TODO: 3. check revoked
 
     // 4. check for matching issuer/subject
-    if (is.null(error) && parent && !cert.isIssuer(parent)) {
+    if (ateos.isNull(error) && parent && !cert.isIssuer(parent)) {
       // parent is not issuer
       error = {
         message: "Certificate issuer is invalid.",
@@ -3219,13 +3219,13 @@ export const verifyCertificateChain = function (caStore, chain, options) {
     // 6. TODO: check names against excluded names tree
 
     // 7. check for unsupported critical extensions
-    if (is.null(error)) {
+    if (ateos.isNull(error)) {
       // supported extensions
       const se = {
         keyUsage: true,
         basicConstraints: true
       };
-      for (let i = 0; is.null(error) && i < cert.extensions.length; ++i) {
+      for (let i = 0; ateos.isNull(error) && i < cert.extensions.length; ++i) {
         const ext = cert.extensions[i];
         if (ext.critical && !(ext.name in se)) {
           error = {
@@ -3239,15 +3239,15 @@ export const verifyCertificateChain = function (caStore, chain, options) {
 
     // 8. check for CA if cert is not first or is the only certificate
     // remaining in chain with no parent or is self-signed
-    if (is.null(error) &&
+    if (ateos.isNull(error) &&
             (!first || (chain.length === 0 && (!parent || selfSigned)))) {
       // first check keyUsage extension and then basic constraints
       const bcExt = cert.getExtension("basicConstraints");
       const keyUsageExt = cert.getExtension("keyUsage");
-      if (!is.null(keyUsageExt)) {
+      if (!ateos.isNull(keyUsageExt)) {
         // keyCertSign must be true and there must be a basic
         // constraints extension
-        if (!keyUsageExt.keyCertSign || is.null(bcExt)) {
+        if (!keyUsageExt.keyCertSign || ateos.isNull(bcExt)) {
           // bad certificate
           error = {
             message:
@@ -3261,7 +3261,7 @@ export const verifyCertificateChain = function (caStore, chain, options) {
         }
       }
       // basic constraints cA flag must be set
-      if (is.null(error) && !is.null(bcExt) && !bcExt.cA) {
+      if (ateos.isNull(error) && !ateos.isNull(bcExt) && !bcExt.cA) {
         // bad certificate
         error = {
           message:
@@ -3273,7 +3273,7 @@ export const verifyCertificateChain = function (caStore, chain, options) {
       // if error is not null and keyUsage is available, then we know it
       // has keyCertSign and there is a basic constraints extension too,
       // which means we can check pathLenConstraint (if it exists)
-      if (is.null(error) && !is.null(keyUsageExt) &&
+      if (ateos.isNull(error) && !ateos.isNull(keyUsageExt) &&
                 "pathLenConstraint" in bcExt) {
         // pathLen is the maximum # of intermediate CA certs that can be
         // found between the current certificate and the end-entity (depth 0)
@@ -3292,7 +3292,7 @@ export const verifyCertificateChain = function (caStore, chain, options) {
     }
 
     // call application callback
-    const vfd = (is.null(error)) ? true : error.error;
+    const vfd = (ateos.isNull(error)) ? true : error.error;
     const ret = options.verify ? options.verify(vfd, depth, certs) : vfd;
     if (ret === true) {
       // clear any set error
@@ -3316,7 +3316,7 @@ export const verifyCertificateChain = function (caStore, chain, options) {
           if (ret.error) {
             error.error = ret.error;
           }
-        } else if (is.string(ret)) {
+        } else if (ateos.isString(ret)) {
           // set custom error
           error.error = ret;
         }

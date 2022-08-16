@@ -38,7 +38,7 @@ internals.Object = class extends Any {
       };
     };
 
-    if (is.string(value) &&
+    if (ateos.isString(value) &&
             options.convert) {
 
       value = internals.safeParse(value);
@@ -47,7 +47,7 @@ internals.Object = class extends Any {
     const type = this._flags.func ? "function" : "object";
     if (!value ||
             typeof value !== type ||
-            is.array(value)) {
+            ateos.isArray(value)) {
 
       errors.push(this.createError(`${type}.base`, null, state, options));
       return finish();
@@ -102,7 +102,7 @@ internals.Object = class extends Any {
           }
         }
 
-        const allUndefined = matchedTargetKeys.every((key) => is.undefined(target[key]));
+        const allUndefined = matchedTargetKeys.every((key) => ateos.isUndefined(target[key]));
         if (rename.options.ignoreUndefined && allUndefined) {
           continue;
         }
@@ -140,7 +140,7 @@ internals.Object = class extends Any {
           }
         }
       } else {
-        if (rename.options.ignoreUndefined && is.undefined(target[rename.from])) {
+        if (rename.options.ignoreUndefined && ateos.isUndefined(target[rename.from])) {
           continue;
         }
 
@@ -163,7 +163,7 @@ internals.Object = class extends Any {
           }
         }
 
-        if (is.undefined(target[rename.from])) {
+        if (ateos.isUndefined(target[rename.from])) {
           delete target[rename.to];
         } else {
           target[rename.to] = target[rename.from];
@@ -207,10 +207,10 @@ internals.Object = class extends Any {
             return finish();
           }
         } else {
-          if (child.schema._flags.strip || (is.undefined(result.value) && result.value !== item)) {
+          if (child.schema._flags.strip || (ateos.isUndefined(result.value) && result.value !== item)) {
             stripProps.push(key);
             target[key] = result.finalValue;
-          } else if (!is.undefined(result.value)) {
+          } else if (!ateos.isUndefined(result.value)) {
             target[key] = result.value;
           }
         }
@@ -275,13 +275,13 @@ internals.Object = class extends Any {
           if (stripUnknown) {
             delete target[key];
             unprocessed.delete(key);
-          } else if (is.function(target[key])) {
+          } else if (ateos.isFunction(target[key])) {
             unprocessed.delete(key);
           }
         }
       }
 
-      if ((!is.undefined(this._flags.allowUnknown) ? !this._flags.allowUnknown : !options.allowUnknown)) {
+      if ((!ateos.isUndefined(this._flags.allowUnknown) ? !this._flags.allowUnknown : !options.allowUnknown)) {
 
         for (const unprocessedKey of unprocessed) {
           errors.push(this.createError("object.allowUnknown", { child: unprocessedKey }, {
@@ -296,7 +296,7 @@ internals.Object = class extends Any {
 
     for (let i = 0; i < this._inner.dependencies.length; ++i) {
       const dep = this._inner.dependencies[i];
-      const err = internals[dep.type].call(this, !is.null(dep.key) && target[dep.key], dep.peers, target, { key: dep.key, path: is.null(dep.key) ? state.path : state.path.concat(dep.key) }, options);
+      const err = internals[dep.type].call(this, !ateos.isNull(dep.key) && target[dep.key], dep.peers, target, { key: dep.key, path: ateos.isNull(dep.key) ? state.path : state.path.concat(dep.key) }, options);
       if (err instanceof Err) {
         errors.push(err);
         if (options.abortEarly) {
@@ -309,7 +309,7 @@ internals.Object = class extends Any {
   }
 
   keys(schema) {
-    assert(is.nil(schema) || typeof schema === "object", "Object schema must be a valid object");
+    assert(ateos.isNil(schema) || typeof schema === "object", "Object schema must be a valid object");
     assert(!schema || !(schema instanceof Any), "Object schema cannot be a joi schema");
 
     const obj = this.clone();
@@ -361,7 +361,7 @@ internals.Object = class extends Any {
 
   append(schema) {
     // Skip any changes
-    if (is.nil(schema) || Object.keys(schema).length === 0) {
+    if (ateos.isNil(schema) || Object.keys(schema).length === 0) {
       return this;
     }
 
@@ -426,7 +426,7 @@ internals.Object = class extends Any {
   pattern(pattern, schema) {
     const isRegExp = pattern instanceof RegExp;
     assert(isRegExp || pattern instanceof Any, "Pattern must be a regex or schema");
-    assert(!is.undefined(schema), "Invalid rule");
+    assert(!ateos.isUndefined(schema), "Invalid rule");
 
     if (isRegExp) {
       pattern = new RegExp(pattern.source, pattern.ignoreCase ? "i" : undefined); // Future version should break this and forbid unsupported regex flags
@@ -522,8 +522,8 @@ internals.Object = class extends Any {
 
   rename(from, to, options) {
 
-    assert(is.string(from) || from instanceof RegExp, "Rename missing the from argument");
-    assert(is.string(to), "Rename missing the to argument");
+    assert(ateos.isString(from) || from instanceof RegExp, "Rename missing the from argument");
+    assert(ateos.isString(to), "Rename missing the to argument");
     assert(to !== from, `Cannot rename key to same name: ${from}`);
 
     for (let i = 0; i < this._inner.renames.length; ++i) {
@@ -586,7 +586,7 @@ internals.Object = class extends Any {
 
     peers = [].concat(peers);
     for (let i = 0; i < peers.length; ++i) {
-      assert(is.string(peers[i]), type, "peers must be a string or array of strings");
+      assert(ateos.isString(peers[i]), type, "peers must be a string or array of strings");
     }
 
     const obj = this.clone();
@@ -683,7 +683,7 @@ internals.Object = class extends Any {
 
   type(constructor, name = constructor.name) {
 
-    assert(is.function(constructor), "type must be a constructor function");
+    assert(ateos.isFunction(constructor), "type must be a constructor function");
     const typeData = {
       name,
       ctor: constructor
@@ -725,7 +725,7 @@ internals.groupChildren = function (children) {
 
   for (let i = 0; i < children.length; ++i) {
     const child = children[i];
-    assert(is.string(child), "children must be strings");
+    assert(ateos.isString(child), "children must be strings");
     const group = child.split(".")[0];
     const childGroup = grouped[group] = (grouped[group] || []);
     childGroup.push(child.substring(group.length + 1));
@@ -749,7 +749,7 @@ internals.keysToLabels = function (schema, keys) {
     return matchingChild ? matchingChild.schema._getLabel(key) : key;
   };
 
-  if (is.array(keys)) {
+  if (ateos.isArray(keys)) {
     return keys.map(findLabel);
   }
 
@@ -759,14 +759,14 @@ internals.keysToLabels = function (schema, keys) {
 
 internals.with = function (value, peers, parent, state, options) {
 
-  if (is.undefined(value)) {
+  if (ateos.isUndefined(value)) {
     return value;
   }
 
   for (let i = 0; i < peers.length; ++i) {
     const peer = peers[i];
     if (!Object.prototype.hasOwnProperty.call(parent, peer) ||
-            is.undefined(parent[peer])) {
+            ateos.isUndefined(parent[peer])) {
 
       return this.createError("object.with", {
         main: state.key,
@@ -783,14 +783,14 @@ internals.with = function (value, peers, parent, state, options) {
 
 internals.without = function (value, peers, parent, state, options) {
 
-  if (is.undefined(value)) {
+  if (ateos.isUndefined(value)) {
     return value;
   }
 
   for (let i = 0; i < peers.length; ++i) {
     const peer = peers[i];
     if (Object.prototype.hasOwnProperty.call(parent, peer) &&
-            !is.undefined(parent[peer])) {
+            !ateos.isUndefined(parent[peer])) {
 
       return this.createError("object.without", {
         main: state.key,
@@ -811,7 +811,7 @@ internals.xor = function (value, peers, parent, state, options) {
   for (let i = 0; i < peers.length; ++i) {
     const peer = peers[i];
     if (Object.prototype.hasOwnProperty.call(parent, peer) &&
-            !is.undefined(parent[peer])) {
+            !ateos.isUndefined(parent[peer])) {
 
       present.push(peer);
     }
@@ -836,7 +836,7 @@ internals.or = function (value, peers, parent, state, options) {
   for (let i = 0; i < peers.length; ++i) {
     const peer = peers[i];
     if (Object.prototype.hasOwnProperty.call(parent, peer) &&
-            !is.undefined(parent[peer])) {
+            !ateos.isUndefined(parent[peer])) {
       return value;
     }
   }
@@ -856,7 +856,7 @@ internals.and = function (value, peers, parent, state, options) {
   for (let i = 0; i < count; ++i) {
     const peer = peers[i];
     if (!Object.prototype.hasOwnProperty.call(parent, peer) ||
-            is.undefined(parent[peer])) {
+            ateos.isUndefined(parent[peer])) {
 
       missing.push(peer);
     } else {
@@ -884,7 +884,7 @@ internals.nand = function (value, peers, parent, state, options) {
   for (let i = 0; i < peers.length; ++i) {
     const peer = peers[i];
     if (Object.prototype.hasOwnProperty.call(parent, peer) &&
-            !is.undefined(parent[peer])) {
+            !ateos.isUndefined(parent[peer])) {
 
       present.push(peer);
     }

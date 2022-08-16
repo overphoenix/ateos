@@ -2308,7 +2308,7 @@ const addressIs = (addressString, descriptors) => {
 
 const loadJsonBatch = (addresses, classes, noMerge) => {
     addresses.forEach((address) => {
-        if (is.undefined(address.conditions) || !address.conditions.length || noMerge) {
+        if (ateos.isUndefined(address.conditions) || !address.conditions.length || noMerge) {
             address.conditions = classes;
         } else {
             address.conditions = address.conditions.concat(classes);

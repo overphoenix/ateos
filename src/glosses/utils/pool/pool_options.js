@@ -45,20 +45,20 @@ export default class PoolOptions {
 
     opts = opts || {};
 
-    this.fifo = is.boolean(opts.fifo) ? opts.fifo : poolDefaults.fifo;
+    this.fifo = ateos.isBoolean(opts.fifo) ? opts.fifo : poolDefaults.fifo;
     this.priorityRange = opts.priorityRange || poolDefaults.priorityRange;
 
     this.testOnBorrow =
-            is.boolean(opts.testOnBorrow)
+            ateos.isBoolean(opts.testOnBorrow)
               ? opts.testOnBorrow
               : poolDefaults.testOnBorrow;
     this.testOnReturn =
-            is.boolean(opts.testOnReturn)
+            ateos.isBoolean(opts.testOnReturn)
               ? opts.testOnReturn
               : poolDefaults.testOnReturn;
 
     this.autostart =
-            is.boolean(opts.autostart)
+            ateos.isBoolean(opts.autostart)
               ? opts.autostart
               : poolDefaults.autostart;
 
@@ -85,6 +85,6 @@ export default class PoolOptions {
     this.idleTimeoutMillis =
             opts.idleTimeoutMillis || poolDefaults.idleTimeoutMillis;
 
-    this.Promise = !is.nil(opts.Promise) ? opts.Promise : poolDefaults.Promise;
+    this.Promise = !ateos.isNil(opts.Promise) ? opts.Promise : poolDefaults.Promise;
   }
 }

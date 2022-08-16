@@ -1,5 +1,4 @@
 const {
-  is,
   error,
   app: {
     Subsystem,
@@ -11,7 +10,7 @@ const {
 
 const getOwnPropertyDescriptor = (obj, propName) => {
   let descr = Object.getOwnPropertyDescriptor(obj, propName);
-  if (!is.undefined(descr)) {
+  if (!ateos.isUndefined(descr)) {
     return descr;
   }
 
@@ -21,7 +20,7 @@ const getOwnPropertyDescriptor = (obj, propName) => {
       return undefined;
     }
     descr = Object.getOwnPropertyDescriptor(o, propName);
-    if (!is.undefined(descr)) {
+    if (!ateos.isUndefined(descr)) {
       return descr;
     }
     o = o.__proto__;
@@ -67,7 +66,7 @@ const cutNamespace = (parts) => {
   // const parts = name.split(".");
 
   do {
-    if (parts[0].startsWith(".") || !is.namespace(get(global, [...namespaceParts, parts[0]]))) {
+    if (parts[0].startsWith(".") || !ateos.isNamespace(get(global, [...namespaceParts, parts[0]]))) {
       break;
     }
     namespaceParts.push(parts.shift());
@@ -257,7 +256,7 @@ export default ({ globals: globals_ } = {}) => class InspectionCommand extends S
         let obj = ns;
         for (const part of parts) {
           const propDescr = getOwnPropertyDescriptor(obj, part);
-          if (is.undefined(propDescr)) {
+          if (ateos.isUndefined(propDescr)) {
             throw new error.UnknownException(`Unknown object: ${name}`);
           }
           obj = obj[part];
@@ -274,7 +273,8 @@ export default ({ globals: globals_ } = {}) => class InspectionCommand extends S
 
       return 0;
     } catch (err) {
-      ateos.log.bright.red.error.noLocate(err);
+      console.error(err);
+      // ateos.log.bright.red.error.noLocate(err);
       return 1;
     }
   }

@@ -4,14 +4,14 @@ const {
 } = ateos;
 
 export default (ms, opts) => {
-  if (!is.finite(ms)) {
+  if (!ateos.isFinite(ms)) {
     throw new TypeError(`${ms} is not finite number`);
   }
 
   opts = opts || {};
 
   if (ms < 1000) {
-    const msDecimalDigits = is.number(opts.msDecimalDigits) ? opts.msDecimalDigits : 0;
+    const msDecimalDigits = ateos.isNumber(opts.msDecimalDigits) ? opts.msDecimalDigits : 0;
     return (msDecimalDigits ? ms.toFixed(msDecimalDigits) : Math.ceil(ms)) + (opts.verbose ? ` ${pluralizeWord("millisecond", Math.ceil(ms))}` : "ms");
   }
 
@@ -39,7 +39,7 @@ export default (ms, opts) => {
   }
 
   const sec = ms / 1000 % 60;
-  const secDecimalDigits = is.number(opts.secDecimalDigits) ? opts.secDecimalDigits : 1;
+  const secDecimalDigits = ateos.isNumber(opts.secDecimalDigits) ? opts.secDecimalDigits : 1;
   const secStr = sec.toFixed(secDecimalDigits).replace(/\.0$/, "");
   add(sec, "second", "s", secStr);
 

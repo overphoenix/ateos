@@ -30,7 +30,7 @@ describe("shani", "util", "stub", () => {
     });
 
     it("throws a readable error if stubbing Symbol on null", () => {
-        if (is.function(Symbol)) {
+        if (ateos.isFunction(Symbol)) {
             assert.throws(
                 () => {
                     createStub(null, Symbol());
@@ -431,7 +431,7 @@ describe("shani", "util", "stub", () => {
             assert.equal(instance.stub(), instance);
         });
 
-        const strictMode = is.undefined(function () {
+        const strictMode = ateos.isUndefined(function () {
             return this;
         }());
         if (strictMode) {
@@ -1469,7 +1469,7 @@ describe("shani", "util", "stub", () => {
         });
 
         it("throws understandable error if failing to yield callback by symbol", () => {
-            if (is.function(Symbol)) {
+            if (ateos.isFunction(Symbol)) {
                 const symbol = Symbol();
 
                 const stub = createStub().yieldsTo(symbol);

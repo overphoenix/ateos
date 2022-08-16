@@ -7,7 +7,7 @@ const has = Object.prototype.hasOwnProperty;
 const arrayToObject = (source, options) => {
   const obj = options && options.plainObjects ? Object.create(null) : {};
   for (let i = 0; i < source.length; ++i) {
-    if (!is.undefined(source[i])) {
+    if (!ateos.isUndefined(source[i])) {
       obj[i] = source[i];
     }
   }
@@ -20,10 +20,10 @@ export default function merge(target, source, options) {
     return target;
   }
 
-  if (!is.object(source)) {
-    if (is.array(target)) {
+  if (!ateos.isObject(source)) {
+    if (ateos.isArray(target)) {
       target.push(source);
-    } else if (is.object(target)) {
+    } else if (ateos.isObject(target)) {
       if (options.plainObjects || options.allowPrototypes || !has.call(Object.prototype, source)) {
         target[source] = true;
       }
@@ -34,19 +34,19 @@ export default function merge(target, source, options) {
     return target;
   }
 
-  if (!is.object(target)) {
+  if (!ateos.isObject(target)) {
     return [target].concat(source);
   }
 
   let mergeTarget = target;
-  if (is.array(target) && !is.array(source)) {
+  if (ateos.isArray(target) && !ateos.isArray(source)) {
     mergeTarget = arrayToObject(target, options);
   }
 
-  if (is.array(target) && is.array(source)) {
+  if (ateos.isArray(target) && ateos.isArray(source)) {
     source.forEach((item, i) => {
       if (has.call(target, i)) {
-        if (target[i] && is.object(target[i])) {
+        if (target[i] && ateos.isObject(target[i])) {
           target[i] = merge(target[i], item, options);
         } else {
           target.push(item);

@@ -75,11 +75,11 @@ const readConfig = (cwd, ts, fileExists, readFile, options) => {
   delete config.options.tsBuildInfoFile;
   delete config.options.incremental;
   // Target ES5 output by default (instead of ES3).
-  if (is.undefined(config.options.target)) {
+  if (ateos.isUndefined(config.options.target)) {
     config.options.target = ts.ScriptTarget.ES5;
   }
   // Target CommonJS modules by default (instead of magically switching to ES6 when the target is ES6).
-  if (is.undefined(config.options.module)) {
+  if (ateos.isUndefined(config.options.module)) {
     config.options.module = ts.ModuleKind.CommonJS;
   }
   return config;
@@ -258,14 +258,14 @@ export class TypeScriptManager {
         getScriptFileNames: () => memoryCache.rootFileNames,
         getScriptVersion: (fileName) => {
           const version = memoryCache.fileVersions.get(fileName);
-          return is.undefined(version) ? "" : version.toString();
+          return ateos.isUndefined(version) ? "" : version.toString();
         },
         getScriptSnapshot(fileName) {
           let contents = memoryCache.fileContents.get(fileName);
           // Read contents into TypeScript memory cache.
-          if (is.undefined(contents)) {
+          if (ateos.isUndefined(contents)) {
             contents = readFile(fileName);
-            if (is.undefined(contents)) {
+            if (ateos.isUndefined(contents)) {
               return;
             }
             memoryCache.fileVersions.set(fileName, 1);
@@ -404,7 +404,7 @@ export class TypeScriptManager {
       throw error;
     }
     if (print) {
-      console.log(is.string(result) ? result : util.inspect(result));
+      console.log(ateos.isString(result) ? result : util.inspect(result));
     }
   }
 

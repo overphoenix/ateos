@@ -44,10 +44,10 @@ const getEpoch = (epoch) => {
   if (!epoch) {
     return 0;
   }
-  if (is.function(epoch.getTime)) {
+  if (ateos.isFunction(epoch.getTime)) {
     return epoch.getTime();
   }
-  if (is.number(epoch)) {
+  if (ateos.isNumber(epoch)) {
     return epoch;
   }
   throw new error.InvalidArgumentException("now should be milliseconds since UNIX epoch");
@@ -147,7 +147,7 @@ const runJobs = (clock) => {
 };
 
 const addTimer = (clock, timer) => {
-  if (is.undefined(timer.func)) {
+  if (ateos.isUndefined(timer.func)) {
     throw new Error("Callback must be provided to timer calls");
   }
 
@@ -261,13 +261,13 @@ const lastTimer = (clock) => {
 };
 
 const callTimer = (clock, timer) => {
-  if (is.number(timer.interval)) {
+  if (ateos.isNumber(timer.interval)) {
     clock.timers[timer.id].callAt += timer.interval;
   } else {
     delete clock.timers[timer.id];
   }
 
-  if (is.function(timer.func)) {
+  if (ateos.isFunction(timer.func)) {
     timer.func.apply(null, timer.args);
   } else {
     /* eslint no-eval: "off" */
@@ -385,7 +385,7 @@ export const createClock = (start, loopLimit) => {
   };
 
   clock.tick = (ms) => {
-    ms = is.number(ms) ? ms : parseTime(ms);
+    ms = ateos.isNumber(ms) ? ms : parseTime(ms);
     let tickFrom = clock.now;
     let tickTo = clock.now + ms;
     let previous = clock.now;
@@ -530,7 +530,7 @@ export const createClock = (start, loopLimit) => {
   };
 
   clock.hrtime = function (prev) {
-    if (is.array(prev)) {
+    if (ateos.isArray(prev)) {
       const oldSecs = (prev[0] + prev[1] / 1e9);
       const newSecs = (clock.hrNow / 1000);
       const difference = (newSecs - oldSecs);
@@ -558,17 +558,17 @@ export const install = (...args) => {
   let shouldAdvanceTime = false;
   let advanceTimeDelta = 20;
 
-  if (is.number(args[0])) {
+  if (ateos.isNumber(args[0])) {
     now = args.shift();
-  } else if (is.date(args[0])) {
+  } else if (ateos.isDate(args[0])) {
     now = args[0].getTime();
   }
 
-  if (is.string(args[0])) {
+  if (ateos.isString(args[0])) {
     methods = args;
-  } else if (is.array(args[0])) {
+  } else if (ateos.isArray(args[0])) {
     methods = args[0];
-  } else if (is.plainObject(args[0])) {
+  } else if (ateos.isPlainObject(args[0])) {
     ({
       target = null,
       now = now,
@@ -630,11 +630,11 @@ export const install = (...args) => {
 
   for (let i = 0; i < clock.methods.length; i++) {
     if (clock.methods[i] === "hrtime") {
-      if (target.process && is.function(target.process.hrtime)) {
+      if (target.process && ateos.isFunction(target.process.hrtime)) {
         hijackMethod(target.process, clock.methods[i], clock);
       }
     } else if (clock.methods[i] === "nextTick") {
-      if (target.process && is.function(target.process.nextTick)) {
+      if (target.process && ateos.isFunction(target.process.nextTick)) {
         hijackMethod(target.process, clock.methods[i], clock);
       }
     } else {

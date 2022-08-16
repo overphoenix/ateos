@@ -14,7 +14,7 @@ export default class InterfaceFactory {
   create(def, peer) {
     const defId = def.id;
     let iInstance = peer._getInterface(defId);
-    if (!is.undefined(iInstance)) {
+    if (!ateos.isUndefined(iInstance)) {
       return iInstance;
     }
 
@@ -53,15 +53,15 @@ export default class InterfaceFactory {
 
     iInstance = new XInterface(def, peerId);
 
-    // if (!is.undefined(def.twin)) {
+    // if (!ateos.isUndefined(def.twin)) {
     //     let twinCode;
-    //     if (!is.string(def.twin) && is.string(def.twin.node)) {
+    //     if (!ateos.isString(def.twin) && ateos.isString(def.twin.node)) {
     //         twinCode = def.twin.node;
     //     } else {
     //         twinCode = def.twin;
     //     }
 
-    //     if (is.string(twinCode)) {
+    //     if (ateos.isString(twinCode)) {
     //         const wrappedCode = `
     //             (function() {
     //                 return ${twinCode};
@@ -92,7 +92,7 @@ export default class InterfaceFactory {
     //     }
     // } else if (this._localTwins.has(def.name)) {
     //     const TwinInterface = this._localTwins.get(def.name);
-    //     if (!is.undefined(TwinInterface)) {
+    //     if (!ateos.isUndefined(TwinInterface)) {
     //         class XTwin extends TwinInterface { }
     //         const twinProto = XTwin.prototype;
     //         const twinMethods = util.keys(twinProto, { all: true });
@@ -131,7 +131,7 @@ export default class InterfaceFactory {
   }
 
   _processArgs(peerId, args, isMethod) {
-    if (isMethod && is.array(args)) {
+    if (isMethod && ateos.isArray(args)) {
       for (let i = 0; i < args.length; ++i) {
         args[i] = this._processObject(peerId, args[i]);
       }

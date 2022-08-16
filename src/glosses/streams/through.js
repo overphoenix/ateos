@@ -30,17 +30,17 @@ const noop = (chunk, enc, callback) => callback(null, chunk);
 // the .ctor export, contains common logic for dealing with arguments
 const through2 = (construct) => {
   return (options, transform, flush) => {
-    if (is.function(options)) {
+    if (ateos.isFunction(options)) {
       flush = transform;
       transform = options;
       options = {};
     }
 
-    if (!is.function(transform)) {
+    if (!ateos.isFunction(transform)) {
       transform = noop;
     }
 
-    if (!is.function(flush)) {
+    if (!ateos.isFunction(flush)) {
       flush = null;
     }
 

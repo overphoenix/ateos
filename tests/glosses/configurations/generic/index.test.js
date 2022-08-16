@@ -39,7 +39,7 @@ describe("configuration", "GenericConfig", () => {
         await conf.load("simple.js");
         assert.equal(conf.raw.val, "value1");
         assert.equal(conf.raw.num, 8);
-        assert.ok(is.date(conf.raw.nowTm));
+        assert.ok(ateos.isDate(conf.raw.nowTm));
     });
 
     const formats = [".js", ".mjs", ".json", ".bson", ".mpak", ".json5"];

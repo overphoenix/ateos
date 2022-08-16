@@ -246,7 +246,7 @@ export default class IP4 {
      * @returns {String}
      */
   mask(optionalMask) {
-    if (is.undefined(optionalMask)) {
+    if (ateos.isUndefined(optionalMask)) {
       optionalMask = this.subnetMask;
     }
 

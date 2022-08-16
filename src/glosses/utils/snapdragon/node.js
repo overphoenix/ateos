@@ -29,7 +29,7 @@ const lazyKeys = () => {
  */
 export default class Node {
   constructor(val, type, parent) {
-    if (!is.string(type)) {
+    if (!ateos.isString(type)) {
       parent = type;
       type = null;
     }
@@ -52,7 +52,7 @@ export default class Node {
       }
     });
 
-    if (is.object(val)) {
+    if (ateos.isObject(val)) {
       lazyKeys();
       const keys = Object.keys(val);
       for (let i = 0; i < keys.length; i++) {
@@ -242,7 +242,7 @@ export default class Node {
   }
 
   get index() {
-    if (!is.array(this.siblings)) {
+    if (!ateos.isArray(this.siblings)) {
       return -1;
     }
     const tok = this.idx !== -1 ? this.siblings[this.idx] : null;
@@ -267,7 +267,7 @@ export default class Node {
      * @returns {object}
      */
   get prev() {
-    if (is.array(this.siblings)) {
+    if (ateos.isArray(this.siblings)) {
       return this.siblings[this.index - 1] || this.parent.prev;
     }
     return null;
@@ -283,7 +283,7 @@ export default class Node {
      * @returns {object}
      */
   get next() {
-    if (is.array(this.siblings)) {
+    if (ateos.isArray(this.siblings)) {
       return this.siblings[this.index + 1] || this.parent.next;
     }
     return null;

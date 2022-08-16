@@ -20,7 +20,7 @@ const set = (mom, unit, value) => {
 };
 
 const makeGetSet = (unit, keepTime) => function (value) {
-  if (is.exist(value)) {
+  if (ateos.isExist(value)) {
     set(this, unit, value);
     hooks.updateOffset(this, keepTime);
     return this;
@@ -53,7 +53,7 @@ export const addSubtract = (mom, duration, isAdding, updateOffset = true) => {
 };
 
 const createAdder = (direction) => function (val, period) {
-  val = is.string(val) ? Number(val) : val;
+  val = ateos.isString(val) ? Number(val) : val;
   const dur = new datetime.Duration(val, period);
   addSubtract(this, dur, direction);
   return this;
@@ -94,47 +94,47 @@ export const getCalendarFormat = (datetime, now) => {
 const customProperties = hooks.customProperties = [];
 
 export const copyConfig = (to, from) => {
-  if (!is.undefined(from._isAnExDateObject)) {
+  if (!ateos.isUndefined(from._isAnExDateObject)) {
     to._isAnExDateObject = from._isAnExDateObject;
   }
-  if (!is.undefined(from._i)) {
+  if (!ateos.isUndefined(from._i)) {
     to._i = from._i;
   }
-  if (!is.undefined(from._f)) {
+  if (!ateos.isUndefined(from._f)) {
     to._f = from._f;
   }
-  if (!is.undefined(from._l)) {
+  if (!ateos.isUndefined(from._l)) {
     to._l = from._l;
   }
-  if (!is.undefined(from._strict)) {
+  if (!ateos.isUndefined(from._strict)) {
     to._strict = from._strict;
   }
-  if (!is.undefined(from._tzm)) {
+  if (!ateos.isUndefined(from._tzm)) {
     to._tzm = from._tzm;
   }
-  if (!is.undefined(from._isUTC)) {
+  if (!ateos.isUndefined(from._isUTC)) {
     to._isUTC = from._isUTC;
   }
-  if (!is.undefined(from._offset)) {
+  if (!ateos.isUndefined(from._offset)) {
     to._offset = from._offset;
   }
-  if (!is.undefined(from._pf)) {
+  if (!ateos.isUndefined(from._pf)) {
     to._pf = __.create.getParsingFlags(from);
   }
-  if (!is.undefined(from._locale)) {
+  if (!ateos.isUndefined(from._locale)) {
     to._locale = from._locale;
   }
-  if (!is.undefined(from._z)) {
+  if (!ateos.isUndefined(from._z)) {
     to._z = from._z;
   }
-  if (!is.undefined(from._a)) {
+  if (!ateos.isUndefined(from._a)) {
     to._a = from._a;
   }
 
   if (customProperties.length > 0) {
     for (const prop of customProperties) {
       const val = from[prop];
-      if (!is.undefined(val)) {
+      if (!ateos.isUndefined(val)) {
         to[prop] = val;
       }
     }
@@ -171,13 +171,13 @@ const setMonth = (mom, value) => {
     return mom;
   }
 
-  if (is.string(value)) {
+  if (ateos.isString(value)) {
     if (/^\d+$/.test(value)) {
       value = toInt(value);
     } else {
       value = mom.localeData().monthsParse(value);
       // TODO: Another silent failure?
-      if (!is.number(value)) {
+      if (!ateos.isNumber(value)) {
         return mom;
       }
     }
@@ -189,7 +189,7 @@ const setMonth = (mom, value) => {
 };
 
 const parseWeekday = (input, locale) => {
-  if (!is.string(input)) {
+  if (!ateos.isString(input)) {
     return input;
   }
 
@@ -198,7 +198,7 @@ const parseWeekday = (input, locale) => {
   }
 
   input = locale.weekdaysParse(input);
-  if (is.number(input)) {
+  if (ateos.isNumber(input)) {
     return input;
   }
 
@@ -206,7 +206,7 @@ const parseWeekday = (input, locale) => {
 };
 
 const parseIsoWeekday = (input, locale) => {
-  if (is.string(input)) {
+  if (ateos.isString(input)) {
     return locale.weekdaysParse(input) % 7 || 7;
   }
   return isNaN(input) ? null : input;
@@ -226,7 +226,7 @@ export const now = function () {
 // datetimes should either be an array of datetime objects or an array, whose
 // first element is an array of datetime objects.
 const pickBy = (fn, datetimes) => {
-  if (datetimes.length === 1 && is.array(datetimes[0])) {
+  if (datetimes.length === 1 && ateos.isArray(datetimes[0])) {
     datetimes = datetimes[0];
   }
   if (!datetimes.length) {
@@ -250,7 +250,7 @@ let updateInProgress = false;
 export class Datetime {
   constructor(config) {
     copyConfig(this, config);
-    this._d = new Date(is.exist(config._d) ? config._d.getTime() : NaN);
+    this._d = new Date(ateos.isExist(config._d) ? config._d.getTime() : NaN);
     if (!this.isValid()) {
       this._d = new Date(NaN);
     }
@@ -265,7 +265,7 @@ export class Datetime {
 
   get(units) {
     units = __.unit.alias.normalizeUnits(units);
-    if (is.function(this[units])) {
+    if (ateos.isFunction(this[units])) {
       return this[units]();
     }
     return this;
@@ -273,7 +273,7 @@ export class Datetime {
 
 
   set(units, value) {
-    if (is.object(units)) {
+    if (ateos.isObject(units)) {
       units = __.unit.alias.normalizeObjectUnits(units);
       const prioritized = __.unit.priority.getPrioritizedUnits(units);
       for (let i = 0; i < prioritized.length; i++) {
@@ -281,7 +281,7 @@ export class Datetime {
       }
     } else {
       units = __.unit.alias.normalizeUnits(units);
-      if (is.function(this[units])) {
+      if (ateos.isFunction(this[units])) {
         return this[units](value);
       }
     }
@@ -295,7 +295,7 @@ export class Datetime {
     const sod = __.unit.offset.cloneWithOffset(now, this).startOf("day");
     const format = hooks.calendarFormat(this, sod) || "sameElse";
 
-    const output = formats && (is.function(formats[format]) ? formats[format].call(this, now) : formats[format]);
+    const output = formats && (ateos.isFunction(formats[format]) ? formats[format].call(this, now) : formats[format]);
 
     return this.format(output || this.localeData().calendar(format, this, __.create.createLocal(now)));
   }
@@ -380,7 +380,7 @@ export class Datetime {
 
   endOf(units) {
     units = __.unit.alias.normalizeUnits(units);
-    if (is.undefined(units) || units === "millisecond") {
+    if (ateos.isUndefined(units) || units === "millisecond") {
       return this;
     }
 
@@ -405,7 +405,7 @@ export class Datetime {
     if (m.year() < 0 || m.year() > 9999) {
       return __.format.formatExDate(m, utc ? "YYYYYY-MM-DD[T]HH:mm:ss.SSS[Z]" : "YYYYYY-MM-DD[T]HH:mm:ss.SSSZ");
     }
-    if (is.function(Date.prototype.toISOString)) {
+    if (ateos.isFunction(Date.prototype.toISOString)) {
       // native implementation is ~50x faster, use it when we can
       if (utc) {
         return this.toDate().toISOString();
@@ -501,7 +501,7 @@ export class Datetime {
     if (!(this.isValid() && localInput.isValid())) {
       return false;
     }
-    units = __.unit.alias.normalizeUnits(!is.undefined(units) ? units : "millisecond");
+    units = __.unit.alias.normalizeUnits(!ateos.isUndefined(units) ? units : "millisecond");
     if (units === "millisecond") {
       return this.valueOf() > localInput.valueOf();
     }
@@ -514,7 +514,7 @@ export class Datetime {
     if (!(this.isValid() && localInput.isValid())) {
       return false;
     }
-    units = __.unit.alias.normalizeUnits(!is.undefined(units) ? units : "millisecond");
+    units = __.unit.alias.normalizeUnits(!ateos.isUndefined(units) ? units : "millisecond");
     if (units === "millisecond") {
       return this.valueOf() < localInput.valueOf();
     }
@@ -551,11 +551,11 @@ export class Datetime {
   }
 
   locale(key) {
-    if (is.undefined(key)) {
+    if (ateos.isUndefined(key)) {
       return this._locale._abbr;
     }
     const newLocaleData = __.locale.getLocale(key);
-    if (is.exist(newLocaleData)) {
+    if (ateos.isExist(newLocaleData)) {
       this._locale = newLocaleData;
     }
     return this;
@@ -659,7 +659,7 @@ export class Datetime {
   }
 
   quarter(input) {
-    if (is.nil(input)) {
+    if (ateos.isNil(input)) {
       return Math.ceil((this.month() + 1) / 3);
     }
     return this.month((input - 1) * 3 + this.month() % 3);
@@ -667,7 +667,7 @@ export class Datetime {
   }
 
   month(value) {
-    if (is.exist(value)) {
+    if (ateos.isExist(value)) {
       setMonth(this, value);
       hooks.updateOffset(this, true);
       return this;
@@ -682,20 +682,20 @@ export class Datetime {
 
   week(input) {
     const week = this.localeData().week(this);
-    return is.nil(input) ? week : this.add((input - week) * 7, "d");
+    return ateos.isNil(input) ? week : this.add((input - week) * 7, "d");
   }
 
   isoWeek(input) {
     const week = __.unit.weekCalendar.weekOfYear(this, 1, 4).week;
-    return is.nil(input) ? week : this.add((input - week) * 7, "d");
+    return ateos.isNil(input) ? week : this.add((input - week) * 7, "d");
   }
 
   day(input) {
     if (!this.isValid()) {
-      return is.exist(input) ? this : NaN;
+      return ateos.isExist(input) ? this : NaN;
     }
     const day = this._isUTC ? this._d.getUTCDay() : this._d.getDay();
-    if (is.exist(input)) {
+    if (ateos.isExist(input)) {
       input = parseWeekday(input, this.localeData());
       return this.add(input - day, "d");
     }
@@ -705,22 +705,22 @@ export class Datetime {
 
   weekday(input) {
     if (!this.isValid()) {
-      return is.exist(input) ? this : NaN;
+      return ateos.isExist(input) ? this : NaN;
     }
     const weekday = (this.day() + 7 - this.localeData()._week.dow) % 7;
-    return is.nil(input) ? weekday : this.add(input - weekday, "d");
+    return ateos.isNil(input) ? weekday : this.add(input - weekday, "d");
   }
 
   isoWeekday(input) {
     if (!this.isValid()) {
-      return is.exist(input) ? this : NaN;
+      return ateos.isExist(input) ? this : NaN;
     }
 
     // behaves the same as datetime#day except
     // as a getter, returns 7 instead of 0 (1-7 range instead of 0-6)
     // as a setter, sunday should belong to the previous week.
 
-    if (is.exist(input)) {
+    if (ateos.isExist(input)) {
       const weekday = parseIsoWeekday(input, this.localeData());
       return this.day(this.day() % 7 ? weekday : weekday - 7);
     }
@@ -730,7 +730,7 @@ export class Datetime {
 
   dayOfYear(input) {
     const dayOfYear = Math.round((this.clone().startOf("day") - this.clone().startOf("year")) / 864e5) + 1;
-    return is.nil(input) ? dayOfYear : this.add(input - dayOfYear, "d");
+    return ateos.isNil(input) ? dayOfYear : this.add(input - dayOfYear, "d");
   }
 
   // keepLocalTime = true means only change the timezone, without
@@ -746,12 +746,12 @@ export class Datetime {
   utcOffset(input, keepLocalTime, keepMinutes) {
     const offset = this._offset || 0;
     if (!this.isValid()) {
-      return is.exist(input) ? this : NaN;
+      return ateos.isExist(input) ? this : NaN;
     }
-    if (is.exist(input)) {
-      if (is.string(input)) {
+    if (ateos.isExist(input)) {
+      if (ateos.isString(input)) {
         input = __.unit.offset.offsetFromString(__.parse.matchShortOffset, input);
-        if (is.null(input)) {
+        if (ateos.isNull(input)) {
           return this;
         }
       } else if (Math.abs(input) < 16 && !keepMinutes) {
@@ -763,7 +763,7 @@ export class Datetime {
       }
       this._offset = input;
       this._isUTC = true;
-      if (is.exist(localAdjust)) {
+      if (ateos.isExist(localAdjust)) {
         this.add(localAdjust, "m");
       }
       if (offset !== input) {
@@ -799,11 +799,11 @@ export class Datetime {
   }
 
   parseZone() {
-    if (is.exist(this._tzm)) {
+    if (ateos.isExist(this._tzm)) {
       this.utcOffset(this._tzm, false, true);
-    } else if (is.string(this._i)) {
+    } else if (ateos.isString(this._i)) {
       const tZone = __.unit.offset.offsetFromString(__.parse.matchOffset, this._i);
-      if (is.exist(tZone)) {
+      if (ateos.isExist(tZone)) {
         this.utcOffset(tZone);
       } else {
         this.utcOffset(0, true);
@@ -829,7 +829,7 @@ export class Datetime {
   }
 
   isDSTShifted() {
-    if (!is.undefined(this._isDSTShifted)) {
+    if (!ateos.isUndefined(this._isDSTShifted)) {
       return this._isDSTShifted;
     }
 

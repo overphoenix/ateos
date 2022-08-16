@@ -125,7 +125,7 @@ describe("ed25519", () => {
         assert.equal(eb64(signature), b64Signature);
     });
 
-    if (!is.undefined(Buffer)) {
+    if (!ateos.isUndefined(Buffer)) {
         it("should sign a node.js Buffer message", () => {
             const pwd = "password";
             const md = SHA256.create();
@@ -177,7 +177,7 @@ describe("ed25519", () => {
         assert.equal(verified, true);
     });
 
-    if (!is.undefined(Buffer)) {
+    if (!ateos.isUndefined(Buffer)) {
         it("should verify a node.js Buffer signature", () => {
             const pwd = "password";
             const md = SHA256.create();

@@ -75,9 +75,9 @@ export class Encoder {
         break;
       }
       default: {
-        if (is.null(x)) {
+        if (ateos.isNull(x)) {
           buf.writeInt8(0xC0);
-        } else if (is.buffer(x)) {
+        } else if (ateos.isBuffer(x)) {
           if (x.length <= 0xFF) {
             buf.writeInt16BE(0xC400 | x.length);
           } else if (x.length <= 0xFFFF) {
@@ -88,7 +88,7 @@ export class Encoder {
             buf.writeUInt32BE(x.length);
           }
           buf.write(x);
-        } else if (is.array(x)) {
+        } else if (ateos.isArray(x)) {
           if (x.length < 16) {
             buf.writeInt8(0x90 | x.length);
           } else if (x.length < 65536) {
@@ -101,7 +101,7 @@ export class Encoder {
           for (const obj of x) {
             this._encode(obj, buf);
           }
-        } else if (is.plainObject(x)) {
+        } else if (ateos.isPlainObject(x)) {
           const keys = Object.keys(x);
 
           if (keys.length < 16) {
@@ -147,7 +147,7 @@ export class Encoder {
               return;
             }
           }
-          throw new ateos.error.NotSupportedException(`Not supported: ${(x.__proto__ && x.__proto__.constructor && is.string(x.__proto__.constructor.name))
+          throw new ateos.error.NotSupportedException(`Not supported: ${(x.__proto__ && x.__proto__.constructor && ateos.isString(x.__proto__.constructor.name))
             ? x.__proto__.constructor.name
             : ateos.typeOf(x)}`);
         }
@@ -219,7 +219,7 @@ export class Decoder {
   }
 
   decode(buf) {
-    if (!is.smartBuffer(buf)) {
+    if (!ateos.isSmartBuffer(buf)) {
       buf = SmartBuffer.wrap(buf, undefined, true);
     }
 
@@ -532,14 +532,14 @@ export class Serializer {
   }
 
   get encoder() {
-    if (is.null(this._encoder)) {
+    if (ateos.isNull(this._encoder)) {
       this._encoder = new ateos.data.mpak.Encoder(this._encodingTypes);
     }
     return this._encoder;
   }
 
   get decoder() {
-    if (is.null(this._decoder)) {
+    if (ateos.isNull(this._decoder)) {
       this._decoder = new ateos.data.mpak.Decoder(this._decodingTypes);
     }
     return this._decoder;

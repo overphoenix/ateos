@@ -1,18 +1,18 @@
-@ateos.task.task("transpile")
+@ateos.task.Task("transpile")
 export default class TranspileTask extends ateos.realm.TransformTask {
-    transform(stream, params) {
-        const transpileOptions = {
-            sourceMap: true,
-            plugins: this.plugins(params)
-        };
-        return stream.sourcemapsInit()
-            .transpile(transpileOptions)
-            .sourcemapsWrite(".", {
-                destPath: params.dst
-            });
-    }
+  transform(stream, params) {
+    const transpileOptions = {
+      sourceMap: true,
+      plugins: this.plugins(params)
+    };
+    return stream.sourcemapsInit()
+      .transpile(transpileOptions)
+      .sourcemapsWrite(".", {
+        destPath: params.dst
+      });
+  }
 
-    plugins() {
-        return ateos.module.BABEL_PLUGINS;
-    }
+  plugins() {
+    return ateos.module.BABEL_PLUGINS;
+  }
 }

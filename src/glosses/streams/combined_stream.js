@@ -37,11 +37,11 @@ export default class CombinedStream extends Stream {
   }
 
   static isStreamLike(stream) {
-    return !is.function(stream)
-            && !is.string(stream)
-            && !is.boolean(stream)
-            && !is.number(stream)
-            && !is.buffer(stream);
+    return !ateos.isFunction(stream)
+            && !ateos.isString(stream)
+            && !ateos.isBoolean(stream)
+            && !ateos.isNumber(stream)
+            && !ateos.isBuffer(stream);
   }
 
   append(stream) {
@@ -79,12 +79,12 @@ export default class CombinedStream extends Stream {
     const stream = this._streams.shift();
 
 
-    if (is.undefined(stream)) {
+    if (ateos.isUndefined(stream)) {
       this.end();
       return;
     }
 
-    if (!is.function(stream)) {
+    if (!ateos.isFunction(stream)) {
       this._pipeNext(stream);
       return;
     }
@@ -133,7 +133,7 @@ export default class CombinedStream extends Stream {
       return;
     }
 
-    if (this.pauseStreams && this._currentStream && is.function(this._currentStream.pause)) {
+    if (this.pauseStreams && this._currentStream && ateos.isFunction(this._currentStream.pause)) {
       this._currentStream.pause();
     }
     this.emit("pause");
@@ -146,7 +146,7 @@ export default class CombinedStream extends Stream {
       this._getNext();
     }
 
-    if (this.pauseStreams && this._currentStream && is.function(this._currentStream.resume)) {
+    if (this.pauseStreams && this._currentStream && ateos.isFunction(this._currentStream.resume)) {
       this._currentStream.resume();
     }
     this.emit("resume");

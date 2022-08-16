@@ -39,7 +39,7 @@ const defaultValue = function (f, def) {
 
   switch (f.type) {
     case "string":
-      return !is.nil(def) ? def : "";
+      return !ateos.isNil(def) ? def : "";
 
     case "bool":
       return def === "true";
@@ -131,11 +131,11 @@ const compileDecode = function (m, resolve, enc) {
   };
 
   return function decode(buf, offset, end) {
-    if (is.nil(offset)) {
+    if (ateos.isNil(offset)) {
       offset = 0;
     }
 
-    if (is.nil(end)) {
+    if (ateos.isNil(end)) {
       end = buf.length;
     }
 
@@ -211,7 +211,7 @@ const compileDecode = function (m, resolve, enc) {
 
       const i = fields[tag];
 
-      if (is.nil(i)) {
+      if (ateos.isNil(i)) {
         offset = skip(prefix & 7, buf, offset);
         continue;
       }

@@ -26,7 +26,7 @@ export default class Dispatcher extends Subsystem {
     };
 
     netron.on("peer:disconnect", (peer) => {
-      if (!is.null(this.peer) && this.peer.id === peer.id) {
+      if (!ateos.isNull(this.peer) && this.peer.id === peer.id) {
         this.peer = null;
       }
     });
@@ -49,7 +49,7 @@ export default class Dispatcher extends Subsystem {
   // }
 
   // async bindGates(gates, { adapters = null } = {}) {
-  //     if (is.plainObject(adapters)) {
+  //     if (ateos.isPlainObject(adapters)) {
   //         for (const [name, AdapterClass] of Object.entries(adapters)) {
   //             runtime.netron.registerAdapter(name, AdapterClass);
   //         }
@@ -66,7 +66,7 @@ export default class Dispatcher extends Subsystem {
   }
 
   // async connect(gate = null) {
-  //     if (is.nil(gate) || is.nil(gate.port)) {
+  //     if (ateos.isNil(gate) || ateos.isNil(gate.port)) {
   //         return this.connectLocal();
   //     }
 
@@ -76,7 +76,7 @@ export default class Dispatcher extends Subsystem {
 
   async connectLocal({ forceStart = false } = {}, _counter = 0) {
     let status = 0;
-    if (is.null(this.peer)) {
+    if (ateos.isNull(this.peer)) {
       let peer = null;
       try {
         peer = await this.netron.connect("default", omnitron.LOCAL_PEER_INFO);
@@ -87,7 +87,7 @@ export default class Dispatcher extends Subsystem {
         }
 
         const pid = await this.startOmnitron();
-        if (is.number(pid)) {
+        if (ateos.isNumber(pid)) {
           return this.connectLocal({
             forceStart
           }, ++_counter);
@@ -100,7 +100,7 @@ export default class Dispatcher extends Subsystem {
   }
 
   async disconnectPeer() {
-    if (!is.null(this.peer)) {
+    if (!ateos.isNull(this.peer)) {
       await this.peer.disconnect();
       this.peer = null;
     }
@@ -111,7 +111,7 @@ export default class Dispatcher extends Subsystem {
       const isActive = await this.isOmnitronActive();
       if (isActive) {
         let shouldDisconnect = false;
-        if (is.null(this.peer)) {
+        if (ateos.isNull(this.peer)) {
           shouldDisconnect = true;
           await this.connectLocal();
         }
@@ -136,13 +136,13 @@ export default class Dispatcher extends Subsystem {
         this.descriptors.stdout = await fs.open(omniConfig.LOGFILE_PATH, "a");
         this.descriptors.stderr = await fs.open(omniConfig.ERRORLOGFILE_PATH, "a");
         let scriptPath;
-        if (is.string(ateosRootPath)) {
+        if (ateos.isString(ateosRootPath)) {
           scriptPath = std.path.resolve(ateosRootPath, "lib", "omnitron", "omnitron", "index.js");
         } else {
           scriptPath = std.path.join(__dirname, "omnitron", "index.js");
         }
         const args = [scriptPath];
-        if (is.string(ateosRootPath)) {
+        if (ateos.isString(ateosRootPath)) {
           args.unshift(ateosRootPath);
           args.unshift("--require");
         }
@@ -195,7 +195,7 @@ export default class Dispatcher extends Subsystem {
             }
           };
           const pid = parseInt(std.fs.readFileSync(ateos.runtime.config.omnitron.PIDFILE_PATH).toString());
-          if (is.windows) {
+          if (ateos.isWindows) {
             try {
               await this.connectLocal();
               await this.kill();
@@ -206,7 +206,7 @@ export default class Dispatcher extends Subsystem {
               return 0;
             }
           } else {
-            if (!is.null(this.peer)) {
+            if (!ateos.isNull(this.peer)) {
               await this.peer.disconnect();
               this.peer = null;
             }
@@ -227,11 +227,11 @@ export default class Dispatcher extends Subsystem {
       return 2;
     }
 
-    if (!is.nil(this.descriptors.stdout)) {
+    if (!ateos.isNil(this.descriptors.stdout)) {
       await fs.close(this.descriptors.stdout);
       this.descriptors.stdout = null;
     }
-    if (!is.nil(this.descriptors.stderr)) {
+    if (!ateos.isNil(this.descriptors.stderr)) {
       await fs.close(this.descriptors.stderr);
       this.descriptors.stderr = null;
     }
@@ -294,7 +294,7 @@ export default class Dispatcher extends Subsystem {
 
   async getDB() {
     let db = this.db;
-    if (is.null(db)) {
+    if (ateos.isNull(db)) {
       if (await this.isOmnitronActive()) {
         await this.connectLocal();
         db = await this.queryInterface("omnitron").getDB();

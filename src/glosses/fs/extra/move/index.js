@@ -60,7 +60,7 @@ export default (fs) => {
   };
     
   return (src, dest, opts, cb) => {
-    if (is.function(opts)) {
+    if (ateos.isFunction(opts)) {
       cb = opts;
       opts = {};
     }

@@ -21,7 +21,7 @@ class TestApp extends ateos.app.Application {
         const expected = ["helper", "_events", "_eventsCount", "_maxListeners"];
         let isOk = true;
         for (const [name, value] of ateos.util.entries(this, { followProto: true })) {
-            if (is.function(value)) {
+            if (ateos.isFunction(value)) {
                 continue;
             }
             if (!expected.includes(name)) {

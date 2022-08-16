@@ -10,11 +10,11 @@ const isFS = function (stream) {
   if (!fs) { // browser
     return false;
   }
-  return (stream instanceof (fs.ReadStream || noop) || stream instanceof (fs.WriteStream || noop)) && is.function(stream.close);
+  return (stream instanceof (fs.ReadStream || noop) || stream instanceof (fs.WriteStream || noop)) && ateos.isFunction(stream.close);
 };
 
 const isRequest = function (stream) {
-  return stream.setHeader && is.function(stream.abort);
+  return stream.setHeader && ateos.isFunction(stream.abort);
 };
 
 const destroyer = function (stream, reading, writing, callback) {
@@ -50,7 +50,7 @@ const destroyer = function (stream, reading, writing, callback) {
       return stream.abort();
     } // request.destroy just do .end - .abort is what we want
 
-    if (is.function(stream.destroy)) {
+    if (ateos.isFunction(stream.destroy)) {
       return stream.destroy();
     }
 
@@ -68,9 +68,9 @@ const pipe = function (from, to) {
 
 const pump = function () {
   let streams = Array.prototype.slice.call(arguments);
-  const callback = is.function(streams[streams.length - 1] || noop) && streams.pop() || noop;
+  const callback = ateos.isFunction(streams[streams.length - 1] || noop) && streams.pop() || noop;
 
-  if (is.array(streams[0])) {
+  if (ateos.isArray(streams[0])) {
     streams = streams[0];
   }
   if (streams.length < 2) {

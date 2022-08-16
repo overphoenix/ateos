@@ -1,5 +1,5 @@
 const isEqual = (arr1, arr2) => {
-    if (ateos.is.number(arr1)) {
+    if (ateos.ateos.isNumber(arr1)) {
         return Math.abs(arr1 - arr2) < ateos.math.matrix.EPSILON;
     }
 

@@ -65,8 +65,8 @@ export default (fs) => {
   };
     
   const symlinkType = (srcpath, type, callback) => {
-    callback = (is.function(type)) ? type : callback;
-    type = (is.function(type)) ? false : type;
+    callback = (ateos.isFunction(type)) ? type : callback;
+    type = (ateos.isFunction(type)) ? false : type;
     if (type) {
       return callback(null, type);
     }
@@ -80,8 +80,8 @@ export default (fs) => {
   };
     
   const createSymlink = (srcpath, dstpath, type, callback) => {
-    callback = (is.function(type)) ? type : callback;
-    type = (is.function(type)) ? false : type;
+    callback = (ateos.isFunction(type)) ? type : callback;
+    type = (ateos.isFunction(type)) ? false : type;
     
     fs.pathExists(dstpath, (err, destinationExists) => {
       if (err) {

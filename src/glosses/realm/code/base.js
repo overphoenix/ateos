@@ -15,7 +15,7 @@ export default class XBase {
     path = null,
     type = "script"
   } = {}) {
-    // if (is.nil(xModule) && !realm.code.isModule(this)) {
+    // if (ateos.isNil(xModule) && !realm.code.isModule(this)) {
     //     throw new ateos.error.NotValidException("XModule cannot be null");
     // }
     this.xModule = xModule;
@@ -36,9 +36,9 @@ export default class XBase {
   }
 
   init() {
-    if (is.null(this.ast) && is.string(this.code)) {
+    if (ateos.isNull(this.ast) && ateos.isString(this.code)) {
       this.parse();
-    } else if (!is.null(this.ast) && is.null(this.code)) {
+    } else if (!ateos.isNull(this.ast) && ateos.isNull(this.code)) {
       this.generate();
     }
   }
@@ -49,7 +49,7 @@ export default class XBase {
 
   getInmoduleReference(name) {
     for (const xObj of this.xModule.scope) {
-      if (is.string(xObj.name) && xObj.name === name) {
+      if (ateos.isString(xObj.name) && xObj.name === name) {
         return xObj;
       }
     }
@@ -70,7 +70,7 @@ export default class XBase {
   }
 
   references() {
-    if (!is.null(this.path) && !["VariableDeclarator"].includes(this.ast.type)) {
+    if (!ateos.isNull(this.path) && !["VariableDeclarator"].includes(this.ast.type)) {
       // Clear array
       this._references.length = 0;
 
@@ -79,15 +79,15 @@ export default class XBase {
         Identifier: (path) => {
           const node = path.node;
           const name = node.name;
-          if (is.undefined(name)) {
+          if (ateos.isUndefined(name)) {
             return;
           }
           const xObj = this.getInmoduleReference(name);
-          if (!is.undefined(xObj)) {
+          if (!ateos.isUndefined(xObj)) {
             this._scopedReferences.push(xObj);
           } else {
             const globalObject = this.xModule.getGlobal(name);
-            if (!is.undefined(globalObject)) {
+            if (!ateos.isUndefined(globalObject)) {
               this._addReference(globalObject.full);
             }
           }
@@ -100,7 +100,7 @@ export default class XBase {
           const name = this._getMemberExpressionName(node);
           const parts = name.split(".");
           const globalObject = this.xModule.getGlobal(parts[0]);
-          if (!is.undefined(globalObject)) {
+          if (!ateos.isUndefined(globalObject)) {
             if (parts.length > 1) {
               const fullName = `${globalObject.full}.${parts.slice(1).join(".")}`;
               const { namespace, objectName } = this.xModule.codeLayout.parseName(fullName);
@@ -194,9 +194,9 @@ export default class XBase {
           xObj = new realm.code.Ateos({ ast, path, xModule });
         } else {
           xObj = this.lookupInGlobalScope(ast.name);
-          if (is.null(xObj)) {
+          if (ateos.isNull(xObj)) {
             xObj = this._tryJsNative({ ast, path, xModule });
-            if (is.null(xObj)) {
+            if (ateos.isNull(xObj)) {
               throw new ateos.error.NotFoundException(`Variable '${ast.name}' not found in global scope`);
             }
           } else {
@@ -223,7 +223,7 @@ export default class XBase {
   lookupInGlobalScope(name) {
     for (const xObj of this.xModule.scope) {
       const node = xObj.ast;
-      if (!is.null(node)) {
+      if (!ateos.isNull(node)) {
         switch (node.type) {
           case "VariableDeclarator": {
             if (xObj.name === name) {
@@ -275,7 +275,7 @@ export default class XBase {
       return `${node.object.name}.${node.property.name}`;
     }
 
-    if (is.undefined(prefix)) {
+    if (ateos.isUndefined(prefix)) {
       return node.property.name;
     }
     return `${prefix}.${node.property.name}`;

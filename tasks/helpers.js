@@ -16,7 +16,7 @@ export const importAteosReplacer = (replacer) => () => ({
 
 export const checkRealm = async (r) => {
   let result = r;
-  if (is.string(result)) {
+  if (ateos.isString(result)) {
     result = new realm.RealmManager({
       cwd: r
     });

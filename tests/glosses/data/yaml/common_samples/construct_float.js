@@ -13,7 +13,7 @@ const expected = {
 };
 
 const testHandler = (actual) => {
-    assert(is.object(actual));
+    assert(ateos.isObject(actual));
     assert.strictEqual(Object.keys(actual).sort().join(","), Object.keys(expected).sort().join(","));
 
     assert.strictEqual(actual.canonical, expected.canonical);

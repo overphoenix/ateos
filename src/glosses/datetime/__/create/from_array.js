@@ -4,10 +4,10 @@ const __ = ateos.getPrivate(ateos.datetime);
 const { YEAR, MONTH, DATE, HOUR, MINUTE, SECOND, MILLISECOND } = __.unit.c;
 
 const defaults = (a, b, c) => {
-  if (is.exist(a)) {
+  if (ateos.isExist(a)) {
     return a;
   }
-  if (is.exist(b)) {
+  if (ateos.isExist(b)) {
     return b;
   }
   return c;
@@ -35,7 +35,7 @@ const dayOfYearFromWeekInfo = (config) => {
 
   const w = config._w;
 
-  if (is.exist(w.GG) || is.exist(w.W) || is.exist(w.E)) {
+  if (ateos.isExist(w.GG) || ateos.isExist(w.W) || ateos.isExist(w.E)) {
     dow = 1;
     doy = 4;
 
@@ -60,13 +60,13 @@ const dayOfYearFromWeekInfo = (config) => {
     // Default to current week.
     week = defaults(w.w, curWeek.week);
 
-    if (is.exist(w.d)) {
+    if (ateos.isExist(w.d)) {
       // weekday -- low day numbers are considered next week
       weekday = w.d;
       if (weekday < 0 || weekday > 6) {
         weekdayOverflow = true;
       }
-    } else if (is.exist(w.e)) {
+    } else if (ateos.isExist(w.e)) {
       // local weekday -- counting starts from begining of week
       weekday = w.e + dow;
       if (w.e < 0 || w.e > 6) {
@@ -79,7 +79,7 @@ const dayOfYearFromWeekInfo = (config) => {
   }
   if (week < 1 || week > weeksInYear(weekYear, dow, doy)) {
     __.create.getParsingFlags(config)._overflowWeeks = true;
-  } else if (is.exist(weekdayOverflow)) {
+  } else if (ateos.isExist(weekdayOverflow)) {
     __.create.getParsingFlags(config)._overflowWeekday = true;
   } else {
     temp = dayOfYearFromWeeks(weekYear, week, weekday, dow, doy);
@@ -103,12 +103,12 @@ export const configFromArray = (config) => {
   const currentDate = currentDateArray(config);
 
   //compute day of the year from weeks and weekdays
-  if (config._w && is.nil(config._a[DATE]) && is.nil(config._a[MONTH])) {
+  if (config._w && ateos.isNil(config._a[DATE]) && ateos.isNil(config._a[MONTH])) {
     dayOfYearFromWeekInfo(config);
   }
 
   //if the day of the year is set, figure out what it is
-  if (!is.nil(config._dayOfYear)) {
+  if (!ateos.isNil(config._dayOfYear)) {
     yearToUse = defaults(config._a[YEAR], currentDate[YEAR]);
 
     if (config._dayOfYear > __.unit.year.daysInYear(yearToUse) || config._dayOfYear === 0) {
@@ -127,13 +127,13 @@ export const configFromArray = (config) => {
   // * if year is given, don't default anything
   let i;
   const input = [];
-  for (i = 0; i < 3 && is.nil(config._a[i]); ++i) {
+  for (i = 0; i < 3 && ateos.isNil(config._a[i]); ++i) {
     config._a[i] = input[i] = currentDate[i];
   }
 
   // Zero out whatever was not defaulted, including time
   for (; i < 7; i++) {
-    config._a[i] = input[i] = (is.nil(config._a[i])) ? (i === 2 ? 1 : 0) : config._a[i];
+    config._a[i] = input[i] = (ateos.isNil(config._a[i])) ? (i === 2 ? 1 : 0) : config._a[i];
   }
 
   // Check for 24:00:00.000
@@ -151,7 +151,7 @@ export const configFromArray = (config) => {
   const expectedWeekday = config._useUTC ? config._d.getUTCDay() : config._d.getDay();
   // Apply timezone offset from input. The actual utcOffset can be changed
   // with parseZone.
-  if (is.exist(config._tzm)) {
+  if (ateos.isExist(config._tzm)) {
     config._d.setUTCMinutes(config._d.getUTCMinutes() - config._tzm);
   }
 
@@ -160,7 +160,7 @@ export const configFromArray = (config) => {
   }
 
   // check for mismatching day of week
-  if (config._w && !is.undefined(config._w.d) && config._w.d !== expectedWeekday) {
+  if (config._w && !ateos.isUndefined(config._w.d) && config._w.d !== expectedWeekday) {
     __.create.getParsingFlags(config).weekdayMismatch = true;
   }
 };

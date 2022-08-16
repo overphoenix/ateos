@@ -11,7 +11,7 @@ export default ExDate.defineLocale("el", {
   months(momentToFormat, format) {
     if (!momentToFormat) {
       return this._monthsNominativeEl;
-    } else if (is.string(format) && /D/.test(format.substring(0, format.indexOf("MMMM")))) { // if there is a day number before 'MMMM'
+    } else if (ateos.isString(format) && /D/.test(format.substring(0, format.indexOf("MMMM")))) { // if there is a day number before 'MMMM'
       return this._monthsGenitiveEl[momentToFormat.month()];
     }
     return this._monthsNominativeEl[momentToFormat.month()];
@@ -58,7 +58,7 @@ export default ExDate.defineLocale("el", {
   calendar(key, mom) {
     const hours = mom && mom.hours();
     let output = this._calendarEl[key];
-    if (is.function(output)) {
+    if (ateos.isFunction(output)) {
       output = output.apply(mom);
     }
     return output.replace("{}", hours % 12 === 1 ? "στη" : "στις");

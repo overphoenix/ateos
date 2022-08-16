@@ -99,10 +99,10 @@ module.exports = {
     "quote-props": ["error", "as-needed"],
     "no-array-constructor": "error",
     "array-callback-return": "error",
-    "func-style": [
-      "error",
-      "expression", { allowArrowFunctions: true }
-    ],
+    // "func-style": [
+    //   "error",
+    //   "expression", { allowArrowFunctions: true }
+    // ],
     "no-loop-func": "error",
     "prefer-rest-params": "error",
     "prefer-arrow-callback": ["warn", {

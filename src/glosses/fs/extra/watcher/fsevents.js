@@ -14,10 +14,10 @@ const Native = ateos.requireAddon(ateos.path.join(__dirname, "native", "fsevents
 const con = Native.constants;
 
 function watch(path, handler) {
-  if (!is.string(path)) {
+  if (!ateos.isString(path)) {
     throw new TypeError(`argument 1 must be a string and not a ${typeof path}`); 
   }
-  if (!is.function(handler)) {
+  if (!ateos.isFunction(handler)) {
     throw new TypeError(`argument 2 must be a function and not a ${typeof handler}`); 
   }
 

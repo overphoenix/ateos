@@ -4,7 +4,7 @@ export default class XVariable extends ateos.realm.code.Base {
 
     const node = this.ast;
     this.name = node.id.name;
-    if (!ateos.is.null(node.init)) {
+    if (!ateos.ateos.isNull(node.init)) {
       this.value = this.createXObject({ ast: node.init, xModule: this.xModule });
       this.value.name = this.name;
     }

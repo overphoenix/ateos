@@ -1,14 +1,13 @@
 const {
-  is,
   util
 } = ateos;
 
 export default function safeRegex(re, opts = {}) {
-  const replimit = is.undefined(opts.limit) ? 25 : opts.limit;
+  const replimit = ateos.isUndefined(opts.limit) ? 25 : opts.limit;
 
-  if (is.regexp(re)) {
+  if (ateos.isRegexp(re)) {
     re = re.source;
-  } else if (!is.string(re)) {
+  } else if (!ateos.isString(re)) {
     re = String(re);
   }
 

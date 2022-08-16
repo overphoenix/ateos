@@ -67,7 +67,7 @@ const parseObject = function (chain, val, options) {
       const cleanRoot = root.charAt(0) === "[" && root.charAt(root.length - 1) === "]" ? root.slice(1, -1) : root;
       const index = parseInt(cleanRoot, 10);
       if (
-        !is.nan(index)
+        !ateos.isNan(index)
                 && root !== cleanRoot
                 && String(index) === cleanRoot
                 && index >= 0
@@ -122,7 +122,7 @@ const parseKeys = (givenKey, val, options) => {
   // Loop through children appending to the array until we hit depth
 
   let i = 0;
-  while (!is.null(segment = child.exec(key)) && i < options.depth) {
+  while (!ateos.isNull(segment = child.exec(key)) && i < options.depth) {
     i += 1;
     if (!options.plainObjects && has.call(Object.prototype, segment[1].slice(1, -1))) {
       if (!options.allowPrototypes) {
@@ -148,11 +148,11 @@ const compactQueue = function compactQueue(queue) {
     const item = queue.pop();
     obj = item.obj[item.prop];
 
-    if (is.array(obj)) {
+    if (ateos.isArray(obj)) {
       const compacted = [];
 
       for (let j = 0; j < obj.length; ++j) {
-        if (!is.undefined(obj[j])) {
+        if (!ateos.isUndefined(obj[j])) {
           compacted.push(obj[j]);
         }
       }
@@ -176,7 +176,7 @@ const compact = function compact(value) {
     for (let j = 0; j < keys.length; ++j) {
       const key = keys[j];
       const val = obj[key];
-      if (is.object(val) && !refs.includes(val)) {
+      if (ateos.isObject(val) && !refs.includes(val)) {
         queue.push({ obj, prop: key });
         refs.push(val);
       }
@@ -189,27 +189,27 @@ const compact = function compact(value) {
 export default function parse(str, opts) {
   const options = opts ? { ...opts } : {};
 
-  if (!is.null(options.decoder) && !is.undefined(options.decoder) && !is.function(options.decoder)) {
+  if (!ateos.isNull(options.decoder) && !ateos.isUndefined(options.decoder) && !ateos.isFunction(options.decoder)) {
     throw new TypeError("Decoder has to be a function.");
   }
 
   options.ignoreQueryPrefix = options.ignoreQueryPrefix === true;
-  options.delimiter = is.string(options.delimiter) || is.regexp(options.delimiter) ? options.delimiter : defaults.delimiter;
-  options.depth = is.number(options.depth) ? options.depth : defaults.depth;
-  options.arrayLimit = is.number(options.arrayLimit) ? options.arrayLimit : defaults.arrayLimit;
+  options.delimiter = ateos.isString(options.delimiter) || ateos.isRegexp(options.delimiter) ? options.delimiter : defaults.delimiter;
+  options.depth = ateos.isNumber(options.depth) ? options.depth : defaults.depth;
+  options.arrayLimit = ateos.isNumber(options.arrayLimit) ? options.arrayLimit : defaults.arrayLimit;
   options.parseArrays = options.parseArrays !== false;
-  options.decoder = is.function(options.decoder) ? options.decoder : defaults.decoder;
-  options.allowDots = is.boolean(options.allowDots) ? options.allowDots : defaults.allowDots;
-  options.plainObjects = is.boolean(options.plainObjects) ? options.plainObjects : defaults.plainObjects;
-  options.allowPrototypes = is.boolean(options.allowPrototypes) ? options.allowPrototypes : defaults.allowPrototypes;
-  options.parameterLimit = is.number(options.parameterLimit) ? options.parameterLimit : defaults.parameterLimit;
-  options.strictNullHandling = is.boolean(options.strictNullHandling) ? options.strictNullHandling : defaults.strictNullHandling;
+  options.decoder = ateos.isFunction(options.decoder) ? options.decoder : defaults.decoder;
+  options.allowDots = ateos.isBoolean(options.allowDots) ? options.allowDots : defaults.allowDots;
+  options.plainObjects = ateos.isBoolean(options.plainObjects) ? options.plainObjects : defaults.plainObjects;
+  options.allowPrototypes = ateos.isBoolean(options.allowPrototypes) ? options.allowPrototypes : defaults.allowPrototypes;
+  options.parameterLimit = ateos.isNumber(options.parameterLimit) ? options.parameterLimit : defaults.parameterLimit;
+  options.strictNullHandling = ateos.isBoolean(options.strictNullHandling) ? options.strictNullHandling : defaults.strictNullHandling;
 
-  if (str === "" || is.null(str) || is.undefined(str)) {
+  if (str === "" || ateos.isNull(str) || ateos.isUndefined(str)) {
     return options.plainObjects ? Object.create(null) : {};
   }
 
-  const tempObj = is.string(str) ? parseValues(str, options) : str;
+  const tempObj = ateos.isString(str) ? parseValues(str, options) : str;
   let obj = options.plainObjects ? Object.create(null) : {};
 
   // Iterate over the keys and setup the new object

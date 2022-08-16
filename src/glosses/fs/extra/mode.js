@@ -163,7 +163,7 @@ export default class Mode {
     if (!stat) {
       throw new ateos.error.InvalidArgumentException("You must pass in a \"stat\" object");
     }
-    if (!ateos.is.number(stat.mode)) {
+    if (!ateos.ateos.isNumber(stat.mode)) {
       stat.mode = 0;
     }
     this.stat = stat;

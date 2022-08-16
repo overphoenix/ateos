@@ -17,7 +17,7 @@ export const configFromStringAndArray = (config) => {
   for (let i = 0; i < config._f.length; i++) {
     let currentScore = 0;
     tempConfig = __.datetime.copyConfig({}, config);
-    if (is.exist(config._useUTC)) {
+    if (ateos.isExist(config._useUTC)) {
       tempConfig._useUTC = config._useUTC;
     }
     tempConfig._f = config._f[i];
@@ -37,7 +37,7 @@ export const configFromStringAndArray = (config) => {
 
     getParsingFlags(tempConfig).score = currentScore;
 
-    if (is.nil(scoreToBeat) || currentScore < scoreToBeat) {
+    if (ateos.isNil(scoreToBeat) || currentScore < scoreToBeat) {
       scoreToBeat = currentScore;
       bestExDate = tempConfig;
     }

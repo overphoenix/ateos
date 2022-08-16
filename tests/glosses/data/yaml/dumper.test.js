@@ -12,11 +12,11 @@ describe("data", "yaml", "dumper", () => {
         }
         specify(file.filename().slice(0, -3), async () => {
             const sample = require(file.path());
-            const data = is.function(sample) ? sample.expected : sample;
+            const data = ateos.isFunction(sample) ? sample.expected : sample;
             const serialized = yaml.dump(data, { schema: TEST_SCHEMA });
             const deserialized = yaml.load(serialized, { schema: TEST_SCHEMA });
 
-            if (is.function(sample)) {
+            if (ateos.isFunction(sample)) {
                 sample.call(null, deserialized);
             } else {
                 assert.deepEqual(deserialized, sample);
@@ -51,7 +51,7 @@ describe("data", "yaml", "dumper", () => {
         }, { with_deleted_keys: true })
     }, { with_deleted_keys: true })
         .map((instance) => {
-            if (instance.condenseFlow === true && !is.undefined(instance.flowLevel)) {
+            if (instance.condenseFlow === true && !ateos.isUndefined(instance.flowLevel)) {
                 instance.flowLevel = -1;
             }
             return instance;
@@ -64,7 +64,7 @@ describe("data", "yaml", "dumper", () => {
                 dumpOptionsArbitrary,
                 (obj, dumpOptions) => {
                     const yamlContent = yaml.safeDump(obj, dumpOptions);
-                    assert.ok(is.string(yamlContent));
+                    assert.ok(ateos.isString(yamlContent));
                     assert.deepStrictEqual(yaml.safeLoad(yamlContent), obj);
                 }));
         });

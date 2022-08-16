@@ -23,7 +23,7 @@ function insecureRandomBytes(size) {
 }
 
 let randomBytes = insecureRandomBytes;
-if (!is.undefined(window) && window.crypto && window.crypto.getRandomValues) {
+if (!ateos.isUndefined(window) && window.crypto && window.crypto.getRandomValues) {
   randomBytes = (size) => window.crypto.getRandomValues(new Uint8Array(size));
 } else {
   try {
@@ -33,7 +33,7 @@ if (!is.undefined(window) && window.crypto && window.crypto.getRandomValues) {
   }
 
   // NOTE: in transpiled cases the above require might return null/undefined
-  if (is.nil(randomBytes)) {
+  if (ateos.isNil(randomBytes)) {
     randomBytes = insecureRandomBytes;
   }
 }

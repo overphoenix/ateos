@@ -61,10 +61,10 @@ const j_lm = ((canary & 0xffffff) == 0xefcafe);
 // (public) Constructor
 export function BigInteger(a, b, c) {
   this.data = [];
-  if (!is.nil(a)) {
-    if (is.number(a)) {
+  if (!ateos.isNil(a)) {
+    if (ateos.isNumber(a)) {
       this.fromNumber(a, b, c); 
-    } else if (is.nil(b) && !is.string(a)) {
+    } else if (ateos.isNil(b) && !ateos.isString(a)) {
       this.fromString(a, 256); 
     } else {
       this.fromString(a, b); 
@@ -124,7 +124,7 @@ function am3(i, x, w, j, c, n) {
 }
 
 // node.js (no browser)
-if (is.undefined(navigator)) {
+if (ateos.isUndefined(navigator)) {
   BigInteger.prototype.am = am3;
   dbits = 28;
 } else if (j_lm && (navigator.appName == "Microsoft Internet Explorer")) {
@@ -169,7 +169,7 @@ function int2char(n) {
 }
 function intAt(s, i) {
   const c = BI_RC[s.charCodeAt(i)];
-  return (is.nil(c)) ? -1 : c;
+  return (ateos.isNil(c)) ? -1 : c;
 }
 
 // (protected) copy this to r
@@ -514,15 +514,15 @@ function bnpDivRemTo(m, q, r) {
   }
   const pt = this.abs();
   if (pt.t < pm.t) {
-    if (!is.nil(q)) {
+    if (!ateos.isNil(q)) {
       q.fromInt(0); 
     }
-    if (!is.nil(r)) {
+    if (!ateos.isNil(r)) {
       this.copyTo(r); 
     }
     return;
   }
-  if (is.nil(r)) {
+  if (ateos.isNil(r)) {
     r = nbi(); 
   }
   const y = nbi(); const ts = this.s; const ms = m.s;
@@ -539,7 +539,7 @@ function bnpDivRemTo(m, q, r) {
   }
   const yt = y0 * (1 << this.F1) + ((ys > 1) ? y.data[ys - 2] >> this.F2 : 0);
   const d1 = this.FV / yt; const d2 = (1 << this.F1) / yt; const e = 1 << this.F2;
-  let i = r.t; let j = i - ys; const t = (is.nil(q)) ? nbi() : q;
+  let i = r.t; let j = i - ys; const t = (ateos.isNil(q)) ? nbi() : q;
   y.dlShiftTo(j, t);
   if (r.compareTo(t) >= 0) {
     r.data[r.t++] = 1;
@@ -561,7 +561,7 @@ function bnpDivRemTo(m, q, r) {
       }
     }
   }
-  if (!is.nil(q)) {
+  if (!ateos.isNil(q)) {
     r.drShiftTo(ys, q);
     if (ts != ms) {
       BigInteger.ZERO.subTo(q, q); 
@@ -838,7 +838,7 @@ function bnSigNum() {
 
 //(protected) convert to radix string
 function bnpToRadix(b) {
-  if (is.nil(b)) {
+  if (ateos.isNil(b)) {
     b = 10; 
   }
   if (this.signum() == 0 || b < 2 || b > 36) {
@@ -858,7 +858,7 @@ function bnpToRadix(b) {
 //(protected) convert from radix string
 function bnpFromRadix(s, b) {
   this.fromInt(0);
-  if (is.nil(b)) {
+  if (ateos.isNil(b)) {
     b = 10; 
   }
   const cs = this.chunkSize(b);
@@ -890,7 +890,7 @@ function bnpFromRadix(s, b) {
 
 //(protected) alternate constructor
 function bnpFromNumber(a, b, c) {
-  if (is.number(b)) {
+  if (ateos.isNumber(b)) {
     // new BigInteger(int,int,RNG)
     if (a < 2) {
       this.fromInt(1); 

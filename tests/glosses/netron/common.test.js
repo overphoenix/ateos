@@ -68,7 +68,7 @@ describe("common stuff", () => {
                 assert.equal(generator.create(), i);
             }
 
-            assert.isTrue(is.integer(generator.create()));
+            assert.isTrue(ateos.isInteger(generator.create()));
         });
 
         it("long-based/slow numeric generator", () => {
@@ -78,7 +78,7 @@ describe("common stuff", () => {
                 assert.isTrue(generator.create().equals(ateos.math.Long.fromNumber(i)));
             }
 
-            assert.isTrue(is.long(generator.create()));
+            assert.isTrue(ateos.isLong(generator.create()));
         });
     });
 });

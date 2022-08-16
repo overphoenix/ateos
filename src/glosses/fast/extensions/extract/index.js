@@ -20,7 +20,7 @@ export default function plugin() {
         const header = file.contents.slice(0, detectFileType.minimumBytes);
         const fileType = detectFileType(header);
 
-        if (is.null(fileType)) {
+        if (ateos.isNull(fileType)) {
           // try interpret by ext
           switch (file.extname) {
             case ".br":
@@ -34,7 +34,7 @@ export default function plugin() {
         }
       }
 
-      if (!is.null(handler)) {
+      if (!ateos.isNull(handler)) {
         if (file.isStream() && handler.supportStream) {
           //
         } else if (file.isBuffer() && handler.supportBuffer) {

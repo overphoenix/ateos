@@ -28,7 +28,7 @@ const matchRange = (min, max, expected, match, notMatch) => {
         assert(re.test(match[i]), `should match ${msg}`);
     }
 
-    if (!is.array(notMatch)) {
+    if (!ateos.isArray(notMatch)) {
         return;
     }
     for (let j = 0; j < notMatch.length; j++) {

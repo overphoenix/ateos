@@ -85,15 +85,15 @@ toposort.Sorter = class Sorter {
   }
 
   add(item, deps) {
-    if (!is.string(item) || !item) {
+    if (!ateos.isString(item) || !item) {
       throw new TypeError("Dependent name must be given as a not empty string");
     }
 
-    deps = is.array(deps) ? deps : [deps];
+    deps = ateos.isArray(deps) ? deps : [deps];
 
     if (deps.length > 0) {
       for (const dep of deps) {
-        if (!is.string(dep) || !dep) {
+        if (!ateos.isString(dep) || !dep) {
           throw new TypeError("Dependency name must be given as a not empty string");
         }
 

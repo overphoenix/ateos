@@ -130,7 +130,7 @@ describe("assertion", "assert", () => {
         let foo;
         assert.equal(foo, undefined);
 
-        if (is.function(Symbol)) {
+        if (ateos.isFunction(Symbol)) {
             const sym = Symbol();
             assert.equal(sym, sym);
         }
@@ -145,7 +145,7 @@ describe("assertion", "assert", () => {
         assert.typeOf(true, "boolean");
         assert.typeOf(5, "number");
 
-        if (is.function(Symbol)) {
+        if (ateos.isFunction(Symbol)) {
             assert.typeOf(Symbol(), "symbol");
         }
 
@@ -171,7 +171,7 @@ describe("assertion", "assert", () => {
         // as IE11, `instanceof` also accepts DOM-related interfaces such as
         // `HTMLElement`, despite being non-callable objects in those browsers.
         // See: https://github.com/chaijs/chai/issues/1000.
-        if (typeof document !== "undefined" && !is.undefined(document.createElement) && typeof HTMLElement !== "undefined") {
+        if (typeof document !== "undefined" && !ateos.isUndefined(document.createElement) && typeof HTMLElement !== "undefined") {
             assert.instanceOf(document.createElement("div"), HTMLElement);
         }
 
@@ -206,7 +206,7 @@ describe("assertion", "assert", () => {
             assert.instanceOf(t, Thing);
         }, "The instanceof assertion needs a constructor but function was given.", true);
 
-        if (!is.undefined(Symbol) && !is.undefined(Symbol.hasInstance)) {
+        if (!ateos.isUndefined(Symbol) && !ateos.isUndefined(Symbol.hasInstance)) {
             err(() => {
                 assert.instanceOf(new Foo(), Symbol());
             }, "The instanceof assertion needs a constructor but symbol was given.");
@@ -261,7 +261,7 @@ describe("assertion", "assert", () => {
             assert.notInstanceOf(new Foo(), undefined);
         }, "The instanceof assertion needs a constructor but undefined was given.");
 
-        if (!is.undefined(Symbol) && !is.undefined(Symbol.hasInstance)) {
+        if (!ateos.isUndefined(Symbol) && !ateos.isUndefined(Symbol.hasInstance)) {
             err(() => {
                 assert.notInstanceOf(new Foo(), Symbol());
             }, "The instanceof assertion needs a constructor but symbol was given.");
@@ -312,7 +312,7 @@ describe("assertion", "assert", () => {
     it("notEqual", () => {
         assert.notEqual(3, 4);
 
-        if (is.function(Symbol)) {
+        if (ateos.isFunction(Symbol)) {
             const sym1 = Symbol();
             const sym2 = Symbol();
             assert.notEqual(sym1, sym2);
@@ -326,7 +326,7 @@ describe("assertion", "assert", () => {
     it("strictEqual", () => {
         assert.strictEqual("foo", "foo");
 
-        if (is.function(Symbol)) {
+        if (ateos.isFunction(Symbol)) {
             const sym = Symbol();
             assert.strictEqual(sym, sym);
         }
@@ -339,7 +339,7 @@ describe("assertion", "assert", () => {
     it("notStrictEqual", () => {
         assert.notStrictEqual(5, "5");
 
-        if (is.function(Symbol)) {
+        if (ateos.isFunction(Symbol)) {
             const sym1 = Symbol();
             const sym2 = Symbol();
             assert.notStrictEqual(sym1, sym2);
@@ -652,8 +652,8 @@ describe("assertion", "assert", () => {
         // .include should work with Error objects and objects with a custom
         // `@@toStringTag`.
         assert.include(new Error("foo"), { message: "foo" });
-        if (!is.undefined(Symbol)
-            && !is.undefined(Symbol.toStringTag)) {
+        if (!ateos.isUndefined(Symbol)
+            && !ateos.isUndefined(Symbol.toStringTag)) {
             const customObj = { a: 1 };
             customObj[Symbol.toStringTag] = "foo";
 
@@ -666,7 +666,7 @@ describe("assertion", "assert", () => {
         assert.include({ foo: obj1, bar: obj2 }, { foo: obj1 });
         assert.include({ foo: obj1, bar: obj2 }, { foo: obj1, bar: obj2 });
 
-        if (is.function(Map)) {
+        if (ateos.isFunction(Map)) {
             const map = new Map();
             var val = [{ a: 1 }];
             map.set("a", val);
@@ -680,7 +680,7 @@ describe("assertion", "assert", () => {
             assert.include(map, NaN);
         }
 
-        if (is.function(Set)) {
+        if (ateos.isFunction(Set)) {
             const set = new Set();
             var val = [{ a: 1 }];
             set.add(val);
@@ -698,7 +698,7 @@ describe("assertion", "assert", () => {
             assert.include(set, NaN);
         }
 
-        if (is.function(WeakSet)) {
+        if (ateos.isFunction(WeakSet)) {
             const ws = new WeakSet();
             var val = [{ a: 1 }];
             ws.add(val);
@@ -706,7 +706,7 @@ describe("assertion", "assert", () => {
             assert.include(ws, val);
         }
 
-        if (is.function(Symbol)) {
+        if (ateos.isFunction(Symbol)) {
             const sym1 = Symbol();
             const sym2 = Symbol();
             assert.include([sym1, sym2], sym1);
@@ -751,7 +751,7 @@ describe("assertion", "assert", () => {
         assert.notInclude({ foo: obj1, bar: obj2 }, { foo: { a: 1 } });
         assert.notInclude({ foo: obj1, bar: obj2 }, { foo: obj1, bar: { b: 2 } });
 
-        if (is.function(Map)) {
+        if (ateos.isFunction(Map)) {
             const map = new Map();
             var val = [{ a: 1 }];
             map.set("a", val);
@@ -761,7 +761,7 @@ describe("assertion", "assert", () => {
             assert.notInclude(map, 3);
         }
 
-        if (is.function(Set)) {
+        if (ateos.isFunction(Set)) {
             const set = new Set();
             var val = [{ a: 1 }];
             set.add(val);
@@ -774,7 +774,7 @@ describe("assertion", "assert", () => {
             assert.notInclude(set, 3);
         }
 
-        if (is.function(WeakSet)) {
+        if (ateos.isFunction(WeakSet)) {
             const ws = new WeakSet();
             var val = [{ a: 1 }];
             ws.add(val);
@@ -783,7 +783,7 @@ describe("assertion", "assert", () => {
             assert.notInclude(ws, {});
         }
 
-        if (is.function(Symbol)) {
+        if (ateos.isFunction(Symbol)) {
             const sym1 = Symbol();
             const sym2 = Symbol();
             const sym3 = Symbol();
@@ -836,21 +836,21 @@ describe("assertion", "assert", () => {
         assert.notDeepInclude({ foo: obj1, bar: obj2 }, { baz: { a: 1 } });
         assert.notDeepInclude({ foo: obj1, bar: obj2 }, { foo: { a: 1 }, bar: { b: 9 } });
 
-        if (is.function(Map)) {
+        if (ateos.isFunction(Map)) {
             const map = new Map();
             map.set(1, [{ a: 1 }]);
 
             assert.deepInclude(map, [{ a: 1 }]);
         }
 
-        if (is.function(Set)) {
+        if (ateos.isFunction(Set)) {
             const set = new Set();
             set.add([{ a: 1 }]);
 
             assert.deepInclude(set, [{ a: 1 }]);
         }
 
-        if (is.function(WeakSet)) {
+        if (ateos.isFunction(WeakSet)) {
             err(() => {
                 assert.deepInclude(new WeakSet(), {}, "foo");
             }, "foo: unable to use .deep.include with WeakSet");
@@ -1026,7 +1026,7 @@ describe("assertion", "assert", () => {
         assert.hasAllKeys(obj, [enumProp1, enumProp2]);
         assert.doesNotHaveAllKeys(obj, [enumProp1, enumProp2, nonEnumProp]);
 
-        if (is.function(Symbol)) {
+        if (ateos.isFunction(Symbol)) {
             var sym1 = Symbol("sym1"),
                 sym2 = Symbol("sym2"),
                 sym3 = Symbol("sym3"),
@@ -1046,7 +1046,7 @@ describe("assertion", "assert", () => {
             assert.doesNotHaveAllKeys(obj, [sym1, sym2, sym3, str]);
         }
 
-        if (!is.undefined(Map)) {
+        if (!ateos.isUndefined(Map)) {
             // Not using Map constructor args because not supported in IE 11.
             var aKey = { thisIs: "anExampleObject" },
                 anotherKey = { doingThisBecauseOf: "referential equality" },
@@ -1113,7 +1113,7 @@ describe("assertion", "assert", () => {
             assert.hasAllKeys(weirdMap, [weirdMapKey1, weirdMapKey2]);
             assert.doesNotHaveAllKeys(weirdMap, [weirdMapKey1, weirdMapKey3]);
 
-            if (is.function(Symbol)) {
+            if (ateos.isFunction(Symbol)) {
                 const symMapKey1 = Symbol();
                 const symMapKey2 = Symbol();
                 const symMapKey3 = Symbol();
@@ -1165,7 +1165,7 @@ describe("assertion", "assert", () => {
             // }, 'expected [ { foo: 1 } ] to deeply contain key { iDoNotExist: 0 }');
         }
 
-        if (!is.undefined(Set)) {
+        if (!ateos.isUndefined(Set)) {
             // Not using Set constructor args because not supported in IE 11.
             var aKey = { thisIs: "anExampleObject" },
                 anotherKey = { doingThisBecauseOf: "referential equality" },
@@ -1232,7 +1232,7 @@ describe("assertion", "assert", () => {
             assert.hasAllKeys(weirdSet, [weirdSetKey1, weirdSetKey2]);
             assert.doesNotHaveAllKeys(weirdSet, [weirdSetKey1, weirdSetKey3]);
 
-            if (is.function(Symbol)) {
+            if (ateos.isFunction(Symbol)) {
                 const symSetKey1 = Symbol();
                 const symSetKey2 = Symbol();
                 const symSetKey3 = Symbol();
@@ -1395,7 +1395,7 @@ describe("assertion", "assert", () => {
             assert.lengthOf(1, 5);
         }, "expected 1 to have property \'length\'");
 
-        if (is.function(Map)) {
+        if (ateos.isFunction(Map)) {
             assert.lengthOf(new Map(), 0);
 
             const map = new Map();
@@ -1409,7 +1409,7 @@ describe("assertion", "assert", () => {
             }, "blah: expected {} to have a size of 3 but got 2");
         }
 
-        if (is.function(Set)) {
+        if (ateos.isFunction(Set)) {
             assert.lengthOf(new Set(), 0);
 
             const set = new Set();
@@ -2541,7 +2541,7 @@ describe("assertion", "assert", () => {
                 assert[isExtensible](undefined);
             }, "expected undefined to be extensible");
 
-            if (is.function(Proxy)) {
+            if (ateos.isFunction(Proxy)) {
                 const proxy = new Proxy({}, {
                     isExtensible() {
                         throw new TypeError();
@@ -2574,11 +2574,11 @@ describe("assertion", "assert", () => {
             assert[isNotExtensible](false);
             assert[isNotExtensible](undefined);
 
-            if (is.function(Symbol)) {
+            if (ateos.isFunction(Symbol)) {
                 assert[isNotExtensible](Symbol());
             }
 
-            if (is.function(Proxy)) {
+            if (ateos.isFunction(Proxy)) {
                 const proxy = new Proxy({}, {
                     isExtensible() {
                         throw new TypeError();
@@ -2611,11 +2611,11 @@ describe("assertion", "assert", () => {
             assert[isSealed](false);
             assert[isSealed](undefined);
 
-            if (is.function(Symbol)) {
+            if (ateos.isFunction(Symbol)) {
                 assert[isSealed](Symbol());
             }
 
-            if (is.function(Proxy)) {
+            if (ateos.isFunction(Proxy)) {
                 const proxy = new Proxy({}, {
                     ownKeys() {
                         throw new TypeError();
@@ -2665,7 +2665,7 @@ describe("assertion", "assert", () => {
                 assert[isNotSealed](undefined);
             }, "expected undefined to not be sealed");
 
-            if (is.function(Proxy)) {
+            if (ateos.isFunction(Proxy)) {
                 const proxy = new Proxy({}, {
                     ownKeys() {
                         throw new TypeError();
@@ -2701,11 +2701,11 @@ describe("assertion", "assert", () => {
             assert[isFrozen](false);
             assert[isFrozen](undefined);
 
-            if (is.function(Symbol)) {
+            if (ateos.isFunction(Symbol)) {
                 assert[isFrozen](Symbol());
             }
 
-            if (is.function(Proxy)) {
+            if (ateos.isFunction(Proxy)) {
                 const proxy = new Proxy({}, {
                     ownKeys() {
                         throw new TypeError();
@@ -2755,7 +2755,7 @@ describe("assertion", "assert", () => {
                 assert[isNotFrozen](undefined);
             }, "expected undefined to not be frozen");
 
-            if (is.function(Proxy)) {
+            if (ateos.isFunction(Proxy)) {
                 const proxy = new Proxy({}, {
                     ownKeys() {
                         throw new TypeError();
@@ -2783,19 +2783,19 @@ describe("assertion", "assert", () => {
             assert[isEmpty](new FakeArgs());
             assert[isEmpty]({});
 
-            if (is.function(WeakMap)) {
+            if (ateos.isFunction(WeakMap)) {
                 err(() => {
                     assert[isEmpty](new WeakMap(), "blah");
                 }, "blah: .empty was passed a weak collection");
             }
 
-            if (is.function(WeakSet)) {
+            if (ateos.isFunction(WeakSet)) {
                 err(() => {
                     assert[isEmpty](new WeakSet(), "blah");
                 }, "blah: .empty was passed a weak collection");
             }
 
-            if (is.function(Map)) {
+            if (ateos.isFunction(Map)) {
                 assert[isEmpty](new Map());
 
                 const map = new Map();
@@ -2803,7 +2803,7 @@ describe("assertion", "assert", () => {
                 assert[isEmpty](map);
             }
 
-            if (is.function(Set)) {
+            if (ateos.isFunction(Set)) {
                 assert[isEmpty](new Set());
 
                 const set = new Set();
@@ -2855,7 +2855,7 @@ describe("assertion", "assert", () => {
                 assert[isEmpty](false);
             }, ".empty was passed non-string primitive false");
 
-            if (!is.undefined(Symbol)) {
+            if (!ateos.isUndefined(Symbol)) {
                 err(() => {
                     assert[isEmpty](Symbol());
                 }, ".empty was passed non-string primitive Symbol()");
@@ -2887,19 +2887,19 @@ describe("assertion", "assert", () => {
             assert[isNotEmpty]({ arguments: 0 });
             assert[isNotEmpty]({ foo: "bar" });
 
-            if (is.function(WeakMap)) {
+            if (ateos.isFunction(WeakMap)) {
                 err(() => {
                     assert[isNotEmpty](new WeakMap(), "blah");
                 }, "blah: .empty was passed a weak collection");
             }
 
-            if (is.function(WeakSet)) {
+            if (ateos.isFunction(WeakSet)) {
                 err(() => {
                     assert[isNotEmpty](new WeakSet(), "blah");
                 }, "blah: .empty was passed a weak collection");
             }
 
-            if (is.function(Map)) {
+            if (ateos.isFunction(Map)) {
                 // Not using Map constructor args because not supported in IE 11.
                 const map = new Map();
                 map.set("a", 1);
@@ -2910,7 +2910,7 @@ describe("assertion", "assert", () => {
                 }, "expected {} not to be empty");
             }
 
-            if (is.function(Set)) {
+            if (ateos.isFunction(Set)) {
                 // Not using Set constructor args because not supported in IE 11.
                 const set = new Set();
                 set.add(1);
@@ -2965,7 +2965,7 @@ describe("assertion", "assert", () => {
                 assert[isNotEmpty](false);
             }, ".empty was passed non-string primitive false");
 
-            if (!is.undefined(Symbol)) {
+            if (!ateos.isUndefined(Symbol)) {
                 err(() => {
                     assert[isNotEmpty](Symbol());
                 }, ".empty was passed non-string primitive Symbol()");

@@ -11,13 +11,14 @@ const __ = ateos.lazify({
   style: "ansi-colors",
   prompts: "enquirer",
   theme: "./theme",
-  spinner: "ora"
+  spinner: "ora",
+  ability: "./ability"
 }, exports, require);
 
 const _attr = (param, val) => {
   let parts;
 
-  if (is.array(param)) {
+  if (ateos.isArray(param)) {
     parts = param;
     param = parts[0] || "normal";
   } else {
@@ -271,7 +272,7 @@ export const parse = (text) => {
           flag.length = 0;
         } else {
           attr = _attr(param, false);
-          if (is.null(attr)) {
+          if (ateos.isNull(attr)) {
             out += cap[0];
           } else {
             // if (param !== state[state.length - 1]) {
@@ -290,7 +291,7 @@ export const parse = (text) => {
           out += cap[0];
         } else {
           attr = _attr(param);
-          if (is.null(attr)) {
+          if (ateos.isNull(attr)) {
             out += cap[0];
           } else {
             state.push(param);

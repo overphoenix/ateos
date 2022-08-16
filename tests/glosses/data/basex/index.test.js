@@ -44,8 +44,8 @@ describe("data", "baseX", () => {
     });
 
     it("decode should return Buffer", () => {
-        assert.ok(is.buffer(bases.base2.decode("")));
-        assert.ok(is.buffer(bases.base2.decode("01")));
+        assert.ok(ateos.isBuffer(bases.base2.decode("")));
+        assert.ok(ateos.isBuffer(bases.base2.decode("01")));
     });
 
     it("encode throws on string", () => {

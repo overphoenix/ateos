@@ -27,7 +27,7 @@ export const GeographicCRS = {
 const warn = () => {
   const args = Array.prototype.slice.apply(arguments);
 
-  if (!is.undefined(typeof console) && console.warn) {
+  if (!ateos.isUndefined(typeof console) && console.warn) {
     console.warn.apply(console, args);
   }
 };
@@ -113,25 +113,25 @@ const calculateBoundsFromNestedArrays = (array) => {
       const lon = lonlat[0];
       const lat = lonlat[1];
 
-      if (is.null(x1)) {
+      if (ateos.isNull(x1)) {
         x1 = lon;
       } else if (lon < x1) {
         x1 = lon;
       }
 
-      if (is.null(x2)) {
+      if (ateos.isNull(x2)) {
         x2 = lon;
       } else if (lon > x2) {
         x2 = lon;
       }
 
-      if (is.null(y1)) {
+      if (ateos.isNull(y1)) {
         y1 = lat;
       } else if (lat < y1) {
         y1 = lat;
       }
 
-      if (is.null(y2)) {
+      if (ateos.isNull(y2)) {
         y2 = lat;
       } else if (lat > y2) {
         y2 = lat;
@@ -167,25 +167,25 @@ const calculateBoundsFromNestedArrayOfArrays = (array) => {
         const lon = lonlat[0];
         const lat = lonlat[1];
 
-        if (is.null(x1)) {
+        if (ateos.isNull(x1)) {
           x1 = lon;
         } else if (lon < x1) {
           x1 = lon;
         }
 
-        if (is.null(x2)) {
+        if (ateos.isNull(x2)) {
           x2 = lon;
         } else if (lon > x2) {
           x2 = lon;
         }
 
-        if (is.null(y1)) {
+        if (ateos.isNull(y1)) {
           y1 = lat;
         } else if (lat < y1) {
           y1 = lat;
         }
 
-        if (is.null(y2)) {
+        if (ateos.isNull(y2)) {
           y2 = lat;
         } else if (lat > y2) {
           y2 = lat;
@@ -214,25 +214,25 @@ const calculateBoundsFromArray = (array) => {
     const lon = lonlat[0];
     const lat = lonlat[1];
 
-    if (is.null(x1)) {
+    if (ateos.isNull(x1)) {
       x1 = lon;
     } else if (lon < x1) {
       x1 = lon;
     }
 
-    if (is.null(x2)) {
+    if (ateos.isNull(x2)) {
       x2 = lon;
     } else if (lon > x2) {
       x2 = lon;
     }
 
-    if (is.null(y1)) {
+    if (ateos.isNull(y1)) {
       y1 = lat;
     } else if (lat < y1) {
       y1 = lat;
     }
 
-    if (is.null(y2)) {
+    if (ateos.isNull(y2)) {
       y2 = lat;
     } else if (lat > y2) {
       y2 = lat;
@@ -303,11 +303,11 @@ const degToRad = (deg) => {
 const eachPosition = (coordinates, func) => {
   for (let i = 0; i < coordinates.length; i++) {
     // we found a number so lets convert this pair
-    if (is.number(coordinates[i][0])) {
+    if (ateos.isNumber(coordinates[i][0])) {
       coordinates[i] = func(coordinates[i]);
     }
     // we found an coordinates array it again and run THIS function against it
-    if (is.array(coordinates[i])) {
+    if (ateos.isArray(coordinates[i])) {
       coordinates[i] = eachPosition(coordinates[i], func);
     }
   }
@@ -545,7 +545,7 @@ const edgeIntersectsEdge = (a1, a2, b1, b2) => {
   return false;
 };
 
-const isNumber = (n) => is.number(n) && is.finite(n);
+const isNumber = (n) => ateos.isNumber(n) && ateos.isFinite(n);
 
 const arraysIntersectArrays = (a, b) => {
   if (isNumber(a[0][0])) {
@@ -949,7 +949,7 @@ export class Point extends Primitive {
 
     if (input && input.type === "Point" && input.coordinates) {
       extend(this, input);
-    } else if (input && is.array(input)) {
+    } else if (input && ateos.isArray(input)) {
       this.coordinates = input;
     } else if (args.length >= 2) {
       this.coordinates = args;
@@ -975,7 +975,7 @@ export class MultiPoint extends Primitive {
     super();
     if (input && input.type === "MultiPoint" && input.coordinates) {
       extend(this, input);
-    } else if (is.array(input)) {
+    } else if (ateos.isArray(input)) {
       this.coordinates = input;
     } else {
       throw new error.InvalidArgumentException("Terraformer: invalid input for Terraformer.MultiPoint");
@@ -1001,7 +1001,7 @@ export class MultiPoint extends Primitive {
   }
 
   removePoint(remove) {
-    if (is.number(remove)) {
+    if (ateos.isNumber(remove)) {
       this.coordinates.splice(remove, 1);
     } else {
       this.coordinates.splice(this.coordinates.indexOf(remove), 1);
@@ -1028,7 +1028,7 @@ export class LineString extends Primitive {
     super();
     if (input && input.type === "LineString" && input.coordinates) {
       extend(this, input);
-    } else if (is.array(input)) {
+    } else if (ateos.isArray(input)) {
       this.coordinates = input;
     } else {
       throw new error.InvalidArgumentException("Terraformer: invalid input for Terraformer.LineString");
@@ -1068,7 +1068,7 @@ export class MultiLineString extends Primitive {
     super();
     if (input && input.type === "MultiLineString" && input.coordinates) {
       extend(this, input);
-    } else if (is.array(input)) {
+    } else if (ateos.isArray(input)) {
       this.coordinates = input;
     } else {
       throw new error.InvalidArgumentException("Terraformer: invalid input for Terraformer.MultiLineString");
@@ -1102,7 +1102,7 @@ export class Polygon extends Primitive {
     super();
     if (input && input.type === "Polygon" && input.coordinates) {
       extend(this, input);
-    } else if (is.array(input)) {
+    } else if (ateos.isArray(input)) {
       this.coordinates = input;
     } else {
       throw new error.InvalidArgumentException("Terraformer: invalid input for Terraformer.Polygon");
@@ -1159,7 +1159,7 @@ export class MultiPolygon extends Primitive {
     super();
     if (input && input.type === "MultiPolygon" && input.coordinates) {
       extend(this, input);
-    } else if (is.array(input)) {
+    } else if (ateos.isArray(input)) {
       this.coordinates = input;
     } else {
       throw new error.InvalidArgumentException("Terraformer: invalid input for Terraformer.MultiPolygon");
@@ -1231,7 +1231,7 @@ export class FeatureCollection extends Primitive {
     super();
     if (input && input.type === "FeatureCollection" && input.features) {
       extend(this, input);
-    } else if (is.array(input)) {
+    } else if (ateos.isArray(input)) {
       this.features = input;
     } else {
       throw new error.InvalidArgumentException("Terraformer: invalid input for Terraformer.FeatureCollection");
@@ -1272,7 +1272,7 @@ export class GeometryCollection extends Primitive {
     super();
     if (input && input.type === "GeometryCollection" && input.geometries) {
       extend(this, input);
-    } else if (is.array(input)) {
+    } else if (ateos.isArray(input)) {
       this.geometries = input;
     } else if (input.coordinates && input.type) {
       this.type = "GeometryCollection";

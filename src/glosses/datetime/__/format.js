@@ -23,7 +23,7 @@ const zeroFill = (number, targetLength, forceSign) => {
 // callback: function () { this.month() + 1 }
 export const addFormatToken = (token, padded, ordinal, callback) => {
   let func = callback;
-  if (is.string(callback)) {
+  if (ateos.isString(callback)) {
     func = function () {
       return this[callback]();
     };
@@ -64,7 +64,7 @@ const makeFormatFunction = (format) => {
   return function (mom) {
     let output = "";
     for (let i = 0; i < array.length; i++) {
-      output += is.function(array[i]) ? array[i].call(mom, format) : array[i];
+      output += ateos.isFunction(array[i]) ? array[i].call(mom, format) : array[i];
     }
     return output;
   };

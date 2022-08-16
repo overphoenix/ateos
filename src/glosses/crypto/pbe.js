@@ -23,7 +23,7 @@ const {
   crypto
 } = ateos;
 
-if (is.undefined(BigInteger)) {
+if (ateos.isUndefined(BigInteger)) {
   var BigInteger = crypto.jsbn.BigInteger;
 }
 
@@ -146,7 +146,7 @@ const pkcs12PbeParamsValidator = {
 export const generatePkcs12Key = function (password, salt, id, iter, n, md) {
   let j; let l;
 
-  if (is.nil(md)) {
+  if (ateos.isNil(md)) {
     if (!("sha1" in crypto.md)) {
       throw new Error('"sha1" hash algorithm unavailable.');
     }
@@ -161,7 +161,7 @@ export const generatePkcs12Key = function (password, salt, id, iter, n, md) {
      * Convert password to Unicode byte buffer + trailing 0-byte.
      */
   const passBuf = new crypto.util.ByteBuffer();
-  if (!is.nil(password)) {
+  if (!ateos.isNil(password)) {
     for (l = 0; l < password.length; l++) {
       passBuf.putInt16(password.charCodeAt(l));
     }
@@ -452,13 +452,13 @@ export const getCipherForPKCS12PBE = function (oid, params, password) {
  *          [md] an optional message digest object to use.
  */
 export const opensslDeriveBytes = function (password, salt, dkLen, md) {
-  if (is.nil(md)) {
+  if (ateos.isNil(md)) {
     if (!("md5" in crypto.md)) {
       throw new Error('"md5" hash algorithm unavailable.');
     }
     md = crypto.md.md5.create();
   }
-  if (is.null(salt)) {
+  if (ateos.isNull(salt)) {
     salt = "";
   }
   const digests = [hash(md, password + salt)];

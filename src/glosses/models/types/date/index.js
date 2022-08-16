@@ -60,10 +60,10 @@ internals.Date = class extends Any {
       return value;
     }
 
-    if (is.string(value) ||
-            (is.number(value) && !isNaN(value) && isFinite(value))) {
+    if (ateos.isString(value) ||
+            (ateos.isNumber(value) && !isNaN(value) && isFinite(value))) {
 
-      if (is.string(value) &&
+      if (ateos.isString(value) &&
                 /^[+-]?\d+(\.\d+)?$/.test(value)) {
 
         value = parseFloat(value);

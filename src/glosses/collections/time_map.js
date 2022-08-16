@@ -35,17 +35,17 @@ export default class TimeMap extends Map {
   set(key, value, callback, timeout) {
     if (super.has(key)) {
       const oldObj = super.get(key);
-      ateos.clearTimeout(oldObj.timer);
+      clearTimeout(oldObj.timer);
     }
     const newObj = { value };
     super.set(key, newObj);
-    newObj.timer = ateos.setTimeout(is.function(callback) ? callback : this._callback, (is.number(timeout) && timeout > 0 ? timeout : this._timeout), key);
+    newObj.timer = setTimeout(ateos.isFunction(callback) ? callback : this._callback, (ateos.isNumber(timeout) && timeout > 0 ? timeout : this._timeout), key);
     return this;
   }
 
   get(key) {
     const obj = super.get(key);
-    if (is.undefined(obj)) {
+    if (ateos.isUndefined(obj)) {
       return obj;
     }
     return obj.value;
@@ -76,16 +76,16 @@ export default class TimeMap extends Map {
 
   delete(key) {
     const obj = super.get(key);
-    if (is.undefined(obj)) {
+    if (ateos.isUndefined(obj)) {
       return false;
     }
-    ateos.clearTimeout(obj.timer);
+    clearTimeout(obj.timer);
     return super.delete(key);
   }
 
   clear() {
     super.forEach((obj) => {
-      ateos.clearTimeout(obj.timer);
+      clearTimeout(obj.timer);
     });
     super.clear();
   }

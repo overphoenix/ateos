@@ -75,7 +75,7 @@ const formatChar = (c) => {
 };
 
 const invalidChar = (c) => {
-  if (is.undefined(c)) {
+  if (ateos.isUndefined(c)) {
     return syntaxError(`JSON5: invalid end of input at ${line}:${column}`);
   }
 
@@ -241,30 +241,30 @@ const push = () => {
         //     throw invalidToken()
   }
 
-  if (is.undefined(root)) {
+  if (ateos.isUndefined(root)) {
     root = value;
   } else {
     const parent = stack[stack.length - 1];
-    if (is.array(parent)) {
+    if (ateos.isArray(parent)) {
       parent.push(value);
     } else {
       parent[key] = value;
     }
   }
 
-  if (!is.null(value) && typeof value === "object") {
+  if (!ateos.isNull(value) && typeof value === "object") {
     stack.push(value);
 
-    if (is.array(value)) {
+    if (ateos.isArray(value)) {
       parseState = "beforeArrayValue";
     } else {
       parseState = "beforePropertyName";
     }
   } else {
     const current = stack[stack.length - 1];
-    if (is.nil(current)) {
+    if (ateos.isNil(current)) {
       parseState = "end";
-    } else if (is.array(current)) {
+    } else if (ateos.isArray(current)) {
       parseState = "afterArrayValue";
     } else {
       parseState = "afterPropertyValue";
@@ -276,9 +276,9 @@ const pop = () => {
   stack.pop();
 
   const current = stack[stack.length - 1];
-  if (is.nil(current)) {
+  if (ateos.isNil(current)) {
     parseState = "end";
-  } else if (is.array(current)) {
+  } else if (ateos.isArray(current)) {
     parseState = "afterArrayValue";
   } else {
     parseState = "afterPropertyValue";
@@ -433,10 +433,10 @@ const parseStates = {
 
 const internalize = (holder, name, reviver) => {
   const value = holder[name];
-  if (!is.nil(value) && typeof value === "object") {
+  if (!ateos.isNil(value) && typeof value === "object") {
     for (const key in value) {
       const replacement = internalize(value, key, reviver);
-      if (is.undefined(replacement)) {
+      if (ateos.isUndefined(replacement)) {
         delete value[key];
       } else {
         value[key] = replacement;
@@ -1073,7 +1073,7 @@ export default (text, reviver) => {
     parseStates[parseState]();
   } while (token.type !== "eof");
 
-  if (is.function(reviver)) {
+  if (ateos.isFunction(reviver)) {
     return internalize({ "": root }, "", reviver);
   }
 

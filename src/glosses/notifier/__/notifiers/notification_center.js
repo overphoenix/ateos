@@ -29,7 +29,7 @@ export default class NotificationCenter extends ateos.EventEmitter {
     options = ateos.util.clone(options || {});
     activeId = id;
 
-    if (is.string(options)) {
+    if (ateos.isString(options)) {
       options = { title: "", message: options };
     }
 

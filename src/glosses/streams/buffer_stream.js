@@ -42,7 +42,7 @@ export class ReadableStream extends ateos.std.stream.Readable {
       throw new Error("Tried to write data to a stopped ReadableStreamBuffer");
     }
 
-    if (is.buffer(data)) {
+    if (ateos.isBuffer(data)) {
       this._increaseBufferIfNecessary(data.length);
       data.copy(this._buffer, this._size, 0);
       this._size += data.length;

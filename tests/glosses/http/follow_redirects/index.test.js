@@ -439,13 +439,13 @@ describe("follow-redirects", () => {
                 const currentTime = Date.now();
                 request = http.get("http://localhost:3600/a", resolve);
                 assert(request.aborted === false || // Node >= v11.0.0
-                    is.undefined(request.aborted)); // Node < v11.0.0
+                    ateos.isUndefined(request.aborted)); // Node < v11.0.0
                 request.on("response", reject);
                 request.on("error", reject);
                 request.on("abort", onAbort);
                 function onAbort() {
                     assert(request.aborted === true || // Node >= v11.0.0
-                        is.number(request.aborted) &&
+                        ateos.isNumber(request.aborted) &&
                         request.aborted > currentTime); // Node < v11.0.0
                     request.removeListener("error", reject);
                     request.on("error", noop);

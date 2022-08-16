@@ -13,12 +13,12 @@ export default function plugin() {
         extname: file.extname
       };
       let p;
-      if (is.string(handler) && handler) {
+      if (ateos.isString(handler) && handler) {
         p = handler;
-      } else if (is.function(handler)) {
+      } else if (ateos.isFunction(handler)) {
         handler(obj);
         p = path.join(obj.dirname, obj.basename + obj.extname);
-      } else if (is.object(handler)) {
+      } else if (ateos.isObject(handler)) {
         const dirname = "dirname" in handler ? handler.dirname : obj.dirname;
         const prefix = handler.prefix || "";
         const suffix = handler.suffix || "";

@@ -129,7 +129,7 @@ function parseShardFun(str /* : string */) {
 
 exports.readShardFun = async (path /* : string */, store) /* : Promise<ShardV1> */ => {
   const key = new Key(path).child(new Key(SHARDING_FN));
-  const get = is.function(store.getRaw) ? store.getRaw.bind(store) : store.get.bind(store);
+  const get = ateos.isFunction(store.getRaw) ? store.getRaw.bind(store) : store.get.bind(store);
   const res = await get(key);
   return parseShardFun((res || "").toString().trim());
 };

@@ -87,7 +87,7 @@ const expand = (start, stop, options) => {
       val = String(val);
     }
 
-    if (is.function(options.transform)) {
+    if (ateos.isFunction(options.transform)) {
       arr[idx++] = options.transform(val, a, b, step, idx, arr, options);
     } else {
       arr[idx++] = val;
@@ -110,11 +110,11 @@ const isPadded = (str) => /^-?0\d/.test(str);
 
 
 const isValidLetter = (ch) => {
-  return is.string(ch) && ch.length === 1 && /^\w+$/.test(ch);
+  return ateos.isString(ch) && ch.length === 1 && /^\w+$/.test(ch);
 };
 
 const isValidNumber = (n) => {
-  return is.numeral(n) && !/\./.test(n);
+  return ateos.isNumeral(n) && !/\./.test(n);
 };
 
 const isValid = (min, max) => {
@@ -132,25 +132,25 @@ const isValid = (min, max) => {
  * @return {Array}
  */
 export default function fillRange(start, stop, step, options) {
-  if (is.undefined(start)) {
+  if (ateos.isUndefined(start)) {
     return [];
   }
 
-  if (is.undefined(stop) || start === stop) {
+  if (ateos.isUndefined(stop) || start === stop) {
     // special case, for handling negative zero
-    const isString = is.string(start);
-    if (is.numeral(start) && !toNumber(start)) {
+    const isString = ateos.isString(start);
+    if (ateos.isNumeral(start) && !toNumber(start)) {
       return [isString ? "0" : 0];
     }
     return [start];
   }
 
-  if (!is.number(step) && !is.string(step)) {
+  if (!ateos.isNumber(step) && !ateos.isString(step)) {
     options = step;
     step = undefined;
   }
 
-  if (is.function(options)) {
+  if (ateos.isFunction(options)) {
     options = { transform: options };
   }
 
@@ -172,9 +172,9 @@ export default function fillRange(start, stop, step, options) {
 
   opts.isPadded = isPadded(start) || isPadded(stop);
   opts.toString = opts.stringify
-        || is.string(opts.step)
-        || is.string(start)
-        || is.string(stop)
+        || ateos.isString(opts.step)
+        || ateos.isString(start)
+        || ateos.isString(stop)
         || !opts.isNumber;
 
   if (opts.isPadded) {
@@ -182,10 +182,10 @@ export default function fillRange(start, stop, step, options) {
   }
 
   // support legacy minimatch/fill-range options
-  if (is.boolean(opts.optimize)) {
+  if (ateos.isBoolean(opts.optimize)) {
     opts.toRegex = opts.optimize;
   }
-  if (is.boolean(opts.makeRe)) {
+  if (ateos.isBoolean(opts.makeRe)) {
     opts.toRegex = opts.makeRe;
   }
   return expand(start, stop, opts);

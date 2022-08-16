@@ -20,7 +20,7 @@ export default class ResourceRequest extends Deferred {
     this._creationTimestamp = Date.now();
     this._timeout = null;
 
-    if (!is.undefined(ttl)) {
+    if (!ateos.isUndefined(ttl)) {
       this.setTimeout(ttl);
     }
   }

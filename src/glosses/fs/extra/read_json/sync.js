@@ -6,7 +6,7 @@ export default (fs) => {
     
   return (file, options) => {
     options = options || {};
-    if (is.string(options)) {
+    if (ateos.isString(options)) {
       options = { encoding: options };
     }
         

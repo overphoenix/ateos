@@ -69,8 +69,8 @@ function toSyncOptions(options) {
 
   // Retries are not allowed because it requires the flow to be sync
   if (
-    (is.number(options.retries) && options.retries > 0) ||
-        (options.retries && is.number(options.retries.retries) && options.retries.retries > 0)
+    (ateos.isNumber(options.retries) && options.retries > 0) ||
+        (options.retries && ateos.isNumber(options.retries.retries) && options.retries.retries > 0)
   ) {
     throw Object.assign(new Error("Cannot use retries with the sync api"), { code: "ESYNC" });
   }

@@ -291,7 +291,7 @@ describe("Engine", () => {
     });
 
     e.on("end test", ({ block, test, meta }) => {
-      results.push(["end", block.name, test.description, meta.err, is.number(meta.elapsed)]);
+      results.push(["end", block.name, test.description, meta.err, ateos.isNumber(meta.elapsed)]);
     });
 
     await waitFor(e, "done");

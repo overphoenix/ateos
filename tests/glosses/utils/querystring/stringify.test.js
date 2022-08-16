@@ -431,7 +431,7 @@ describe("util", "querystring", "stringify", () => {
     it("can use custom encoder for a buffer object", () => {
         assert.equal(qs.stringify({ a: Buffer.from([1]) }, {
             encoder(buffer) {
-                if (is.string(buffer)) {
+                if (ateos.isString(buffer)) {
                     return buffer;
                 }
                 return String.fromCharCode(buffer.readUInt8(0) + 97);

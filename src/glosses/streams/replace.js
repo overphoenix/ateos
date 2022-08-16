@@ -104,7 +104,7 @@ export default function replaceStream(search, replace, options) {
         break;
       }
       matches = match.exec(haystack);
-      if (is.null(matches)) {
+      if (ateos.isNull(matches)) {
         break;
       }
       matchCount++;

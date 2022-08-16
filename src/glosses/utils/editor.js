@@ -8,7 +8,7 @@ export default class Editor {
   constructor({ text = "", editor = null, path = null, ext = "" } = {}) {
     this.text = text;
     this.path = path;
-    if (is.string(path) && ext.length > 0 && !path.endsWith(ext)) {
+    if (ateos.isString(path) && ext.length > 0 && !path.endsWith(ext)) {
       path += ext;
     }
     this.ext = ext;
@@ -29,7 +29,7 @@ export default class Editor {
   }
 
   async run({ save = false, detached } = {}) {
-    if (is.null(this.path)) {
+    if (ateos.isNull(this.path)) {
       this.path = await fs.tmpName({ ext: this.ext });
     }
     await fs.writeFile(this.path, this.text);

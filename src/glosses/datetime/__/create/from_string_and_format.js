@@ -12,13 +12,13 @@ hooks.RFC_2822 = function () {};
 const meridiemFixWrap = (locale, hour, meridiem) => {
   let isPm;
 
-  if (is.nil(meridiem)) {
+  if (ateos.isNil(meridiem)) {
     // nothing to do
     return hour;
   }
-  if (is.exist(locale.meridiemHour)) {
+  if (ateos.isExist(locale.meridiemHour)) {
     return locale.meridiemHour(hour, meridiem);
-  } else if (is.exist(locale.isPM)) {
+  } else if (ateos.isExist(locale.isPM)) {
     // Fallback
     isPm = locale.isPM(meridiem);
     if (isPm && hour < 12) {

@@ -18,12 +18,12 @@ const verifyIsStub = (...args) => {
     if (method.proxy && method.proxy[isProxy]) {
       verifyIsStub(method.proxy);
     } else {
-      if (!is.function(method)) {
+      if (!ateos.isFunction(method)) {
         // eslint-disable-next-line no-use-before-define
         assert.fail(`${method} is not a function`);
       }
 
-      if (!is.function(method.getCall)) {
+      if (!ateos.isFunction(method.getCall)) {
         // eslint-disable-next-line no-use-before-define
         assert.fail(`${method} is not stubbed`);
       }
@@ -111,8 +111,8 @@ const assert = {
     }
 
     const o = options || {};
-    const prefix = is.undefined(o.prefix) ? "assert" : o.prefix;
-    const includeFail = is.undefined(o.includeFail) || Boolean(o.includeFail);
+    const prefix = ateos.isUndefined(o.prefix) ? "assert" : o.prefix;
+    const includeFail = ateos.isUndefined(o.includeFail) || Boolean(o.includeFail);
     const instance = this;
 
     for (const name of keys(instance)) {
@@ -153,10 +153,10 @@ const mirrorPropAsAssertion = (...args) => {
     let failed = false;
 
     verifyIsValidAssertion(name, args);
-    if (is.function(method)) {
+    if (ateos.isFunction(method)) {
       failed = !method(fake);
     } else {
-      failed = is.function(fake[method])
+      failed = ateos.isFunction(fake[method])
         ? !fake[method].apply(fake, args)
         : !fake[method];
     }

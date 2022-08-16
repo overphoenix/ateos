@@ -17,7 +17,7 @@ const not = (pattern, options) => new RegExp(not.create(pattern, options));
  * @return {string}
  */
 not.create = (pattern, options) => {
-  if (!is.string(pattern)) {
+  if (!ateos.isString(pattern)) {
     throw new error.InvalidArgumentException("expected a string");
   }
 

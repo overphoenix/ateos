@@ -2,10 +2,10 @@ const { is, shani: { util: { __ } } } = ateos;
 
 const restorable = Symbol.for("shani:restorable");
 
-const isRestorable = (obj) => is.function(obj) && is.function(obj.restore) && obj.restore[restorable];
+const isRestorable = (obj) => ateos.isFunction(obj) && ateos.isFunction(obj.restore) && obj.restore[restorable];
 
 export default function restore(object) {
-  if (!is.null(object) && is.plainObject(object)) {
+  if (!ateos.isNull(object) && ateos.isPlainObject(object)) {
     __.util.walk(object, (prop) => {
       if (isRestorable(object[prop])) {
         object[prop].restore();

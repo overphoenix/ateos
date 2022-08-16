@@ -12,10 +12,10 @@ describe("fnv1a", () => {
 
         let vector;
         let encoding;
-        if (is.string(testCase.vector)) {
+        if (ateos.isString(testCase.vector)) {
             vector = testCase.vector;
             encoding = "utf8";
-        } else if (is.string(testCase.vectorHex)) {
+        } else if (ateos.isString(testCase.vectorHex)) {
             vector = testCase.vectorHex;
             encoding = "hex";
         }

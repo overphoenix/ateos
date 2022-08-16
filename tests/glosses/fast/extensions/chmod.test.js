@@ -171,7 +171,7 @@ describe("fast", "transform", "chmod", () => {
     });
 
     describe("integration", {
-        skip: ateos.is.windows
+        skip: ateos.ateos.isWindows
     }, () => {
         let root;
         let fromdir;

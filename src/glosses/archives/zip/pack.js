@@ -171,8 +171,8 @@ class Entry {
     }
     this.isDirectory = isDirectory;
     this.state = Entry.WAITING_FOR_METADATA;
-    this.setLastModDate(!is.nil(options.mtime) ? options.mtime : new Date());
-    if (!is.nil(options.mode)) {
+    this.setLastModDate(!ateos.isNil(options.mtime) ? options.mtime : new Date());
+    if (!ateos.isNil(options.mode)) {
       this.setFileAttributesMode(options.mode);
     } else {
       this.setFileAttributesMode(isDirectory ? defaultDirectoryMode : defaultFileMode);
@@ -188,7 +188,7 @@ class Entry {
       this.crc32 = null;
       this.uncompressedSize = null;
       this.compressedSize = null;
-      if (!is.nil(options.size)) {
+      if (!ateos.isNil(options.size)) {
         this.uncompressedSize = options.size;
       }
     }
@@ -196,13 +196,13 @@ class Entry {
       this.compress = false;
     } else {
       this.compress = true; // default
-      if (!is.nil(options.compress)) {
+      if (!ateos.isNil(options.compress)) {
         this.compress = Boolean(options.compress);
       }
     }
     this.forceZip64Format = Boolean(options.forceZip64Format);
     if (options.fileComment) {
-      if (is.string(options.fileComment)) {
+      if (ateos.isString(options.fileComment)) {
         this.fileComment = Buffer.from(options.fileComment, "utf-8");
       } else {
         // It should be a Buffer
@@ -239,10 +239,10 @@ class Entry {
   useZip64Format() {
     return (
       this.forceZip64Format ||
-            (!is.nil(this.uncompressedSize) && this.uncompressedSize > 0xfffffffe) ||
-            (!is.nil(this.compressedSize) && this.compressedSize > 0xfffffffe) ||
+            (!ateos.isNil(this.uncompressedSize) && this.uncompressedSize > 0xfffffffe) ||
+            (!ateos.isNil(this.compressedSize) && this.compressedSize > 0xfffffffe) ||
             (
-              !is.nil(this.relativeOffsetOfLocalHeader) &&
+              !ateos.isNil(this.relativeOffsetOfLocalHeader) &&
                 this.relativeOffsetOfLocalHeader > 0xfffffffe
             )
     );
@@ -429,12 +429,12 @@ const calculateFinalSize = (self) => {
     }
     if (entry.state >= Entry.READY_TO_PUMP_FILE_DATA) {
       // if addReadStream was called without providing the size, we can't predict the final size
-      if (is.nil(entry.uncompressedSize)) {
+      if (ateos.isNil(entry.uncompressedSize)) {
         return -1;
       }
     } else {
       // if we're still waiting for fs.stat, we might learn the size someday
-      if (is.nil(entry.uncompressedSize)) {
+      if (ateos.isNil(entry.uncompressedSize)) {
         return null;
       }
     }
@@ -477,9 +477,9 @@ const pumpEntries = (self) => {
     return;
   }
   // first check if finalSize is finally known
-  if (self.ended && !is.nil(self.finalSizeCallback)) {
+  if (self.ended && !ateos.isNil(self.finalSizeCallback)) {
     const finalSize = calculateFinalSize(self);
-    if (!is.nil(finalSize)) {
+    if (!ateos.isNil(finalSize)) {
       // we have an answer
       self.finalSizeCallback(finalSize);
       self.finalSizeCallback = null;
@@ -494,7 +494,7 @@ const pumpEntries = (self) => {
       break;
     }
   }
-  if (!is.null(entry)) {
+  if (!ateos.isNull(entry)) {
     // this entry is not done yet
     if (entry.state < Entry.READY_TO_PUMP_FILE_DATA) {
       return;
@@ -535,7 +535,7 @@ const pumpFileDataReadStream = (self, entry, readStream) => {
     .pipe(self.outputStream, { end: false });
   compressedSizeCounter.once("end", () => {
     entry.crc32 = crc32Watcher.crc32;
-    if (is.nil(entry.uncompressedSize)) {
+    if (ateos.isNil(entry.uncompressedSize)) {
       entry.uncompressedSize = uncompressedSizeCounter.byteCount;
     } else {
       if (entry.uncompressedSize !== uncompressedSizeCounter.byteCount) {
@@ -588,7 +588,7 @@ const encodeCp437 = function (string) {
   }
 
   // This is the slow path.
-  if (is.nil(reverseCp437)) {
+  if (ateos.isNil(reverseCp437)) {
     // cache this once
     reverseCp437 = {};
     for (let i = 0; i < cp437.length; i++) {
@@ -599,7 +599,7 @@ const encodeCp437 = function (string) {
   const result = Buffer.allocUnsafe(string.length);
   for (let i = 0; i < string.length; i++) {
     const b = reverseCp437[string[i]];
-    if (is.nil(b)) {
+    if (ateos.isNil(b)) {
       throw new Error(`character not encodable in CP437: ${JSON.stringify(string[i])}`);
     }
     result[i] = b;
@@ -632,10 +632,10 @@ export class ZipFile extends ateos.EventEmitter {
         return this.emit("error", new error.IllegalStateException(`not a file: ${realPath}`));
       }
       entry.uncompressedSize = stats.size;
-      if (is.nil(options.mtime)) {
+      if (ateos.isNil(options.mtime)) {
         entry.setLastModDate(stats.mtime);
       }
-      if (is.nil(options.mode)) {
+      if (ateos.isNil(options.mode)) {
         entry.setFileAttributesMode(stats.mode);
       }
       entry.setFileDataPumpFunction(() => {
@@ -671,7 +671,7 @@ export class ZipFile extends ateos.EventEmitter {
     if (buffer.length > 0x3fffffff) {
       throw new error.InvalidArgumentException(`buffer too large: ${buffer.length} > ${0x3fffffff}`);
     }
-    if (!is.nil(options.size)) {
+    if (!ateos.isNil(options.size)) {
       throw new error.InvalidArgumentException("options.size not allowed");
     }
     const entry = new Entry(metadataPath, false, options);
@@ -708,10 +708,10 @@ export class ZipFile extends ateos.EventEmitter {
 
   addEmptyDirectory(metadataPath, options = {}) {
     metadataPath = validateMetadataPath(metadataPath, true);
-    if (!is.nil(options.size)) {
+    if (!ateos.isNil(options.size)) {
       throw new error.InvalidArgumentException("options.size not allowed");
     }
-    if (!is.nil(options.compress)) {
+    if (!ateos.isNil(options.compress)) {
       throw new error.InvalidArgumentException("options.compress not allowed");
     }
     const entry = new Entry(metadataPath, true, options);
@@ -726,7 +726,7 @@ export class ZipFile extends ateos.EventEmitter {
   }
 
   async end(options) {
-    if (is.nil(options)) {
+    if (ateos.isNil(options)) {
       options = {};
     }
     if (this.ended) {
@@ -738,7 +738,7 @@ export class ZipFile extends ateos.EventEmitter {
     });
     this.forceZip64Eocd = Boolean(options.forceZip64Format);
     if (options.comment) {
-      if (is.string(options.comment)) {
+      if (ateos.isString(options.comment)) {
         this.comment = encodeCp437(options.comment);
       } else {
         // It should be a Buffer

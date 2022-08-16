@@ -70,7 +70,7 @@ export const tokenizeClass = (str, regexpStr) => {
   let c;
 
 
-  while (!is.nil(rs = regexp.exec(str))) {
+  while (!ateos.isNil(rs = regexp.exec(str))) {
     if (rs[1]) {
       tokens.push(sets.words());
 

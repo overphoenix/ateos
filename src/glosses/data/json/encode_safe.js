@@ -6,7 +6,7 @@ const arr = [];
 
 const decirc = function (val, k, stack, parent) {
   let i;
-  if (typeof val === "object" && !is.null(val)) {
+  if (typeof val === "object" && !ateos.isNull(val)) {
     for (i = 0; i < stack.length; i++) {
       if (stack[i] === val) {
         parent[k] = "[Circular]";
@@ -16,7 +16,7 @@ const decirc = function (val, k, stack, parent) {
     }
     stack.push(val);
     // Optimize for Arrays. Big arrays could kill the performance otherwise!
-    if (is.array(val)) {
+    if (ateos.isArray(val)) {
       for (i = 0; i < val.length; i++) {
         decirc(val[i], i, stack, val);
       }
@@ -68,11 +68,11 @@ export default function (obj, replacer, spacer) {
 //         res += prefix;
 //         if (val) {
 //             res += val;
-//         } else if (!is.object(obj)) {
-//             res += is.undefined(obj) ? null : JSON.stringify(obj);
-//         } else if (is.null(obj)) {
+//         } else if (!ateos.isObject(obj)) {
+//             res += ateos.isUndefined(obj) ? null : JSON.stringify(obj);
+//         } else if (ateos.isNull(obj)) {
 //             res += "null";
-//         } else if (is.array(obj)) {
+//         } else if (ateos.isArray(obj)) {
 //             queue.push({ val: "]" });
 //             for (i = obj.length - 1; i >= 0; i--) {
 //                 arrayPrefix = i === 0 ? "" : ",";

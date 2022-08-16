@@ -224,7 +224,7 @@ Task.prototype.debug = function (msg) {
  */
 Task.prototype.next = function (name, subrun) {
   // juggle parameters if it looks like no name is given
-  if (is.function(name)) {
+  if (ateos.isFunction(name)) {
     subrun = name;
 
     // inherit parent's name
@@ -333,7 +333,7 @@ Task.prototype.start = function () {
  * @param n number of permits to wait for(default: 1).
  */
 Task.prototype.block = function (n) {
-  n = is.undefined(n) ? 1 : n;
+  n = ateos.isUndefined(n) ? 1 : n;
   this.blocks += n;
   if (this.blocks > 0) {
     this.state = sStateTable[this.state][BLOCK];
@@ -354,7 +354,7 @@ Task.prototype.block = function (n) {
  * @return the current block count (task is unblocked when count is 0)
  */
 Task.prototype.unblock = function (n) {
-  n = is.undefined(n) ? 1 : n;
+  n = ateos.isUndefined(n) ? 1 : n;
   this.blocks -= n;
   if (this.blocks === 0 && this.state !== DONE) {
     this.state = RUNNING;
@@ -369,7 +369,7 @@ Task.prototype.unblock = function (n) {
  * @param n number of milliseconds to sleep (default: 0).
  */
 Task.prototype.sleep = function (n) {
-  n = is.undefined(n) ? 0 : n;
+  n = ateos.isUndefined(n) ? 0 : n;
   this.state = sStateTable[this.state][SLEEP];
   const self = this;
   this.timeoutId = setTimeout(() => {
@@ -412,7 +412,7 @@ Task.prototype.cancel = function () {
   // remove permits needed
   this.permitsNeeded = 0;
   // cancel timeouts
-  if (!is.null(this.timeoutId)) {
+  if (!ateos.isNull(this.timeoutId)) {
     cancelTimeout(this.timeoutId);
     this.timeoutId = null;
   }
@@ -451,10 +451,10 @@ Task.prototype.fail = function (next) {
     // do next task as specified
     runNext(next, 0);
   } else {
-    if (!is.null(this.parent)) {
+    if (!ateos.isNull(this.parent)) {
       // finish root task (ensures it is removed from task queue)
       let parent = this.parent;
-      while (!is.null(parent.parent)) {
+      while (!ateos.isNull(parent.parent)) {
         // propagate task info
         parent.error = this.error;
         parent.swapTime = this.swapTime;
@@ -525,7 +525,7 @@ var runNext = function (task, recurse) {
 
         if (!task.error) {
           // chain back up and run parent
-          if (!is.null(task.parent)) {
+          if (!ateos.isNull(task.parent)) {
             // propagate task info
             task.parent.error = task.error;
             task.parent.swapTime = task.swapTime;
@@ -565,7 +565,7 @@ var finish = function (task, suppressCallbacks) {
   }
 
   // only do queue processing for root tasks
-  if (is.null(task.parent)) {
+  if (ateos.isNull(task.parent)) {
     // report error if queue is missing
     if (!(task.type in sTaskQueues)) {
       crypto.log.error(cat,

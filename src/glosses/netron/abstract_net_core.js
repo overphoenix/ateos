@@ -49,7 +49,7 @@ export default class AbstractNetCore {
   }
 
   async _createNode(addr) {
-    if (is.null(this.node)) {
+    if (ateos.isNull(this.node)) {
       if (!is.peerId(this.options.peerId)) {
         this.setPeerId(await ateos.p2p.PeerId.create({ bits: 512 }));
       }

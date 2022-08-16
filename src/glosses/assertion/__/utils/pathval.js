@@ -48,7 +48,7 @@ const {
  */
 
 function hasProperty(obj, name) {
-  if (is.nil(obj)) {
+  if (ateos.isNil(obj)) {
     return false;
   }
 
@@ -112,12 +112,12 @@ function parsePath(path) {
 function internalGetPathValue(obj, parsed, pathDepth) {
   let temporaryValue = obj;
   let res = null;
-  pathDepth = (is.undefined(pathDepth) ? parsed.length : pathDepth);
+  pathDepth = (ateos.isUndefined(pathDepth) ? parsed.length : pathDepth);
 
   for (let i = 0; i < pathDepth; i++) {
     const part = parsed[i];
     if (temporaryValue) {
-      if (is.undefined(part.p)) {
+      if (ateos.isUndefined(part.p)) {
         temporaryValue = temporaryValue[part.i];
       } else {
         temporaryValue = temporaryValue[part.p];
@@ -159,20 +159,20 @@ function internalSetPathValue(obj, val, parsed) {
 
     // If it's the last part of the path, we set the 'propName' value with the property name
     if (i === (pathDepth - 1)) {
-      propName = is.undefined(part.p) ? part.i : part.p;
+      propName = ateos.isUndefined(part.p) ? part.i : part.p;
       // Now we set the property with the name held by 'propName' on object with the desired val
       tempObj[propName] = val;
-    } else if (!is.undefined(part.p) && tempObj[part.p]) {
+    } else if (!ateos.isUndefined(part.p) && tempObj[part.p]) {
       tempObj = tempObj[part.p];
-    } else if (!is.undefined(part.i) && tempObj[part.i]) {
+    } else if (!ateos.isUndefined(part.i) && tempObj[part.i]) {
       tempObj = tempObj[part.i];
     } else {
       // If the obj doesn't have the property we create one with that name to define it
       const next = parsed[i + 1];
       // Here we set the name of the property which will be defined
-      propName = is.undefined(part.p) ? part.i : part.p;
+      propName = ateos.isUndefined(part.p) ? part.i : part.p;
       // Here we decide if this property will be an array or a new object
-      propVal = is.undefined(next.p) ? [] : {};
+      propVal = ateos.isUndefined(next.p) ? [] : {};
       tempObj[propName] = propVal;
       tempObj = tempObj[propName];
     }

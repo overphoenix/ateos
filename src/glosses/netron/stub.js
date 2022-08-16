@@ -18,7 +18,7 @@ export default class Stub {
   }
 
   get definition() {
-    if (is.null(this._def)) {
+    if (ateos.isNull(this._def)) {
       const r = this.reflection;
       const def = this._def = new Definition();
 
@@ -63,7 +63,7 @@ export default class Stub {
       if ($.method) {
         this._processArgs(peer, data, true);
         const result = this.instance[prop](...data);
-        if (is.promise(result)) {
+        if (ateos.isPromise(result)) {
           return result.then(ateos.noop);
         }
         return undefined;
@@ -84,13 +84,13 @@ export default class Stub {
       if ($.method) {
         this._processArgs(peer, defaultData, true);
         const result = this.instance[prop](...defaultData);
-        if (is.promise(result)) {
+        if (ateos.isPromise(result)) {
           return result.then((result) => this._processResult(peer, result));
         }
         return this._processResult(peer, result);
       }
       let val = this.instance[prop];
-      if (is.undefined(val)) {
+      if (ateos.isUndefined(val)) {
         defaultData = this._processArgs(peer, defaultData, false);
         val = defaultData;
       } else {
@@ -118,7 +118,7 @@ export default class Stub {
   }
 
   _processArgs(peer, args, isMethod) {
-    if (isMethod && is.array(args)) {
+    if (isMethod && ateos.isArray(args)) {
       for (let i = 0; i < args.length; ++i) {
         args[i] = this._processObject(peer, args[i]);
       }

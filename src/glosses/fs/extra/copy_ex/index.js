@@ -135,9 +135,9 @@ export default (fs) => {
         const fns = [];
         const patterns = [];
         for (const f of filter) {
-          if (is.function(f)) {
+          if (ateos.isFunction(f)) {
             fns.push(f);
-          } else if (is.string(f)) {
+          } else if (ateos.isString(f)) {
             patterns.push(f);
           }
         }
@@ -259,10 +259,10 @@ export default (fs) => {
           return;
         }
         hasFinished = true;
-        if (is.function(read.close)) {
+        if (ateos.isFunction(read.close)) {
           read.close();
         }
-        if (is.function(write.close)) {
+        if (ateos.isFunction(write.close)) {
           write.close();
         }
         return reject(error);

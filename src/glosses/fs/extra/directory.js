@@ -22,7 +22,7 @@ export default (fs) => {
     }
 
     normalizedPath() {
-      return is.windows ? ateos.util.normalizePath(this._path) : this._path;
+      return ateos.isWindows ? ateos.util.normalizePath(this._path) : this._path;
     }
 
     relativePath(path) {
@@ -64,9 +64,9 @@ export default (fs) => {
       if (!(await this.exists())) {
         await fs.mkdirp(this._path, mode & (~process.umask()));
       }
-      if (!is.null(atime) || !is.null(mtime)) {
+      if (!ateos.isNull(atime) || !ateos.isNull(mtime)) {
         // TODO: -1 will be converted to now, ok?
-        await this.utimes(is.null(atime) ? -1 : atime, is.null(mtime) ? -1 : mtime);
+        await this.utimes(ateos.isNull(atime) ? -1 : atime, ateos.isNull(mtime) ? -1 : mtime);
       }
     }
 
@@ -111,7 +111,7 @@ export default (fs) => {
 
     async addFile(...filename) {
       const opts = { contents: "", mode: 0o666, mtime: null, atime: null };
-      if (is.object(filename[filename.length - 1])) {
+      if (ateos.isObject(filename[filename.length - 1])) {
         Object.assign(opts, filename.pop());
       }
       let root = this;
@@ -130,7 +130,7 @@ export default (fs) => {
         mtime: null,
         atime: null
       };
-      if (is.object(filename[filename.length - 1])) {
+      if (ateos.isObject(filename[filename.length - 1])) {
         Object.assign(opts, filename.pop());
       }
       let root = this;
@@ -196,7 +196,7 @@ export default (fs) => {
     }
 
     unlink({ relPath, retries = 10, delay = 100 } = {}) {
-      if (is.string(relPath) && !aPath.isAbsolute(relPath)) {
+      if (ateos.isString(relPath) && !aPath.isAbsolute(relPath)) {
         return fs.removeEx(aPath.join(this._path, relPath), { maxBusyTries: retries, emfileWait: delay });
       }
       return fs.removeEx(this._path, { maxBusyTries: retries, emfileWait: delay });

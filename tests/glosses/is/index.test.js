@@ -467,7 +467,7 @@ describe("is", () => {
 
             it("returns true if Comparator says so even on primitives", () => {
                 const valueA = {
-                    a: new Matcher(is.number)
+                    a: new Matcher(ateos.isNumber)
                 };
                 const valueB = { a: 1 };
                 assert(is.deepEqual(valueA, valueB, { comparator: matcherComparator }) === true,
@@ -477,7 +477,7 @@ describe("is", () => {
             it("returns true if Comparator says so even on primitives (switch arg order)", () => {
                 const valueA = { a: 1 };
                 const valueB = {
-                    a: new Matcher(is.number)
+                    a: new Matcher(ateos.isNumber)
                 };
                 assert(is.deepEqual(valueA, valueB, { comparator: matcherComparator }) === true,
                     "eql({a:1}, {a:value => typeof value === 'number'}, <comparator>) === true");
@@ -526,23 +526,23 @@ describe("is", () => {
         }
 
         it("class => false", () => {
-            assert.isFalse(ateos.is.plainObject(new Foo()));
+            assert.isFalse(ateos.ateos.isPlainObject(new Foo()));
         });
 
         it("function => false", () => {
-            assert.isFalse(ateos.is.plainObject(new Bar()));
+            assert.isFalse(ateos.ateos.isPlainObject(new Bar()));
         });
 
         it("[1, 2, 3] => false", () => {
-            assert.isFalse(is.plainObject([1, 2, 3]));
+            assert.isFalse(ateos.isPlainObject([1, 2, 3]));
         });
 
         it("{ 'x': 0, 'y': 0 } => true", () => {
-            assert.isTrue(is.plainObject({ x: 0, y: 0 }));
+            assert.isTrue(ateos.isPlainObject({ x: 0, y: 0 }));
         });
 
         it("Object.create(null) => true", () => {
-            assert.isTrue(is.plainObject(Object.create(null)));
+            assert.isTrue(ateos.isPlainObject(Object.create(null)));
         });
     });
 
@@ -564,12 +564,12 @@ describe("is", () => {
         describe("namespace", () => {
             it("plain object", () => {
                 const obj = {};
-                assert.isFalse(is.namespace(obj));
+                assert.isFalse(ateos.isNamespace(obj));
             });
 
             it("plain object marked namespace", () => {
                 const obj = ateos.asNamespace({});
-                assert.isTrue(is.namespace(obj));
+                assert.isTrue(ateos.isNamespace(obj));
             });
 
             class A {}
@@ -577,22 +577,22 @@ describe("is", () => {
 
             it("class", () => {
                 const obj = A;
-                assert.isFalse(is.namespace(obj));
+                assert.isFalse(ateos.isNamespace(obj));
             });
             
             it("class marked namespace", () => {
                 const obj = ateos.asNamespace(A);
-                assert.isTrue(is.namespace(obj));
+                assert.isTrue(ateos.isNamespace(obj));
             });
 
             it("function", () => {
                 const obj = b;
-                assert.isFalse(is.namespace(obj));
+                assert.isFalse(ateos.isNamespace(obj));
             });
             
             it("function marked namespace", () => {
                 const obj = ateos.asNamespace(b);
-                assert.isTrue(is.namespace(obj));
+                assert.isTrue(ateos.isNamespace(obj));
             });
 
             it("realm", () => {

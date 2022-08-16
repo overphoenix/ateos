@@ -11,7 +11,7 @@ equal.expand = function (pattern, expected, options) {
 
 describe("util", "braces", () => {
     it("should return an array", () => {
-        assert(is.array(braces("{a,b}")));
+        assert(ateos.isArray(braces("{a,b}")));
     });
 
     it("should return an optimized string by default", () => {

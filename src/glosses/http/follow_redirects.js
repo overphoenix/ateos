@@ -85,10 +85,10 @@ class RedirectableRequest extends Writable {
     }
 
     // Validate input and shift parameters if necessary
-    if (!(is.string(data) || typeof data === "object" && ("length" in data))) {
+    if (!(ateos.isString(data) || typeof data === "object" && ("length" in data))) {
       throw new Error("data should be a string, Buffer or Uint8Array");
     }
-    if (is.function(encoding)) {
+    if (ateos.isFunction(encoding)) {
       callback = encoding;
       encoding = null;
     }
@@ -117,10 +117,10 @@ class RedirectableRequest extends Writable {
   // Ends the current native request
   end(data, encoding, callback) {
     // Shift parameters if necessary
-    if (is.function(data)) {
+    if (ateos.isFunction(data)) {
       callback = data;
       data = encoding = null;
-    } else if (is.function(encoding)) {
+    } else if (ateos.isFunction(encoding)) {
       callback = encoding;
       encoding = null;
     }
@@ -377,7 +377,7 @@ const wrap = (protocols) => {
     // Executes a request, following redirects
     wrappedProtocol.request = function (input, options, callback) {
       // Parse parameters
-      if (is.string(input)) {
+      if (ateos.isString(input)) {
         const urlStr = input;
         try {
           input = urlToOptions(new URL(urlStr));
@@ -394,7 +394,7 @@ const wrap = (protocols) => {
         options = input;
         input = { protocol };
       }
-      if (is.function(options)) {
+      if (ateos.isFunction(options)) {
         callback = options;
         options = null;
       }

@@ -24,12 +24,12 @@ export default class WindowsToaster extends ateos.EventEmitter {
   async notify(options) {
     options = ateos.util.clone(options || {});
 
-    if (is.string(options)) {
+    if (ateos.isString(options)) {
       options = { title: "", message: options };
     }
 
     options.title = options.title || "Node Notification:";
-    if (is.undefined(options.message) && is.undefined(options.close)) {
+    if (ateos.isUndefined(options.message) && ateos.isUndefined(options.close)) {
       throw new Error("Message or ID to close is required.");
     }
 

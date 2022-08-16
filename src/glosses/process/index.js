@@ -81,16 +81,16 @@ export const errname = (code) => ateos.std.util.getSystemErrorName(code);
 
 ateos.lazifyp({
   platformGetList: () => {
-    return is.darwin
+    return ateos.isDarwin
       ? () => __.execStdout("netstat", ["-anv", "-p", "tcp"])
         .then((data) => Promise.all([data, __.execStdout("netstat", ["-anv", "-p", "udp"])]))
         .then((data) => data.join("\n"))
-      : is.linux
+      : ateos.isLinux
         ? () => __.execStdout("ss", ["-tunlp"])
         : () => __.execStdout("netstat", ["-ano"]);
   },
   checkProc: () => (proc, x) => {
-    if (is.string(proc)) {
+    if (ateos.isString(proc)) {
       return x.name === proc;
     }
 

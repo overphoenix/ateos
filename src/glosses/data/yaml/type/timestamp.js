@@ -18,13 +18,13 @@ const YAML_TIMESTAMP_REGEXP = new RegExp(
     "(?::([0-9][0-9]))?))?$"); // [11] tz_minute
 
 const resolveYamlTimestamp = (data) => {
-  if (is.null(data)) {
+  if (ateos.isNull(data)) {
     return false;
   }
-  if (!is.null(YAML_DATE_REGEXP.exec(data))) {
+  if (!ateos.isNull(YAML_DATE_REGEXP.exec(data))) {
     return true;
   }
-  if (!is.null(YAML_TIMESTAMP_REGEXP.exec(data))) {
+  if (!ateos.isNull(YAML_TIMESTAMP_REGEXP.exec(data))) {
     return true;
   }
   return false;
@@ -32,11 +32,11 @@ const resolveYamlTimestamp = (data) => {
 
 const constructYamlTimestamp = (data) => {
   let match = YAML_DATE_REGEXP.exec(data);
-  if (is.null(match)) {
+  if (ateos.isNull(match)) {
     match = YAML_TIMESTAMP_REGEXP.exec(data);
   }
 
-  if (is.null(match)) {
+  if (ateos.isNull(match)) {
     throw new error.InvalidArgumentException("Date resolve error");
   }
 

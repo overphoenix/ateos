@@ -1,7 +1,10 @@
-// Be here until it appears in the official implementation
+require('ts-node').register();
+
 import "reflect-metadata";
 
-import * as common from "./common";
+import * as common from "@recalibratedsystems/common";
+import { definep, getPrivate, lazify, lazifyp, setLazifyErrorHandler } from "@recalibratedsystems/common/lazify";
+import { asNamespace } from "@recalibratedsystems/common/namespace";
 
 export interface Ateos {
   __app__: any;
@@ -11,13 +14,50 @@ export interface Ateos {
   path: any;
   getPath: (n: string, ...args: string[]) => string;
   HOME: string;
-  std: {};
+  std: {
+    assert: any,
+    asyncHooks: any,
+    buffer: any,
+    childProcess: any,
+    cluster: any,
+    console: any,
+    crypto: any,
+    dgram: any,
+    dns: any,
+    domain: any,
+    events: any,
+    fs: any,
+    http: any,
+    http2: any,
+    https: any,
+    inspector: any,
+    module: any,
+    net: any,
+    os: any,
+    path: any,
+    perfHooks: any,
+    process: any,
+    querystring: any,
+    readline: any,
+    repl: any,
+    stream: any,
+    stringDecoder: any,
+    timers: any,
+    tls: any,
+    tty: any,
+    url: any,
+    util: any,
+    v8: any,
+    vm: any,
+    workerThreads: any,
+    zlib: any
+  };
   [key: string]: unknown;
 }
 
 const ateos: Ateos = Object.create({
   __app__: null, // root application instance
-  common: common.asNamespace(common),
+  common: asNamespace(common),
   // expose some useful commons
   null: common.null,
   undefined: common.undefined,
@@ -26,17 +66,11 @@ const ateos: Ateos = Object.create({
   truly: common.truly,
   falsely: common.falsely,
   o: common.o,
-  lazify: common.lazify,
-  lazifyp: common.lazifyp,
-  definep: common.definep,
-  getPrivate: common.getPrivate,
-  asNamespace: common.asNamespace,
-  setTimeout: common.setTimeout,
-  clearTimeout: common.clearTimeout,
-  setInterval: common.setInterval,
-  clearInterval: common.clearInterval,
-  setImmediate: common.setImmediate,
-  clearImmediate: common.clearImmediate,
+  lazify,
+  lazifyp,
+  definep,
+  getPrivate,
+  asNamespace: asNamespace,
   EMPTY_BUFFER: common.EMPTY_BUFFER
 });
 
@@ -60,7 +94,7 @@ Object.defineProperty(ateos, "ateos", {
   value: ateos
 });
 
-common.lazify({
+lazify({
   package: "../package.json",
   log: "ololog",
 
@@ -71,24 +105,63 @@ common.lazify({
 
   assert: () => ateos.assertion.assert,
 
+  EventEmitter: "eventemitter3",
+  AsyncEventEmitter: ["@recalibratedsystems/common/async_event_emitter", "AsyncEventEmitter"],
+  SmartBuffer: "@recalibratedsystems/smartbuffer",
+  typeOf: "@recalibratedsystems/common/typeof",
+
   // Predicates
   isLinux: () => process.platform === "linux",
   isDarwin: () => process.platform === "darwin",
   isFreebsd: () => process.platform === "freebsd",
   isOpenbsd: () => process.platform === "openbsd",
   isWindows: () => common.isWindows,
+  isNodejs: () => common.isNodejs,
   isArray: () => common.isArray,
   isFunction: () => common.isFunction,
+  isAsyncFunction: () => common.isAsyncFunction,
+  isGeneratorFunction: () => common.isGeneratorFunction,
   isString: () => common.isString,
   isNumber: () => common.isNumber,
+  isInteger: () => common.isInteger,
   isBuffer: () => common.isBuffer,
-  isPlainObject: () => common.isPlainObject
+  isSmartBuffer: () => common.isSmartBuffer,
+  isClass: () => common.isClass,
+  isBoolean: () => common.isBoolean,
+  isUndefined: () => common.isUndefined,
+  isPropertyDefined: () => common.isPropertyDefined,
+  isPropertyOwned: () => common.isPropertyOwned,
+  isObject: () => common.isObject,
+  isPlainObject: () => common.isPlainObject,
+  isNull: () => common.isNull,
+  isNil: () => common.isNil,
+  isRegexp: () => common.isRegexp,
+  isDate: () => common.isDate,
+  isNamespace: () => common.isNamespace,
+  isPromise: () => common.isPromise,
+  isExist: () => common.isExist,
+  isFinite: () => common.isFinite,
+  isNan: () => common.isNan,
+  isStream: () => common.isStream,
+  isWritableStream: () => common.isWritableStream,
+  isSet: () => common.isSet,
+  isMap: () => common.isMap,
+  isIdentifier: () => common.isIdentifier,
+  isIterable: () => common.isIterable,
+  isProperty: () => common.isProperty,
+  isSymbol: () => common.isSymbol,
+  isPrimitive: () => common.isPrimitive,
+  isDigits: () => common.isDigits,
+  isError: () => common.isError,
+  isEmptyObject: () => common.isEmptyObject,
+  isEqualArrays: () => common.isEqualArrays,
+  isBinaryPath: () => common.isBinaryPath
 }, ateos, require);
 
 // Namespaces
-common.lazify({
+lazify({
   // NodeJS modules
-  std: () => common.lazify({
+  std: () => lazify({
     assert: "assert",
     asyncHooks: "async_hooks",
     buffer: "buffer",
@@ -131,8 +204,6 @@ common.lazify({
   app: "./glosses/app",
   archive: "./glosses/archives",
   assertion: "./glosses/assertion",
-  AsyncEventEmitter: "./glosses/async_event_emitter",
-  buffer: "./glosses/buffer",
   cli: "./glosses/cli",
   collection: "./glosses/collections",
   compressor: "./glosses/compressors",
@@ -144,7 +215,7 @@ common.lazify({
   datetime: "./glosses/datetime",
   diff: "./glosses/diff",
   env: "./glosses/env",
-  error: "./glosses/errors",
+  error: "@recalibratedsystems/common/error",
   fast: "./glosses/fast",
   fs: "./glosses/fs",
   git: "isomorphic-git",
@@ -170,7 +241,7 @@ common.lazify({
   p2p: "./glosses/p2p",
   pretty: "./glosses/pretty",
   process: "./glosses/process",
-  promise: "./glosses/promise",
+  promise: "@recalibratedsystems/common/promise",
   realm: "./glosses/realm",
   regex: "./glosses/regex",
   rollup: "./glosses/rollup",
@@ -180,10 +251,9 @@ common.lazify({
   sourcemap: "./glosses/sourcemap",
   stream: "./glosses/streams",
   system: "./glosses/system",
-  task: "./glosses/tasks",
+  task: "@recalibratedsystems/tasks",
   templating: "./glosses/templating",
   text: "./glosses/text",
-  typeOf: "./glosses/typeof",
   util: "./glosses/utils",
   validation: "./glosses/validation",
   vault: "./glosses/vault",
@@ -191,7 +261,6 @@ common.lazify({
 
   // lazify third-party libraries
   async: "async",
-  EventEmitter: "eventemitter3",
   lodash: "lodash",
   tslib: "tslib",
   typescript: "typescript",
@@ -202,18 +271,18 @@ common.lazify({
 }, ateos, require, { asNamespace: true });
 
 // mappings
-common.lazify({
+lazify({
   require: "./glosses/module/require",
   requireAddon: "./glosses/module/require_addon",
   sprintf: "./glosses/text/sprintf"
-}, ateos);
+}, ateos, require);
 
 // lazify non-extendable objects in std
-common.lazify({
+lazify({
   constants: "constants"
 }, ateos.std);
 
-common.setLazifyErrorHandler((err: any) => {
+setLazifyErrorHandler((err: any) => {
   //eslint-disable-next-line
   if (ateos.__app__ !== null) {
     ateos.__app__.fireException(err);

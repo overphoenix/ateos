@@ -6,7 +6,7 @@ const {
 const { ParsedError } = pretty.error;
 
 const error = function (what) {
-    if (is.string(what)) {
+    if (ateos.isString(what)) {
         return error(() => {
             throw Error(what);
         });

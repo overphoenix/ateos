@@ -199,7 +199,7 @@ export default function tokenizeRegexp(regexpStr) {
         const rs = /^(\d+)(,(\d+)?)?\}/.exec(str.slice(i));
         let min;
         let max;
-        if (!is.null(rs)) {
+        if (!ateos.isNull(rs)) {
           if (last.length === 0) {
             repeatErr(i);
           }

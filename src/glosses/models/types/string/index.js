@@ -41,7 +41,7 @@ internals.String = class extends Any {
 
   _base(value, state, options) {
 
-    if (is.string(value) &&
+    if (ateos.isString(value) &&
             options.convert) {
 
       if (this._flags.normalize) {
@@ -81,7 +81,7 @@ internals.String = class extends Any {
 
     return {
       value,
-      errors: (is.string(value)) ? null : this.createError("string.base", { value }, state, options)
+      errors: (ateos.isString(value)) ? null : this.createError("string.base", { value }, state, options)
     };
   }
 
@@ -123,7 +123,7 @@ internals.String = class extends Any {
       pattern: new RegExp(pattern.source, pattern.ignoreCase ? "i" : undefined) // Future version should break this and forbid unsupported regex flags
     };
 
-    if (is.string(patternOptions)) {
+    if (ateos.isString(patternOptions)) {
       patternObject.name = patternOptions;
     } else if (typeof patternOptions === "object") {
       patternObject.invert = Boolean(patternOptions.invert);
@@ -175,17 +175,17 @@ internals.String = class extends Any {
 
     if (isEmailOptions) {
       assert(typeof isEmailOptions === "object", "email options must be an object");
-      assert(is.undefined(isEmailOptions.checkDNS), "checkDNS option is not supported");
-      assert(is.undefined(isEmailOptions.tldWhitelist) || typeof isEmailOptions.tldWhitelist === "object", "tldWhitelist must be an array or object");
+      assert(ateos.isUndefined(isEmailOptions.checkDNS), "checkDNS option is not supported");
+      assert(ateos.isUndefined(isEmailOptions.tldWhitelist) || typeof isEmailOptions.tldWhitelist === "object", "tldWhitelist must be an array or object");
       assert(
-        is.undefined(isEmailOptions.minDomainAtoms) ||
+        ateos.isUndefined(isEmailOptions.minDomainAtoms) ||
                 is.safeInteger(isEmailOptions.minDomainAtoms) &&
                 isEmailOptions.minDomainAtoms > 0,
         "minDomainAtoms must be a positive integer"
       );
       assert(
-        is.undefined(isEmailOptions.errorLevel) ||
-                is.boolean(isEmailOptions.errorLevel) ||
+        ateos.isUndefined(isEmailOptions.errorLevel) ||
+                ateos.isBoolean(isEmailOptions.errorLevel) ||
                 (
                   is.safeInteger(isEmailOptions.errorLevel) &&
                     isEmailOptions.errorLevel >= 0
@@ -215,7 +215,7 @@ internals.String = class extends Any {
     assert(typeof ipOptions === "object", "options must be an object");
 
     if (ipOptions.cidr) {
-      assert(is.string(ipOptions.cidr), "cidr must be a string");
+      assert(ateos.isString(ipOptions.cidr), "cidr must be a string");
       ipOptions.cidr = ipOptions.cidr.toLowerCase();
 
       assert(contain(internals.cidrPresences, ipOptions.cidr), `cidr must be one of ${internals.cidrPresences.join(", ")}`);
@@ -232,7 +232,7 @@ internals.String = class extends Any {
 
     let versions;
     if (ipOptions.version) {
-      if (!is.array(ipOptions.version)) {
+      if (!ateos.isArray(ipOptions.version)) {
         ipOptions.version = [ipOptions.version];
       }
 
@@ -241,7 +241,7 @@ internals.String = class extends Any {
       versions = [];
       for (let i = 0; i < ipOptions.version.length; ++i) {
         let version = ipOptions.version[i];
-        assert(is.string(version), `version at position ${i} must be a string`);
+        assert(ateos.isString(version), `version at position ${i} must be a string`);
         version = version.toLowerCase();
         assert(Ip.versions[version], `version at position ${i} must be one of ${Object.keys(Ip.versions).join(", ")}`);
         versions.push(version);
@@ -282,9 +282,9 @@ internals.String = class extends Any {
       assert(unknownOptions.length === 0, `Options contain unknown keys: ${unknownOptions}`);
 
       if (uriOptions.scheme) {
-        assert(uriOptions.scheme instanceof RegExp || is.string(uriOptions.scheme) || is.array(uriOptions.scheme), "scheme must be a RegExp, String, or Array");
+        assert(uriOptions.scheme instanceof RegExp || ateos.isString(uriOptions.scheme) || ateos.isArray(uriOptions.scheme), "scheme must be a RegExp, String, or Array");
 
-        if (!is.array(uriOptions.scheme)) {
+        if (!ateos.isArray(uriOptions.scheme)) {
           uriOptions.scheme = [uriOptions.scheme];
         }
 
@@ -293,7 +293,7 @@ internals.String = class extends Any {
         // Flatten the array into a string to be used to match the schemes.
         for (let i = 0; i < uriOptions.scheme.length; ++i) {
           const scheme = uriOptions.scheme[i];
-          assert(scheme instanceof RegExp || is.string(scheme), `scheme at position ${i} must be a RegExp or String`);
+          assert(scheme instanceof RegExp || ateos.isString(scheme), `scheme at position ${i} must be a RegExp or String`);
 
           // Add OR separators if a value already exists
           customScheme = customScheme + (customScheme ? "|" : "");
@@ -367,7 +367,7 @@ internals.String = class extends Any {
     let versionNumbers = "";
 
     if (guidOptions && guidOptions.version) {
-      if (!is.array(guidOptions.version)) {
+      if (!ateos.isArray(guidOptions.version)) {
         guidOptions.version = [guidOptions.version];
       }
 
@@ -376,7 +376,7 @@ internals.String = class extends Any {
 
       for (let i = 0; i < guidOptions.version.length; ++i) {
         let version = guidOptions.version[i];
-        assert(is.string(version), `version at position ${i} must be a string`);
+        assert(ateos.isString(version), `version at position ${i} must be a string`);
         version = version.toLowerCase();
         const versionNumber = internals.guidVersions[version];
         assert(versionNumber, `version at position ${i} must be one of ${Object.keys(internals.guidVersions).join(", ")}`);
@@ -408,7 +408,7 @@ internals.String = class extends Any {
 
   hex(hexOptions = {}) {
     assert(typeof hexOptions === "object", "hex options must be an object");
-    assert(is.undefined(hexOptions.byteAligned) || is.boolean(hexOptions.byteAligned), "byteAligned must be boolean");
+    assert(ateos.isUndefined(hexOptions.byteAligned) || ateos.isBoolean(hexOptions.byteAligned), "byteAligned must be boolean");
 
     const byteAligned = hexOptions.byteAligned === true;
     const regex = /^[a-f0-9]+$/i;
@@ -435,7 +435,7 @@ internals.String = class extends Any {
 
     // Validation.
     assert(typeof base64Options === "object", "base64 options must be an object");
-    assert(is.undefined(base64Options.paddingRequired) || is.boolean(base64Options.paddingRequired), "paddingRequired must be boolean");
+    assert(ateos.isUndefined(base64Options.paddingRequired) || ateos.isBoolean(base64Options.paddingRequired), "paddingRequired must be boolean");
 
     // Determine if padding is required.
     const paddingRequired = base64Options.paddingRequired === false ?
@@ -554,7 +554,7 @@ internals.String = class extends Any {
   }
 
   trim(enabled = true) {
-    assert(is.boolean(enabled), "Option must be a boolean");
+    assert(ateos.isBoolean(enabled), "Option must be a boolean");
 
     if ((this._flags.trim && enabled) || (!this._flags.trim && !enabled)) {
       return this;
@@ -583,12 +583,12 @@ internals.String = class extends Any {
 
   replace(pattern, replacement) {
 
-    if (is.string(pattern)) {
+    if (ateos.isString(pattern)) {
       pattern = new RegExp(escapeRegex(pattern), "g");
     }
 
     assert(pattern instanceof RegExp, "pattern must be a RegExp");
-    assert(is.string(replacement), "replacement must be a String");
+    assert(ateos.isString(replacement), "replacement must be a String");
 
     // This can not be considere a test like trim, we can't "reject"
     // anything from this rule, so just clone the current object
@@ -608,7 +608,7 @@ internals.String = class extends Any {
 
   truncate(enabled) {
 
-    const value = is.undefined(enabled) ? true : Boolean(enabled);
+    const value = ateos.isUndefined(enabled) ? true : Boolean(enabled);
 
     if (this._flags.truncate === value) {
       return this;

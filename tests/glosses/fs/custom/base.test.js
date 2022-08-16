@@ -16,13 +16,13 @@ describe("fs", "custom", "BaseFileSystem", () => {
         const check = {
             success(info, err, result) {
                 assert.isNull(err);
-                if (is.array(info.validArgs)) {
+                if (ateos.isArray(info.validArgs)) {
                     assert.sameDeepMembers(result, info.validArgs);
                 }
             },
             fail(info, err, result) {
                 assert.exists(err);
-                if (is.array(info.validArgs)) {
+                if (ateos.isArray(info.validArgs)) {
                     assert.sameDeepMembers(err.args, info.validArgs);
                 }
             }

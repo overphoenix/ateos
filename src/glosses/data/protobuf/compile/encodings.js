@@ -18,7 +18,7 @@ exports.make = encoder;
 
 exports.bytes = (function (tag) {
   const bufferLength = function (val) {
-    return is.buffer(val) ? val.length : Buffer.byteLength(val);
+    return ateos.isBuffer(val) ? val.length : Buffer.byteLength(val);
   };
 
   const encodingLength = function (val) {
@@ -33,7 +33,7 @@ exports.bytes = (function (tag) {
     varint.encode(len, buffer, offset);
     offset += varint.encode.bytes;
 
-    if (is.buffer(val)) {
+    if (ateos.isBuffer(val)) {
       val.copy(buffer, offset);
     } else {
       buffer.write(val, offset, len);

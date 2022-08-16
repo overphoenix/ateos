@@ -564,7 +564,7 @@ function arrayToRing(arr) {
 function pointToWKTPoint(primitive) {
   let ret = "POINT ";
 
-  if (is.undefined(primitive.coordinates) || primitive.coordinates.length === 0) {
+  if (ateos.isUndefined(primitive.coordinates) || primitive.coordinates.length === 0) {
     ret += "EMPTY";
 
     return ret;
@@ -589,7 +589,7 @@ function pointToWKTPoint(primitive) {
 function lineStringToWKTLineString(primitive) {
   let ret = "LINESTRING ";
 
-  if (is.undefined(primitive.coordinates) || primitive.coordinates.length === 0 || primitive.coordinates[0].length === 0) {
+  if (ateos.isUndefined(primitive.coordinates) || primitive.coordinates.length === 0 || primitive.coordinates[0].length === 0) {
     ret += "EMPTY";
 
     return ret;
@@ -611,7 +611,7 @@ function lineStringToWKTLineString(primitive) {
 function polygonToWKTPolygon(primitive) {
   let ret = "POLYGON ";
 
-  if (is.undefined(primitive.coordinates) || primitive.coordinates.length === 0 || primitive.coordinates[0].length === 0) {
+  if (ateos.isUndefined(primitive.coordinates) || primitive.coordinates.length === 0 || primitive.coordinates[0].length === 0) {
     ret += "EMPTY";
 
     return ret;
@@ -640,7 +640,7 @@ function polygonToWKTPolygon(primitive) {
 function multiPointToWKTMultiPoint(primitive) {
   let ret = "MULTIPOINT ";
 
-  if (is.undefined(primitive.coordinates) || primitive.coordinates.length === 0 || primitive.coordinates[0].length === 0) {
+  if (ateos.isUndefined(primitive.coordinates) || primitive.coordinates.length === 0 || primitive.coordinates[0].length === 0) {
     ret += "EMPTY";
 
     return ret;
@@ -662,7 +662,7 @@ function multiPointToWKTMultiPoint(primitive) {
 function multiLineStringToWKTMultiLineString(primitive) {
   let ret = "MULTILINESTRING ";
 
-  if (is.undefined(primitive.coordinates) || primitive.coordinates.length === 0 || primitive.coordinates[0].length === 0) {
+  if (ateos.isUndefined(primitive.coordinates) || primitive.coordinates.length === 0 || primitive.coordinates[0].length === 0) {
     ret += "EMPTY";
 
     return ret;
@@ -691,7 +691,7 @@ function multiLineStringToWKTMultiLineString(primitive) {
 function multiPolygonToWKTMultiPolygon(primitive) {
   let ret = "MULTIPOLYGON ";
 
-  if (is.undefined(primitive.coordinates) || primitive.coordinates.length === 0 || primitive.coordinates[0].length === 0) {
+  if (ateos.isUndefined(primitive.coordinates) || primitive.coordinates.length === 0 || primitive.coordinates[0].length === 0) {
     ret += "EMPTY";
 
     return ret;

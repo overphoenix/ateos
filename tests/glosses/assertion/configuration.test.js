@@ -27,7 +27,7 @@ describe("assertion", "configuration", () => {
 
     describe("includeStack", () => {
         // Skip tests if `Error.captureStackTrace` is unsupported
-        if (is.undefined(Error.captureStackTrace)) {
+        if (ateos.isUndefined(Error.captureStackTrace)) {
             return;
         }
 
@@ -35,7 +35,7 @@ describe("assertion", "configuration", () => {
             throw Error();
         } catch (err) {
             // Skip tests if `err.stack` is unsupported
-            if (is.undefined(err.stack)) {
+            if (ateos.isUndefined(err.stack)) {
                 return;
             }
         }
@@ -111,7 +111,7 @@ describe("assertion", "configuration", () => {
                     it("should include Chai frames in stack trace", () => {
                         expect(caughtErr.stack).to.contain("propertyGetter");
 
-                        if (!is.undefined(Proxy) && !is.undefined(Reflect)) {
+                        if (!ateos.isUndefined(Proxy) && !ateos.isUndefined(Reflect)) {
                             expect(caughtErr.stack).to.contain("proxyGetter");
                         }
                     });
@@ -137,7 +137,7 @@ describe("assertion", "configuration", () => {
                     it("should include Chai frames in stack trace", () => {
                         expect(caughtErr.stack).to.contain("overwritingPropertyGetter");
 
-                        if (!is.undefined(Proxy) && !is.undefined(Reflect)) {
+                        if (!ateos.isUndefined(Proxy) && !ateos.isUndefined(Reflect)) {
                             expect(caughtErr.stack).to.contain("proxyGetter");
                         }
                     });
@@ -253,7 +253,7 @@ describe("assertion", "configuration", () => {
                     it("should not include Chai frames in stack trace", () => {
                         expect(caughtErr.stack).to.not.contain("propertyGetter");
 
-                        if (!is.undefined(Proxy) && !is.undefined(Reflect)) {
+                        if (!ateos.isUndefined(Proxy) && !ateos.isUndefined(Reflect)) {
                             expect(caughtErr.stack).to.not.contain("proxyGetter");
                         }
                     });
@@ -279,7 +279,7 @@ describe("assertion", "configuration", () => {
                     it("should not include Chai frames in stack trace", () => {
                         expect(caughtErr.stack).to.not.contain("overwritingPropertyGetter");
 
-                        if (!is.undefined(Proxy) && !is.undefined(Reflect)) {
+                        if (!ateos.isUndefined(Proxy) && !ateos.isUndefined(Reflect)) {
                             expect(caughtErr.stack).to.not.contain("proxyGetter");
                         }
                     });
@@ -466,7 +466,7 @@ describe("assertion", "configuration", () => {
 
         describe("when true", () => {
             it("should use proxy unless user's environment doesn't support", () => {
-                if (!is.undefined(Proxy) && !is.undefined(Reflect)) {
+                if (!ateos.isUndefined(Proxy) && !ateos.isUndefined(Reflect)) {
                     expect(readNoExistentProperty).to.throw("Invalid Chai property: tue");
                 } else {
                     expect(readNoExistentProperty).to.not.throw("Invalid Chai property: tue");
@@ -505,7 +505,7 @@ describe("assertion", "configuration", () => {
         it("should throw for properties which are not on the `proxyExcludedKeys` Array in an environment with proxy support", () => {
             assertion.config.proxyExcludedKeys = [];
 
-            if (!is.undefined(Proxy) && !is.undefined(Reflect)) {
+            if (!ateos.isUndefined(Proxy) && !ateos.isUndefined(Reflect)) {
                 expect(readNoExistentProperty("then")).to.throw("Invalid Chai property: then");
                 expect(readNoExistentProperty("inspect")).to.throw("Invalid Chai property: inspect");
             } else {

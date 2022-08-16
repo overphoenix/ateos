@@ -3,7 +3,7 @@ const {
     is
 } = ateos;
 
-const isNode = !is.undefined(process) && typeof process.release === "object" && process.release.name;
+const isNode = !ateos.isUndefined(process) && typeof process.release === "object" && process.release.name;
 
 const describeIf = (condition) => condition ? describe : describe.skip;
 

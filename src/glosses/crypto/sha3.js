@@ -259,11 +259,11 @@ class Keccak {
     const type = typeof message;
     if (type !== "string") {
       if (type === "object") {
-        if (is.null(message)) {
+        if (ateos.isNull(message)) {
           throw ERROR;
         } else if (message.constructor === ArrayBuffer) {
           message = new Uint8Array(message);
-        } else if (!is.array(message)) {
+        } else if (!ateos.isArray(message)) {
           if (!ArrayBuffer.isView(message)) {
             throw ERROR;
           }
@@ -357,11 +357,11 @@ class Keccak {
     const type = typeof str;
     if (type !== "string") {
       if (type === "object") {
-        if (is.null(str)) {
+        if (ateos.isNull(str)) {
           throw ERROR;
         } else if (str.constructor === ArrayBuffer) {
           str = new Uint8Array(str);
-        } else if (!is.array(str)) {
+        } else if (!ateos.isArray(str)) {
           if (!ArrayBuffer.isView(str)) {
             throw ERROR;
           }

@@ -12,7 +12,7 @@ const Long = require("./long");
  */
 class Timestamp extends Long {
   constructor(low, high) {
-    if (is.long(low)) {
+    if (ateos.isLong(low)) {
       super(low.low, low.high, true);
     } else {
       super(low, high, true);

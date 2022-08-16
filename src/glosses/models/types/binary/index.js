@@ -22,7 +22,7 @@ internals.Binary = class extends Any {
       value
     };
 
-    if (is.string(value) && options.convert) {
+    if (ateos.isString(value) && options.convert) {
 
       try {
         result.value = Buffer.from(value, this._flags.encoding);
@@ -31,7 +31,7 @@ internals.Binary = class extends Any {
       }
     }
 
-    result.errors = is.buffer(result.value) ? null : this.createError("binary.base", null, state, options);
+    result.errors = ateos.isBuffer(result.value) ? null : this.createError("binary.base", null, state, options);
     return result;
   }
 

@@ -20,7 +20,7 @@ export default class TransformTask extends BaseTask {
   }
 
   initialize(params) {
-    if (is.null(this.stream)) {
+    if (ateos.isNull(this.stream)) {
       this.stream = fast.src(params.src, this.streamOptions());
     }
 

@@ -39,7 +39,7 @@ export default class StubManager {
 
   getStub(defId) {
     const stub = this.stubs.get(defId);
-    if (is.undefined(stub)) {
+    if (ateos.isUndefined(stub)) {
       throw new error.NotExistsException(`Stub for definition with id='${defId}' not found`);
     }
     return stub;

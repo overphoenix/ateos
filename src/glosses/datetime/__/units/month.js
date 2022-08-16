@@ -67,7 +67,7 @@ addParseToken(["M", "MM"], (input, array) => {
 addParseToken(["MMM", "MMMM"], (input, array, config, token) => {
   const month = config._locale.monthsParse(input, token, config._strict);
   // if we didn't find a month name, mark the date as invalid.
-  if (is.exist(month)) {
+  if (ateos.isExist(month)) {
     array[MONTH] = month;
   } else {
     __.create.getParsingFlags(config).invalidMonth = input;
@@ -80,9 +80,9 @@ const MONTHS_IN_FORMAT = /D[oD]?(\[[^\[\]]*\]|\s)+MMMM?/;
 export const defaultLocaleMonths = "January_February_March_April_May_June_July_August_September_October_November_December".split("_");
 export const localeMonths = function (m, format) {
   if (!m) {
-    return is.array(this._months) ? this._months : this._months.standalone;
+    return ateos.isArray(this._months) ? this._months : this._months.standalone;
   }
-  return is.array(this._months)
+  return ateos.isArray(this._months)
     ? this._months[m.month()]
     : this._months[(this._months.isFormat || MONTHS_IN_FORMAT).test(format) ? "format" : "standalone"][m.month()];
 };
@@ -90,9 +90,9 @@ export const localeMonths = function (m, format) {
 export const defaultLocaleMonthsShort = "Jan_Feb_Mar_Apr_May_Jun_Jul_Aug_Sep_Oct_Nov_Dec".split("_");
 export const localeMonthsShort = function (m, format) {
   if (!m) {
-    return is.array(this._monthsShort) ? this._monthsShort : this._monthsShort.standalone;
+    return ateos.isArray(this._monthsShort) ? this._monthsShort : this._monthsShort.standalone;
   }
-  return is.array(this._monthsShort)
+  return ateos.isArray(this._monthsShort)
     ? this._monthsShort[m.month()]
     : this._monthsShort[MONTHS_IN_FORMAT.test(format) ? "format" : "standalone"][m.month()];
 };
@@ -213,7 +213,7 @@ const computeMonthsParse = function () {
 const defaultMonthsShortRegex = matchWord;
 export const monthsShortRegex = function (isStrict) {
   if (this._monthsParseExact) {
-    if (!is.propertyOwned(this, "_monthsRegex")) {
+    if (!ateos.isPropertyOwned(this, "_monthsRegex")) {
       computeMonthsParse.call(this);
     }
     if (isStrict) {
@@ -222,7 +222,7 @@ export const monthsShortRegex = function (isStrict) {
     return this._monthsShortRegex;
 
   }
-  if (!is.propertyOwned(this, "_monthsShortRegex")) {
+  if (!ateos.isPropertyOwned(this, "_monthsShortRegex")) {
     this._monthsShortRegex = defaultMonthsShortRegex;
   }
   return this._monthsShortStrictRegex && isStrict
@@ -234,7 +234,7 @@ export const monthsShortRegex = function (isStrict) {
 const defaultMonthsRegex = matchWord;
 export const monthsRegex = function (isStrict) {
   if (this._monthsParseExact) {
-    if (!is.propertyOwned(this, "_monthsRegex")) {
+    if (!ateos.isPropertyOwned(this, "_monthsRegex")) {
       computeMonthsParse.call(this);
     }
     if (isStrict) {
@@ -243,7 +243,7 @@ export const monthsRegex = function (isStrict) {
     return this._monthsRegex;
 
   }
-  if (!is.propertyOwned(this, "_monthsRegex")) {
+  if (!ateos.isPropertyOwned(this, "_monthsRegex")) {
     this._monthsRegex = defaultMonthsRegex;
   }
   return this._monthsStrictRegex && isStrict

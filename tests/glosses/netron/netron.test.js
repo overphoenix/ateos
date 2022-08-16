@@ -75,7 +75,7 @@ describe("Netron", () => {
         for (const m of methods) {
             // eslint-disable-next-line
             it(`${m}()`, () => {
-                assert.isTrue(is.function(netron[m]));
+                assert.isTrue(ateos.isFunction(netron[m]));
             });
         }
     });
@@ -185,7 +185,7 @@ describe("Netron", () => {
 
         it("getContextNames() should return empty array if not contexts", () => {
             const contexts = netron.getContextNames();
-            assert(is.array(contexts));
+            assert(ateos.isArray(contexts));
             assert.equal(contexts.length, 0);
         });
 

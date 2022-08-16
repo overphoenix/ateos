@@ -25,7 +25,7 @@ describe("process", "child pids", () => {
 
         assert.isTrue(children.length > 0);
         kill(parent.pid, {
-            force: is.windows
+            force: ateos.isWindows
         });
 
         await promise.delay(2000);
@@ -58,7 +58,7 @@ describe("process", "child pids", () => {
             expect(children.map((x) => Number(x.pid)).sort()).to.be.deep.equal(expectedPids);
         } finally {
             kill(child.pid, {
-                force: is.windows
+                force: ateos.isWindows
             });
         }
     });
@@ -68,7 +68,7 @@ describe("process", "child pids", () => {
         await promise.delay(200);
         let children = await getChildPids(child.pid.toString());
         await kill(child.pid, {
-            force: is.windows
+            force: ateos.isWindows
         });
 
         await promise.delay(1000);

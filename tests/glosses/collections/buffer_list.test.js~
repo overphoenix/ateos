@@ -400,7 +400,7 @@ describe("collection", "BufferList", () => {
         const rndhash = md5(random);
         const md5sum = crypto.createHash("md5");
         const bl = new BufferList(((err, buf) => {
-            assert.ok(is.buffer(buf));
+            assert.ok(ateos.isBuffer(buf));
             assert.isNull(err);
             assert.deepEqual(rndhash, md5(bl.slice()));
             assert.deepEqual(rndhash, md5(buf));
@@ -463,7 +463,7 @@ describe("collection", "BufferList", () => {
     it("write nothing, should get empty buffer", (done) => {
         new BufferList((err, data) => {
             assert.notOk(err, "no error");
-            assert.ok(is.buffer(data), "got a buffer");
+            assert.ok(ateos.isBuffer(data), "got a buffer");
             assert.equal(0, data.length, "got a zero-length buffer");
             done();
         }).end();

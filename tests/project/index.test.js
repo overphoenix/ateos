@@ -114,7 +114,7 @@ describe("project", function () {
                     assert.isTrue(await fs.exists(filePath));
                     if (!["application", "cli.application"].includes(type.name)) {
                         const moduleExport = ateos.require(filePath);
-                        assert.isTrue(is.class(moduleExport.default));
+                        assert.isTrue(ateos.isClass(moduleExport.default));
                         assert.equal(moduleExport.default.name, text.capitalize(text.toCamelCase(name)));
                         await type.check(moduleExport);
                     }
@@ -142,7 +142,7 @@ describe("project", function () {
 
                         assert.isTrue(await fs.exists(filePath));
                         const moduleExport = ateos.require(filePath);
-                        assert.isTrue(is.class(moduleExport.default));
+                        assert.isTrue(ateos.isClass(moduleExport.default));
                         assert.isTrue(moduleExport.default.name.startsWith("_class") || moduleExport.default.name.startsWith("_default"));
                         await type.check(moduleExport);
                     }
@@ -184,7 +184,7 @@ describe("project", function () {
                     assert.isTrue(await fs.exists(filePath));
                     if (!["application", "cli.application"].includes(type.name)) {
                         const moduleExport = ateos.require(filePath);
-                        assert.isTrue(is.class(moduleExport.default));
+                        assert.isTrue(ateos.isClass(moduleExport.default));
                         assert.equal(moduleExport.default.name, text.capitalize(text.toCamelCase(name)));
                         await type.check(moduleExport);
                     }
@@ -275,7 +275,7 @@ describe("project", function () {
                         const jsconfig = await ateos.configuration.Jsconfig.load({
                             cwd
                         });
-                        assert.isFalse(is.propertyOwned(jsconfig.raw, "include"));
+                        assert.isFalse(ateos.isPropertyOwned(jsconfig.raw, "include"));
                     }
                 });
             }
@@ -332,7 +332,7 @@ describe("project", function () {
                     const jsconfig = await ateos.configuration.Jsconfig.load({
                         cwd
                     });
-                    assert.isTrue(is.array(jsconfig.raw.include));
+                    assert.isTrue(ateos.isArray(jsconfig.raw.include));
                 });
             }
 

@@ -1,5 +1,4 @@
 const {
-  is,
   fs,
   path,
   realm,
@@ -12,14 +11,14 @@ const __ = ateos.lazify({
 /**
 * Initialize realm.
 */
-@ateos.task.task("realmInit")
+@ateos.task.Task("realmInit")
 export default class extends realm.BaseTask {
   async main(options = {}) {
     // keep original options immutable
-    options = ateos.lodash.defaults(options, {})
+    options = ateos.lodash.defaults(options, {});
 
     const cwd = this.cwd = process.cwd();
-    
+
     await fs.mkdir(path.join(cwd, ".ateos"));
 
     await __.helper.realm.createConfig({
@@ -27,8 +26,7 @@ export default class extends realm.BaseTask {
       },
       tasks: {
         basePath: [
-          "lib/ateos_tasks",
-          "src/ateos_tasks"
+          "ateos_tasks"
         ],
         loadPolicy: "ignore",
         default: false,
@@ -45,22 +43,33 @@ export default class extends realm.BaseTask {
       },
       defaultTask: "copy",
       units: {
-        tasks: {
-          description: "ATEOS tasks",
+        src: {
           units: {
-            src: {
-              description: "Tasks codebase",
-              src: "src/ateos_tasks/**/*.js",
-              dst: "lib/ateos_tasks",
+            jssrc: {
+              description: "JavaScript codebase",
+              src: "src/**/*.js",
+              dst: "lib",
               task: "transpile"
+            },
+            tssrc: {
+              description: "TypeScript codebase",
+              src: [
+                "src/**/*.ts",
+                "!src/**/*.d.ts"
+              ],
+              dst: "lib",
+              task: "tsc"
             },
             assets: {
               description: "Assets",
+              task: "copy",
               src: [
-                "src/ateos_tasks/**/*",
-                "!src/ateos_tasks/**/*.js"
+                "src/**/*",
+                "!src/**/*.js",
+                "!src/**/*.ts",
+                "!src/**/*.d.ts"
               ],
-              dst: "lib/ateos_tasks"
+              dst: "lib"
             }
           }
         }
@@ -74,6 +83,6 @@ export default class extends realm.BaseTask {
   }
 
   async undo(err) {
-    is.string(this.cwd) && await fs.remove(path.join(this.cwd, ".ateos"));
+    ateos.isString(this.cwd) && await fs.remove(path.join(this.cwd, ".ateos"));
   }
 }

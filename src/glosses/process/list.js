@@ -29,7 +29,7 @@ const listWindows = async ({ system, username, password, filter, verbose = false
     );
   }
 
-  if (is.array(filter)) {
+  if (ateos.isArray(filter)) {
     for (const f of filter) {
       args.push("/fi", f);
     }
@@ -94,7 +94,7 @@ const listDefault = ({ all } = {}) => {
         const pid = line.split(" ", 1)[0];
         const val = line.slice(pid.length + 1).trim();
 
-        if (is.undefined(ret[pid])) {
+        if (ateos.isUndefined(ret[pid])) {
           ret[pid] = {};
         }
 
@@ -115,5 +115,5 @@ const listDefault = ({ all } = {}) => {
   });
 };
 
-const list = is.windows ? listWindows : listDefault;
+const list = ateos.isWindows ? listWindows : listDefault;
 export default list;

@@ -9,7 +9,7 @@ ateos.asNamespace(exports);
  * JSON.stringify.
  */
 export const compress = function (input) {
-  if (!is.string(input) && !is.buffer(input)) {
+  if (!ateos.isString(input) && !ateos.isBuffer(input)) {
     throw new Error("Input must be a String or a Buffer");
   }
 
@@ -24,7 +24,7 @@ export const compress = function (input) {
 };
 
 export const compressSync = function (input) {
-  if (!is.string(input) && !is.buffer(input)) {
+  if (!ateos.isString(input) && !ateos.isBuffer(input)) {
     throw new Error("input must be a String or a Buffer");
   }
 
@@ -47,14 +47,14 @@ export const isValidCompressed = (input) => {
 
 export const isValidCompressedSync = native.isValidCompressedSync;
 
-const uncompressOpts = (opts) => (opts && is.boolean(opts.asBuffer)) ? opts : { asBuffer: true };
+const uncompressOpts = (opts) => (opts && ateos.isBoolean(opts.asBuffer)) ? opts : { asBuffer: true };
 
 /**
  * Asyncronous uncompress previously compressed data.
  * A parser can be attached. If no parser is attached, return buffer.
  */
 export const decompress = function (compressed, opts) {
-  if (!is.buffer(compressed)) {
+  if (!ateos.isBuffer(compressed)) {
     throw new Error("Input must be a Buffer");
   }
 
@@ -69,7 +69,7 @@ export const decompress = function (compressed, opts) {
 };
 
 export const decompressSync = function (compressed, opts) {
-  if (!is.buffer(compressed)) {
+  if (!ateos.isBuffer(compressed)) {
     throw new Error("Input must be a Buffer");
   }
 

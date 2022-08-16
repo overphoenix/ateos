@@ -116,7 +116,7 @@ root.isRef = function (ref) {
 root.validate = function (value, ...args /*, [schema], [options], callback */) {
 
   const last = args[args.length - 1];
-  const callback = is.function(last) ? last : null;
+  const callback = ateos.isFunction(last) ? last : null;
 
   const count = args.length - (callback ? 1 : 0);
   if (count === 0) {
@@ -158,14 +158,14 @@ root.attempt = function (value, schema, message) {
   const error = result.error;
   if (error) {
     if (!message) {
-      if (is.function(error.annotate)) {
+      if (ateos.isFunction(error.annotate)) {
         error.message = error.annotate();
       }
       throw error;
     }
 
     if (!(message instanceof Error)) {
-      if (is.function(error.annotate)) {
+      if (ateos.isFunction(error.annotate)) {
         error.message = `${message} ${error.annotate()}`;
       }
       throw error;
@@ -180,7 +180,7 @@ root.attempt = function (value, schema, message) {
 root.reach = function (schema, path) {
 
   assert(schema && schema instanceof Any, "you must provide a joi schema");
-  assert(is.array(path) || is.string(path), "path must be a string or an array of strings");
+  assert(ateos.isArray(path) || ateos.isString(path), "path must be a string or an array of strings");
 
   const reach = (sourceSchema, schemaPath) => {
 
@@ -202,7 +202,7 @@ root.reach = function (schema, path) {
     }
   };
 
-  const schemaPath = is.string(path) ? (path ? path.split(".") : []) : path.slice();
+  const schemaPath = ateos.isString(path) ? (path ? path.split(".") : []) : path.slice();
 
   return reach(schema, schemaPath);
 };
@@ -213,7 +213,7 @@ root.lazy = function (fn) {
 
 root.defaults = function (fn) {
 
-  assert(is.function(fn), "Defaults must be a function");
+  assert(ateos.isFunction(fn), "Defaults must be a function");
 
   let model = Object.create(this.any());
   model = fn(model);
@@ -249,7 +249,7 @@ root.extend = function (...args) {
   for (let i = 0; i < extensions.length; ++i) {
     let extension = extensions[i];
 
-    if (is.function(extension)) {
+    if (ateos.isFunction(extension)) {
       extension = extension(joi);
     }
 
@@ -367,7 +367,7 @@ root.extend = function (...args) {
 
           if (rule.setup) {
             const newSchema = rule.setup.call(schema, arg);
-            if (!is.undefined(newSchema)) {
+            if (!ateos.isUndefined(newSchema)) {
               assert(newSchema instanceof Any, `Setup of extension model.${this._type}().${rule.name}() must return undefined or a Joi object`);
               schema = newSchema;
             }

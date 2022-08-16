@@ -394,7 +394,7 @@ describe("util", "braces", "bash.expanded", () => {
     ];
 
     fixtures.forEach((arr) => {
-        if (is.string(arr)) {
+        if (ateos.isString(arr)) {
             return;
         }
 

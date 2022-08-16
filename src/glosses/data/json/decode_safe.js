@@ -13,7 +13,7 @@ const pop = (obj, stack, metaStack) => {
   }
   const element = lastMetaElement.element;
   const lastElementIndex = lastMetaElement.index;
-  if (is.array(element)) {
+  if (ateos.isArray(element)) {
     element.push(obj);
   } else if (lastElementIndex === stack.length - 2) { // obj with key+value
     const key = stack.pop();
@@ -39,7 +39,7 @@ export default (str) => {
 
   for (; ;) {
     collationIndex = str[i++];
-    if (collationIndex === "}" || collationIndex === "]" || is.undefined(collationIndex)) {
+    if (collationIndex === "}" || collationIndex === "]" || ateos.isUndefined(collationIndex)) {
       if (stack.length === 1) {
         return stack.pop();
       }

@@ -6,7 +6,7 @@ ateos.lazify({
   BigInteger: "./big_integer",
   BitSet: "./bitset",
   Decimal: "./decimal",
-  Long: "./long",
+  Long: "long",
   simd: "./simd",
   matrix: "./matrix"
 }, exports, require);
@@ -27,7 +27,7 @@ export const max = (array, func = ateos.identity) => {
   let maxElem = undefined;
   for (let i = 0; i < array.length; ++i) {
     const elem = array[i];
-    if (is.null(maxScore)) {
+    if (ateos.isNull(maxScore)) {
       maxScore = func(elem);
       maxElem = elem;
       continue;
@@ -49,7 +49,7 @@ export const min = (array, func = ateos.identity) => {
   let minElem = undefined;
   for (let i = 0; i < array.length; ++i) {
     const elem = array[i];
-    if (is.null(minScore)) {
+    if (ateos.isNull(minScore)) {
       minScore = func(elem);
       minElem = elem;
       continue;

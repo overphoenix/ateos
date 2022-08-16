@@ -33,7 +33,7 @@ export const algorithms = {};
  */
 export const createCipher = function (algorithm, key) {
   let api = algorithm;
-  if (is.string(api)) {
+  if (ateos.isString(api)) {
     api = getAlgorithm(api);
     if (api) {
       api = api();
@@ -66,7 +66,7 @@ export const createCipher = function (algorithm, key) {
  */
 export const createDecipher = function (algorithm, key) {
   let api = algorithm;
-  if (is.string(api)) {
+  if (ateos.isString(api)) {
     api = getAlgorithm(api);
     if (api) {
       api = api();
