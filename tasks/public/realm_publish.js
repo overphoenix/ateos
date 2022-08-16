@@ -16,7 +16,7 @@ const PUBLISH_CONFIG_FILE = "publish.task";
 const TARGETS = ["gitea", "github"];
 
 @ateos.task.Task("realmPublish")
-export default class extends ateos.realm.BaseTask {
+export default class extends ateos.task.AdvancedTask {
   async main({ realm, tag, auth } = {}) {
     this.manager.notify(this, "progress", {
       text: "[publish] checking"

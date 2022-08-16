@@ -1,10 +1,10 @@
 const {
   is,
   fast,
-  realm: { BaseTask }
+  task: { AdvancedTask }
 } = ateos;
 
-export default class TransformTask extends BaseTask {
+export default class TransformTask extends AdvancedTask {
   constructor() {
     super();
     this.stream = null;

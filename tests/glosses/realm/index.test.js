@@ -47,7 +47,7 @@ describe("realm", () => {
     it("'ateos.realm' namespace", () => {
         assert.isTrue(ateos.isNamespace(ateos.realm));
         assert.isTrue(ateos.isClass(ateos.realm.RealmManager));
-        assert.isTrue(ateos.isClass(ateos.realm.BaseTask));
+        assert.isTrue(ateos.isClass(ateos.task.AdvancedTask));
         assert.isTrue(ateos.isClass(ateos.realm.TransformTask));
         assert.isTrue(ateos.isClass(ateos.realm.Configuration));
         assert.isTrue(ateos.isClass(ateos.realm.DevConfiguration));

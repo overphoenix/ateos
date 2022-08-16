@@ -1,26 +1,25 @@
 const {
-    task: { task },
-    realm: { BaseTask }
+  task: { Task }
 } = ateos;
 
-@task("nestedA")
-export class NestedTaskA extends BaseTask {
-    main() {
-        return "aaa";
-    }
+@Task("nestedA")
+export class NestedTaskA extends ateos.task.AdvancedTask {
+  main() {
+    return "aaa";
+  }
 }
 
-@task("nestedB")
-export class NestedTaskB extends BaseTask {
-    main() {
-        return "bbb";
-    }
+@Task("nestedB")
+export class NestedTaskB extends ateos.task.AdvancedTask {
+  main() {
+    return "bbb";
+  }
 }
 
-@task("dummy")
-export class DummyTask extends BaseTask {
-    main() {
-        return "nested dummy";
-    }
+@Task("dummy")
+export class DummyTask extends ateos.task.AdvancedTask {
+  main() {
+    return "nested dummy";
+  }
 }
 

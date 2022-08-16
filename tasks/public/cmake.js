@@ -1,12 +1,11 @@
 const {
   fast,
   nodejs,
-  path,
-  realm: { BaseTask }
+  path
 } = ateos;
 
 @ateos.task.Task("cmake")
-export default class extends BaseTask {
+export default class extends ateos.task.AdvancedTask {
   async main({ src, dst, files } = {}) {
     const version = process.version;
     const realm = this.manager;

@@ -1,13 +1,12 @@
 const {
   fs,
-  std,
-  realm: { BaseTask }
+  std
 } = ateos;
 
 const VERSION_PARTS = ["major", "minor", "patch", "premajor", "preminor", "prepatch", "prerelease"];
 
 @ateos.task.Task("increaseVersion")
-export default class extends BaseTask {
+export default class extends ateos.task.AdvancedTask {
   async main({ part = "minor", preid = undefined, loose = false } = {}) {
     const config = this.manager.config;
     const prevVersion = config.raw.version;

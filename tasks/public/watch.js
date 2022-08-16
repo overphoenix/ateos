@@ -1,7 +1,7 @@
 const {
   fast,
   std,
-  realm: { BaseTask, TransformTask }
+  realm: { TransformTask }
 } = ateos;
 
 class WatchTask extends TransformTask {
@@ -76,7 +76,7 @@ class WatchTask extends TransformTask {
 }
 
 @ateos.task.Task("watch")
-export default class extends BaseTask {
+export default class extends ateos.task.AdvancedTask {
   async main({ realm, path } = {}) {
     const devConfig = this.manager.devConfig;
     const nonWatchbaleTasks = ateos.util.arrify(devConfig.get("nonWatchableTasks"));

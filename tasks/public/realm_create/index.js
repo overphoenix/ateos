@@ -23,7 +23,7 @@ const __ = ateos.lazify({
  * If `options.realm.dev` is not defined or equal to `false`, associated config will not be created.
  */
 @ateos.task.Task("realmCreate")
-export default class extends realm.BaseTask {
+export default class extends ateos.task.AdvancedTask {
   async main(options = {}) {
     // keep original options immutable
     options = ateos.lodash.defaults(options, {

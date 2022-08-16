@@ -6,7 +6,7 @@ const {
 } = ateos;
 
 @ateos.task.Task("realmInfo")
-export default class extends realm.BaseTask {
+export default class extends ateos.task.AdvancedTask {
   get arch() {
     const arch = process.arch;
     switch (arch) {

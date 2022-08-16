@@ -1,5 +1,5 @@
 @ateos.task.Task("build")
-export default class extends ateos.realm.BaseTask {
+export default class extends ateos.task.AdvancedTask {
   async main({ path } = {}) {
     const { platform } = process;
     const observer = await ateos.task.runParallel(this.manager, this.manager.devConfig.getUnits(path).filter((unit) => {

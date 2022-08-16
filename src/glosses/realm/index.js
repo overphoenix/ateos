@@ -20,7 +20,6 @@ const realm = ateos.lazify({
   DevConfiguration: "./dev_configuration",
   RealmManager: "./manager",
   RealmArtifacts: "./artifacts",
-  BaseTask: "./base_task",
   TransformTask: "./transform_task",
   MountPoint: "./mount_point",
   code: "./code",

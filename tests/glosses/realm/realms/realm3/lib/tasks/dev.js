@@ -1,10 +1,7 @@
-const {
-    realm
-} = ateos;
 
-@ateos.task.task("task2")
-export default class Task2 extends realm.BaseTask {
-    main() {
-        return ateos.package.version;
-    }
+@ateos.task.Task("task2")
+export default class Task2 extends ateos.task.AdvancedTask {
+  main() {
+    return ateos.package.version;
+  }
 }

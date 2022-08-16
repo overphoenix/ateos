@@ -1,5 +1,4 @@
 const {
-  realm: { BaseTask }
 } = ateos;
 
 const MANAGERS = [
@@ -20,7 +19,7 @@ const MANAGERS = [
 ];
 
 @ateos.task.Task("installModules")
-export default class extends BaseTask {
+export default class extends ateos.task.AdvancedTask {
   async main({ cwd, dev = false, modules } = {}) {
     let app;
     for (const appInfo of MANAGERS) {
@@ -48,7 +47,7 @@ export default class extends BaseTask {
         if (dev) {
           args.push(app.single.dev);
         }
-        args.push(`${name}@${version}`)
+        args.push(`${name}@${version}`);
         await ateos.process.exec(app.name, args, {
           cwd
         });

@@ -5,12 +5,11 @@ const {
   error,
   fast,
   fs,
-  path,
-  realm
+  path
 } = ateos;
 
 @ateos.task.Task("realmMerge")
-export default class extends realm.BaseTask {
+export default class extends ateos.task.AdvancedTask {
   async main({ superRealm, subRealm, symlink = false } = {}) {
     this.manager.notify(this, "progress", {
       message: `checking realms`

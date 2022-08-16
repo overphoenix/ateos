@@ -8,13 +8,13 @@ const {
   fs,
   path: aPath,
   nodejs,
-  realm: { BaseTask, RealmManager }
+  realm: { RealmManager }
 } = ateos;
 
-const PACK_CONFIG_FILE = "pack.task"
+const PACK_CONFIG_FILE = "pack.task";
 
 @ateos.task.Task("realmPack")
-export default class extends BaseTask {
+export default class extends ateos.task.AdvancedTask {
   async main({ realm, path, name, tags, filter, type = nodejs.DEFAULT_EXT } = {}) {
     this.manager.notify(this, "progress", {
       text: "[pack] checking"
@@ -71,7 +71,7 @@ export default class extends BaseTask {
       text: `[pack] packing realm ${cli.theme.primary(realm.name)} to ${cli.theme.accent(fullPath)}`
     });
 
-    const artifacts = new Set;
+    const artifacts = new Set();
     if (ateos.isArray(options.tags) && options.tags.length > 0) {
       options.tags = new Set(options.tags);
     } else if (ateos.isString(options.tags) && options.tags.length > 0) {

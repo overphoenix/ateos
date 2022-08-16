@@ -6,7 +6,7 @@ const {
 } = ateos;
 
 @ateos.task.Task("realmLink")
-export default class extends ateos.realm.BaseTask {
+export default class extends ateos.task.AdvancedTask {
   async main({ realm, delete: del = false, binName, libName, noBin = true, noLib = true } = {}) {
     this.manager.notify(this, "progress", {
       message: "checking"

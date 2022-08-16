@@ -4,7 +4,7 @@ const {
   is,
   fs,
   path: aPath,
-  realm: { BaseTask, RealmManager }
+  realm: { RealmManager }
 } = ateos;
 
 const IGNORED_ARTIFACTS = [
@@ -23,7 +23,7 @@ const IGNORED_ARTIFACTS = [
 ];
 
 @ateos.task.Task("realmFork")
-export default class extends BaseTask {
+export default class extends ateos.task.AdvancedTask {
   async main({ realm, path, name, tags, filter, skipNpm } = {}) {
     this.manager.notify(this, "progress", {
       message: "checking"

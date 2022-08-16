@@ -1,11 +1,10 @@
 const {
-  cli: { style },
-  realm
+  cli: { style }
 } = ateos;
 
 
 @ateos.task.Task("registerCliCommand")
-export default class extends realm.BaseTask {
+export default class extends ateos.task.AdvancedTask {
   async main({ cmd } = {}) {
     const rootRealm = this.manager;
     const AppConfiguration = require(rootRealm.getPath("lib", "app", "configuration")).default; // hmm...

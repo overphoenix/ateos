@@ -1,11 +1,10 @@
 const {
-    task: { task },
-    realm: { BaseTask }
+  task: { Task }
 } = ateos;
 
-@task("dummy")
-export default class DummyTask extends BaseTask {
-    main() {
-        return "root dummy";
-    }
+@Task("dummy")
+export default class DummyTask extends ateos.task.AdvancedTask {
+  main() {
+    return "root dummy";
+  }
 }

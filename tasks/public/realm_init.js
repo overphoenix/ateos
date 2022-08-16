@@ -1,7 +1,7 @@
 const {
   fs,
   path,
-  realm,
+  realm
 } = ateos;
 
 const __ = ateos.lazify({
@@ -12,7 +12,7 @@ const __ = ateos.lazify({
 * Initialize realm.
 */
 @ateos.task.Task("realmInit")
-export default class extends realm.BaseTask {
+export default class extends ateos.task.AdvancedTask {
   async main(options = {}) {
     // keep original options immutable
     options = ateos.lodash.defaults(options, {});

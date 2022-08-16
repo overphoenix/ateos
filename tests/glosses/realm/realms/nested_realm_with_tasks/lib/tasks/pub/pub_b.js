@@ -1,11 +1,10 @@
 const {
-    task: { task },
-    realm: { BaseTask }
+  task: { Task }
 } = ateos;
 
-@task("pubB")
-export default class PubTaskB extends BaseTask {
-    main() {
-        return "pub bbb";
-    }
+@Task("pubB")
+export default class PubTaskB extends ateos.task.AdvancedTask {
+  main() {
+    return "pub bbb";
+  }
 }

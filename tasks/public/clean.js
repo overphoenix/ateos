@@ -1,7 +1,6 @@
 const {
   fs,
-  path: aPath,
-  realm: { BaseTask }
+  path: aPath
 } = ateos;
 
 const clean = async function ({ manager, ...unit } = {}) {
@@ -43,7 +42,7 @@ const clean = async function ({ manager, ...unit } = {}) {
 };
 
 @ateos.task.Task("clean")
-export default class extends BaseTask {
+export default class extends ateos.task.AdvancedTask {
   async main({ path } = {}) {
     const observer = await ateos.task.runParallel(this.manager, this.manager.devConfig.getUnits(path).map((unit) => ({
       task: clean,
