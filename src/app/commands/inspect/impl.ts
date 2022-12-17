@@ -8,6 +8,8 @@ const {
   pretty
 } = ateos;
 
+const GLOBALS = ["ateos", "global"];
+
 const getOwnPropertyDescriptor = (obj, propName) => {
   let descr = Object.getOwnPropertyDescriptor(obj, propName);
   if (!ateos.isUndefined(descr)) {
@@ -102,7 +104,8 @@ const addCommonGlobals = (globals) => {
   }
 };
 
-export default ({ globals: globals_ } = {}) => class InspectionCommand extends Subsystem {
+class InspectionCommand extends Subsystem {
+  
   @CliMainCommand({
     arguments: [
       {
@@ -180,7 +183,7 @@ export default ({ globals: globals_ } = {}) => class InspectionCommand extends S
         funcDetails: opts.has("funcDetails")
       };
 
-      const globals = [...globals_];
+      const globals = [...GLOBALS];
       addCommonGlobals(globals);
 
       let name = args.get("name");
@@ -279,3 +282,6 @@ export default ({ globals: globals_ } = {}) => class InspectionCommand extends S
     }
   }
 };
+
+
+export default () => InspectionCommand;

@@ -1,7 +1,3 @@
-const {
-  is
-} = ateos;
-
 ateos.lazify({
   StateMachine: "./state_machine",
   Subsystem: "./subsystem",

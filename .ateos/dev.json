@@ -19,7 +19,10 @@
         },
         "lib": {
           "description": "Ateos CLI codebase",
-          "src": "src/app/**/*.{ts,js}",
+          "src": [
+            "src/app/**/*.{ts,js}",
+            "!src/app/**/*.d.ts"
+          ],
           "dst": "lib/app",
           "task": "tsc"
         },
@@ -28,7 +31,7 @@
           "task": "copy",
           "src": [
             "src/app/**/*",
-            "!src/app/**/*.js"
+            "!src/app/**/*.{ts,js}"
           ],
           "dst": "lib/app"
         }

@@ -88,18 +88,6 @@ const command = (name) => path.join(__dirname, "commands", name);
       description: "Realm management",
       subsystem: command("realm")
     },
-    {
-      name: "rollup",
-      group: "common",
-      description: "Rollup cli",
-      subsystem: command("rollup")
-    },
-    {
-      name: ["shani"],
-      group: "common",
-      description: "Test runner",
-      subsystem: command("shani")
-    },
   ]
 })
 export default class ATEOSApp extends app.Application {

@@ -2,7 +2,6 @@
 const log = require("ololog");
 
 const {
-  is,
   std,
   app,
   util

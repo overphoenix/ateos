@@ -1,5 +1,4 @@
 ateos.lazify({
-  acorn: "./acorn",
   babel: "./babel",
   esutils: "esutils",
   tokTypes: ["@babel/parser", (mod) => mod.tokTypes],
