@@ -1,4 +1,4 @@
-import { ateos } from "../../index";
+import { ateos } from "../../index"; // must be here!!!
 
 ateos.lazify({
   SourceMapGenerator: ["source-map", "SourceMapGenerator"],

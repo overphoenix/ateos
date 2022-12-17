@@ -67,3 +67,5 @@ _fixtures/
 test-resources/
 
 .env.*
+
+tsconfig.tsbuildinfo
