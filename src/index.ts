@@ -6,7 +6,6 @@ import { asNamespace, definep, getPrivate, lazify, lazifyp, setLazifyErrorHandle
 
 export interface Ateos {
   __app__: any;
-  assertion: any;
   asNamespace: (obf: any) => any;
   fs: any;
   path: any;
@@ -100,8 +99,6 @@ lazify({
   LOGO: () => ateos.fs.readFileSync(ateos.getPath("share", "media", "ateos.txt"), { encoding: "utf8" }),
 
   getPath: () => (p: string, ...args: string[]) => ateos.path.join((p && p.startsWith("/")) ? p : ateos.path.join(ateos.HOME, p), ...args),
-
-  assert: () => ateos.assertion.assert,
 
   EventEmitter: "eventemitter3",
   AsyncEventEmitter: () => common.AsyncEventEmitter,
@@ -205,7 +202,6 @@ lazify({
   collection: "./glosses/collections",
   compressor: "./glosses/compressors",
   configuration: "./glosses/configurations",
-  crypto: "./glosses/crypto",
   data: "./glosses/data",
   database: "./glosses/databases",
   datastore: "./glosses/datastores",
@@ -237,9 +233,6 @@ lazify({
   promise: ["@recalibratedsystems/common-cjs", "promise"],
   realm: "./glosses/realm",
   regex: "./glosses/regex",
-  rollup: "./glosses/rollup",
-  semver: "semver",
-  shell: "./glosses/shell",
   sourcemap: "./glosses/sourcemap",
   stream: "./glosses/streams",
   system: "./glosses/system",
@@ -247,7 +240,6 @@ lazify({
   templating: "./glosses/templating",
   text: "./glosses/text",
   util: "./glosses/utils",
-  validation: "./glosses/validation",
   vault: "./glosses/vault",
 
   // lazify third-party libraries
@@ -259,6 +251,7 @@ lazify({
   path: "upath",
   punycode: "punycode/",
   uri: "urijs",
+  semver: "semver",
   systeminformation: "systeminformation"
 }, ateos, require, { asNamespace: true });
 

@@ -1,6 +1,5 @@
 const {
   error,
-  is,
   fs,
   path: aPath
 } = ateos;

@@ -21,7 +21,5 @@ const realm = ateos.lazify({
   RealmManager: "./manager",
   RealmArtifacts: "./artifacts",
   TransformTask: "./transform_task",
-  MountPoint: "./mount_point",
-  code: "./code",
   rootRealm: () => new realm.RealmManager({ cwd: ateos.HOME })
 }, exports, require);

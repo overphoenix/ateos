@@ -1,5 +1,4 @@
 const {
-  is,
   text
 } = ateos;
 
@@ -289,6 +288,5 @@ ateos.lazify({
   truncate: "./truncate",
   toCamelCase: "./to_camel_case",
   sprintf: "./sprintf",
-  MagicString: "magic-string",
   width: "./width"
 }, exports, require);

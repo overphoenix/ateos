@@ -1,7 +1,6 @@
 const {
   app: { lockfile },
   error,
-  is,
   fs,
   path: aPath,
   realm,

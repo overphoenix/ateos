@@ -11,12 +11,6 @@
   "units": {
     "app": {
       "units": {
-        "bin": {
-          "description": "Ateos CLI executable",
-          "src": "src/app/ateos.js",
-          "dst": "bin",
-          "task": "tsc"
-        },
         "lib": {
           "description": "Ateos CLI codebase",
           "src": [

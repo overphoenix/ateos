@@ -1,14 +1,7 @@
-const {
-  is
-} = ateos;
-
 ateos.lazify({
   BigInteger: "./big_integer",
   BitSet: "./bitset",
-  Decimal: "./decimal",
-  Long: "long",
-  simd: "./simd",
-  matrix: "./matrix"
+  Long: "long"
 }, exports, require);
 
 export const random = (min = 0, max = 0xFFFFFFFF) => {

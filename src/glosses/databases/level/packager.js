@@ -1,5 +1,4 @@
 const {
-  is,
   database: { level: { LevelUP, backend: { EncodingBackend } } }
 } = ateos;
 

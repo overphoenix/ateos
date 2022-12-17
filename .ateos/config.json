@@ -30,8 +30,7 @@
       "README.md"
     ],
     "tests": [
-      "tests",
-      "shanifile.js"
+      "tests"
     ]
   },
   "tasks": {

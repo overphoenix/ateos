@@ -1,4 +1,4 @@
-const { is, math: { Long } } = ateos;
+const { math: { Long } } = ateos;
 
 // each bin holds bits 0 - 30, totaling 31 (sign takes up last bit)
 const BITS_PER_INT = 31;

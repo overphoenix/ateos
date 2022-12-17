@@ -1,7 +1,4 @@
 /* eslint-disable func-style */
-const {
-  is
-} = ateos;
 
 const BASE = 1e7;
 const LOG_BASE = 7;

@@ -1,5 +1,4 @@
 const {
-  is,
   fs,
   path: { join },
   util
@@ -20,7 +19,6 @@ const COMMON_FILENAMES = [
   ["node_modules", "modules"],
   ["realm.lock", "lockfile"],
   ["package.json", "package"],
-  ["shanifile.js", "shanifile"],
   "LICENSE",
   ["README.md", "readme"]
 ].map((v) => ateos.isString(v) ? [v, v] : v);

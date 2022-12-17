@@ -1,5 +1,4 @@
 const {
-  is,
   path: aPath
 } = ateos;
 
