@@ -1,5 +1,6 @@
+import { NotImplementedException } from "@recalibratedsystems/common-cjs";
+
 const {
-  app: { lockfile },
   error,
   fs,
   path: aPath,
@@ -248,18 +249,11 @@ export default class RealmManager extends task.TaskManager {
   }
 
   async lock() {
-    return lockfile.create(this.cwd, {
-      lockfilePath: this.LOCKFILE_PATH
-    });
+    throw new NotImplementedException();
   }
 
   async unlock() {
-    const options = {
-      lockfilePath: this.LOCKFILE_PATH
-    };
-    if (await lockfile.check(this.cwd, options)) {
-      return lockfile.release(this.cwd, options);
-    }
+    throw new NotImplementedException();
   }
 
   async #connectSuperRealm(options) {

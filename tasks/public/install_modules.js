@@ -1,6 +1,3 @@
-const {
-} = ateos;
-
 const MANAGERS = [
   {
     name: "yarn",

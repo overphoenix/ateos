@@ -19,7 +19,6 @@ module.exports = {
         "match": true,
         "FS": true,
         "skip": true,
-        "fakeClock": true,
         "$": true,
         "request": true,
         "specter": true,

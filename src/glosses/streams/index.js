@@ -1,5 +1,4 @@
 ateos.lazify({
-  iterable: "./iterables",
   Readable: "readable-stream",
   buffer: () => ateos.lazify({
     DEFAULT_INITIAL_SIZE: ["./buffer_stream", (mod) => mod.DEFAULT_INITIAL_SIZE],

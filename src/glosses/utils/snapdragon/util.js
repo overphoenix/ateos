@@ -1,7 +1,3 @@
-const {
-  is
-} = ateos;
-
 /**
  * Shim to ensure the `.append` methods work with any version of snapdragon
  */

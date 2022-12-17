@@ -1,11 +1,9 @@
 const {
   http,
   fs,
-  is,
   path,
   stream,
   error,
-  std
 } = ateos;
 
 /**

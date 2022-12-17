@@ -18,7 +18,7 @@
             "!src/app/**/*.d.ts"
           ],
           "dst": "lib/app",
-          "task": "tsc"
+          "task": "transpile"
         },
         "assets": {
           "description": "Ateos CLI assets",
@@ -35,7 +35,7 @@
       "description": "Common codebase",
       "src": "src/*.ts",
       "dst": "lib",
-      "task": "tsc"
+      "task": "transpile"
     },
     "glosses": {
       "units": {
@@ -46,7 +46,7 @@
             "!src/glosses/**/*.d.ts"
           ],
           "dst": "lib/glosses",
-          "task": "tsc"
+          "task": "transpile"
         },
         "assets": {
           "description": "Glosses assets",

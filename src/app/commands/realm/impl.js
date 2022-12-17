@@ -1,7 +1,5 @@
 const {
   app,
-  is,
-  cli,
   realm
 } = ateos;
 
@@ -64,18 +62,6 @@ const subCommand = (name) => ateos.path.join(__dirname, "commands", name);
       group: "generic",
       description: "Show realm information",
       subsystem: subCommand("info")
-    },
-    {
-      name: "link",
-      group: "generic",
-      description: "Create/delete [sym]links to realm",
-      subsystem: subCommand("link")
-    },
-    {
-      name: "merge",
-      group: "own",
-      description: "Merge realm into ATEOS",
-      subsystem: subCommand("merge")
     },
     {
       name: "pack",

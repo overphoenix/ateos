@@ -1,6 +1,5 @@
 const {
   assert,
-  is,
   noop,
   std: { url, http, https, stream: { Writable } }
 } = ateos;

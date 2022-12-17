@@ -50,7 +50,6 @@ ateos.lazify({
   shebang: "./shebang",
   reinterval: "./reinterval",
   throttle: ["@recalibratedsystems/common-cjs", "throttle"],
-  fakeClock: "./fake_clock",
   ltgt: "./ltgt",
   LogRotator: "./log_rotator",
   debounce: "./debounce",
