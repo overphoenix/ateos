@@ -220,7 +220,6 @@ lazify({
   is: "./glosses/is",
   js: "./glosses/js",
   math: "./glosses/math",
-  model: "./glosses/models",
   module: "./glosses/module",
   net: "./glosses/net",
   nodejs: "./glosses/nodejs",
@@ -264,7 +263,7 @@ lazify({
 // lazify non-extendable objects in std
 lazify({
   constants: "constants"
-}, ateos.std);
+}, ateos.std, require);
 
 setLazifyErrorHandler((err: any) => {
   //eslint-disable-next-line

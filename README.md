@@ -17,5 +17,6 @@ Ateos is an organic Node.js extension library with the following features:
 ```
 git clone https://github.com/overphoenix/ateos
 cd ateos
+npm run build:tsc
 npm install --global
 ```

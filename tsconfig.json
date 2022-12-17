@@ -1,32 +1,33 @@
 {
-  "ts-node": {
-    "swc": true
-  },
   "compilerOptions": {
     "baseUrl": ".",
     "rootDir": "src",
     "outDir": "lib",
-    "allowJs": true,
-    "skipLibCheck": true,
-    "strict": true,
-    "resolveJsonModule": true,
-    "target": "es2020",
-    "lib": ["es2020"],
+    "declaration": false,
+    "target": "es2021",
+    "lib": ["es2021"],
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "declaration": false,
     "removeComments": true,
+    "incremental": true,
     "moduleResolution": "node",
     "module": "commonjs",
+    "noEmitOnError": false,
+    "strict": true,
+    "newLine": "LF",
+    "noImplicitReturns": true,
+    "allowJs": true,
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
   },
-  "include": [
-    "src"
-  ],
   "exclude": [
+    "bin",
     "node_modules",
     "lib",
     "share",
-    "types",
+    "tasks",
     "tests"
   ]
 }

@@ -1,18 +1,7 @@
-// gloss: "Library code exposed as namespace at runtime"
-// app: Managed application
-// app.command: "Command for cli applications"
-// app.subsystem: "Generic subsystem for applications
-// omnitron.task
-// omnitron.service
-// omnitron.subsystem
-// realm.task
-// realm.handler
-// 
-
 export const DOMAIN = {
   PUBLIC: "public", // tasks available from anywhere
-  PRIVATE: "private", // tasks available only for realm managing them
-  DEV: "dev" // tasks available only for realm managin them in dev stage (not included in release)
+  PRIVATE: "private", // tasks available only for realm
+  DEV: "dev" // tasks available only for realm managing them in dev stage (not included in release)
 };
 
 const realm = ateos.lazify({

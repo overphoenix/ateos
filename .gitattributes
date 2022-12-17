@@ -1,6 +1,2 @@
 src/glosses/databases/level/backends/leveldb/native/deps/* linguist-vendored
 src/glosses/compressors/brotli/native/src/deps/* linguist-vendored
-src/native/nan/* linguist-vendored
-src/native/napi/* linguist-vendored
-src/glosses/async/* linguist-vendored
-src/glosses/lodash/* linguist-vendored
