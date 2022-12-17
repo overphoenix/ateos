@@ -231,6 +231,7 @@ lazify({
   promise: ["@recalibratedsystems/common-cjs", "promise"],
   realm: "./glosses/realm",
   regex: "./glosses/regex",
+  ssh: "./glosses/ssh",
   sourcemap: "./glosses/sourcemap",
   stream: "./glosses/streams",
   system: "./glosses/system",

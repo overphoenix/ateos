@@ -34,26 +34,16 @@ ateos.lazify({
   // All of these predicates should be replced in-place during transpiling
   subsystem: () => (obj) => obj instanceof ateos.app.Subsystem,
   application: () => (obj) => obj instanceof ateos.app.Application,
-  smartBuffer: () => (obj) => obj instanceof ateos.buffer.SmartBuffer,
   coreStream: () => (obj) => obj instanceof ateos.stream.core.Stream,
   configuration: () => (obj) => obj instanceof ateos.configuration.BaseConfig,
   datetime: () => (obj) => obj instanceof ateos.datetime.Datetime,
-  multiAddress: () => (obj) => obj instanceof ateos.multi.address.Multiaddr,
-
 
   realm: () => (obj) => obj instanceof ateos.realm.RealmManager,
-
-  // crypto
-  identity: () => (obj) => obj instanceof ateos.crypto.Identity,
 
   // fast
   fastStream: () => (obj) => obj instanceof ateos.fast.Stream,
   fastLocalStream: () => (obj) => obj instanceof ateos.fast.LocalStream,
   fastLocalMapStream: () => (obj) => obj instanceof ateos.fast.LocalMapStream,
-
-  // peer/p2p/net
-  peerId: () => ateos.p2p.PeerId.isPeerId,
-  // peerInfo: () => ateos.p2p.PeerInfo.isPeerInfo,
 
   vaultValuable: () => (obj) => obj instanceof ateos.vault.Valuable,
 }, exports, require);

@@ -7,6 +7,7 @@
     "eof": 1
   },
   "author": "ATEOS Team",
+  "private": true,
   "license": "MIT",
   "engines": {
     "node": ">=18"
@@ -18,8 +19,7 @@
   "files": [
     ".ateos",
     "bin",
-    "lib",
-    "types"
+    "lib"
   ],
   "scripts": {
     "lint": "eslint --fix \"src/**/*.{js,jsx,ts,tsx}\"",
@@ -44,10 +44,8 @@
     "fast-check": "^1.22.2",
     "fixturify": "^1.2.0",
     "immutable": "^4.0.0-rc.12",
-    "iterable-ndjson": "^1.1.0",
     "mapleTree": "^0.5.1",
     "mkfiletree": "^2.0.0",
-    "ndjson": "^2.0.0",
     "node-gyp": "^8.1.0",
     "random-bytes": "^1.0.0",
     "random-int": "^3.0.0",
@@ -55,11 +53,7 @@
     "requirejs": "^2.3.6",
     "run-parallel": "^1.1.9",
     "run-series": "^1.1.8",
-    "sander": "^0.6.0",
-    "sinon": "^9.0.1",
-    "terser": "^4.6.6",
     "through2": "^4.0.2",
-    "trickle": "^0.0.2",
     "wsurl": "^1.0.0"
   },
   "dependencies": {
@@ -142,6 +136,7 @@
     "lodash": "^4.17.21",
     "long": "^5.2.1",
     "lzma-native": "^8.0.6",
+    "make-dir": "^3.1.0",
     "memdown": "^6.0.0",
     "micromatch": "^4.0.4",
     "mime": "^2.4.4",
@@ -161,14 +156,16 @@
     "relative-url": "^1.0.2",
     "require-relative": "^0.8.7",
     "resolve": "^1.20.0",
+    "sb-promise-queue": "^2.1.0",
+    "sb-scandir": "^3.1.0",
     "semver": "^7.3.7",
+    "shell-escape": "^0.2.0",
     "signal-exit": "^3.0.3",
     "snappy": "^7.1.1",
     "source-map": "0.6.1",
     "source-map-support": "^0.5.16",
     "sourcemap-codec": "^1.4.8",
     "ssh2": "^1.11.0",
-    "ssh2-sftp-client": "^9.0.2",
     "ssh2-streams": "^0.4.10",
     "streaming-iterables": "^6.0.0",
     "supports-color": "^9.0.1",

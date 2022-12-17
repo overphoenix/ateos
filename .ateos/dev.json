@@ -9,62 +9,29 @@
     "cmake"
   ],
   "units": {
-    "app": {
-      "units": {
-        "lib": {
-          "description": "Ateos CLI codebase",
-          "src": [
-            "src/app/**/*.{ts,js}",
-            "!src/app/**/*.d.ts"
-          ],
-          "dst": "lib/app",
-          "task": "transpile"
-        },
-        "assets": {
-          "description": "Ateos CLI assets",
-          "task": "copy",
-          "src": [
-            "src/app/**/*",
-            "!src/app/**/*.{ts,js}"
-          ],
-          "dst": "lib/app"
-        }
-      }
-    },
-    "common": {
-      "description": "Common codebase",
-      "src": "src/*.ts",
-      "dst": "lib",
-      "task": "transpile"
-    },
-    "glosses": {
+    "codebase": {
       "units": {
         "src": {
-          "description": "Glosses TypeScript codebase",
+          "description": "Ateos codebase",
           "src": [
-            "src/glosses/**/*.{ts,js}",
-            "!src/glosses/**/*.d.ts"
+            "src/**/*.{ts,js}",
+            "!src/**/*.d.ts"
           ],
-          "dst": "lib/glosses",
+          "dst": "lib",
           "task": "transpile"
         },
         "assets": {
-          "description": "Glosses assets",
+          "description": "Ateos assets",
           "task": "copy",
           "src": [
-            "src/glosses/**/*",
-            "!src/glosses/**/*.js",
-            "!src/glosses/**/*.ts",
-            "!src/glosses/**/*.d.ts"
+            "src/**/*",
+            "!src/**/*.js",
+            "!src/**/*.ts",
+            "!src/**/*.d.ts"
           ],
-          "dst": "lib/glosses"
+          "dst": "lib"
         }
       }
-    },
-    "native": {
-      "description": "Everything to build Node.js addons",
-      "src": "src/native/**/*",
-      "dst": "lib/native"
     }
   }
 }
