@@ -1,5 +1,4 @@
 const {
-  is,
   error,
   noop,
   collection
@@ -50,7 +49,7 @@ ateos.lazify({
   }),
   shebang: "./shebang",
   reinterval: "./reinterval",
-  throttle: "@recalibratedsystems/common/throttle",
+  throttle: ["@recalibratedsystems/common-cjs", "throttle"],
   fakeClock: "./fake_clock",
   ltgt: "./ltgt",
   LogRotator: "./log_rotator",

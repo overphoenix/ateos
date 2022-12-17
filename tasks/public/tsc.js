@@ -6,7 +6,7 @@ export default class TSCompileTask extends ateos.realm.TransformTask {
       sourceMap: true,
       compilerOptions: {
         target: "es2021",
-        lib: ["es5", "es6", "es2021", "dom"],
+        lib: ["es2021"],
         emitDecoratorMetadata: true,
         experimentalDecorators: true,
         declaration: true,
@@ -20,6 +20,11 @@ export default class TSCompileTask extends ateos.realm.TransformTask {
         strictPropertyInitialization: true,
         strictFunctionTypes: true,
         strict: true,
+        allowJs: true,
+        esModuleInterop: true,
+        forceConsistentCasingInFileNames: true,
+        skipLibCheck: true,
+        resolveJsonModule: true,
         ...params.compilerOptions
       },
       ...ateos.util.omit(params, ["id", "src", "dst", "task", "realm", "cwd", "compilerOptions"])

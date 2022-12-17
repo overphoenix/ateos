@@ -1,6 +1,5 @@
-import __ from ".";
+import * as __ from ".";
 const {
-  is,
   path,
   util,
   std: { fs },

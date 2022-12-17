@@ -1,7 +1,3 @@
-const {
-  is
-} = ateos;
-
 const __ = ateos.lazify({
   getChildPids: "./get_child_pids",
   getPidByPort: ["./get_pid", "getPidByPort"],

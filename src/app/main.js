@@ -4,7 +4,6 @@ const __ = ateos.lazify({
 }, null, require);
 
 const {
-  is,
   cli,
   path,
   app
@@ -72,12 +71,6 @@ const command = (name) => path.join(__dirname, "commands", name);
       subsystem: command("inspect")
     },
     // {
-    //     name: "ipfs",
-    //     group: "common",
-    //     description: "IPFS cli",
-    //     subsystem: command("ipfs")
-    // },
-    // {
     //     name: "omni",
     //     group: "common",
     //     description: "Omni-application management",
@@ -107,12 +100,6 @@ const command = (name) => path.join(__dirname, "commands", name);
       description: "Test runner",
       subsystem: command("shani")
     },
-    // {
-    //     name: ["system", "sys"],
-    //     group: "common",
-    //     description: "System information",
-    //     subsystem: command("system")
-    // }
   ]
 })
 export default class ATEOSApp extends app.Application {

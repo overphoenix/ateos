@@ -1,4 +1,4 @@
-import { lazify } from "@recalibratedsystems/common/lazify";
+import { lazify } from "@recalibratedsystems/common-cjs";
 
 export const exceptionIdMap = {};
 export const stdIdMap = {};

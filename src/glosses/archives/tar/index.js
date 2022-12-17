@@ -1,5 +1,4 @@
 const {
-  is,
   std: { fs },
   error,
   noop,

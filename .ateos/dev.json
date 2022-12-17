@@ -15,13 +15,13 @@
           "description": "Ateos CLI executable",
           "src": "src/app/ateos.js",
           "dst": "bin",
-          "task": "transpile"
+          "task": "tsc"
         },
         "lib": {
           "description": "Ateos CLI codebase",
-          "src": "src/app/**/*.js",
+          "src": "src/app/**/*.{ts,js}",
           "dst": "lib/app",
-          "task": "transpile"
+          "task": "tsc"
         },
         "assets": {
           "description": "Ateos CLI assets",
@@ -42,16 +42,10 @@
     },
     "glosses": {
       "units": {
-        "jssrc": {
-          "description": "Glosses JavaScript codebase",
-          "src": "src/glosses/**/*.js",
-          "dst": "lib/glosses",
-          "task": "transpile"
-        },
-        "tssrc": {
+        "src": {
           "description": "Glosses TypeScript codebase",
           "src": [
-            "src/glosses/**/*.ts",
+            "src/glosses/**/*.{ts,js}",
             "!src/glosses/**/*.d.ts"
           ],
           "dst": "lib/glosses",
@@ -67,36 +61,6 @@
             "!src/glosses/**/*.d.ts"
           ],
           "dst": "lib/glosses"
-        }
-      }
-    },
-    "shani": {
-      "units": {
-        "jssrc": {
-          "description": "Shani (test runner) JavaScript codebase",
-          "src": "src/shani/**/*.js",
-          "dst": "lib/shani",
-          "task": "transpile"
-        },
-        "tssrc": {
-          "description": "Shani (test runner) TypeScript codebase",
-          "src": [
-            "src/shani/**/*.ts",
-            "!src/shani/**/*.d.ts"
-          ],
-          "dst": "lib/shani",
-          "task": "tsc"
-        },
-        "assets": {
-          "description": "Shani (test runner) assets",
-          "task": "copy",
-          "src": [
-            "src/shani/**/*",
-            "!src/shani/**/*.js",
-            "!src/shani/**/*.ts",
-            "!src/shani/**/*.d.ts"
-          ],
-          "dst": "lib/shani"
         }
       }
     },

@@ -1,10 +1,8 @@
 require('ts-node').register();
 
 import "reflect-metadata";
-
-import * as common from "@recalibratedsystems/common";
-import { definep, getPrivate, lazify, lazifyp, setLazifyErrorHandler } from "@recalibratedsystems/common/lazify";
-import { asNamespace } from "@recalibratedsystems/common/namespace";
+import * as common from "@recalibratedsystems/common-cjs";
+import { asNamespace, definep, getPrivate, lazify, lazifyp, setLazifyErrorHandler } from "@recalibratedsystems/common-cjs";
 
 export interface Ateos {
   __app__: any;
@@ -106,9 +104,9 @@ lazify({
   assert: () => ateos.assertion.assert,
 
   EventEmitter: "eventemitter3",
-  AsyncEventEmitter: ["@recalibratedsystems/common/async_event_emitter", "AsyncEventEmitter"],
+  AsyncEventEmitter: () => common.AsyncEventEmitter,
   SmartBuffer: "@recalibratedsystems/smartbuffer",
-  typeOf: "@recalibratedsystems/common/typeof",
+  typeOf: () => common.typeOf,
 
   // Predicates
   isLinux: () => process.platform === "linux",
@@ -215,7 +213,7 @@ lazify({
   datetime: "./glosses/datetime",
   diff: "./glosses/diff",
   env: "./glosses/env",
-  error: "@recalibratedsystems/common/error",
+  error: "@recalibratedsystems/common-cjs",
   fast: "./glosses/fast",
   fs: "./glosses/fs",
   git: "isomorphic-git",
@@ -228,20 +226,17 @@ lazify({
   is: "./glosses/is",
   js: "./glosses/js",
   lockfile: "./glosses/lockfile",
-  logger: "./glosses/logger",
   math: "./glosses/math",
   model: "./glosses/models",
   module: "./glosses/module",
-  multiformat: "./glosses/multiformats",
   net: "./glosses/net",
-  netron: "./glosses/netron",
+  // netron: "./glosses/netron",
   nodejs: "./glosses/nodejs",
   notifier: "./glosses/notifier",
   omnitron: "./glosses/omnitron",
-  p2p: "./glosses/p2p",
   pretty: "./glosses/pretty",
   process: "./glosses/process",
-  promise: "@recalibratedsystems/common/promise",
+  promise: ["@recalibratedsystems/common-cjs", "promise"],
   realm: "./glosses/realm",
   regex: "./glosses/regex",
   rollup: "./glosses/rollup",
@@ -257,7 +252,6 @@ lazify({
   util: "./glosses/utils",
   validation: "./glosses/validation",
   vault: "./glosses/vault",
-  web: "./glosses/web",
 
   // lazify third-party libraries
   async: "async",

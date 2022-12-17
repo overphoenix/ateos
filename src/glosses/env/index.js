@@ -1,5 +1,4 @@
 const {
-  is,
   std
 } = ateos;
 const { os } = std;

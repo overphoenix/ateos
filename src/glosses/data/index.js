@@ -1,7 +1,7 @@
 ateos.lazify({
   json: "./json",
   json5: "./json5",
-  mpak: "./mpak",
+  mpak: "@recalibratedsystems/messagepack",
   bson: "./bson",
   base64: "./base64",
   yaml: "./yaml",

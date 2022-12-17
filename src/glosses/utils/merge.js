@@ -1,6 +1,3 @@
-const {
-  is
-} = ateos;
 
 const has = Object.prototype.hasOwnProperty;
 
