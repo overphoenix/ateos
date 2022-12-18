@@ -7,7 +7,7 @@ const {
   AppSubsystem
 } = app;
 
-const subCommand = (name) => ateos.path.join(__dirname, "commands", name);
+const subCommand = (name: string) => ateos.path.join(__dirname, "commands", name);
 
 @AppSubsystem({
   commandsGroups: [
@@ -98,6 +98,6 @@ class RealmCommand extends app.Subsystem {
     });
     return manager;
   }
-};
+}
 
-export default () => RealmCommand
+export default () => RealmCommand;

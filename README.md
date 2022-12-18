@@ -4,7 +4,7 @@
   <p><i>Node.js [CommonJS] extension library</i></p>
 </div>
 
-Ateos is an organic Node.js extension library for microservices development, workflow automation and enhancements and devops.
+Ateos is an organic Node.js extension library for microservices development and devops, workflow automation and enhancements.
 
 ## Installing
 

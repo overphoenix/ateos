@@ -3,6 +3,12 @@ require('ts-node').register();
 import "reflect-metadata";
 import * as common from "@recalibratedsystems/common-cjs";
 import { asNamespace, definep, getPrivate, lazify, lazifyp, setLazifyErrorHandler } from "@recalibratedsystems/common-cjs";
+import AppHelper from "./glosses/app/app_helper";
+import { AppSubsystem, CliCommand, CliMainCommand, getSubsystemMeta, EXIT, STATE } from "./glosses/app/index";
+import run from "./glosses/app/run";
+import Application from "./glosses/app/application";
+import StateMachine from "./glosses/app/state_machine";
+import Subsystem from "./glosses/app/subsystem";
 
 export interface Ateos {
   __app__: any;
@@ -48,6 +54,19 @@ export interface Ateos {
     vm: any,
     workerThreads: any,
     zlib: any
+  };
+  app: {
+    AppHelper: typeof AppHelper;
+    AppSubsystem: typeof AppSubsystem;
+    Application: typeof Application;
+    CliCommand: typeof CliCommand;
+    CliMainCommand: typeof CliMainCommand;
+    EXIT: typeof EXIT;
+    STATE: typeof STATE;
+    StateMachine: typeof StateMachine;
+    Subsystem: typeof Subsystem;
+    getSubsystemMeta: typeof getSubsystemMeta;
+    run: typeof run
   };
   [key: string]: unknown;
 }
@@ -279,3 +298,7 @@ process.env.ATEOS_HOME = ateos.path.join(__dirname, "..");
 
 exports.ateos = ateos;
 exports.default = ateos;
+
+declare global {
+  var ateos: Ateos;
+}
