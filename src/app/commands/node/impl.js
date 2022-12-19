@@ -20,7 +20,7 @@ const indent = " ".repeat(bullet.length);
 export default () => class NodeCommand extends Subsystem {
   onConfigure() {
     this.nodejsManager = new nodejs.NodejsManager({
-      realm: ateos.realm.rootRealm
+      realm: ateos.realm.ateosRealm
     });
 
     this.log = this.root.log;

@@ -4,7 +4,7 @@ const {
   path: aPath
 } = ateos;
 
-const compileModule = (path, content, transpile) => {
+const compileModule = (path: string, content: string, transpile?: boolean) => {
   const m = new ateos.module.Module(path, {
     transforms: transpile ? [ateos.module.transform.babel()] : []
   });
@@ -16,15 +16,17 @@ const compileModule = (path, content, transpile) => {
 };
 
 export default class GenericConfig extends ateos.configuration.BaseConfig {
+  public cwd: string;
+
   static serializer = ateos.lazify({
     ".js": () => ({
       encode: null,
-      decode: (buf, { path, transpile = false } = {}) => compileModule(path, buf, transpile),
+      decode: (buf: any, opts: { path: string, transpile?: boolean }) => compileModule(opts.path, buf, opts.transpile),
       ext: ".js"
     }),
     ".mjs": () => ({
       encode: null,
-      decode: (buf, { path } = {}) => compileModule(path, buf, true),
+      decode: (buf: any, opts: { path: string }) => compileModule(opts.path, buf, true),
       ext: ".mjs"
     }),
     ".json": () => ({
@@ -52,13 +54,13 @@ export default class GenericConfig extends ateos.configuration.BaseConfig {
       decode: ateos.data.yaml.decode,
       ext: ".yaml"
     })
-  }, {});
+  }, {}, require);
 
   static extensions = Object.keys(GenericConfig.serializer);
 
-  constructor({ cwd = process.cwd() } = {}) {
+  constructor(opts: { cwd: string }) {
     super();
-    this.cwd = aPath.resolve(cwd);
+    this.cwd = aPath.resolve(opts.cwd);
   }
 
   registerExtension(ext, decode, encode) {

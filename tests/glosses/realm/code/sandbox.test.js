@@ -18,7 +18,7 @@ describe("Sandbox", () => {
         const sb = new Sandbox({ input: "1.js" });
 
         assert.equal(sb.cwd, process.cwd());
-        assert.equal(sb.ateosPath, ateos.realm.rootRealm.cwd);
+        assert.equal(sb.ateosPath, ateos.realm.ateosRealm.cwd);
         assert.sameMembers(sb.entries, [path.join(process.cwd(), "1.js")]);
         assert.instanceOf(sb.globalScope, code.GlobalScope);
     });

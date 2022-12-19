@@ -596,7 +596,7 @@ describe("is", () => {
             });
 
             it("realm", () => {
-                assert.isTrue(is.realm(ateos.realm.rootRealm));
+                assert.isTrue(is.realm(ateos.realm.ateosRealm));
             });
         });
     });

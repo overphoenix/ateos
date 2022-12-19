@@ -10,7 +10,7 @@ const {
 } = ateos;
 
 describe("realm", "common tasks", () => {
-    const { rootRealm } = realm;
+    const { ateosRealm } = realm;
 
     let tmpTestPath;
     let newRealmsPath;
@@ -18,7 +18,7 @@ describe("realm", "common tasks", () => {
     before(async () => {
         tmpTestPath = await getTmpPath();
         newRealmsPath = aPath.join(tmpTestPath, "new_realms");
-        await rootRealm.connect();
+        await ateosRealm.connect();
     });
 
     describe("create realm", () => {
@@ -32,13 +32,13 @@ describe("realm", "common tasks", () => {
 
         it("create realm without 'name' should be thrown", async () => {
             await assert.throws(async () => {
-                await rootRealm.runAndWait("realmCreate");
+                await ateosRealm.runAndWait("realmCreate");
             }, error.InvalidArgumentException);
         });
 
         it("create realm without 'path' should be thrown", async () => {
             await assert.throws(async () => {
-                await rootRealm.runAndWait("realmCreate", {
+                await ateosRealm.runAndWait("realmCreate", {
                     name: "realm1"
                 });
             }, error.InvalidArgumentException);
@@ -46,7 +46,7 @@ describe("realm", "common tasks", () => {
 
         it("create realm at existing location should have thrown", async () => {
             await assert.throws(async () => {
-                await rootRealm.runAndWait("realmCreate", {
+                await ateosRealm.runAndWait("realmCreate", {
                     name: "no_tasks",
                     path: getRealmPathFor()
                 });
@@ -56,7 +56,7 @@ describe("realm", "common tasks", () => {
         it("create mininal realm", async () => {
             const name = getRealmName();
 
-            await rootRealm.runAndWait("realmCreate", {
+            await ateosRealm.runAndWait("realmCreate", {
                 name,
                 path: newRealmsPath
             });
@@ -68,7 +68,7 @@ describe("realm", "common tasks", () => {
         it("create realm with empty '.ateos/config.json'", async () => {
             const name = getRealmName();
 
-            await rootRealm.runAndWait("realmCreate", {
+            await ateosRealm.runAndWait("realmCreate", {
                 name,
                 path: newRealmsPath,
                 realm: {
@@ -92,7 +92,7 @@ describe("realm", "common tasks", () => {
                 tasks: {}
             };
 
-            await rootRealm.runAndWait("realmCreate", {
+            await ateosRealm.runAndWait("realmCreate", {
                 name,
                 path: newRealmsPath,
                 realm: {
@@ -108,7 +108,7 @@ describe("realm", "common tasks", () => {
         it("create mininal realm with empty '.ateos/dev.json'", async () => {
             const name = getRealmName();
 
-            await rootRealm.runAndWait("realmCreate", {
+            await ateosRealm.runAndWait("realmCreate", {
                 name,
                 path: newRealmsPath,
                 realm: {
@@ -130,7 +130,7 @@ describe("realm", "common tasks", () => {
                 }
             };
 
-            await rootRealm.runAndWait("realmCreate", {
+            await ateosRealm.runAndWait("realmCreate", {
                 name,
                 path: newRealmsPath,
                 realm: {
@@ -152,7 +152,7 @@ describe("realm", "common tasks", () => {
                 }
             };
 
-            await rootRealm.runAndWait("realmCreate", {
+            await ateosRealm.runAndWait("realmCreate", {
                 name,
                 path: newRealmsPath,
                 realm: {
@@ -177,7 +177,7 @@ describe("realm", "common tasks", () => {
                 path: newRealmsPath
             };
 
-            await rootRealm.runAndWait("realmCreate", info);
+            await ateosRealm.runAndWait("realmCreate", info);
 
             assert.equal(info.cwd, aPath.join(newRealmsPath, info.name));
             assert.isTrue(await fs.exists(info.cwd));
@@ -207,7 +207,7 @@ describe("realm", "common tasks", () => {
                 path: newRealmsPath
             };
 
-            await rootRealm.runAndWait("realmCreate", info);
+            await ateosRealm.runAndWait("realmCreate", info);
 
             assert.equal(info.cwd, aPath.join(newRealmsPath, info.dir));
             assert.isTrue(await fs.exists(info.cwd));
@@ -235,7 +235,7 @@ describe("realm", "common tasks", () => {
                 path: newRealmsPath
             };
 
-            await rootRealm.runAndWait("realmCreate", info);
+            await ateosRealm.runAndWait("realmCreate", info);
 
             assert.isFalse(await fs.exists(aPath.join(info.cwd, ".eslintrc.js")));
             assert.isFalse(await fs.exists(aPath.join(info.cwd, "jsconfig.json")));
@@ -252,7 +252,7 @@ describe("realm", "common tasks", () => {
                 path: newRealmsPath
             };
 
-            await rootRealm.runAndWait("realmCreate", info);
+            await ateosRealm.runAndWait("realmCreate", info);
 
             assert.isTrue(await fs.isFile(aPath.join(info.cwd, ".eslintrc.js")));
             assert.isFalse(await fs.exists(aPath.join(info.cwd, "jsconfig.json")));
@@ -269,7 +269,7 @@ describe("realm", "common tasks", () => {
                 path: newRealmsPath
             };
 
-            await rootRealm.runAndWait("realmCreate", info);
+            await ateosRealm.runAndWait("realmCreate", info);
 
             assert.isTrue(await fs.isFile(aPath.join(info.cwd, "jsconfig.json")));
             assert.isFalse(await fs.exists(aPath.join(info.cwd, ".eslintrc.js")));
@@ -293,21 +293,21 @@ describe("realm", "common tasks", () => {
         });
 
         it("fork without 'name' should be thrown", async () => {
-            await assert.throws(async () => rootRealm.runAndWait("realmFork", {
-                realm: rootRealm
+            await assert.throws(async () => ateosRealm.runAndWait("realmFork", {
+                realm: ateosRealm
             }), error.NotValidException);
         });
 
         it("fork without 'basePath' should be thrown", async () => {
-            await assert.throws(async () => rootRealm.runAndWait("realmFork", {
-                realm: rootRealm,
+            await assert.throws(async () => ateosRealm.runAndWait("realmFork", {
+                realm: ateosRealm,
                 name: "test"
             }), error.NotValidException);
         });
 
         it("fork at existing path should be thrown", async () => {
-            await assert.throws(async () => rootRealm.runAndWait("realmFork", {
-                realm: rootRealm,
+            await assert.throws(async () => ateosRealm.runAndWait("realmFork", {
+                realm: ateosRealm,
                 name: "realm1",
                 path: getRealmPathFor()
             }), error.ExistsException);
@@ -322,7 +322,7 @@ describe("realm", "common tasks", () => {
         for (const srcRealm of invalidSrcRealms) {
             // eslint-disable-next-line no-loop-func
             it(`for when srcRealm=${ateos.typeOf(srcRealm)} should be thrown`, async () => {
-                await assert.throws(async () => rootRealm.runAndWait("realmFork", {
+                await assert.throws(async () => ateosRealm.runAndWait("realmFork", {
                     srcRealm,
                     name: ".ateos",
                     path: newRealmsPath
@@ -331,7 +331,7 @@ describe("realm", "common tasks", () => {
         }
 
         it("fork empty dir should be thrown", async () => {
-            await assert.throws(async () => rootRealm.runAndWait("realmFork", {
+            await assert.throws(async () => ateosRealm.runAndWait("realmFork", {
                 realm: getRealmPathFor("empty_dir"),
                 name: "bad",
                 path: newRealmsPath
@@ -339,7 +339,7 @@ describe("realm", "common tasks", () => {
         });
 
         it("fork dir without .ateos/config.json should be ok", async () => {
-            rootRealm.runAndWait("realmFork", {
+            ateosRealm.runAndWait("realmFork", {
                 realm: getRealmPathFor("realm_no_config"),
                 name: "bad",
                 path: newRealmsPath
@@ -347,7 +347,7 @@ describe("realm", "common tasks", () => {
         });
 
         it("fork empty realm", async () => {
-            const destRealm = await rootRealm.runAndWait("realmFork", {
+            const destRealm = await ateosRealm.runAndWait("realmFork", {
                 realm: getRealmPathFor("no_tasks"),
                 name: "1",
                 path: newRealmsPath
@@ -359,7 +359,7 @@ describe("realm", "common tasks", () => {
         });
 
         it("fork simple realm", async () => {
-            const destRealm = await rootRealm.runAndWait("realmFork", {
+            const destRealm = await ateosRealm.runAndWait("realmFork", {
                 realm: getRealmPathFor("realm3"),
                 name: "2",
                 path: newRealmsPath
@@ -372,7 +372,7 @@ describe("realm", "common tasks", () => {
         });
 
         it("fork whole realm when 'tags=[]'", async () => {
-            const destRealm = await rootRealm.runAndWait("realmFork", {
+            const destRealm = await ateosRealm.runAndWait("realmFork", {
                 realm: getRealmPathFor("realm1"),
                 name: "1",
                 path: newRealmsPath,
@@ -386,21 +386,21 @@ describe("realm", "common tasks", () => {
 
         it("fork whole ateos realm", async function () {
             this.timeout(300 * 1000);
-            const destRealm = await rootRealm.runAndWait("realmFork", {
-                realm: rootRealm,
+            const destRealm = await ateosRealm.runAndWait("realmFork", {
+                realm: ateosRealm,
                 name: ".ateos",
                 path: await fs.tmpName()
             });
             tmpPath = aPath.dirname(destRealm.cwd);
 
-            const srcRootFiles = (await fs.readdir(rootRealm.cwd));
+            const srcRootFiles = (await fs.readdir(ateosRealm.cwd));
             const dstRootFiles = (await fs.readdir(destRealm.cwd));
             assert.sameMembers(srcRootFiles, dstRootFiles);
         });
 
         it("fork only specified tags of ateos realm", async () => {
-            const destRealm = await rootRealm.runAndWait("realmFork", {
-                realm: rootRealm,
+            const destRealm = await ateosRealm.runAndWait("realmFork", {
+                realm: ateosRealm,
                 name: ".ateos",
                 path: await fs.tmpName(),
                 tags: ["share", "info"]
@@ -415,7 +415,7 @@ describe("realm", "common tasks", () => {
     describe("install node modules", () => {
         it("install 'production' modules by default", async () => {
             const path = await fs.tmpName();
-            const destRealm = await rootRealm.runAndWait("realmFork", {
+            const destRealm = await ateosRealm.runAndWait("realmFork", {
                 realm: getRealmPathFor("realm4"),
                 name: "realm4",
                 path
@@ -434,7 +434,7 @@ describe("realm", "common tasks", () => {
 
         it("install prod and dev modules", async () => {
             const path = await fs.tmpName();
-            const destRealm = await rootRealm.runAndWait("realmFork", {
+            const destRealm = await ateosRealm.runAndWait("realmFork", {
                 realm: getRealmPathFor("realm4"),
                 name: "realm4",
                 path
@@ -455,7 +455,7 @@ describe("realm", "common tasks", () => {
 
         it("install specified modules", async () => {
             const path = await fs.tmpName();
-            const destRealm = await rootRealm.runAndWait("realmFork", {
+            const destRealm = await ateosRealm.runAndWait("realmFork", {
                 realm: getRealmPathFor("realm5"),
                 name: "realm5",
                 path
@@ -483,8 +483,8 @@ describe("realm", "common tasks", () => {
         let tmpPath;
         before(async function () {
             this.timeout(300 * 1000);
-            superRealm = await rootRealm.runAndWait("realmFork", {
-                realm: rootRealm,
+            superRealm = await ateosRealm.runAndWait("realmFork", {
+                realm: ateosRealm,
                 name: "ateos",
                 path: await getTmpPath()
             });
@@ -497,7 +497,7 @@ describe("realm", "common tasks", () => {
 
         it("merge realm without superRealm should be thrown", async () => {
             await assert.throws(async () => {
-                await rootRealm.runAndWait("realmMerge", {
+                await ateosRealm.runAndWait("realmMerge", {
                     subRealm: getRealmPathFor("realm1")
                 });
             }, error.NotValidException);
@@ -505,7 +505,7 @@ describe("realm", "common tasks", () => {
 
         it("merge realm without subRealm should be thrown", async () => {
             await assert.throws(async () => {
-                await rootRealm.runAndWait("realmMerge", {
+                await ateosRealm.runAndWait("realmMerge", {
                     superRealm
                 });
             }, error.NotValidException);
@@ -513,7 +513,7 @@ describe("realm", "common tasks", () => {
 
         it("merge realm with symlink=false", async () => {
             const subRealm = getRealmPathFor("realm1");
-            const mergedPath = await rootRealm.runAndWait("realmMerge", {
+            const mergedPath = await ateosRealm.runAndWait("realmMerge", {
                 superRealm,
                 subRealm
             });
@@ -530,7 +530,7 @@ describe("realm", "common tasks", () => {
             const subRealm = await getTmpPath();
             const origPath = getRealmPathFor("realm1");
             await fs.copy(origPath, subRealm);
-            const mergedPath = await rootRealm.runAndWait("realmMerge", {
+            const mergedPath = await ateosRealm.runAndWait("realmMerge", {
                 superRealm,
                 subRealm,
                 symlink: true

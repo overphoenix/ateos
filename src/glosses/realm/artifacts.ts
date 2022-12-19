@@ -1,3 +1,4 @@
+import RealmManager from "./manager";
 const {
   fs,
   path: { join },
@@ -24,20 +25,20 @@ const COMMON_FILENAMES = [
 ].map((v) => ateos.isString(v) ? [v, v] : v);
 
 export default class RealmArtifacts {
-  #manager;
+  private manager_: RealmManager;
 
-  #artifacts = [];
+  private artifacts_: any[] = [];
 
-  constructor(manager, artifacts) {
-    this.#manager = manager;
-    this.#artifacts = artifacts;
+  constructor(manager: RealmManager, artifacts: any[]) {
+    this.manager_ = manager;
+    this.artifacts_ = artifacts;
   }
 
   get(attr) {
     const artifacts = [];
     const attrs = util.arrify(attr);
 
-    for (const info of this.#artifacts) {
+    for (const info of this.artifacts_) {
       if (attrs.reduce((sum, item) => sum + (info.attrs.has(item) ? 1 : 0), 0) === attrs.length) {
         artifacts.push(info);
       }
@@ -47,15 +48,15 @@ export default class RealmArtifacts {
   }
 
   hasArtifact(path) {
-    return !ateos.isUndefined(this.#artifacts.find((a) => a.path === path));
+    return !ateos.isUndefined(this.artifacts_.find((a) => a.path === path));
   }
 
   getArtifact(path) {
-    return this.#artifacts.find((a) => a.path === path);
+    return this.artifacts_.find((a) => a.path === path);
   }
 
 
-  static async collect(manager) {
+  static async collect(manager: RealmManager): Promise<RealmArtifacts> {
     const rootFiles = await fs.readdir(manager.cwd);
     const cfgArtifacts = manager.config.get("artifacts") || {};
     const artifacts = [];
@@ -80,7 +81,7 @@ export default class RealmArtifacts {
     for (const [tag, paths] of Object.entries(cfgArtifacts)) {
       for (const path of paths) {
         const fullPath = join(manager.cwd, path);
-                
+
         let artifact = artifacts.find((a) => a.path === path);
         if (ateos.isUndefined(artifact)) {
           artifact = {

@@ -17,10 +17,8 @@ export default class Configuration extends ateos.configuration.GenericConfig {
     });
   }
 
-  static async load({ cwd } = {}) {
-    const config = new Configuration({
-      cwd
-    });
+  static async load(opts: { cwd: string }) {
+    const config = new Configuration(opts);
     await config.load();
     return config;
   }

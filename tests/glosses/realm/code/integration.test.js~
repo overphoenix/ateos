@@ -6,7 +6,7 @@ describe("realm", "code", "integration test", () => {
     describe("common namespaces inspection", () => {
         it("ateos.app", async () => {
             const mod = new realm.code.Module({
-                realm: realm.rootRealm,
+                realm: realm.ateosRealm,
                 filePath: "src/glosses/app/index.js"
             });
             await mod.load();

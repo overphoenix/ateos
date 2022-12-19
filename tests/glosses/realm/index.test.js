@@ -7,7 +7,7 @@ const {
 } = ateos;
 
 describe("realm", () => {
-    const { rootRealm } = realm;
+    const { ateosRealm } = realm;
     let realmManager;
 
     const CORE_TASKS = [
@@ -51,30 +51,30 @@ describe("realm", () => {
         assert.isTrue(ateos.isClass(ateos.realm.TransformTask));
         assert.isTrue(ateos.isClass(ateos.realm.Configuration));
         assert.isTrue(ateos.isClass(ateos.realm.DevConfiguration));
-        assert.isTrue(is.realm(ateos.realm.rootRealm));
+        assert.isTrue(is.realm(ateos.realm.ateosRealm));
     });
 
     describe("root realm", () => {
         it("before connect", () => {
-            assert.instanceOf(rootRealm, ateos.realm.RealmManager);
-            assert.deepEqual(rootRealm.package, ateos.package);
-            assert.isObject(rootRealm.config);
+            assert.instanceOf(ateosRealm, ateos.realm.RealmManager);
+            assert.deepEqual(ateosRealm.package, ateos.package);
+            assert.isObject(ateosRealm.config);
         });
 
         it("after connect", async () => {
-            assert.lengthOf(rootRealm.getTaskNames(), 0);
+            assert.lengthOf(ateosRealm.getTaskNames(), 0);
 
-            await rootRealm.connect();
+            await ateosRealm.connect();
 
-            assert.strictEqual(rootRealm.connected, true);
-            assert.sameMembers(rootRealm.getTaskNames(), CORE_TASKS);
+            assert.strictEqual(ateosRealm.connected, true);
+            assert.sameMembers(ateosRealm.getTaskNames(), CORE_TASKS);
         });
 
         it("connect to realm repeatedly shouldn't be thrown", async () => {
             let i;
             for (i = 0; i < 10; i++) {
                 // eslint-disable-next-line no-await-in-loop
-                await rootRealm.connect();
+                await ateosRealm.connect();
             }
             assert.equal(i, 10);
         });
@@ -84,19 +84,19 @@ describe("realm", () => {
         it("realm without tasks", async () => {
             const mgr = await createManagerFor({ name: "no_tasks" });
             
-            assert.equal(mgr.getTaskNames().length, rootRealm.getTaskNames("pub").length);
+            assert.equal(mgr.getTaskNames().length, ateosRealm.getTaskNames("pub").length);
         });
 
         it("realm with default tasks configuration", async () => {
             const mgr = await createManagerFor({ name: "realm1" });
 
-            assert.sameMembers(mgr.getTaskNames(), ["task1", "task2", ...rootRealm.getTaskNames("pub")]);
+            assert.sameMembers(mgr.getTaskNames(), ["task1", "task2", ...ateosRealm.getTaskNames("pub")]);
         });
 
         it("realm with configuration tasks with pub tag", async () => {
             const mgr = await createManagerFor({ name: "realm2" });
 
-            assert.sameMembers(mgr.getTaskNames("pub"), ["task1", "task2", ...rootRealm.getTaskNames("pub")]);
+            assert.sameMembers(mgr.getTaskNames("pub"), ["task1", "task2", ...ateosRealm.getTaskNames("pub")]);
         });
 
         it("realm with configuration tasks with dev tag", async () => {
@@ -138,7 +138,7 @@ describe("realm", () => {
                 transpile: true
             });
 
-            assert.sameMembers(nr.getTaskNames(), ["nestedA", "nestedB", "pubA", "pubB", "dummy", ...rootRealm.getTaskNames("pub")]);
+            assert.sameMembers(nr.getTaskNames(), ["nestedA", "nestedB", "pubA", "pubB", "dummy", ...ateosRealm.getTaskNames("pub")]);
         });
 
         it("run task of super realm", async () => {

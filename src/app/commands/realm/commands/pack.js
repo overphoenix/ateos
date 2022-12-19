@@ -36,12 +36,12 @@ export default class extends Subsystem {
     ]
   })
   async main(args, opts) {
-    let rootRealm = null;
+    let ateosRealm = null;
     try {
-      rootRealm = await this.parent.connectRealm();
+      ateosRealm = await this.parent.connectRealm();
 
-      await rootRealm.observerNotifications("progress")
-      await rootRealm.runAndWait("realmPack", {
+      await ateosRealm.observerNotifications("progress")
+      await ateosRealm.runAndWait("realmPack", {
         realm: process.cwd(),
         name: opts.has("name")
           ? opts.get("name")
@@ -56,8 +56,8 @@ export default class extends Subsystem {
 
       return 0;
     } catch (err) {
-      if (!ateos.isNull(rootRealm)) {
-        rootRealm.stopNotifications(err);
+      if (!ateos.isNull(ateosRealm)) {
+        ateosRealm.stopNotifications(err);
       } else {
         console.error(ateos.pretty.error(err));
       }

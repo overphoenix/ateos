@@ -65,33 +65,33 @@ export default class extends ateos.task.AdvancedTask {
     return result;
   }
 
-  _getCommonInfo(rootRealm) {
+  _getCommonInfo(ateosRealm) {
     const info = [];
-    if (ateos.isString(rootRealm.package.name)) {
+    if (ateos.isString(ateosRealm.package.name)) {
       info.push({
         key: "Name:",
-        value: rootRealm.package.name
+        value: ateosRealm.package.name
       });
     }
 
-    if (ateos.isString(rootRealm.package.version)) {
+    if (ateos.isString(ateosRealm.package.version)) {
       info.push({
         key: "Version:",
-        value: rootRealm.package.version
+        value: ateosRealm.package.version
       });
     }
 
-    if (ateos.isString(rootRealm.package.description)) {
+    if (ateos.isString(ateosRealm.package.description)) {
       info.push({
         key: "Description:",
-        value: rootRealm.package.description
+        value: ateosRealm.package.description
       });
     }
 
-    if (ateos.isString(rootRealm.package.author)) {
+    if (ateos.isString(ateosRealm.package.author)) {
       info.push({
         key: "Author:",
-        value: rootRealm.package.author
+        value: ateosRealm.package.author
       });
     }
 

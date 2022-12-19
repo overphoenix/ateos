@@ -9,7 +9,7 @@ export default class FsCache {
     if (is.realm(realm)) {
       this.realm = realm;
     } else {
-      this.realm = ateos.realm.rootRealm;
+      this.realm = ateos.realm.ateosRealm;
     }
     this.appName = appName;
     Object.assign(this, cacheDirs);

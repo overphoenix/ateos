@@ -82,6 +82,12 @@ const command = (name) => path.join(__dirname, "commands", name);
       description: "Realm management",
       subsystem: command("realm")
     },
+    {
+      name: "specter",
+      group: "common",
+      description: "DevOps workflows",
+      subsystem: command("specter")
+    },
   ]
 })
 export default class ATEOSApp extends app.Application {

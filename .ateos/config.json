@@ -4,7 +4,15 @@
       "share"
     ],
     "src": [
-      "src"
+      "src",
+      ".eslintignore",
+      ".eslintrc.js",
+      ".gitattributes",
+      ".gitignore",
+      "jsconfig.json",
+      "tsconfig.json",
+      "LICENSE",
+      "README.md"
     ],
     "tasks": [
       "tasks"
@@ -12,20 +20,8 @@
     "release": [
       "bin",
       "lib",
-      "package.json"
-    ],
-    "node_modules": [
-      "node_modules"
-    ],
-    "configs": [
-      "etc",
-      ".eslintignore",
-      ".eslintrc.js",
-      ".gitattributes",
-      ".gitignore",
-      "jsconfig.json"
-    ],
-    "info": [
+      "node_modules",
+      "package.json",
       "LICENSE",
       "README.md"
     ],

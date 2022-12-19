@@ -1,3 +1,5 @@
+import { omit } from "@recalibratedsystems/common-cjs";
+
 const {
   path: aPath
 } = ateos;
@@ -13,11 +15,11 @@ export default class Configuration extends ateos.configuration.GenericConfig {
   /**
      * Loads configuration.
      */
-  async load(options) {
+  async load(options: any) {
     await super.load(Configuration.configName, options);
   }
 
-  loadSync(options) {
+  loadSync(options: any) {
     super.loadSync(Configuration.configName, options);
   }
 
@@ -26,20 +28,18 @@ export default class Configuration extends ateos.configuration.GenericConfig {
      * 
      * @param {string} cwd path where config should be saved
      */
-  save({ cwd, ...options } = {}) {
-    if (!options.ext) {
-      options.ext = ".json";
+  save(opts: { cwd: string, ext?: string, space?: string }) {
+    if (!opts.ext) {
+      opts.ext = ".json";
     }
-    if (options.ext === ".json" && !options.space) {
-      options.space = "  ";
+    if (opts.ext === ".json" && !opts.space) {
+      opts.space = "  ";
     }
-    return super.save(ateos.isString(cwd) ? aPath.join(cwd, Configuration.configName) : Configuration.configName, options);
+    return super.save(ateos.isString(opts.cwd) ? aPath.join(opts.cwd, Configuration.configName) : Configuration.configName, omit(opts, ['cwd', 'ext']));
   }
 
-  static async load({ cwd } = {}) {
-    const config = new Configuration({
-      cwd
-    });
+  static async load(opts: { cwd: string }) {
+    const config = new Configuration(opts);
     await config.load();
     return config;
   }

@@ -24,10 +24,10 @@ export default class extends Subsystem {
   })
   async info(args, opts) {
     try {
-      const rootRealm = await this.parent.connectRealm({
+      const ateosRealm = await this.parent.connectRealm({
         // progress: false
       });
-      const result = await rootRealm.runAndWait("realmInfo", {
+      const result = await ateosRealm.runAndWait("realmInfo", {
         cwd: process.cwd(),
         ...opts.getAll()
       });

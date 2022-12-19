@@ -91,7 +91,7 @@ class RealmCommand extends app.Subsystem {
     if (ateos.isString(cwd)) {
       manager = new realm.RealmManager({ cwd });
     } else {
-      manager = realm.rootRealm;
+      manager = realm.ateosRealm;
     }
     await manager.connect({
       transpile: true

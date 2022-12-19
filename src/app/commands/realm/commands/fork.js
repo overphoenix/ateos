@@ -36,8 +36,8 @@ export default class extends Subsystem {
   })
   async main(args, opts) {
     try {
-      const rootRealm = await this.parent.connectRealm();
-      await rootRealm.runAndWait("realmFork", {
+      const ateosRealm = await this.parent.connectRealm();
+      await ateosRealm.runAndWait("realmFork", {
         ...opts.getAll(),
         realm: process.cwd()
       });

@@ -1,14 +1,17 @@
+declare global {
+  var ateos: Ateos;
+}
+
 require('ts-node').register();
 
 import "reflect-metadata";
 import * as common from "@recalibratedsystems/common-cjs";
-import { asNamespace, definep, getPrivate, lazify, lazifyp, setLazifyErrorHandler } from "@recalibratedsystems/common-cjs";
-import AppHelper from "./glosses/app/app_helper";
-import { AppSubsystem, CliCommand, CliMainCommand, getSubsystemMeta, EXIT, STATE } from "./glosses/app/index";
-import run from "./glosses/app/run";
-import Application from "./glosses/app/application";
-import StateMachine from "./glosses/app/state_machine";
-import Subsystem from "./glosses/app/subsystem";
+import { asNamespace, error, definep, getPrivate, lazify, lazifyp, setLazifyErrorHandler, typeOf } from "@recalibratedsystems/common-cjs";
+import * as task from "@recalibratedsystems/tasks";
+import { IRealm } from "./glosses/realm";
+import _ from "lodash";
+import { IConfiguration } from "./glosses/configurations";
+import { IApp } from "./glosses/app";
 
 export interface Ateos {
   __app__: any;
@@ -55,23 +58,25 @@ export interface Ateos {
     workerThreads: any,
     zlib: any
   };
-  app: {
-    AppHelper: typeof AppHelper;
-    AppSubsystem: typeof AppSubsystem;
-    Application: typeof Application;
-    CliCommand: typeof CliCommand;
-    CliMainCommand: typeof CliMainCommand;
-    EXIT: typeof EXIT;
-    STATE: typeof STATE;
-    StateMachine: typeof StateMachine;
-    Subsystem: typeof Subsystem;
-    getSubsystemMeta: typeof getSubsystemMeta;
-    run: typeof run
-  };
+  app: IApp;
+  configuration: IConfiguration;
+  error: typeof error;
+  lazify: typeof lazify;
+  lodash: typeof _;
+  realm: IRealm;
+  task: typeof task;
+  typeOf: typeof typeOf;
+  isArray: typeof common.isArray,
+  isConfiguration: (obj: any) => boolean,
+  isFunction: typeof common.isFunction,
+  isString: typeof common.isString,
+  isNull: typeof common.isNull,
+  isObject: typeof common.isObject,
+  isUndefined: typeof common.isUndefined,
   [key: string]: unknown;
 }
 
-const ateos: Ateos = Object.create({
+export const ateos: Ateos = Object.create({
   __app__: null, // root application instance
   common: asNamespace(common),
   // expose some useful commons
@@ -88,7 +93,7 @@ const ateos: Ateos = Object.create({
   getPrivate,
   asNamespace: asNamespace,
   EMPTY_BUFFER: common.EMPTY_BUFFER
-});
+}) as Ateos;
 
 // Mark some globals as namespaces
 [
@@ -169,7 +174,8 @@ lazify({
   isError: () => common.isError,
   isEmptyObject: () => common.isEmptyObject,
   isEqualArrays: () => common.isEqualArrays,
-  isBinaryPath: () => common.isBinaryPath
+  isBinaryPath: () => common.isBinaryPath,
+  isConfiguration: () => (obj: any) => obj instanceof ateos.configuration.BaseConfig,
 }, ateos, require);
 
 // Namespaces
@@ -296,9 +302,4 @@ setLazifyErrorHandler((err: any) => {
 // Set environment variables
 process.env.ATEOS_HOME = ateos.path.join(__dirname, "..");
 
-exports.ateos = ateos;
-exports.default = ateos;
-
-declare global {
-  var ateos: Ateos;
-}
+export default ateos;

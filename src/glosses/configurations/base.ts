@@ -1,30 +1,29 @@
+
+import ateos from "../..";
 const {
-  is,
   lodash: { assign, merge, get, has, set, unset, keys, values, toPairs }
 } = ateos;
 
 export default class BaseConfig {
-  constructor() {
-    this.raw = {};
-  }
+  public raw: any = {};
 
-  get(key) {
-    this.#checkKey(key);
+  get(key: any) {
+    this.checkKey_(key);
     return get(this.raw, key);
   }
 
-  has(key) {
-    this.#checkKey(key);
+  has(key: any) {
+    this.checkKey_(key);
     return has(this.raw, key);
   }
 
-  set(key, value) {
-    this.#checkKey(key);
+  set(key: any, value: any) {
+    this.checkKey_(key);
     return set(this.raw, key, value);
   }
 
-  delete(key) {
-    this.#checkKey(key);
+  delete(key: any) {
+    this.checkKey_(key);
     return unset(this.raw, key);
   }
 
@@ -32,19 +31,19 @@ export default class BaseConfig {
     this.raw = {};
   }
 
-  keys(key) {
-    return keys(this.#getObject(key));
+  keys(key: any) {
+    return keys(this.getObject_(key));
   }
 
-  values(key) {
-    return values(this.#getObject(key));
+  values(key: any) {
+    return values(this.getObject_(key));
   }
 
-  entries(key) {
-    return toPairs(this.#getObject(key));
+  entries(key: any) {
+    return toPairs(this.getObject_(key));
   }
 
-  assign(...args) {
+  assign(...args: any[]) {
     if (args.length < 1) {
       return false;
     }
@@ -53,13 +52,13 @@ export default class BaseConfig {
     if (ateos.isString(args[0]) || ateos.isArray(args[0])) {
       key = args.shift();
     }
-    const obj = this.#getObject(key);
+    const obj = this.getObject_(key);
     if (!ateos.isObject(obj)) {
       return this.set(key, assign(...args));
     }
 
     for (let i = args.length; --i >= 0;) {
-      if (is.configuration(args[i])) {
+      if (ateos.isConfiguration(args[i])) {
         args[i] = args[i].raw;
       }
     }
@@ -67,7 +66,7 @@ export default class BaseConfig {
     return assign(obj, ...args);
   }
 
-  merge(...args) {
+  merge(...args: any[]) {
     if (args.length < 1) {
       return false;
     }
@@ -76,13 +75,13 @@ export default class BaseConfig {
     if (ateos.isString(args[0]) || ateos.isArray(args[0])) {
       key = args.shift();
     }
-    const obj = this.#getObject(key);
+    const obj = this.getObject_(key);
     if (!ateos.isObject(obj)) {
       return this.set(key, assign(...args));
     }
 
     for (let i = args.length; --i >= 0;) {
-      if (is.configuration(args[i])) {
+      if (ateos.isConfiguration(args[i])) {
         args[i] = args[i].raw;
       }
     }
@@ -98,7 +97,7 @@ export default class BaseConfig {
     throw new ateos.error.NotImplementedException("Method save() is not implemented");
   }
 
-  #getObject(key) {
+  private getObject_(key: any) {
     let obj;
     if ((ateos.isString(key) && key !== "") || ateos.isArray(key)) {
       obj = this.get(key);
@@ -108,7 +107,7 @@ export default class BaseConfig {
     return obj;
   }
 
-  #checkKey(key) {
+  private checkKey_(key: any) {
     let parts;
     const type = ateos.typeOf(key);
     switch (type) {
@@ -126,7 +125,7 @@ export default class BaseConfig {
     if (parts.length === 0) {
       throw new ateos.error.InvalidArgumentException("Invalid type of key");
     }
-        
+
     return parts;
   }
 }

@@ -210,8 +210,8 @@ export default class extends Subsystem {
     }
 
     try {
-      const rootRealm = await this.parent.connectRealm();
-      await rootRealm.runAndWait("realmCreate", info);
+      const ateosRealm = await this.parent.connectRealm();
+      await ateosRealm.runAndWait("realmCreate", info);
 
       return 0;
     } catch (err) {

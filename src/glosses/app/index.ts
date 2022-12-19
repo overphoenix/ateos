@@ -1,3 +1,10 @@
+
+import AppHelper from "./glosses/app/app_helper";
+import run from "./glosses/app/run";
+import Application from "./glosses/app/application";
+import StateMachine from "./glosses/app/state_machine";
+import Subsystem from "./glosses/app/subsystem";
+
 ateos.lazify({
   StateMachine: "./state_machine",
   Subsystem: "./subsystem",
@@ -39,9 +46,9 @@ const SubsystemDecorator = (sysInfo = {}) => (target) => {
 };
 
 // Decorators
- 
+
 export const AppSubsystem = SubsystemDecorator;
-export const CliMainCommand = (info = {}) => (target, key, descriptor) => {
+export const CliMainCommand = (info: any) => (target, key, descriptor) => {
   let sysMeta = getSubsystemMeta(target.constructor);
   info.handler = descriptor.value;
   if (ateos.isUndefined(sysMeta)) {
@@ -61,7 +68,7 @@ export const CliMainCommand = (info = {}) => (target, key, descriptor) => {
     }
   }
 };
-export const CliCommand = (commandInfo = {}) => (target, key, descriptor) => {
+export const CliCommand = (commandInfo: any) => (target, key, descriptor) => {
   let sysMeta = getSubsystemMeta(target.constructor);
   commandInfo.handler = descriptor.value;
   if (ateos.isUndefined(sysMeta)) {
@@ -81,3 +88,21 @@ export const CliCommand = (commandInfo = {}) => (target, key, descriptor) => {
     }
   }
 };
+
+
+// import { AppSubsystem, CliCommand, CliMainCommand, getSubsystemMeta, EXIT, STATE } from "./glosses/app/index";
+
+
+export interface IApp {
+  AppHelper: typeof AppHelper;
+  AppSubsystem: typeof AppSubsystem;
+  Application: typeof Application;
+  CliCommand: typeof CliCommand;
+  CliMainCommand: typeof CliMainCommand;
+  EXIT: typeof EXIT;
+  STATE: typeof STATE;
+  StateMachine: typeof StateMachine;
+  Subsystem: typeof Subsystem;
+  getSubsystemMeta: typeof getSubsystemMeta;
+  run: typeof run;
+}

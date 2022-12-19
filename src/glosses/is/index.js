@@ -35,7 +35,6 @@ ateos.lazify({
   subsystem: () => (obj) => obj instanceof ateos.app.Subsystem,
   application: () => (obj) => obj instanceof ateos.app.Application,
   coreStream: () => (obj) => obj instanceof ateos.stream.core.Stream,
-  configuration: () => (obj) => obj instanceof ateos.configuration.BaseConfig,
   datetime: () => (obj) => obj instanceof ateos.datetime.Datetime,
 
   realm: () => (obj) => obj instanceof ateos.realm.RealmManager,

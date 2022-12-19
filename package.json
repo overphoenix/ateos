@@ -12,6 +12,7 @@
   "engines": {
     "node": ">=18"
   },
+  "types": "./index.d.ts",
   "bin": {
     "ateos": "./bin/ateos.js"
   },
@@ -23,6 +24,7 @@
   ],
   "scripts": {
     "build:tsc": "tsc",
+    "build:types": "tsc -p tsconfig.types.json",
     "lint": "eslint --fix \"src/**/*.{js,jsx,ts,tsx}\"",
     "check-deps": "npx npm-check-updates --deep",
     "update-deps": "npx npm-check-updates --deep -u"
@@ -78,6 +80,7 @@
     "@recalibratedsystems/tasks": "^0.9.1",
     "@swc/core": "^1.2.233",
     "@swc/wasm": "^1.2.235",
+    "@types/lodash": "^4.14.191",
     "abstract-leveldown": "^7.2.0",
     "ansi-colors": "^4.1.1",
     "ansi-styles": "^6.1.0",
