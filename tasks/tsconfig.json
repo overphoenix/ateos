@@ -4,7 +4,7 @@
   },
   "compilerOptions": {
     "baseUrl": ".",
-    "rootDir": ".",
+    "rootDir": "public",
     "outDir": ".",
     "declaration": false,
     "target": "es2021",

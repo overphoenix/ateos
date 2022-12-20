@@ -6,62 +6,62 @@ const {
 
 export default class extends Subsystem {
   @CliMainCommand({
-    arguments: [
-      {
-        name: "path",
-        nargs: "?",
-        help: "Project entry path"
-      }
-    ],
-    options: [
-      {
-        name: ["-re", "--re"],
-        help: "Interpret 'path' as regular expression"
-      }
-    ]
+    // arguments: [
+    //   {
+    //     name: "path",
+    //     nargs: "?",
+    //     help: "Project entry path"
+    //   }
+    // ],
+    // options: [
+    //   {
+    //     name: ["-re", "--re"],
+    //     help: "Interpret 'path' as regular expression"
+    //   }
+    // ]
   })
   async info(args: any, opts: any) {
     let r: ateos.realm.RealmManager | null = null;
     try {
-      const path = this.parent.resolvePath(args, opts);
       r = await this.parent.connectRealm({
         cwd: process.cwd(),
         progress: false
       });
       await r.observerNotifications("progress");
       r.notify(this, "progress", {
-        text: "loading"
+        text: "loading information"
       });
       const result = await r.runAndWait("specterInfo");
 
       r.notify(this, "progress", {
-        text: "building complete",
-        status: "succeed"
+        text: "complete",
+        status: "stop"
       });
 
-      if (result.specs.length > 0) {
-        console.info('Specter specifications:\n---');
-        console.info(YAML.stringify(result.specs.map((spec: any) => {
-          const result: {
-            name: string;
-            version: string;
-            description: string;
-            type: string;
-            nodes?: any[];
-          } = {
-            name: r.package.name,
-            version: r.package.version,
-            description: r.package.description,
-            type: spec.type
-          };
-
-          if (spec.nodes) {
-            result.nodes = spec.nodes.map((n: any) => `${n.ip4} (${n.hostname})`);
-          }
-
-          return result;
-        })));
+      console.info('Specter project:\n---');
+      console.info(`name: ${r.package.name}`);
+      console.info(`version: ${r.package.version}`);
+      console.info(`description: ${r.package.description})`);
+      if (Object.keys(result.specs).length > 0) {
+        console.info('\nSpecifications:\n---');
+        console.info(YAML.stringify(result.specs));
       }
+      // console.info(YAML.stringify(result.specs.map((spec: any) => {
+      //   const result: {
+      //     name: string;
+      //     type: string;
+      //     nodes?: any[];
+      //   } = {
+      //     name: 
+      //     type: spec.type
+      //   };
+
+      //   if (spec.nodes) {
+      //     result.nodes = spec.nodes.map((n: any) => `${n.ip4} (${n.hostname})`);
+      //   }
+
+      //   return result;
+      // })));
 
       return 0;
     } catch (err) {

@@ -2,7 +2,36 @@ declare global {
   var ateos: Ateos;
 }
 
-require('ts-node').register();
+require('ts-node').register({
+  "ts-node": {
+    swc: true
+  },
+  sourceMap: true,
+  compilerOptions: {
+    target: "es2021",
+    lib: ["es2021"],
+    emitDecoratorMetadata: true,
+    experimentalDecorators: true,
+    declaration: true,
+    removeComments: true,
+    incremental: true,
+    moduleResolution: "node",
+    module: "commonjs",
+    noEmitOnError: false,
+    // noUnusedLocals: true,
+    // noUnusedParameters: true,
+    // strictPropertyInitialization: true,
+    // strictFunctionTypes: true,
+    strict: true,
+    newLine: "LF",
+    noImplicitReturns: true,
+    allowJs: true,
+    esModuleInterop: true,
+    forceConsistentCasingInFileNames: true,
+    skipLibCheck: true,
+    resolveJsonModule: true,
+  }
+});
 
 import "reflect-metadata";
 import * as common from "@recalibratedsystems/common-cjs";
@@ -12,6 +41,7 @@ import { IRealm } from "./glosses/realm";
 import _ from "lodash";
 import { IConfiguration } from "./glosses/configurations";
 import { IApp } from "./glosses/app";
+import * as ssh from "./glosses/ssh";
 
 export interface Ateos {
   __app__: any;
@@ -65,6 +95,7 @@ export interface Ateos {
   lodash: typeof _;
   realm: IRealm;
   task: typeof task;
+  ssh: typeof ssh;
   typeOf: typeof typeOf;
   isArray: typeof common.isArray,
   isConfiguration: (obj: any) => boolean,

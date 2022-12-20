@@ -28,6 +28,18 @@ const subCommand = (name: string) => ateos.path.join(__dirname, "commands", name
       description: "Get `specter` information",
       subsystem: subCommand("info")
     },
+    {
+      name: "software",
+      group: "generic",
+      description: "Install the required software",
+      subsystem: subCommand("software")
+    },
+    {
+      name: "check",
+      group: "generic",
+      description: "Check ssh connection",
+      subsystem: subCommand("check")
+    },
     // {
     //   name: "clean",
     //   group: "generic",
@@ -87,10 +99,10 @@ class RealmCommand extends Subsystem {
     return path;
   }
 
-  async connectRealm(opt: { cwd: string; }) {
+  async connectRealm(opts: { cwd: string; }) {
     let manager;
-    if (ateos.isString(opt.cwd)) {
-      manager = new realm.RealmManager(opt);
+    if (ateos.isString(opts.cwd)) {
+      manager = new realm.RealmManager(opts);
     } else {
       manager = realm.ateosRealm;
     }
