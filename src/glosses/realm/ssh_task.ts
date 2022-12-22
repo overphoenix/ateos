@@ -11,7 +11,7 @@ export default class SSHTask extends AdvancedTask {
 
   async initialize(sshConfig: any) {
     this.result = {};
-    await this.ssh.connect(omit(sshConfig, ['hostname', 'auth']));
+    await this.ssh.connect(omit(sshConfig, ['hostname', 'auth', 'software']));
   }
 
   main(sshConfig: any) {

@@ -37,14 +37,14 @@ export default class extends Subsystem {
       r.notify(this, "progress", {
         text: "installing software"
       });
-      const result = await r.runAndWait("specterInstallSoftware", { spec: args.get('spec'), ...opts.getAll() });
+      const result = await r.runAndWait("specterSoftware", { spec: args.get('spec'), ...opts.getAll() });
 
       r.notify(this, "progress", {
         text: "complete",
         status: "stop"
       });
 
-      console.info(result);
+      // console.info(result);
       return 0;
     } catch (err) {
       if (!ateos.isNull(r)) {

@@ -1,4 +1,4 @@
-@ateos.task.Task("specterInstallSoftware")
+@ateos.task.Task("specterSoftware")
 export default class extends ateos.task.AdvancedTask {
   async main(opts/*: { cwd?: string, spec: string }*/) {
     const result/*: any*/ = {};
@@ -12,7 +12,8 @@ export default class extends ateos.task.AdvancedTask {
             args: {
               ...node,
               specName: name,
-              software: spec.software
+              software: spec.software,
+              specEnv: spec.env
             }
           };
         }), {

@@ -17,6 +17,7 @@ import {
   ShellOptions,
 } from 'ssh2';
 import { Prompt, Stats, TransferOptions } from 'ssh2-streams';
+import { isNumber, isString } from '@recalibratedsystems/common-cjs';
 
 export type SSHConfig = ConnectConfig & {
   privateKeyPath?: string;
@@ -385,8 +386,8 @@ export class HappySSH {
     );
     invariant(
       options.stdin == null ||
-        typeof options.stdin === 'string' ||
-        isStream.readable(options.stdin),
+      typeof options.stdin === 'string' ||
+      isStream.readable(options.stdin),
       'options.stdin must be a valid string or readable stream',
     );
     invariant(
@@ -463,10 +464,10 @@ export class HappySSH {
             code = code_ ?? null;
             signal = signal_ ?? null;
           });
-          channel.on('close', () => {
+          channel.on('close', (code_: number | null = null, signal_: string) => {
             resolve({
-              code: code != null ? code : null,
-              signal: signal != null ? signal : null,
+              code: isNumber(code_) ? code_ : code != null ? code : null,
+              signal: isString(signal_) ? signal_ : signal != null ? signal : null,
               stdout: output.stdout.join('').trim(),
               stderr: output.stderr.join('').trim(),
             });
@@ -499,7 +500,7 @@ export class HappySSH {
     );
     invariant(
       options.stream == null ||
-        ['both', 'stdout', 'stderr'].includes(options.stream),
+      ['both', 'stdout', 'stderr'].includes(options.stream),
       'options.stream must be one of both, stdout, stderr',
     );
     for (let i = 0, { length } = parameters; i < length; i += 1) {
