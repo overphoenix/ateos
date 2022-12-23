@@ -41,27 +41,21 @@ export default class extends Subsystem {
       console.info('Specter project:\n---');
       console.info(`name: ${r.package.name}`);
       console.info(`version: ${r.package.version}`);
-      console.info(`description: ${r.package.description})`);
+      console.info(`description: ${r.package.description}`);
+      console.info();
+      if (result.nodes && result.nodes.length > 0) {
+        console.info('\Nodes:\n---');
+        console.info(YAML.stringify(result.nodes));
+      }
+
+      if (Object.keys(result.pubkeys).length > 0) {
+        console.info('\nPublic ssh keys:\n---');
+        console.info(YAML.stringify(result.pubkeys));
+      }
       if (Object.keys(result.specs).length > 0) {
         console.info('\nSpecifications:\n---');
         console.info(YAML.stringify(result.specs));
       }
-      // console.info(YAML.stringify(result.specs.map((spec: any) => {
-      //   const result: {
-      //     name: string;
-      //     type: string;
-      //     nodes?: any[];
-      //   } = {
-      //     name: 
-      //     type: spec.type
-      //   };
-
-      //   if (spec.nodes) {
-      //     result.nodes = spec.nodes.map((n: any) => `${n.ip4} (${n.hostname})`);
-      //   }
-
-      //   return result;
-      // })));
 
       return 0;
     } catch (err) {

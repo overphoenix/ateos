@@ -15,16 +15,12 @@ export default class extends ateos.task.AdvancedTask {
     }
 
     this.manager.notify(this, "progress", {
-      message: "connecting to realm"
+      message: "collecting info"
     });
 
     const r = new realm.RealmManager({ cwd });
     await r.connect({
       transpile: true
-    });
-
-    this.manager.notify(this, "progress", {
-      message: "collecting info"
     });
 
     const specFiles = (await readdir(cwd)).filter((name/*: string*/) => name.endsWith(".spec.json"));
@@ -37,24 +33,17 @@ export default class extends ateos.task.AdvancedTask {
       }
     }
 
-    const result/*: {
+    this.result/*: {
       specs: any;
     } */ = {
+      nodes: require(path.join(cwd, ".specter", "nodes.json")),
+      pubkeys: require(path.join(cwd, ".specter", "pubkeys.json")),
       specs
     };
 
     this.manager.notify(this, "progress", {
       clean: true,
       status: true
-    });
-
-    return result;
-  }
-
-  async undo(err/*: any*/) {
-    this.manager.notify(this, "progress", {
-      message: err,
-      status: false
     });
   }
 }

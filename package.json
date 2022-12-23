@@ -78,7 +78,7 @@
     "@recalibratedsystems/common-cjs": "^0.2.14",
     "@recalibratedsystems/messagepack": "^1.2.2",
     "@recalibratedsystems/smartbuffer": "^1.2.1",
-    "@recalibratedsystems/tasks": "^0.9.5",
+    "@recalibratedsystems/tasks": "^0.9.7",
     "@swc/core": "^1.2.233",
     "@swc/wasm": "^1.2.235",
     "@types/lodash": "^4.14.191",
@@ -184,6 +184,6 @@
     "uuid": "^8.3.2",
     "which": "^2.0.2",
     "ws": "^8.8.1",
-    "yaml": "^2.1.1"
+    "yaml": "^2.2.0"
   }
 }

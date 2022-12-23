@@ -40,6 +40,12 @@ const subCommand = (name: string) => ateos.path.join(__dirname, "commands", name
       description: "Check ssh connection",
       subsystem: subCommand("check")
     },
+    {
+      name: "run",
+      group: "generic",
+      description: "Run specification scoped task",
+      subsystem: subCommand("run")
+    },
     // {
     //   name: "clean",
     //   group: "generic",

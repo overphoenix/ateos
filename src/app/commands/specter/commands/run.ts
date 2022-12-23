@@ -8,9 +8,9 @@ export default class extends Subsystem {
   @CliMainCommand({
     arguments: [
       {
-        name: "spec",
-        nargs: "*",
-        help: "Specter's specification name(s)"
+        name: "command",
+        type: String,
+        help: "Specter's specification command name"
       }
     ],
     options: [
@@ -36,7 +36,7 @@ export default class extends Subsystem {
       }
     ]
   })
-  async installSoftware(args: any, opts: any) {
+  async run(args: any, opts: any) {
     let r: ateos.realm.RealmManager | null = null;
     try {
       r = await this.parent.connectRealm({
@@ -44,17 +44,10 @@ export default class extends Subsystem {
         progress: false
       });
       await r.observerNotifications("progress");
-      r.notify(this, "progress", {
-        text: "installing software"
-      });
-      const result = await r.runAndWait("specterSoftware", { spec: args.get('spec'), ...opts.getAll() });
+      const result = await r.runAndWait("specterRun", { command: args.get('command'), ...opts.getAll() });
+      console.log(ateos.std.util.inspect(result, { depth: 5 }));
+      // console.info(ateos.data.yaml.encode(result));
 
-      r.notify(this, "progress", {
-        text: "complete",
-        status: "stop"
-      });
-
-      // console.info(result);
       return 0;
     } catch (err) {
       if (!ateos.isNull(r)) {
