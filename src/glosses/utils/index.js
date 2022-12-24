@@ -78,7 +78,7 @@ ateos.lazify({
   bufferFrom: "./buffer_from",
   fromMs: "./from_ms",
   toMs: "./to_ms",
-  omit: "./omit",
+  omit: ["@recalibratedsystems/common-cjs","omit"],
   clone: "./clone",
   detectFileType: "./detect_file_type",
   mockInstance: "./mock_instance",
