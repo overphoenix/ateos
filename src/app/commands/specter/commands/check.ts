@@ -1,5 +1,3 @@
-import YAML from "yaml";
-
 const {
   app: { Subsystem, CliMainCommand }
 } = ateos;
@@ -39,7 +37,10 @@ export default class extends Subsystem {
       });
       const result = await r.runAndWait("specterCheck", { spec: args.get('spec'), ...opts.getAll() });
 
-      // TODO: ....
+      r.notify(this, "progress", {
+        text: "complete",
+        status: "stop"
+      });
 
       return 0;
     } catch (err) {

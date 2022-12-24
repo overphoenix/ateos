@@ -1,5 +1,3 @@
-import YAML from "yaml";
-
 const {
   app: { Subsystem, CliMainCommand }
 } = ateos;
@@ -32,22 +30,22 @@ export default class extends Subsystem {
       console.info();
       if (result.nodes && result.nodes.length > 0) {
         console.info('\Nodes:\n---');
-        console.info(YAML.stringify(result.nodes));
+        console.info(ateos.data.yaml.encode(result.nodes));
       }
 
       if (result.pubkeys && Object.keys(result.pubkeys).length > 0) {
         console.info('\nPublic ssh keys:\n---');
-        console.info(YAML.stringify(result.pubkeys));
+        console.info(ateos.data.yaml.encode(result.pubkeys));
       }
 
       if (result.tasks && Object.keys(result.tasks).length > 0) {
         console.info('\nTasks:\n---');
-        console.info(YAML.stringify(result.tasks));
+        console.info(ateos.data.yaml.encode(result.tasks));
       }
 
       if (result.specs && Object.keys(result.specs).length > 0) {
         console.info('\nSpecifications:\n---');
-        console.info(YAML.stringify(result.specs));
+        console.info(ateos.data.yaml.encode(result.specs));
       }
 
       return 0;

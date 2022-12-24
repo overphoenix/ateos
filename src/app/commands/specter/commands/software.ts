@@ -1,5 +1,3 @@
-import YAML from "yaml";
-
 const {
   app: { Subsystem, CliMainCommand }
 } = ateos;

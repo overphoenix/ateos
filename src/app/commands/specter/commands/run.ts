@@ -1,5 +1,3 @@
-import YAML from "yaml";
-
 const {
   app: { Subsystem, CliMainCommand }
 } = ateos;
@@ -52,7 +50,10 @@ export default class extends Subsystem {
       await r.observerNotifications("progress");
       const argv = ateos.minimist(rest);
       const result = await r.runAndWait("specterRun", { task: args.get('task'), ...opts.getAll(), argv });
-
+      r.notify(this, "progress", {
+        text: "complete",
+        status: "stop"
+      });
       console.info(ateos.data.yaml.encode(result));
 
       return 0;
