@@ -11,6 +11,7 @@ Ateos is an organic Node.js extension library for microservices development and 
 ```
 git clone https://github.com/overphoenix/ateos
 cd ateos
+npm install
 npm run build:tsc
 node ./bin/ateos.js realm build
 npm install --global
