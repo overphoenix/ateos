@@ -38,7 +38,7 @@ export default class extends Subsystem {
         status: "stop"
       });
 
-      console.info('Specter project:\n---');
+      console.info('Specter project base:\n---');
       console.info(`name: ${r.package.name}`);
       console.info(`version: ${r.package.version}`);
       console.info(`description: ${r.package.description}`);

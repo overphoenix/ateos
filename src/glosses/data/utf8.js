@@ -1,6 +1,5 @@
 /* eslint-disable func-style */
 
-ateos.asNamespace(exports);
 const stringFromCharCode = String.fromCharCode;
 
 let byteArray;

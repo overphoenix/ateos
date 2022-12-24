@@ -1,5 +1,3 @@
-ateos.asNamespace(exports);
-
 const MSB = 0x80;
 const REST = 0x7F;
 const MSBALL = ~REST;

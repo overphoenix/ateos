@@ -17,8 +17,12 @@ export default class extends ateos.task.AdvancedTask {
             const nodeInfo = isString(node) ? nodeMap.get(node) : (isObject(node) ? node : {});
             return {
               task: "sshCheck",
-              args: nodeInfo
-          };
+              args: {
+                ...nodeInfo,
+                specName: name,
+                specEnv: spec.env
+              }
+            };
           }), {
             privateKeyPath: opts.privkey,
             passphrase: opts.passphrase

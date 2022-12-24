@@ -43,26 +43,24 @@ export default class extends ateos.task.AdvancedTask {
       message: "collecting info"
     });
 
-    const result = {};
+    this.result = {};
 
     if (common || all) {
-      result.common = this._getCommonInfo(r);
+      this.result.common = this._getCommonInfo(r);
     }
 
     if (tasks || all) {
-      result.tasks = r.getTaskNames().sort();
+      this.result.tasks = r.getTaskNames().sort();
     }
 
     if (units || all) {
-      result.units = r.devConfig.getUnits();
+      this.result.units = r.devConfig.getUnits();
     }
 
     this.manager.notify(this, "progress", {
       clean: true,
       status: true
     });
-
-    return result;
   }
 
   _getCommonInfo(ateosRealm) {

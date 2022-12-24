@@ -34,8 +34,6 @@ export default class extends Subsystem {
 
       if (result.common) {
         console.log();
-        console.log(chalk.bold("Common:"));
-        console.log();
         console.log(pretty.table(result.common, {
           width: "100%",
           borderless: true,

@@ -1,4 +1,3 @@
-ateos.asNamespace(exports);
 
 /**
  * Generate a character map.

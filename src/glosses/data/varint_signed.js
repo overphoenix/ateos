@@ -2,8 +2,6 @@ const {
   data: { varint }
 } = ateos;
 
-ateos.asNamespace(exports);
-
 export const encode = function encode(v, b, o) {
   v = v >= 0 ? v * 2 : v * -2 - 1;
   const r = varint.encode(v, b, o);
