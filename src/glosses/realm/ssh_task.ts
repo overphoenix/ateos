@@ -1,5 +1,3 @@
-import { omit } from "@recalibratedsystems/common-cjs";
-import { inspect } from "node:util";
 import { SSHConfig } from "../ssh/index";
 const {
   task: { AdvancedTask },
@@ -7,16 +5,15 @@ const {
 } = ateos;
 
 export default class SSHTask extends AdvancedTask {
-  protected ssh = new HappySSH();
+  protected ssh: any; // for simplification of some cases
 
   async initialize(sshConfig: any) {
     this.result = {};
-    await this.ssh.connect(omit(sshConfig, ['hostname', 'auth', 'software']));
   }
 
   main(sshConfig: any) {
     this.manager.notify(this, "progress", {
-      text: `[${this.hostkey(sshConfig)})] ok (${sshConfig.auth})`,
+      text: `${this.hostkey(sshConfig)} [ok] ${sshConfig.auth}`,
       status: "succeed"
     });
     this.result[this.hostkey(sshConfig)] = {
@@ -33,13 +30,19 @@ export default class SSHTask extends AdvancedTask {
 
   error(err: any, sshConfig: SSHConfig): void {
     this.manager.notify(this, "progress", {
-      text: `${this.hostkey(sshConfig)}] [error] (${err.message})`,
+      text: `${this.hostkey(sshConfig)} [error] ${err.message}`,
       status: "fail"
     });
     this.result[this.hostkey(sshConfig)] = {
       status: 'error',
       error: err.stack
     };
+  }
+
+  async connectSSH(sshConfig: any, ssh_?: HappySSH) {
+    const ssh = ssh_ ? ssh_ : new HappySSH();
+    await ssh.connect(ateos.util.pick(sshConfig, ['host', 'username', 'password', 'privateKeyPath', 'passphrase']));
+    return ssh;
   }
 
   // notify(stream, params) {

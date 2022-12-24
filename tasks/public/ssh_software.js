@@ -3,6 +3,7 @@ import { arrify, isArray, isObject, isPropertyDefined, isPropertyOwned, isString
 @ateos.task.Task("sshSoftware")
 export default class extends ateos.realm.SSHTask {
   async main(sshOpts) {
+    this.ssh = await this.connectSSH(sshOpts);
     if (ateos.isArray(sshOpts.software)) {
       for (let si of sshOpts.software) {
         if (si.type === 'apt-upgrade') {
@@ -19,7 +20,7 @@ export default class extends ateos.realm.SSHTask {
             });
           }
         } else if (si.type === 'exec') {
-          await this.sequenceOfExecCommands(sshOpts, si, si.execCommand)
+          await this.sequenceOfExecCommands(sshOpts, si, si.execCommand, si.cwd)
         } else if (si.type === 'apt') {
           try {
             if (isArray(si.aptBefore)) {

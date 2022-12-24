@@ -145,6 +145,7 @@
     "memdown": "^6.0.0",
     "micromatch": "^4.0.4",
     "mime": "^2.4.4",
+    "minimist": "^1.2.7",
     "nanoid": "^3.3.4",
     "nunjucks": "^3.2.3",
     "ololog": "^1.1.175",

@@ -249,7 +249,7 @@ lazify({
     vm: "vm",
     workerThreads: "worker_threads",
     zlib: "zlib"
-  }, null, require, { asNamespace: true }),
+  }, null, require, { asNamespace: false }),
 
   // glosses
   app: "./glosses/app",
@@ -302,12 +302,13 @@ lazify({
   tsn: "ts-node",
   tslib: "tslib",
   typescript: "typescript",
+  minimist: "minimist",
   path: "upath",
   punycode: "punycode/",
   uri: "urijs",
   semver: "semver",
   systeminformation: "systeminformation"
-}, ateos, require, { asNamespace: true });
+}, ateos, require, { asNamespace: false });
 
 // mappings
 lazify({

@@ -6,19 +6,6 @@ const {
 
 export default class extends Subsystem {
   @CliMainCommand({
-    // arguments: [
-    //   {
-    //     name: "path",
-    //     nargs: "?",
-    //     help: "Project entry path"
-    //   }
-    // ],
-    // options: [
-    //   {
-    //     name: ["-re", "--re"],
-    //     help: "Interpret 'path' as regular expression"
-    //   }
-    // ]
   })
   async info(args: any, opts: any) {
     let r: ateos.realm.RealmManager | null = null;
@@ -48,11 +35,17 @@ export default class extends Subsystem {
         console.info(YAML.stringify(result.nodes));
       }
 
-      if (Object.keys(result.pubkeys).length > 0) {
+      if (result.pubkeys && Object.keys(result.pubkeys).length > 0) {
         console.info('\nPublic ssh keys:\n---');
         console.info(YAML.stringify(result.pubkeys));
       }
-      if (Object.keys(result.specs).length > 0) {
+
+      if (result.tasks && Object.keys(result.tasks).length > 0) {
+        console.info('\nTasks:\n---');
+        console.info(YAML.stringify(result.tasks));
+      }
+
+      if (result.specs && Object.keys(result.specs).length > 0) {
         console.info('\nSpecifications:\n---');
         console.info(YAML.stringify(result.specs));
       }

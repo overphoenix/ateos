@@ -33,12 +33,34 @@ export default class extends ateos.task.AdvancedTask {
       }
     }
 
+    let nodes;
+    try {
+      nodes = require(path.join(cwd, ".specter", "nodes.json"));
+    } catch (ex) {
+
+    }
+
+    let pubkeys;
+    try {
+      pubkeys = require(path.join(cwd, ".specter", "pubkeys.json"));
+    } catch (ex) {
+
+    }
+
+    let tasks;
+    try {
+      tasks = require(path.join(cwd, ".specter", "tasks.json"));
+    } catch (ex) {
+
+    }
+
     this.result/*: {
       specs: any;
     } */ = {
-      nodes: require(path.join(cwd, ".specter", "nodes.json")),
-      pubkeys: require(path.join(cwd, ".specter", "pubkeys.json")),
-      specs
+      specs,
+      nodes,
+      pubkeys,
+      tasks
     };
 
     this.manager.notify(this, "progress", {

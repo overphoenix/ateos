@@ -8,12 +8,18 @@ export default class extends Subsystem {
   @CliMainCommand({
     arguments: [
       {
-        name: "command",
+        name: "task",
         type: String,
-        help: "Specter's specification command name"
+        help: "Specter task name"
       }
     ],
     options: [
+      {
+        name: "--spec",
+        type: String,
+        required: true,
+        help: "Specter specification name"
+      },
       {
         name: "--privkey",
         type: String,
@@ -36,7 +42,7 @@ export default class extends Subsystem {
       }
     ]
   })
-  async run(args: any, opts: any) {
+  async run(args: any, opts: any, { rest }) {
     let r: ateos.realm.RealmManager | null = null;
     try {
       r = await this.parent.connectRealm({
@@ -44,9 +50,10 @@ export default class extends Subsystem {
         progress: false
       });
       await r.observerNotifications("progress");
-      const result = await r.runAndWait("specterRun", { command: args.get('command'), ...opts.getAll() });
-      console.log(ateos.std.util.inspect(result, { depth: 5 }));
-      // console.info(ateos.data.yaml.encode(result));
+      const argv = ateos.minimist(rest);
+      const result = await r.runAndWait("specterRun", { task: args.get('task'), ...opts.getAll(), argv });
+
+      console.info(ateos.data.yaml.encode(result));
 
       return 0;
     } catch (err) {

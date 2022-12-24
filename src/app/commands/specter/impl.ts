@@ -46,54 +46,6 @@ const subCommand = (name: string) => ateos.path.join(__dirname, "commands", name
       description: "Run specification scoped task",
       subsystem: subCommand("run")
     },
-    // {
-    //   name: "clean",
-    //   group: "generic",
-    //   description: "Clean realm build files",
-    //   subsystem: subCommand("clean")
-    // },
-    // {
-    //   name: ["create", "new"],
-    //   group: "generic",
-    //   description: "Create new realm",
-    //   subsystem: subCommand("create")
-    // },
-    // {
-    //   name: "init",
-    //   group: "generic",
-    //   description: "Init realm",
-    //   subsystem: subCommand("init")
-    // },
-    // {
-    //   name: "dev",
-    //   group: "generic",
-    //   description: "Start realm development cycle",
-    //   subsystem: subCommand("dev")
-    // },
-    // {
-    //   name: "fork",
-    //   group: "generic",
-    //   description: "Fork realm",
-    //   subsystem: subCommand("fork")
-    // },
-    // {
-    //   name: "info",
-    //   group: "generic",
-    //   description: "Show realm information",
-    //   subsystem: subCommand("info")
-    // },
-    // {
-    //   name: "pack",
-    //   group: "generic",
-    //   description: "Pack realm into the archive",
-    //   subsystem: subCommand("pack")
-    // },
-    // {
-    //   name: "publish",
-    //   group: "generic",
-    //   description: "Publish realm release",
-    //   subsystem: subCommand("publish")
-    // }
   ]
 })
 class RealmCommand extends Subsystem {
