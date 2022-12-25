@@ -1,7 +1,4 @@
-const {
-  std
-} = ateos;
-const { os } = std;
+const { std } = ateos;
 
 export const user = () => {
   let result = ateos.isWindows ? `${process.env.USERDOMAIN}\\${process.env.USERNAME}` : process.env.USER;
@@ -11,9 +8,9 @@ export const user = () => {
   return result;
 };
 export const prompt = () => ateos.isWindows ? process.env.PROMPT : process.env.PS1;
-export const hostname = () => os.hostname();
-export const tmpdir = () => os.tmpdir();
-export const home = () => os.homedir();
+export const hostname = () => std.os.hostname();
+export const tmpdir = () => std.os.tmpdir();
+export const home = () => std.os.homedir();
 
 export const pathKey = () => ateos.isWindows
   ? Object.keys(process.env).find((key) => key.toUpperCase() === "PATH") || "Path"

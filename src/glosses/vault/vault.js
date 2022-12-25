@@ -1,5 +1,4 @@
 const {
-  is,
   vault,
   database: { level }
 } = ateos;

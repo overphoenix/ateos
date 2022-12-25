@@ -1,5 +1,4 @@
 const {
-  is,
   util: {
     color: {
       convert: colorConvert

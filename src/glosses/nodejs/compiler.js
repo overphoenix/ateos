@@ -1,5 +1,4 @@
 const {
-  is,
   fs: { which },
   process: { exec },
   system: { env }

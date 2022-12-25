@@ -260,7 +260,6 @@ lazify({
   configuration: "./glosses/configurations",
   data: "./glosses/data",
   database: "./glosses/databases",
-  datastore: "./glosses/datastores",
   datetime: "./glosses/datetime",
   env: "./glosses/env",
   error: ["@recalibratedsystems/common-cjs", "error"],
@@ -291,13 +290,13 @@ lazify({
   stream: "./glosses/streams",
   system: "./glosses/system",
   task: "@recalibratedsystems/tasks",
-  templating: "./glosses/templating",
   text: "./glosses/text",
   util: "./glosses/utils",
   vault: "./glosses/vault",
 
   // lazify third-party libraries
   async: "async",
+  dot: "dot",
   lodash: "lodash",
   tsn: "ts-node",
   tslib: "tslib",

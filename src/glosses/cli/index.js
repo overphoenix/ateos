@@ -1,7 +1,3 @@
-const {
-  is
-} = ateos;
-
 const __ = ateos.lazify({
   progress: "cli-progress",
   esc: "./esc",

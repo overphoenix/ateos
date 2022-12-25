@@ -8,4 +8,4 @@ export default ateos.lazify({
   warn: () => ateos.cli.chalkify("#FF5722"),
   info: () => ateos.cli.chalkify("#FFEB3B"),
   notice: () => ateos.cli.chalkify("#FFEB3B")
-}, null);
+}, null, require);
