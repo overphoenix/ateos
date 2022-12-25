@@ -30,14 +30,7 @@
     ]
   },
   "tasks": {
-    "basePath": [
-      "tasks"
-    ],
-    "loadPolicy": "ignore",
-    "default": false,
-    "domains": {
-      "public": "public",
-      "private": "private"
-    }
+    "dir": "tasks",
+    "loadPolicy": "ignore"
   }
 }

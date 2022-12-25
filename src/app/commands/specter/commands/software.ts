@@ -41,7 +41,7 @@ export default class extends Subsystem {
         cwd: process.cwd(),
         progress: false
       });
-      await r.observerNotifications("progress");
+      await r.observeNotifications("progress");
       r.notify(this, "progress", {
         text: "installing software"
       });

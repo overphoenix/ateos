@@ -1,8 +1,5 @@
 const {
   error,
-  std: { path },
-  is,
-  templating,
   util,
   text
 } = ateos;
@@ -30,7 +27,7 @@ const createRenderFunction = (template) => {
   return (obj) => {
     try {
       if (!fn) {
-        fn = templating.dot.compile(template/*, { ...dot.templateSettings, strip: false }*/);
+        fn = ateos.dot.compile(template/*, { ...dot.templateSettings, strip: false }*/);
       }
       return fn(obj);
     } catch (err) {

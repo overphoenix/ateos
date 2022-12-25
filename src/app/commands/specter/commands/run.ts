@@ -47,7 +47,7 @@ export default class extends Subsystem {
         cwd: process.cwd(),
         progress: false
       });
-      await r.observerNotifications("progress");
+      await r.observeNotifications("progress");
       const argv = ateos.minimist(rest);
       const result = await r.runAndWait("specterRun", { task: args.get('task'), ...opts.getAll(), argv });
       r.notify(this, "progress", {

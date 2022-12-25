@@ -9,7 +9,7 @@ export default class extends Subsystem {
     let ateosRealm = null;
     try {
       ateosRealm = await this.parent.connectRealm();
-      await ateosRealm.observerNotifications("progress");
+      await ateosRealm.observeNotifications("progress");
       ateosRealm.notify(this, "progress", {
         text: "initializing"
       });

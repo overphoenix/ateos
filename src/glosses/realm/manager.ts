@@ -1,25 +1,27 @@
-import { NotImplementedException } from "@recalibratedsystems/common-cjs";
+import { IllegalStateException, NotExistsException, NotImplementedException, NotValidException } from "@recalibratedsystems/common-cjs";
+import { TaskManager, TaskObserver } from "@recalibratedsystems/tasks";
+import { DOMAIN } from ".";
+import RealmArtifacts from "./artifacts";
 
 const {
-  error,
   fs,
-  path: aPath,
+  path,
   realm,
-  task: { TaskManager },
-  util
 } = ateos;
+
+const DOMAINS = [DOMAIN.PUBLIC, DOMAIN.PRIVATE, DOMAIN.DEV];
 
 const tryRealmAt = (cwd: string) => {
   try {
-    // Validation...
+    // TODO: Validation...
 
     // try to require realm config
-    require(aPath.join(cwd, ".ateos", "config.json"));
+    require(path.join(cwd, ".ateos", "config.json"));
 
     // try to require package.json
-    require(aPath.join(cwd, "package.json"));
+    require(path.join(cwd, "package.json"));
 
-    return new realm.RealmManager({
+    return new RealmManager({
       cwd
     });
   } catch (err) {
@@ -28,24 +30,24 @@ const tryRealmAt = (cwd: string) => {
 };
 
 export default class RealmManager extends TaskManager {
-  private connected_ = false;
+  private _connected = false;
 
-  private connectiong_ = false;
+  private _connecting = false;
 
-  private connectOptions_ = {};
+  private _connectOptions = {};
 
-  private superRealm_: RealmManager | null = null;
+  private _superRealm: RealmManager | null = null;
 
-  private spinner_ = null;
+  private _spinner: any = null;
 
-  public cwd: string | null = null;
+  public cwd: string;
   public package: any;
 
   constructor({ cwd = process.cwd() } = {}) {
     super();
 
     if (!ateos.isString(cwd)) {
-      throw new error.NotValidException(`Invalid type of cwd: ${ateos.typeOf(cwd)}`);
+      throw new NotValidException(`Invalid type of cwd: ${ateos.typeOf(cwd)}`);
     }
     this.cwd = cwd;
 
@@ -84,10 +86,10 @@ export default class RealmManager extends TaskManager {
         }
         return cfg;
       },
-      package: () => require(aPath.join(cwd, "package.json"))
+      package: () => require(path.join(cwd, "package.json"))
     }, this, require);
 
-    this.checkSuperRealm();
+    this._checkSuperRealm();
   }
 
   get name() {
@@ -95,104 +97,79 @@ export default class RealmManager extends TaskManager {
   }
 
   get connected() {
-    return this.connected_;
+    return this._connected;
   }
 
   get superRealm() {
-    return this.superRealm_;
+    return this._superRealm;
   }
 
-  async connect(options = {}) {
-    if (this.connected_ || this.connectiong_) {
+  async connect(options?: any) {
+    if (this._connected || this._connecting) {
       return;
     }
-    this.connectiong_ = true;
-    this.connectOptions_ = options;
+    this._connecting = true;
+    this._connectOptions = options;
 
     try {
       // Load realm tasks.
-      const tasksConfig = this.config.raw.tasks;
+      const tasksConfig = this.config.raw.tasks || {
+        dir: "tasks"
+      };
       if (ateos.isObject(tasksConfig)) {
-        const basePaths = util.arrify(tasksConfig.basePath).map((p) => aPath.join(this.cwd, p));
-        const loadPolicy = tasksConfig.loadPolicy || ateos.task.TaskManager.DEFAULT_LOAD_POLICY;
-
-        if (ateos.isObject(tasksConfig) && basePaths.length > 0) {
-          const loadTasks = async (basePath: string, skipLoaded = false) => {
-            if (ateos.isObject(tasksConfig.domains)) {
-              for (const [domain, path] of Object.entries(tasksConfig.domains)) {
-                await this.loadTasksFrom(aPath.join(basePath, path), {
-                  transpile: options.transpile,
-                  domain,
-                  loadPolicy
-                });
-              }
-            }
-          };
-
-          for (const tasksBasePath of basePaths) {
-            // Load tasks from common base path.
-            fs.existsSync(tasksBasePath) && await loadTasks(tasksBasePath);
-            if (tasksConfig.default !== false) {
-              const ignore = ateos.isObject(tasksConfig.domains)
-                ? [...Object.values(tasksConfig.domains)]
-                : [];
-              await this.loadTasksFrom(tasksBasePath, {
-                transpile: options.transpile,
-                ignore,
-                loadPolicy
-              });
-            }
+        const tasksPath = path.join(this.cwd, tasksConfig.dir || "tasks");
+        for (const domain of DOMAINS) {
+          const tasksDomainPath = path.join(tasksPath, domain);
+          if (fs.existsSync(tasksDomainPath)) {
+            await this.loadTasksFrom(tasksDomainPath, {
+              transpile: options?.transpile,
+              domain,
+              loadPolicy: tasksConfig.loadPolicy || ateos.task.TaskManager.DEFAULT_LOAD_POLICY
+            });
           }
         }
       }
 
-      if (this.checkSuperRealm()) {
-        await this.#connectSuperRealm(options);
+      if (this._checkSuperRealm()) {
+        await this._connectSuperRealm();
       }
 
-      this.artifacts = await realm.RealmArtifacts.collect(this);
+      this.artifacts = await RealmArtifacts.collect(this);
 
-      this.connected_ = true;
+      this._connected = true;
     } catch (err) {
-      this.connected_ = false;
+      this._connected = false;
       throw err;
     } finally {
-      this.connectiong_ = false;
+      this._connecting = false;
     }
   }
 
-  async observerNotifications(type) {
+  async observeNotifications(type: string | Array<string>) {
     if (ateos.isArray(type)) {
       for (const w of type) {
-        this.observerNotifications(w);
+        this.observeNotifications(w);
       }
       return;
     }
 
-    let notifType;
-    if (ateos.isObject(type)) {
-      notifType = type.name;
-    } else {
-      notifType = type;
-    }
-    await this.onNotification(notifType, (sender, name, info) => {
+    await this.onNotification(type, (sender: any, name: string, info: any) => {
       this._updateProgress(info);
     });
   }
 
   stopNotifications(err: any) {
-    if (!ateos.isNull(this.spinner_)) {
+    if (!ateos.isNull(this._spinner)) {
       if (err) {
-        this.spinner_.fail(err.message);
-        console.error(err);
+        this._spinner.fail(err);
       } else {
-        this.spinner_.stop();
+        this._spinner.stop();
       }
-      this.spinner_ = null;
+      this._spinner = null;
     }
   }
 
-  _createSpinner(text: any) {
+  private _createSpinner(text: any) {
     let options;
     if (ateos.isString(text)) {
       options = {
@@ -201,40 +178,39 @@ export default class RealmManager extends TaskManager {
     } else {
       options = text;
     }
-    this.spinner_ = ateos.cli.spinner(options).start();
+    this._spinner = ateos.cli.spinner(options).start();
   }
 
-  _updateProgress(options: { clean?: boolean, text?: string, status?: string, reset?: boolean }) {
-    if (ateos.isNull(this.spinner_) || options.reset) {
-      if (options.clean && this.spinner_) {
-        this.spinner_.stop();
+  private _updateProgress(options: { clean?: boolean, text?: string, status?: string, reset?: boolean }) {
+    if (ateos.isNull(this._spinner) || options.reset) {
+      if (options.clean && this._spinner) {
+        this._spinner.stop();
       }
       this._createSpinner(options.text);
     }
 
     if (ateos.isString(options.status)) {
-      this.spinner_[options.status](options.text);
+      this._spinner[options.status](options.text);
     } else {
-      this.spinner_.text = options.text;
+      this._spinner.text = options.text;
     }
   }
 
-  getPath(...args) {
-    return aPath.join(this.cwd, ...args);
+  getPath(...args: string[]) {
+    return path.join(this.cwd, ...args);
   }
 
-  async run(name, ...args) {
-    let result;
+  async run(name: string, ...args: any[]) {
+    if (!this._connected) {
+      throw new IllegalStateException(`Cannot run task '${name}' while manager is not connected to realm`);
+    }
+    
     try {
-      result = await super.run(name, ...args);
-      return result;
+      return await super.run(name, ...args);
     } catch (err) {
-      if (err instanceof error.NotExistsException) {
-        if (this.checkSuperRealm() === 1) {
-          await this.#connectSuperRealm(this.connectOptions_);
-        }
-        if (!ateos.isNull(this.superRealm)) {
-          // try again
+      if (err instanceof NotExistsException && err.message.startsWith(`Task '${name}' not exists`)) {
+        if (!ateos.isNull(this._superRealm)) {
+          // try run task from super realm
           return super.run(name, ...args);
         }
       }
@@ -242,7 +218,7 @@ export default class RealmManager extends TaskManager {
     }
   }
 
-  async runSafe(name, ...args) {
+  async runWithLock(name: string, ...args: any[]): Promise<TaskObserver> {
     await this.lock();
     const observer = await this.run(name, ...args);
     await observer.finally(() => this.unlock());
@@ -257,45 +233,44 @@ export default class RealmManager extends TaskManager {
     throw new NotImplementedException('`unlock() is not implemented');
   }
 
-  async #connectSuperRealm(options) {
+  private async _connectSuperRealm() {
     // Use resources from super realm.
-    if (!ateos.isNull(this.superRealm)) {
-      await this.superRealm.connect(options);
+    if (!ateos.isNull(this._superRealm)) {
+      await this._superRealm.connect(this._connectOptions);
 
       // add tasks from super realm
-      const tasks = this.superRealm.getTasksByDomain(realm.DOMAIN.PUBLIC);
+      const tasks = this._superRealm.getTasksByDomain(realm.DOMAIN.PUBLIC);
       for (const taskInfo of tasks) {
         if (!this.hasTask(taskInfo.name)) {
-          // eslint-disable-next-line no-await-in-loop
           await this.addTask({
             name: taskInfo.name,
             task: taskInfo.Class,
-            ...util.pick(taskInfo, ["suspendable", "cancelable", "concurrency", "interval", "singleton", "description", "tag"])
+            ...ateos.util.pick(taskInfo, ["suspendable", "cancelable", "concurrency", "interval", "singleton", "description", "tag"])
           });
         }
       }
     }
   }
 
-  private checkSuperRealm() {
-    if (ateos.isNull(this.superRealm)) {
+  private _checkSuperRealm() {
+    if (ateos.isNull(this._superRealm)) {
       // Scan for super realm
-      const parentPath = aPath.dirname(this.cwd);
-      const baseName = aPath.basename(parentPath);
+      const parentPath = path.dirname(this.cwd);
+      const baseName = path.basename(parentPath);
 
       // Nested realms are always in the 'opt' directory of the parent realm.
       // So, we can check parent/super if detect such directory name
       if (baseName === "opt") {
-        this.superRealm_ = tryRealmAt(aPath.dirname(parentPath));
+        this._superRealm = tryRealmAt(path.dirname(parentPath));
       }
       // check 'superRealm' property in configuration
-      if (ateos.isNull(this.superRealm_)) {
+      if (ateos.isNull(this._superRealm)) {
         if (ateos.HOME !== this.cwd) {
-          // default super-realm is ATEOS
-          this.superRealm_ = tryRealmAt(ateos.HOME);
+          // default super-realm is Ateos
+          this._superRealm = tryRealmAt(ateos.HOME);
         }
       }
-      return ateos.isNull(this.superRealm_) ? 0 : 1;
+      return ateos.isNull(this._superRealm) ? 0 : 1;
     }
     return 2;
   }

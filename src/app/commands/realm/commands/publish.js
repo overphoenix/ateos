@@ -28,7 +28,7 @@ export default class extends Subsystem {
     try {
       ateosRealm = await this.parent.connectRealm();
 
-      await ateosRealm.observerNotifications("progress")
+      await ateosRealm.observeNotifications("progress")
       await ateosRealm.runAndWait("realmPublish", {
         realm: process.cwd(),
         ...opts.getAll(true)

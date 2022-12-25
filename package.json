@@ -78,7 +78,7 @@
     "@recalibratedsystems/common-cjs": "^0.2.14",
     "@recalibratedsystems/messagepack": "^1.2.2",
     "@recalibratedsystems/smartbuffer": "^1.2.1",
-    "@recalibratedsystems/tasks": "^0.9.7",
+    "@recalibratedsystems/tasks": "^0.9.8",
     "@swc/core": "^1.2.233",
     "@swc/wasm": "^1.2.235",
     "@types/lodash": "^4.14.191",

@@ -4,12 +4,6 @@ import RealmManager from "./manager";
 import SSHTask from "./ssh_task";
 import TransformTask from "./transform_task";
 
-export const DOMAIN = {
-  PUBLIC: "public", // tasks available from anywhere
-  PRIVATE: "private", // tasks available only for realm in which they are placed
-  DEV: "dev" // same as private, but dev-tasks only available in dev stage (not included in release)
-};
-
 export interface IRealm {
   DOMAIN: typeof DOMAIN;
   Configuration: typeof Configuration;
@@ -19,6 +13,12 @@ export interface IRealm {
   SSHTask: typeof SSHTask;
   ateosRealm: RealmManager;
 }
+
+export enum DOMAIN {
+  PUBLIC = "public", // tasks available from anywhere
+  PRIVATE = "private", // tasks available only for realm in which they are placed
+  DEV = "dev" // same as private, but dev-tasks only available in dev stage (not included in release)
+};
 
 ateos.lazify({
   Configuration: "./configuration",

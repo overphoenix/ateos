@@ -82,7 +82,7 @@ export default class extends ateos.realm.SSHTask {
     const listOfCommands = arrify(commands);
     for (const cmd_ of listOfCommands) {
       try {
-        const tmpl = ateos.templating.dot.compile(cmd_);
+        const tmpl = ateos.dot.compile(cmd_);
         const cmd = tmpl({ ...sshOpts.specEnv });
         let result = await this.ssh.execCommand(cmd, { cwd: cwd ? cwd : '/root', execOptions: { tty: true } });
         if (result.stderr) {

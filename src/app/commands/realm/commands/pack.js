@@ -40,7 +40,7 @@ export default class extends Subsystem {
     try {
       ateosRealm = await this.parent.connectRealm();
 
-      await ateosRealm.observerNotifications("progress")
+      await ateosRealm.observeNotifications("progress")
       await ateosRealm.runAndWait("realmPack", {
         realm: process.cwd(),
         name: opts.has("name")
