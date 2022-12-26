@@ -296,7 +296,7 @@ lazify({
 
   // lazify third-party libraries
   async: "async",
-  dot: "dot",
+  nunjucks: "nunjucks",
   lodash: "lodash",
   tsn: "ts-node",
   tslib: "tslib",

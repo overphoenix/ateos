@@ -23,7 +23,7 @@ export default class extends Subsystem {
         status: "stop"
       });
 
-      console.info('Specter project base:\n---');
+      console.info('Specter project information:\n---');
       console.info(`name: ${r.package.name}`);
       console.info(`version: ${r.package.version}`);
       console.info(`description: ${r.package.description}`);
@@ -41,11 +41,6 @@ export default class extends Subsystem {
       if (result.tasks && Object.keys(result.tasks).length > 0) {
         console.info('\nTasks:\n---');
         console.info(ateos.data.yaml.encode(result.tasks));
-      }
-
-      if (result.specs && Object.keys(result.specs).length > 0) {
-        console.info('\nSpecifications:\n---');
-        console.info(ateos.data.yaml.encode(result.specs));
       }
 
       return 0;

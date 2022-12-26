@@ -82,8 +82,8 @@ export default class extends ateos.realm.SSHTask {
     const listOfCommands = arrify(commands);
     for (const cmd_ of listOfCommands) {
       try {
-        const tmpl = ateos.dot.compile(cmd_);
-        const cmd = tmpl({ ...sshOpts.specEnv });
+        ateos.nunjucks.configure({ autoescape: false })
+        const cmd = ateos.nunjucks.renderString(cmd_, { ...sshOpts.specEnv });
         let result = await this.ssh.execCommand(cmd, { cwd: cwd ? cwd : '/root', execOptions: { tty: true } });
         if (result.stderr) {
           this.manager.notify(this, "progress", {

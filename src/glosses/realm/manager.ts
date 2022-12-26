@@ -161,7 +161,8 @@ export default class RealmManager extends TaskManager {
   stopNotifications(err: any) {
     if (!ateos.isNull(this._spinner)) {
       if (err) {
-        this._spinner.fail(err);
+        this._spinner.stop();
+        console.error(err);
       } else {
         this._spinner.stop();
       }

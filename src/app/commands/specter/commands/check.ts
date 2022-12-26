@@ -6,9 +6,9 @@ export default class extends Subsystem {
   @CliMainCommand({
     arguments: [
       {
-        name: "spec",
-        nargs: "*",
-        help: "Specter's specification name(s)"
+        name: "group",
+        type: String,
+        help: "Nodes group"
       }
     ],
     options: [
@@ -28,14 +28,13 @@ export default class extends Subsystem {
     let r: ateos.realm.RealmManager | null = null;
     try {
       r = await this.parent.connectRealm({
-        cwd: process.cwd(),
-        progress: false
+        cwd: process.cwd()
       });
       await r.observeNotifications("progress");
       r.notify(this, "progress", {
         text: "checking ssh connection"
       });
-      const result = await r.runAndWait("specterCheck", { spec: args.get('spec'), ...opts.getAll() });
+      const result = await r.runAndWait("specterCheck", { group: args.get('group'), ...opts.getAll() });
 
       r.notify(this, "progress", {
         text: "complete",

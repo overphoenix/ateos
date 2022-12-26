@@ -1,6 +1,5 @@
 const {
   error,
-  is,
   std
 } = ateos;
 
@@ -30,7 +29,7 @@ export default (fs) => {
       const path = std.path.join(tmpRootPath, `${prefix}${nameGenerator()}${ext}`);
 
       try {
-        await fs.stat(path); // eslint-disable-line no-await-in-loop
+        await fs.stat(path);
         continue;
       } catch (err) {
         return path;

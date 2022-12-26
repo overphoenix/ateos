@@ -1,5 +1,3 @@
-import { readdir } from "node:fs/promises";
-
 const {
   error,
   path,
@@ -23,19 +21,9 @@ export default class extends ateos.task.AdvancedTask {
       transpile: true
     });
 
-    const specFiles = (await readdir(cwd)).filter((name/*: string*/) => name.endsWith(".spec.json"));
-    const specs/*: any*/ = {};
-    for (const fileName of specFiles) {
-      try {
-        specs[fileName.substring(0, fileName.length - ".spec.json".length)] = require(path.join(cwd, fileName));
-      } catch (ex) {
-        continue;
-      }
-    }
-
     let nodes;
     try {
-      nodes = require(path.join(cwd, ".ateos", "nodes.specter.json"));
+      nodes = require(path.join(cwd, ".specter", "nodes.json"));
     } catch (ex) {
     }
 
@@ -49,10 +37,7 @@ export default class extends ateos.task.AdvancedTask {
 
     }
 
-    this.result/*: {
-      specs: any;
-    } */ = {
-      specs,
+    this.result = {
       nodes,
       pubkeys,
       tasks

@@ -13,10 +13,10 @@ export default class extends Subsystem {
     ],
     options: [
       {
-        name: "--spec",
+        name: "--group",
         type: String,
         required: true,
-        help: "Specter specification name"
+        help: "Nodes group name"
       },
       {
         name: "--privkey",
@@ -34,7 +34,7 @@ export default class extends Subsystem {
         help: "Git user"
       },
       {
-        name: "--git-pat",
+        name: "--git-token",
         type: String,
         help: "Git personal access token"
       }
